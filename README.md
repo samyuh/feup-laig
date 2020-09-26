@@ -1,10 +1,10 @@
 # LAIG 2020/2021
 
-## Group T0xG0y
+## Group T01G04
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Diogo Fernandes  | 201806250 | 201806250@fe.up.pt |
+| Paulo Ribeiro    | 201806505 | 201806505@fe.up.pt |
 
 ----
 
