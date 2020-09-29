@@ -82,6 +82,8 @@
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+
+                <noderef id="wall" />
             </descendants>
         </node>
         <node id="demoChild">            <!-- defines one intermediate node; may be repeated as necessary -->
@@ -102,6 +104,114 @@
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" z3="ff"/>
                 <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+        <node id="wall">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="window" />
+                <noderef id="door-right" />
+                <noderef id="door-left" />
+            </descendants>
+        </node>
+        <node id="window">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="window-decoration" />
+            </descendants>
+        </node>
+        <node id="window-decoration">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="ff" slices="ii" stacks="ii"/>
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+            </descendants>
+        </node>
+        <node id="door-right">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="door" />
+            </descendants>
+        </node>
+        <node id="door-left">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="door" />
+            </descendants>
+        </node>
+        <node id="door">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
             </descendants>
         </node>
     </nodes>
