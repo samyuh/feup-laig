@@ -2,7 +2,7 @@
     <initials>
         <reference length="2" />
         <!-- axis length; "0" means no axis displayed -->
-        <root id="demoRoot" />
+        <root id="palace-got" />
         <!-- identifier of root node of the scene graph; this node -->
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
@@ -57,7 +57,7 @@
     </materials>
 
     <nodes>
-        <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
+        <node id="palace-got">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
             <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
