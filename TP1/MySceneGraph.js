@@ -418,7 +418,7 @@ class MySceneGraph {
    * @param {nodes block element} nodesNode
    */
   parseNodes(nodesNode) {
-        var children = nodesNode.children;
+        var children = nodesNode.children; // -- Get all elements of node
 
         this.nodes = [];
 
@@ -428,7 +428,7 @@ class MySceneGraph {
 
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
-
+             // -- Check if node is right
             if (children[i].nodeName != "node") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -443,6 +443,10 @@ class MySceneGraph {
             if (this.nodes[nodeID] != null)
                 return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
 
+            this.nodes[nodeID] = new MyNode(this, nodeID);
+            console.log("New Root: " + nodeID);
+            
+            // -- Nomes das tags dentro do node
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -455,6 +459,7 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
+            // --
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
 
@@ -470,21 +475,16 @@ class MySceneGraph {
             for (var j = 0; j < descendants.length; j++) {
                 if (descendants[j].nodeName == "noderef") {
                     var type = this.reader.getString(descendants[j], 'id');
-                    console.log("Descendant ID: " + type);
-                    this.nodes.push(type);
+                    console.log("New Node: " + type);
+                    this.nodes[nodeID].addNode(type);
                 }
                 if (descendants[j].nodeName == "leaf") {
                     this.nodes.push(new MyLeaf(this, descendants[j]));
+                    console.log("New Primitive: ");
+                    this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
                 }
             }
-            console.log(this.nodes.length);
         }
-
-        // Teste
-        for(var i = 0; i < this.nodes.length; i++) {
-            console.log(this.nodes[i]);
-        }
-        // Teste
     }
 
 
@@ -588,6 +588,6 @@ class MySceneGraph {
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
-        //this.nodes[this.idRoot].display()
+        this.nodes[this.idRoot].display();
     }
 }

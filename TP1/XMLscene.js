@@ -123,11 +123,6 @@ class XMLscene extends CGFscene {
             this.axis.display();
  
             this.defaultAppearance.apply();
-
-            // Temp
-            var rect = new MyRectangle(this, -1, -.1, 1, .1);
-            rect.display();
-            // Temp
             
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
