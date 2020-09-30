@@ -64,15 +64,24 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
         <texture id="wallTexture" path="./scenes/images/stones.jpg" />
         <texture id="windowTexture" path="./scenes/images/glass.jpg" />
-        <texture id="windowTexture" path="./scenes/images/swords.jpg" />
+        <texture id="throneTexture" path="./scenes/images/swords.jpg" />
     </textures>
 
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
+         <material id="defaultMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
         <material id="floorMaterial">
             <shininess value="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -110,9 +119,9 @@
         <!-- The Root Node, representing the main scene - the palace -->
         <node id="palace-got">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
-            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+            <material id="floorMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="wallTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -257,11 +266,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -276,11 +287,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -293,11 +306,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -311,11 +326,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -328,11 +345,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -345,11 +364,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -362,16 +383,20 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
                 <noderef id="floor-main" />
                 <noderef id="floor-stairs" />
+                <noderef id="column-left" />
+                <noderef id="column-right" />
             </descendants>
         </node>
 
@@ -380,11 +405,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -397,11 +424,13 @@
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -411,16 +440,76 @@
             </descendants>
         </node>
 
+        <!-- Node representing the left column -->
+        <node id="column-left">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="column" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the right column -->
+        <node id="column-right">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="column" />
+            </descendants>
+        </node>
+
+        <!-- Node representing column -->
+        <node id="column">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii" />
+            </descendants>
+        </node>
+
         <!-- Node representing a cube -->
         <node id="cube">
             <material id="null" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="2.0" />
+                <amplification afs="ff" aft="ff" />
             </texture>
 
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
