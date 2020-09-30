@@ -57,6 +57,7 @@
     </materials>
 
     <nodes>
+        <!-- The Root Node, representing the main scene - the palace -->
         <node id="palace-got">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
             <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
@@ -81,6 +82,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the main wall, behind the throne -->
         <node id="wall">
             <material id="null" />
 
@@ -101,6 +103,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the window of the main wall -->
         <node id="window">
             <material id="null" />
 
@@ -119,6 +122,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the window decoration of the main wall -->
         <node id="window-decoration">
             <material id="null" />
 
@@ -139,6 +143,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the door of the main wall at the right -->
         <node id="door-right">
             <material id="null" />
 
@@ -157,6 +162,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the door of the main wall at the left -->
         <node id="door-left">
             <material id="null" />
 
@@ -175,6 +181,7 @@
             </descendants>
         </node>
         
+        <!-- Node representing a door -->
         <node id="door">
             <material id="null" />
 
@@ -195,6 +202,7 @@
                 </descendants>
         </node>
 
+        <!-- Node representing the throne -->
         <node id="throne">
             <material id="null" />
 
@@ -213,6 +221,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the seat of the throne -->
         <node id="throne-seat">
             <material id="null" />
 
@@ -229,6 +238,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the arm-supports of the throne -->
         <node id="throne-supports">
             <material id="null" />
 
@@ -246,6 +256,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the left arm-support of the throne -->
         <node id="throne-left-support">
             <material id="null" />
 
@@ -262,6 +273,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the right arm-support of the throne -->
         <node id="throne-right-support">
             <material id="null" />
 
@@ -278,6 +290,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the back of the throne -->
         <node id="throne-back">
             <material id="null" />
 
@@ -294,6 +307,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the floor of the scene -->
         <node id="floor">
             <material id="null" />
 
@@ -311,6 +325,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the main floor of the scene -->
         <node id="floor-main">
             <material id="null" />
 
@@ -327,6 +342,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the stairs to the throne -->
         <node id="floor-stairs">
             <material id="null" />
 
@@ -345,6 +361,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing a cube -->
         <node id="cube">
             <material id="null" />
 
