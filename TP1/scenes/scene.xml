@@ -33,19 +33,25 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="windowLight">            <!-- window light -->
+        <light id="ambientLight">            <!-- ambient light -->
             <enable value="1" />
-            <!-- enable/disable -->
-            <position x="0" y="20" z="20" w="0.0" />    <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="1.0" g="1.0" b="0.73" a="1.0" />            <!-- ambient component -->
+            <position x="10" y="12" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+        </light>
+
+        <light id="windowLight">            <!-- window light -->
+            <enable value="0" />
+            <position x="0" y="20" z="20" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
 
         <light id="rightLight">            <!-- right torch light -->
             <enable value="0" />
-            <!-- enable/disable -->
-            <position x="25" y="15" z="38" w="1.0" />   <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="25" y="15" z="38" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="0.37" b="0.11" a="1.0" />           <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
@@ -53,8 +59,7 @@
 
         <light id="leftLight">            <!-- left torch light -->
             <enable value="0" />
-            <!-- enable/disable -->
-            <position x="25" y="15" z="2" w="1.0" />    <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="25" y="15" z="2" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="0.37" b="0.11" a="1.0" />           <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
@@ -513,11 +518,108 @@
             </transformations>
 
             <descendants>
+                <noderef id="cubeface1" />
+                <noderef id="cubeface2" />
+                <noderef id="cubeface3" />
+                <noderef id="cubeface4" />
+                <noderef id="cubeface5" />
+                <noderef id="cubeface6" />
+            </descendants>
+        </node>
+
+        <!-- Cube Faces -->
+        <node id="cubeface1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="cubeface2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="cubeface3">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="cubeface4">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="cubeface5">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="cubeface6">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <rotation axis="cc" angle="ff" />
+            </transformations>
+
+            <descendants>
                 <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
             </descendants>
         </node>
