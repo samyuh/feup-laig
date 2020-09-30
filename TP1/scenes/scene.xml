@@ -77,6 +77,7 @@
             <descendants>
                 <noderef id="wall" />
                 <noderef id="throne" />
+                <noderef id="floor" />
             </descendants>
         </node>
 
@@ -289,6 +290,57 @@
             </transformations>
 
             <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="floor">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="floor-main" />
+                <noderef id="floor-stairs" />
+            </descendants>
+        </node>
+
+        <node id="floor-main">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+            </descendants>
+        </node>
+
+        <node id="floor-stairs">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+                <noderef id="cube" />
                 <noderef id="cube" />
             </descendants>
         </node>
