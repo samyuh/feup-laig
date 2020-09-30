@@ -86,6 +86,7 @@
                 <noderef id="wall" />
             </descendants>
         </node>
+
         <node id="demoChild">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
             <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
@@ -106,6 +107,7 @@
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
+
         <node id="wall">
             <material id="null" />
 
@@ -125,6 +127,7 @@
                 <noderef id="door-left" />
             </descendants>
         </node>
+
         <node id="window">
             <material id="null" />
 
@@ -142,6 +145,7 @@
                 <noderef id="window-decoration" />
             </descendants>
         </node>
+
         <node id="window-decoration">
             <material id="null" />
 
@@ -161,6 +165,7 @@
                 <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
             </descendants>
         </node>
+
         <node id="door-right">
             <material id="null" />
 
@@ -178,6 +183,7 @@
                 <noderef id="door" />
             </descendants>
         </node>
+
         <node id="door-left">
             <material id="null" />
 
@@ -195,6 +201,7 @@
                 <noderef id="door" />
             </descendants>
         </node>
+        
         <node id="door">
             <material id="null" />
 
@@ -212,6 +219,126 @@
                 <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
                 <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
                 <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                </descendants>
+        </node>
+
+        <node id="throne">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="throne-seat" />
+                <noderef id="throne-supports" />
+                <noderef id="throne-back" />
+            </descendants>
+        </node>
+
+        <node id="throne-seat">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-supports">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="throne-left-support" />
+                <noderef id="throne-right-support" />
+            </descendants>
+        </node>
+
+        <node id="throne-left-support">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-right-support">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-back">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="cube">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
             </descendants>
         </node>
     </nodes>
