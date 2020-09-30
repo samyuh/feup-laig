@@ -12,6 +12,12 @@
             <from x="30" y="15" z="30" />
             <to x="0" y="-2" z="0" />
         </perspective>
+
+        <perspective id="frontCamera" near="0.1" far="500" angle="0">
+            <from x="80" y="50" z="20" />
+            <to x="0" y="-2" z="20" />
+        </perspective>
+
         <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
             <from x="5" y="0" z="10" />
             <to x="5" y="0" z="0" />
@@ -27,12 +33,30 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="demoLight">            <!-- light identifier -->
+        <light id="windowLight">            <!-- window light -->
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+            <position x="0" y="20" z="20" w="0.0" />    <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="1.0" g="1.0" b="0.73" a="1.0" />            <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+        </light>
+
+        <light id="rightLight">            <!-- right torch light -->
+            <enable value="0" />
+            <!-- enable/disable -->
+            <position x="25" y="15" z="38" w="1.0" />   <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="1.0" g="0.37" b="0.11" a="1.0" />           <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+        </light>
+
+        <light id="leftLight">            <!-- left torch light -->
+            <enable value="0" />
+            <!-- enable/disable -->
+            <position x="25" y="15" z="2" w="1.0" />    <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="1.0" g="0.37" b="0.11" a="1.0" />           <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
     </lights>
@@ -40,18 +64,44 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
+        <texture id="wallTexture" path="./scenes/images/stones.jpg" />
+        <texture id="windowTexture" path="./scenes/images/glass.jpg" />
+        <texture id="windowTexture" path="./scenes/images/swords.jpg" />
     </textures>
 
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
-        <material id="demoMaterial">
-            <shininess value="ff" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        <material id="floorMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.86" g="0.85" b="0.7" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="blackMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="orangeMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="0.5" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="lightOrangeMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="0.7" b="0.4" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
