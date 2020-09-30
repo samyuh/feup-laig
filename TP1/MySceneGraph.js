@@ -463,7 +463,28 @@ class MySceneGraph {
             // Texture
 
             // Descendants
+            console.log(nodeID);
+
+            var descendants = children[i].children[descendantsIndex].children;
+           
+            for (var j = 0; j < descendants.length; j++) {
+                if (descendants[j].nodeName == "noderef") {
+                    var type = this.reader.getString(descendants[j], 'id');
+                    console.log("Descendant ID: " + type);
+                    this.nodes.push(type);
+                }
+                if (descendants[j].nodeName == "leaf") {
+                    this.nodes.push(new MyLeaf(this, descendants[j]));
+                }
+            }
+            console.log(this.nodes.length);
         }
+
+        // Teste
+        for(var i = 0; i < this.nodes.length; i++) {
+            console.log(this.nodes[i]);
+        }
+        // Teste
     }
 
 
@@ -565,7 +586,6 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
         //this.nodes[this.idRoot].display()
