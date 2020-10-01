@@ -143,6 +143,8 @@
                 <noderef id="wall" />
                 <noderef id="throne" />
                 <noderef id="floor" />
+                <noderef id="column-left" />
+                <noderef id="column-right" />
             </descendants>
         </node>
 
@@ -201,9 +203,140 @@
             </transformations>
 
             <descendants>
+                <noderef id="window-decoration-spiral" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
                 <leaf type="sphere" radius="ff" slices="ii" stacks="ii"/>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <noderef id="window-decoration-spiral-side1" />
+                <noderef id="window-decoration-spiral-side2" />
+                <noderef id="window-decoration-spiral-side3" />
+                <noderef id="window-decoration-spiral-side4" />
+                <noderef id="window-decoration-spiral-side5" />
+                <noderef id="window-decoration-spiral-side6" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side3">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side4">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side5">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-side6">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
             </descendants>
         </node>
 
@@ -400,8 +533,6 @@
             <descendants>
                 <noderef id="floor-main" />
                 <noderef id="floor-stairs" />
-                <noderef id="column-left" />
-                <noderef id="column-right" />
             </descendants>
         </node>
 
