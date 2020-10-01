@@ -143,8 +143,7 @@
                 <noderef id="wall" />
                 <noderef id="throne" />
                 <noderef id="floor" />
-                <noderef id="column-left" />
-                <noderef id="column-right" />
+                <noderef id="columns" />
             </descendants>
         </node>
 
@@ -573,6 +572,26 @@
                 <noderef id="cube" />
                 <noderef id="cube" />
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the columns -->
+        <node id="columns">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="ff" aft="ff" />
+            </texture>
+
+            <transformations>
+                <translation x="ff" y="ff" z="ff" />
+                <rotation axis="cc" angle="ff" />
+                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="column-left" />
+                <noderef id="column-right" />
             </descendants>
         </node>
 
