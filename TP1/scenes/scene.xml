@@ -153,15 +153,31 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
+                <noderef id="main-wall" />
                 <noderef id="window" />
                 <noderef id="door-right" />
                 <noderef id="door-left" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the window decoration of the main wall -->
+        <node id="main-wall">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="25.0" z="0.0" />
+                <scale sx="50.0" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
             </descendants>
         </node>
 
@@ -203,6 +219,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the spiral of the window decoration of the main wall -->
         <node id="window-decoration-spiral">
             <material id="null" />
 
@@ -236,13 +253,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="1.0" />
+                <rotation axis="x" angle="60" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -254,13 +270,11 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <rotation axis="x" angle="120" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -272,13 +286,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="-1.0" />
+                <rotation axis="x" angle="180" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -290,13 +303,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="-1.0" />
+                <rotation axis="x" angle="240" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -308,13 +320,11 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <rotation axis="x" angle="300" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -326,13 +336,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="1.0" />
+                <rotation axis="x" angle="360" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
             </descendants>
         </node>
 
@@ -345,9 +354,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="15.0" />
             </transformations>
 
             <descendants>
@@ -364,9 +371,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="-15.0" />
             </transformations>
 
             <descendants>
@@ -383,16 +388,65 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
-                </descendants>
+                <noderef id="door-arc" />
+                <noderef id="door-side1" />
+                <noderef id="door-side2" />
+                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the door arc -->
+        <node id="door-arc">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="12.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="2.5" outer="3.5" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the left side of the door -->
+        <node id="door-side1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.0" z="-2.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the right side of the door -->
+        <node id="door-side2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.0" z="2.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
+            </descendants>
         </node>
 
         <!-- Node representing the throne -->
@@ -425,9 +479,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <scale sx="1.0" sy="0.8" sz="2.0" />
             </transformations>
 
             <descendants>
@@ -444,9 +496,6 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -464,9 +513,8 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="-1.5" />
+                <scale sx="1.2" sy="2.0" sz="0.8" />
             </transformations>
 
             <descendants>
@@ -483,9 +531,8 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="1.5" />
+                <scale sx="1.2" sy="2.0" sz="0.8" />
             </transformations>
 
             <descendants>
@@ -502,9 +549,8 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="-1.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="3.0" sz="1.5" />
             </transformations>
 
             <descendants>
