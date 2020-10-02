@@ -521,9 +521,6 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -541,13 +538,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <scale sx="40" sy="50" sz="1.0" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
             </descendants>
         </node>
 
@@ -581,9 +577,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.0" y="0.0" z="10.0" />
             </transformations>
 
             <descendants>
@@ -601,9 +595,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="-15.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -620,9 +612,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="15.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -639,14 +629,44 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+            </transformations>
+
+            <descendants>
+                <noderef id="column-base" />
+                <noderef id="column-cylinder" />
+            </descendants>
+        </node>
+
+        <node id="column-base">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="4" sy="4" sz="4" />
             </transformations>
 
             <descendants>
                 <noderef id="cube" />
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii" />
+            </descendants>
+        </node>
+
+        <node id="column-cylinder">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="2.0" z="0.0" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="20" topRadius="1" bottomRadius="1" stacks="8" slices="8" />
             </descendants>
         </node>
 
