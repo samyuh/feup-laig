@@ -473,10 +473,19 @@ class MySceneGraph {
                     mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
                 }
                 if(transformations[j].nodeName == "rotation") {
-
+                    let axis = this.reader.getString(transformations[j], 'axis');
+                    let angle = this.reader.getFloat(transformations[j], 'angle');
+                    
+                    console.log(axis);
+                    if(axis == 'x' || axis == 'y' || axis == 'z')
+                        mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * 3.14 / 180, this.axisCoords[axis]);
                 }
                 if(transformations[j].nodeName == "scale") {
+                    let sx = this.reader.getFloat(transformations[j], 'sx');
+                    let sy = this.reader.getFloat(transformations[j], 'sy');
+                    let sz = this.reader.getFloat(transformations[j], 'sz');
 
+                    mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
                 }
             }
             
