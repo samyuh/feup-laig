@@ -418,7 +418,7 @@ class MySceneGraph {
    * @param {nodes block element} nodesNode
    */
   parseNodes(nodesNode) {
-        var children = nodesNode.children;
+        var children = nodesNode.children; // -- Get all elements of node
 
         this.nodes = [];
 
@@ -428,7 +428,7 @@ class MySceneGraph {
 
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
-
+             // -- Check if node is right
             if (children[i].nodeName != "node") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -443,6 +443,10 @@ class MySceneGraph {
             if (this.nodes[nodeID] != null)
                 return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
 
+            this.nodes[nodeID] = new MyNode(this, nodeID);
+            console.log("New Root: " + nodeID);
+            
+            // -- Nomes das tags dentro do node
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -455,14 +459,57 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
+            // --
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
+            var transformations = children[i].children[transformationsIndex].children;
+            for (var j = 0; j < transformations.length; j++) {
+                console.log(transformations[j].nodeName);
+                if(transformations[j].nodeName == "translation") {
+                    let x = this.reader.getFloat(transformations[j], 'x');
+                    let y = this.reader.getFloat(transformations[j], 'y');
+                    let z = this.reader.getFloat(transformations[j], 'z');
 
+                    mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
+                }
+                if(transformations[j].nodeName == "rotation") {
+                    let axis = this.reader.getString(transformations[j], 'axis');
+                    let angle = this.reader.getFloat(transformations[j], 'angle');
+                    
+                    console.log(axis);
+                    if(axis == 'x' || axis == 'y' || axis == 'z')
+                        mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * 3.14 / 180, this.axisCoords[axis]);
+                }
+                if(transformations[j].nodeName == "scale") {
+                    let sx = this.reader.getFloat(transformations[j], 'sx');
+                    let sy = this.reader.getFloat(transformations[j], 'sy');
+                    let sz = this.reader.getFloat(transformations[j], 'sz');
+
+                    mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
+                }
+            }
+            
             // Material
 
             // Texture
 
             // Descendants
+            console.log(nodeID);
+
+            var descendants = children[i].children[descendantsIndex].children;
+           
+            for (var j = 0; j < descendants.length; j++) {
+                if (descendants[j].nodeName == "noderef") {
+                    var type = this.reader.getString(descendants[j], 'id');
+                    console.log("New Node: " + type);
+                    this.nodes[nodeID].addDescendants(type);
+                }
+                if (descendants[j].nodeName == "leaf") {
+                    this.nodes.push(new MyLeaf(this, descendants[j]));
+                    console.log("New Primitive: ");
+                    this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+                }
+            }
         }
     }
 
@@ -565,9 +612,8 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
-        //this.nodes[this.idRoot].display()
+        this.nodes[this.idRoot].display();
     }
 }

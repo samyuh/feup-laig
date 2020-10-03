@@ -123,7 +123,7 @@ class XMLscene extends CGFscene {
             this.axis.display();
  
             this.defaultAppearance.apply();
-
+            
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
