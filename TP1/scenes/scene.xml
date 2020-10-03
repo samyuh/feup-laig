@@ -489,7 +489,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="4.5" z="-20.0" />
+                <translation x="0.0" y="4.5" z="-22.0" />
                 <rotation axis="y" angle="-90" />
             </transformations>
 
@@ -509,7 +509,8 @@
             </texture>
 
             <transformations>
-                <scale sx="1.0" sy="0.8" sz="2.0" />
+                <translation x="0.5" y="0.0" z="0.0" />
+                <scale sx="2.0" sy="1.0" sz="1.8" />
             </transformations>
 
             <descendants>
@@ -526,6 +527,7 @@
             </texture>
 
             <transformations>
+                <scale sx="1.0" sy="0.8" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -543,7 +545,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-1.5" />
+                <translation x="0.0" y="0.0" z="-1.3" />
                 <scale sx="1.2" sy="2.0" sz="0.8" />
             </transformations>
 
@@ -561,7 +563,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="1.5" />
+                <translation x="0.0" y="0.0" z="1.3" />
                 <scale sx="1.2" sy="2.0" sz="0.8" />
             </transformations>
 
@@ -579,8 +581,8 @@
             </texture>
 
             <transformations>
-                <translation x="-1.0" y="2.0" z="0.0" />
-                <scale sx="1.0" sy="3.0" sz="1.5" />
+                <translation x="-1.0" y="0.0" z="0.0" />
+                <scale sx="1.0" sy="3.0" sz="1.8" />
             </transformations>
 
             <descendants>
@@ -632,6 +634,7 @@
             </texture>
 
             <transformations>
+                <translation x="0.0" y="0.0" z="-10.0" />
             </transformations>
 
             <descendants>
@@ -650,7 +653,6 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.5" z="0.0" />
                 <scale sx="20.0" sy="2.0" sz="30.0" />
             </transformations>
 
@@ -668,7 +670,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="1.5" z="0.0" />
+                <translation x="0.0" y="1.5" z="-5.0" />
                 <scale sx="15.0" sy="2.0" sz="20.0" />
             </transformations>
 
@@ -686,7 +688,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="2.5" z="0.0" />
+                <translation x="0.0" y="2.5" z="-10.0" />
                 <scale sx="5.0" sy="2.0" sz="10.0" />
             </transformations>
 
