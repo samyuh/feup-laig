@@ -223,7 +223,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="17.0" z="0.0" />
+                <translation x="0.0" y="17.0" z="-24.0" />
             </transformations>
 
             <descendants>
@@ -250,7 +250,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.5" outer="3.0" slices="20" loops="40" />
+                <leaf type="torus" inner="2.0" outer="3.0" slices="8" loops="8" />
             </descendants>
         </node>
 
@@ -266,7 +266,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.5" slices="40" stacks="20"/>
+                <leaf type="sphere" radius="0.5" slices="8" stacks="8"/>
             </descendants>
         </node>
 
@@ -279,12 +279,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="1.0" />
-                <rotation axis="x" angle="60" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="-0.5" y1="0" x2="0.0" y2="0.5" x3="0.5" y3="0.0" />
+                <leaf type="triangle" x1="-0.5" y1="0" x2="0.5" y2="0.0" x3="0.0" y3="0.5" />
             </descendants>
         </node>
 
@@ -297,7 +297,9 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="120" />
+                <rotation axis="z" angle="60.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -314,8 +316,9 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-1.0" />
-                <rotation axis="x" angle="180" />
+                <rotation axis="z" angle="120.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -332,8 +335,9 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-1.0" />
-                <rotation axis="x" angle="240" />
+                <rotation axis="z" angle="180.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -350,7 +354,9 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="300" />
+                <rotation axis="z" angle="240.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -367,8 +373,10 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="1.0" />
-                <rotation axis="x" angle="360" />
+                
+                <rotation axis="z" angle="300.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
+                <scale sx="1.0" sy="10.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -385,7 +393,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="15.0" />
+                <translation x="20.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -402,7 +410,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-15.0" />
+                <translation x="-20.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -419,13 +427,13 @@
             </texture>
 
             <transformations>
+                <translation x="0.0" y="0.0" z="-25.0" />
             </transformations>
 
             <descendants>
                 <noderef id="door-arc" />
                 <noderef id="door-side1" />
                 <noderef id="door-side2" />
-                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
             </descendants>
         </node>
 
@@ -438,11 +446,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="12.0" z="0.0" />
+                <translation x="0.0" y="10.0" z="0.0" />
+
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.5" outer="3.5" slices="15" loops="40" />
+                <leaf type="torus" inner="2.0" outer="3.5" slices="15" loops="40" />
             </descendants>
         </node>
 
@@ -455,11 +464,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0.0" z="-2.5" />
+                <translation x="2.5" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
+                <leaf type="cylinder" height="10.0" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="8"/>
             </descendants>
         </node>
 
@@ -472,11 +482,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0.0" z="2.5" />
+                <translation x="-2.5" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="12.0" topRadius="1.0" bottomRadius="1.0" stacks="20" slices="35"/>
+                <leaf type="cylinder" height="10.0" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="8"/>
             </descendants>
         </node>
 
@@ -641,6 +652,8 @@
                 <noderef id="stair1" />
                 <noderef id="stair2" />
                 <noderef id="stair3" />
+                <noderef id="side-stair1" />
+                <noderef id="side-stair2" />
             </descendants>
         </node>
 
@@ -653,7 +666,8 @@
             </texture>
 
             <transformations>
-                <scale sx="20.0" sy="2.0" sz="30.0" />
+                <translation x="0.0" y="0.0" z="-7.5" />
+                <scale sx="12.5" sy="2.0" sz="15.0" />
             </transformations>
 
             <descendants>
@@ -670,8 +684,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="1.5" z="-5.0" />
-                <scale sx="15.0" sy="2.0" sz="20.0" />
+                <translation x="0.0" y="0.0" z="-10.0" />
+                <scale sx="10" sy="3.5" sz="10.0" />
             </transformations>
 
             <descendants>
@@ -688,8 +702,42 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="2.5" z="-10.0" />
-                <scale sx="5.0" sy="2.0" sz="10.0" />
+                <translation x="0.0" y="0.0" z="-11.5" />
+                <scale sx="5.0" sy="4.5" sz="7.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="side-stair1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-11.5" />
+                <scale sx="20.0" sy="3.5" sz="7.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="side-stair2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-10.5" />
+                <scale sx="25.0" sy="2.0" sz="9.5" />
             </transformations>
 
             <descendants>
@@ -792,8 +840,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="2.0" z="0.0" />
-                <rotation axis="x" angle="90" />
+                <translation x="0.0" y="4.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -810,7 +858,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.5" z="0.0" />
+                <translation x="0" y="0.5" z="0" />
             </transformations>
 
             <descendants>
@@ -832,11 +880,11 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -849,11 +897,11 @@
 
             <transformations>
                 <rotation axis="y" angle="90" />
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -866,11 +914,11 @@
 
             <transformations>
                 <rotation axis="y" angle="180" />
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -883,11 +931,11 @@
 
             <transformations>
                 <rotation axis="y" angle="270" />
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -900,11 +948,11 @@
 
             <transformations>
                 <rotation axis="x" angle="90" />
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -917,11 +965,11 @@
 
             <transformations>
                 <rotation axis="x" angle="270" />
-                <translation x="0.0" y="0.0" z="-0.5" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.5" y1="-0.5" x2="-0.5" y2="0.5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
     </nodes>
