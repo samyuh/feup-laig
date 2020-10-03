@@ -462,7 +462,24 @@ class MySceneGraph {
             // --
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
+            var transformations = children[i].children[transformationsIndex].children;
+            for (var j = 0; j < transformations.length; j++) {
+                console.log(transformations[j].nodeName);
+                if(transformations[j].nodeName == "translation") {
+                    let x = this.reader.getFloat(transformations[j], 'x');
+                    let y = this.reader.getFloat(transformations[j], 'y');
+                    let z = this.reader.getFloat(transformations[j], 'z');
 
+                    mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
+                }
+                if(transformations[j].nodeName == "rotation") {
+
+                }
+                if(transformations[j].nodeName == "scale") {
+
+                }
+            }
+            
             // Material
 
             // Texture
@@ -476,7 +493,7 @@ class MySceneGraph {
                 if (descendants[j].nodeName == "noderef") {
                     var type = this.reader.getString(descendants[j], 'id');
                     console.log("New Node: " + type);
-                    this.nodes[nodeID].addNode(type);
+                    this.nodes[nodeID].addDescendants(type);
                 }
                 if (descendants[j].nodeName == "leaf") {
                     this.nodes.push(new MyLeaf(this, descendants[j]));
