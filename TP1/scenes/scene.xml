@@ -190,9 +190,6 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -209,9 +206,6 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
             </transformations>
 
             <descendants>
@@ -228,14 +222,12 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.5" y="17.0" z="0.0" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
-                <leaf type="sphere" radius="ff" slices="ii" stacks="ii"/>
+                <noderef id="window-decoration-wheel" />
+                <noderef id="window-decoration-sphere" />
                 <noderef id="window-decoration-spiral-side1" />
                 <noderef id="window-decoration-spiral-side2" />
                 <noderef id="window-decoration-spiral-side3" />
@@ -245,6 +237,39 @@
             </descendants>
         </node>
 
+        <!-- Node representing the wheel of the window decoration of the main wall -->
+        <node id="window-decoration-wheel">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="2.5" outer="3.0" slices="20" loops="40" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the inner sphere of the window decoration of the main wall -->
+        <node id="window-decoration-sphere">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.5" slices="40" stacks="20"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the first triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side1">
             <material id="null" />
 
@@ -262,6 +287,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the second triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side2">
             <material id="null" />
 
@@ -278,6 +304,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the third triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side3">
             <material id="null" />
 
@@ -295,6 +322,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the fourth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side4">
             <material id="null" />
 
@@ -312,6 +340,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the fifth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side5">
             <material id="null" />
 
@@ -328,6 +357,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the sixth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side6">
             <material id="null" />
 
@@ -458,9 +488,7 @@
             </texture>
 
             <transformations>
-                <translation x="ff" y="ff" z="ff" />
-                <rotation axis="cc" angle="ff" />
-                <scale sx="ff" sy="ff" sz="ff" />
+                <translation x="0.5" y="6.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -585,7 +613,7 @@
 
             <transformations>
                 <scale sx="40" sy="50" sz="1.0" />
-                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="90" />
             </transformations>
 
             <descendants>
@@ -608,8 +636,62 @@
             </transformations>
 
             <descendants>
+                <noderef id="stair1" />
+                <noderef id="stair2" />
+                <noderef id="stair3" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the first stair to the throne -->
+        <node id="stair1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.5" z="0.0" />
+                <scale sx="20.0" sy="2.0" sz="30.0" />
+            </transformations>
+
+            <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the second stair to the throne -->
+        <node id="stair2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="1.5" z="0.0" />
+                <scale sx="15.0" sy="2.0" sz="20.0" />
+            </transformations>
+
+            <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the third stair to the throne -->
+        <node id="stair3">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="2.5" z="0.0" />
+                <scale sx="5.0" sy="2.0" sz="10.0" />
+            </transformations>
+
+            <descendants>
                 <noderef id="cube" />
             </descendants>
         </node>
@@ -683,6 +765,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the column base -->
         <node id="column-base">
             <material id="null" />
 
@@ -699,6 +782,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the column body -->
         <node id="column-cylinder">
             <material id="null" />
 
@@ -814,7 +898,7 @@
             </texture>
 
             <transformations>
-                <rotation axis="z" angle="90" />
+                <rotation axis="x" angle="90" />
                 <translation x="0.0" y="0.0" z="-0.5" />
             </transformations>
 
@@ -831,7 +915,7 @@
             </texture>
 
             <transformations>
-                <rotation axis="z" angle="270" />
+                <rotation axis="x" angle="270" />
                 <translation x="0.0" y="0.0" z="-0.5" />
             </transformations>
 
