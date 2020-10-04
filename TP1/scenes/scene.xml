@@ -6,6 +6,7 @@
         <!-- identifier of root node of the scene graph; this node -->
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
+
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -29,7 +30,6 @@
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
         <background r="0.1" g="0.1" b="0.1" a="1.0" />        <!-- background color -->
     </illumination>
-
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
@@ -66,15 +66,13 @@
         </light>
     </lights>
 
-
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
         <texture id="wallTexture" path="./scenes/images/stones.jpg" />
-        <texture id="windowTexture" path="./scenes/images/glass.jpg" />
+        <texture id="glassTexture" path="./scenes/images/glass.jpg" />
         <texture id="throneTexture" path="./scenes/images/swords.jpg" />
     </textures>
-
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
@@ -124,9 +122,9 @@
         <!-- The Root Node, representing the main scene - the palace -->
         <node id="palace-got">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
-            <material id="floorMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+            <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="wallTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="defaultTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -153,7 +151,6 @@
             </texture>
 
             <transformations>
-                
             </transformations>
 
             <descendants>
@@ -168,7 +165,7 @@
         <node id="main-wall">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="wallTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -194,7 +191,26 @@
             </transformations>
 
             <descendants>
+                <noderef id="glass" />
                 <noderef id="window-decoration" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the glass of the window -->
+        <node id="glass">
+            <material id="null" />
+
+            <texture id="glassTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="13.0" z="-24.9" />
+                <scale sx="2.0" sy="5.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -211,6 +227,7 @@
 
             <descendants>
                 <noderef id="window-decoration-spiral" />
+                <!-- Will be added more elements... -->
             </descendants>
         </node>
 
@@ -229,18 +246,13 @@
             <descendants>
                 <noderef id="window-decoration-wheel" />
                 <noderef id="window-decoration-sphere" />
-                <noderef id="window-decoration-spiral-side1" />
-                <noderef id="window-decoration-spiral-side2" />
-                <noderef id="window-decoration-spiral-side3" />
-                <noderef id="window-decoration-spiral-side4" />
-                <noderef id="window-decoration-spiral-side5" />
-                <noderef id="window-decoration-spiral-side6" />
+                <noderef id="window-decoration-spirals" />
             </descendants>
         </node>
 
         <!-- Node representing the wheel of the window decoration of the main wall -->
         <node id="window-decoration-wheel">
-            <material id="null" />
+            <material id="blackMaterial" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
@@ -256,7 +268,7 @@
 
         <!-- Node representing the inner sphere of the window decoration of the main wall -->
         <node id="window-decoration-sphere">
-            <material id="null" />
+            <material id="orangeMaterial" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
@@ -267,6 +279,27 @@
 
             <descendants>
                 <leaf type="sphere" radius="0.5" slices="8" stacks="8"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the spirals of the window decoration of the main wall -->
+        <node id="window-decoration-spirals">
+            <material id="lightOrangeMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="window-decoration-spiral-side1" />
+                <noderef id="window-decoration-spiral-side2" />
+                <noderef id="window-decoration-spiral-side3" />
+                <noderef id="window-decoration-spiral-side4" />
+                <noderef id="window-decoration-spiral-side5" />
+                <noderef id="window-decoration-spiral-side6" />
             </descendants>
         </node>
 
@@ -495,7 +528,7 @@
         <node id="throne">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="throneTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -515,7 +548,7 @@
         <node id="throne-seat">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -533,7 +566,7 @@
         <node id="throne-supports">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -551,7 +584,7 @@
         <node id="throne-left-support">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -569,7 +602,7 @@
         <node id="throne-right-support">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -587,7 +620,7 @@
         <node id="throne-back">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -603,7 +636,7 @@
 
         <!-- Node representing the floor of the scene -->
         <node id="floor">
-            <material id="null" />
+            <material id="floorMaterial" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
