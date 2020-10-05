@@ -245,6 +245,8 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+        this.onXMLMinorError("To do: Parse views.");
+
         this.cameras = {};
         var children = viewsNode.children;
 
@@ -553,9 +555,37 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
+
+        this.textures = {};
+
+        var children = texturesNode.children;
+
+        for (var i = 0; i < children.length; i++) {
+            var id = this.reader.getString(children[i], 'id');
+
+            // Check if texture has no ID
+            if (id == null) {
+                return "Texture with no ID found on <textures>";
+            }
+            // Check if texture has repeated ID
+            if (this.textures[id] != null) {
+                return "Texture with repeated ID found on <textures> (" + id + ")";
+            }
+
+            var file = this.reader.getString(children[i], 'path');
+
+            // Check if texture has no file path
+            if (file == null) {
+                return "Texture with no file path found on <textures> (" + id + ")";
+            }
+
+            this.textures[id] = file;
+        }
+
+        this.log("Parsed textures");
+
         return null;
     }
 
@@ -674,9 +704,25 @@ class MySceneGraph {
             
             // Material
 
-            // Texture
+            // ---------- Texture ----------
 
-            // Descendants
+            // Check if <texture> tag is present
+            if (textureIndex == -1) {
+                return ("<texture> tag missing from node " + id + " in <nodes>");
+            }
+
+            var textureID = this.reader.getString(children[textureIndex], 'id');
+
+            // Check if the texture ID is present
+            if (textureID == null)
+                return ("Texture ID missing from <texture> tag, node " + id + " in <nodes>");
+
+            // Check if the texture ID is valid
+            if (this.textures[textureID] == null && textureID != "null" && textureID != "clear") {
+                return ("Texture ID invalid (" + textureID + ") from <texture> tag, node " + id + " in <nodes>");
+            }
+
+            // ---------- Descendants ----------
             console.log(nodeID);
 
             var descendants = children[i].children[descendantsIndex].children;
