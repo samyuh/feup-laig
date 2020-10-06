@@ -40,7 +40,7 @@ class MyTriangle extends CGFobject {
 		var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
 
 		var cosA = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2*a*c);
-		var sinA = sqrt(1 - Math.pow(cosA, 2));
+		var sinA = Math.sqrt(1 - Math.pow(cosA, 2));
 
 		this.texCoords = [
 			0, 0,
