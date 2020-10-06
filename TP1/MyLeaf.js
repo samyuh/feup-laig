@@ -13,7 +13,7 @@ class MyLeaf {
         if (this.type == "cylinder")
             this.primitive = new MyCylinder(this.sceneGraph.scene, 1, 8);
         if (this.type == "sphere")
-            this.primitive = new MyRectangle(this.sceneGraph.scene, 0, 0, 0, 0);
+            this.primitive = new MySphere(this.sceneGraph.scene, 8, 8);
         if (this.type == "torus")
             this.primitive = new MyRectangle(this.sceneGraph.scene, 0, 0, 0, 0);
         if (this.type == "rectangle") {
