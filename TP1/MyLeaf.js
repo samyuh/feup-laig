@@ -10,27 +10,35 @@ class MyLeaf {
         this.initPrimitive();
     }
     initPrimitive() {
-        if (this.type == "cylinder")
-            this.primitive = new MyCylinder(this.sceneGraph.scene, 1, 8);
+        if (this.type == "cylinder") {
+            // -- height="10.0" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="8"
+            let height = this.sceneGraph.reader.getFloat(this.descendants, 'height');
+            let topRadius = this.sceneGraph.reader.getFloat(this.descendants, 'topRadius');
+            let bottomRadius = this.sceneGraph.reader.getFloat(this.descendants, 'bottomRadius');
+            let stacks = this.sceneGraph.reader.getFloat(this.descendants, 'stacks');
+            let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
+
+            this.primitive = new MyCylinder(this.sceneGraph.scene, height, topRadius, bottomRadius, stacks, slices);
+        }
         if (this.type == "sphere")
             this.primitive = new MySphere(this.sceneGraph.scene, 8, 8);
         if (this.type == "torus")
             this.primitive = new MyRectangle(this.sceneGraph.scene, 0, 0, 0, 0);
         if (this.type == "rectangle") {
-            var x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
-            var y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
-            var x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');
-            var y2 = this.sceneGraph.reader.getFloat(this.descendants, 'y2');
+            let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
+            let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
+            let x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');
+            let y2 = this.sceneGraph.reader.getFloat(this.descendants, 'y2');
 
             this.primitive = new MyRectangle(this.sceneGraph.scene, x1, y1, x2, y2);
         }
         if (this.type == "triangle") {
-            var x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
-            var y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
-            var x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');
-            var y2 = this.sceneGraph.reader.getFloat(this.descendants, 'y2');
-            var x3 = this.sceneGraph.reader.getFloat(this.descendants, 'x3');
-            var y3 = this.sceneGraph.reader.getFloat(this.descendants, 'y3');
+            let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
+            let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
+            let x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');
+            let y2 = this.sceneGraph.reader.getFloat(this.descendants, 'y2');
+            let x3 = this.sceneGraph.reader.getFloat(this.descendants, 'x3');
+            let y3 = this.sceneGraph.reader.getFloat(this.descendants, 'y3');
 
             this.primitive = new MyTriangle(this.sceneGraph.scene, x1, y1, x2, y2, x3, y3);
         }
