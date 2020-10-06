@@ -708,18 +708,18 @@ class MySceneGraph {
 
             // Check if <texture> tag is present
             if (textureIndex == -1) {
-                return ("<texture> tag missing from node " + id + " in <nodes>");
+                return ("<texture> tag missing from node " + nodeID + " in <nodes>");
             }
 
-            var textureID = this.reader.getString(children[textureIndex], 'id');
+            var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
             // Check if the texture ID is present
             if (textureID == null)
-                return ("Texture ID missing from <texture> tag, node " + id + " in <nodes>");
+                return ("Texture ID missing from <texture> tag, node " + nodeID + " in <nodes>");
 
             // Check if the texture ID is valid
             if (this.textures[textureID] == null && textureID != "null" && textureID != "clear") {
-                return ("Texture ID invalid (" + textureID + ") from <texture> tag, node " + id + " in <nodes>");
+                return ("Texture ID invalid (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>");
             }
 
             // ---------- Descendants ----------
