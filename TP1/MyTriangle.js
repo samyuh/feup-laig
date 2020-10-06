@@ -28,6 +28,26 @@ class MyTriangle extends CGFobject {
 			2, 1, 0,
 		];
 
+		this.normals = [];
+		
+		// Defining the normals:
+		for (let j = 0 ; j < 3 ; j++) {
+			this.normals.push(0,0,1);
+		}
+
+		var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
+		var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
+		var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
+
+		var cosA = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2*a*c);
+		var sinA = sqrt(1 - Math.pow(cosA, 2));
+
+		this.texCoords = [
+			0, 0,
+			a, 0,
+			c*cosA, c*sinA
+		];
+
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
 		this.primitiveType = this.scene.gl.TRIANGLES;
