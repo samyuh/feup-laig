@@ -68,7 +68,7 @@ class MyCylinder extends CGFobject {
                 angle += amplitude_increment;
             }
         }
-
+        
         // -- Draw Sides -- //
         for (var i = 0; i <= (this.slices * 2) * this.stacks + 20; i = i + 2) {
             this.indices.push(i);
