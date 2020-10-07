@@ -26,7 +26,7 @@ class MyCylinder extends CGFobject {
 
         var amplitude_increment = (2 * Math.PI) / this.slices;
         var height_increment = this.height / this.stacks;
-        var radius_increment = (this.topRadius - this.bottomRadius) / this.stacks;
+        var radius_increment = (this.bottomRadius - this.topRadius) / this.stacks;
         
         
         // BASE
@@ -41,8 +41,8 @@ class MyCylinder extends CGFobject {
             var x = Math.cos(angle);
             var y = Math.sin(angle);
 
-            this.vertices.push(x);
-            this.vertices.push(y);
+            this.vertices.push(x * this.bottomRadius);
+            this.vertices.push(y * this.bottomRadius);
             this.vertices.push(0);
 
             this.normals.push(0, 0, -1);
@@ -65,7 +65,6 @@ class MyCylinder extends CGFobject {
                 this.vertices.push(z);
 
                 // -- Normals -- //
-                // cos^2 (x) + sin^2 (x) = 1, so normal is unitary
                 this.normals.push(Math.cos(angle), Math.sin(angle), 0);
 
                 /*
@@ -100,14 +99,16 @@ class MyCylinder extends CGFobject {
             var x = Math.cos(angle);
             var y = Math.sin(angle);
 
-            this.vertices.push(x);
-            this.vertices.push(y);
+            this.vertices.push(x * this.topRadius);
+            this.vertices.push(y * this.topRadius);
             this.vertices.push(this.height);
 
             this.normals.push(0, 0, 1);
 
             angle += amplitude_increment;
         }
+
+        console.log(this.topRadius);
 
         // BASE
         for (let j = 0; j < this.slices; j++) {
@@ -138,12 +139,11 @@ class MyCylinder extends CGFobject {
         }
 
         // TOP
-        for (let j = 0; j < this.slices; j++) {
+        for (let j = 0; j < this.slices - 2; j++) {
             let val = this.vertices.length/3 - this.slices;
 
-            if(j == this.slices - 1) this.indices.push(val + 1);
-            else this.indices.push(val + j + 2);
-             this.indices.push(val);
+            this.indices.push(val + j + 2);
+            this.indices.push(val);
             this.indices.push(val + j + 1);
            
         }  
