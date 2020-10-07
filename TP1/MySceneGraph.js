@@ -848,21 +848,18 @@ class MySceneGraph {
 
     processNode(node) {
         // Aplicar texturas
-        
+
         this.scene.pushMatrix();
         this.scene.multMatrix(this.nodes[node].transformation);
 
         for(var i = 0; i < this.nodes[node].descendants.length; i++) {
-            this.scene.pushMatrix();
             this.processNode(this.nodes[node].descendants[i]);
-            this.scene.popMatrix();
         }
         
         for(var i = 0; i < this.nodes[node].leaves.length; i++) {
-            this.scene.pushMatrix();
             this.nodes[node].leaves[i].display();
-            this.scene.popMatrix();
         }
+        
         this.scene.popMatrix();
     } 
 }
