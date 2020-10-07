@@ -25,21 +25,4 @@ class MyNode {
     addLeaf(leaf) {
         this.leaves.push(leaf);
     }
-    display() {
-        this.graph.scene.pushMatrix();
-        this.graph.scene.multMatrix(this.transformation);
-
-        for(var i = 0; i < this.descendants.length; i++) {
-            this.graph.scene.pushMatrix();
-            this.graph.nodes[this.descendants[i]].display();
-            this.graph.scene.popMatrix();
-        }
-        
-        for(var i = 0; i < this.leaves.length; i++) {
-            this.graph.scene.pushMatrix();
-            this.leaves[i].display();
-            this.graph.scene.popMatrix();
-        }
-        this.graph.scene.popMatrix();
-    } 
 }

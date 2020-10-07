@@ -245,7 +245,192 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+        this.onXMLMinorError("To do: Parse views.");
+
+        this.cameras = {};
+        var children = viewsNode.children;
+
+        var default_view = this.reader.getString(viewsNode, 'default');
+        if (default_view == null)
+            this.onXMLMinorError("no default_view defined for scene");  // Use defaultView?
+
+        if (children.length === 0)
+            this.onXMLMinorError("No views declared in <views>");  // Use defaultView?
+
+        for (var i = 0; i < children.length; i++) {
+            var camera = {};
+            var nodeType = children[i].nodeName;    // Either perspective or ortho
+            if (nodeType == null) {
+                this.onXMLMinorError("Camera with no type in <views>");
+                continue;   // Ignore camera with no type
+            }
+
+            var id = this.reader.getString(children[i], 'id');
+            if (id == null) {
+                this.onXMLMinorError("Camera with no 'id' atribute in <views>. Ignoring camera...");
+                continue;
+            }
+
+            // Process common atributes between perspective and ortho cameras (near and far)
+            var near = this.reader.getFloat(children[i], 'near');
+            if (near == null) {
+                this.onXMLMinorError("Camera with no 'near' atribute in <views>. Using near = 0.1");
+                near = 0.1;
+            }
+
+            var far = this.reader.getFloat(children[i], 'far');
+            if (far == null) {
+                this.onXMLMinorError("Camera with no 'far' atribute in <views>. Using far = 500");
+                far = 500;
+            }
+
+            camera.near = near;
+            camera.far = far;
+
+            // Process different atributes between perspective and ortho cameras (perspective - angle ; ortho - left, right, top, bottom)
+            if (nodeType === "perspective") {
+                var angle = this.reader.getFloat(children[i], 'angle');
+                if (angle == null) {
+                    this.onXMLMinorError("Perspective Camera with no 'angle' atribute in <views>. Using angle = 45");
+                    angle = 45;
+                }
+
+                camera.angle = angle;
+            }
+            else if (nodeType === "ortho") {
+                var left = this.reader.getFloat(children[i], 'left');
+                if (left == null) {
+                    this.onXMLMinorError("Ortho Camera with no 'left' atribute in <views>. Using left = -0.2");
+                    left = -0.2;
+                }
+
+                var right = this.reader.getFloat(children[i], 'right');
+                if (right == null) {
+                    this.onXMLMinorError("Ortho Camera with no 'right' atribute in <views>. Using right = 0.2");
+                    right = 0.2;
+                }
+
+                var top = this.reader.getFloat(children[i], 'top');
+                if (top == null) {
+                    this.onXMLMinorError("Ortho Camera with no 'top' atribute in <views>. Using top = 0.2");
+                    top = 0.2;
+                }
+
+                var bottom = this.reader.getFloat(children[i], 'bottom');
+                if (bottom == null) {
+                    this.onXMLMinorError("Ortho Camera with no 'bottom' atribute in <views>. Using bottom = -0.2");
+                    bottom = -0.2;
+                }
+
+                camera.left = left;
+                camera.right = right;
+                camera.top = top;
+                camera.bottom = bottom;
+            }
+            else {
+                this.onXMLMinorError("Not Perspective/Ortho camera found in <views>. Ignoring Camera...");
+                continue;
+            }
+
+            // Process "from" and "to" points of cameras
+            var grandChildren = children[i].children;
+            var nodeNames = [];
+
+            for (var i = 0; i < grandChildren.length; i++)
+                nodeNames.push(grandChildren[i].nodeName);
+            
+            var fromIndex = nodeNames.indexOf("from");
+            var toIndex = nodeNames.indexOf("to");
+
+            if (fromIndex == -1) {
+                return ('Camera ' + id + " is missing the 'from' attribute");
+            }
+            if (toIndex == -1) {
+                return ('Camera ' + id + " is missing the 'to' attribute");
+            }
+
+            camera.from = {};
+            camera.to = {};
+            var x, y, z;
+
+            x = this.reader.getFloat(grandChildren[fromIndex], 'x');
+            if (x == null) {
+                this.onXMLMinorError("Camera with no 'x' value of 'from' atribute in <views>. Using x = 30");
+                x = 30;
+            }
+
+            y = this.reader.getFloat(grandChildren[fromIndex], 'y');
+            if (y == null) {
+                this.onXMLMinorError("Camera with no 'y' value of 'from' atribute in <views>. Using y = 15");
+                y = 15;
+            }
+
+            z = this.reader.getFloat(grandChildren[fromIndex], 'z');
+            if (z == null) {
+                this.onXMLMinorError("Camera with no 'z' value of 'from' atribute in <views>. Using z = 30");
+                z = 30;
+            }
+
+            camera.from.x = x;
+            camera.from.y = y;
+            camera.from.z = z;
+
+            x = this.reader.getFloat(grandChildren[toIndex], 'x');
+            if (x == null) {
+                this.onXMLMinorError("Camera with no 'x' value of 'to' atribute in <views>. Using x = 30");
+                x = 30;
+            }
+
+            y = this.reader.getFloat(grandChildren[toIndex], 'y');
+            if (y == null) {
+                this.onXMLMinorError("Camera with no 'y' value of 'to' atribute in <views>. Using y = 15");
+                y = 15;
+            }
+
+            z = this.reader.getFloat(grandChildren[toIndex], 'z');
+            if (z == null) {
+                this.onXMLMinorError("Camera with no 'z' value of 'to' atribute in <views>. Using z = 30");
+                z = 30;
+            }
+
+            camera.to.x = x;
+            camera.to.y = y;
+            camera.to.z = z;
+
+            // Process "up" point of ortho cameras
+            if (nodeType === "ortho") {
+                camera.up = {};
+                var upIndex = nodeNames.indexOf("up");
+                if (upIndex == -1) {    // 'up' atribute is optional: if not defined, using up = (0,1,0)
+                    camera.up.x = 0;
+                    camera.up.y = 1;
+                    camera.up.z = 0;
+                }
+                else {
+                    x = this.reader.getFloat(grandChildren[upIndex], 'x');
+                    if (x == null)
+                        x = 0;  // if not defined, using x = 0
+
+                    y = this.reader.getFloat(grandChildren[upIndex], 'y');
+                    if (y == null)
+                        y = 1;  // if not defined, using y = 1
+
+                    z = this.reader.getFloat(grandChildren[upIndex], 'z');
+                    if (z == null) {
+                        z = 0;  // if not defined, using z = 0
+                    }
+                    camera.up.x = x;
+                    camera.up.y = y;
+                    camera.up.z = z;
+                }
+            }
+
+            // Obtained all data, adding camera to the scene cameras
+            this.cameras[id] = camera;
+        }
+        
+        this.log("Parsed Views.");
+
         return null;
     }
 
@@ -370,9 +555,37 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
+
+        this.textures = {};
+
+        var children = texturesNode.children;
+
+        for (var i = 0; i < children.length; i++) {
+            var id = this.reader.getString(children[i], 'id');
+
+            // Check if texture has no ID
+            if (id == null) {
+                return "Texture with no ID found on <textures>";
+            }
+            // Check if texture has repeated ID
+            if (this.textures[id] != null) {
+                return "Texture with repeated ID found on <textures> (" + id + ")";
+            }
+
+            var file = this.reader.getString(children[i], 'path');
+
+            // Check if texture has no file path
+            if (file == null) {
+                return "Texture with no file path found on <textures> (" + id + ")";
+            }
+
+            this.textures[id] = file;
+        }
+
+        this.log("Parsed textures");
+
         return null;
     }
 
@@ -491,9 +704,25 @@ class MySceneGraph {
             
             // Material
 
-            // Texture
+            // ---------- Texture ----------
 
-            // Descendants
+            // Check if <texture> tag is present
+            if (textureIndex == -1) {
+                return ("<texture> tag missing from node " + nodeID + " in <nodes>");
+            }
+
+            var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
+
+            // Check if the texture ID is present
+            if (textureID == null)
+                return ("Texture ID missing from <texture> tag, node " + nodeID + " in <nodes>");
+
+            // Check if the texture ID is valid
+            if (this.textures[textureID] == null && textureID != "null" && textureID != "clear") {
+                return ("Texture ID invalid (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>");
+            }
+
+            // ---------- Descendants ----------
             console.log(nodeID);
 
             var descendants = children[i].children[descendantsIndex].children;
@@ -614,6 +843,26 @@ class MySceneGraph {
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
-        this.nodes[this.idRoot].display();
+        this.processNode(this.idRoot);
     }
+
+    processNode(node) {
+        // Aplicar texturas
+        
+        this.scene.pushMatrix();
+        this.scene.multMatrix(this.nodes[node].transformation);
+
+        for(var i = 0; i < this.nodes[node].descendants.length; i++) {
+            this.scene.pushMatrix();
+            this.processNode(this.nodes[node].descendants[i]);
+            this.scene.popMatrix();
+        }
+        
+        for(var i = 0; i < this.nodes[node].leaves.length; i++) {
+            this.scene.pushMatrix();
+            this.nodes[node].leaves[i].display();
+            this.scene.popMatrix();
+        }
+        this.scene.popMatrix();
+    } 
 }
