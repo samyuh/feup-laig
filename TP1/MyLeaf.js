@@ -10,6 +10,9 @@ class MyLeaf {
         this.initPrimitive();
     }
     initPrimitive() {
+        if (this.type == "torus") {
+            this.primitive = new MyTorus(this.sceneGraph.scene, 1, 1, 8, 8);
+        }
         if (this.type == "cylinder") {
             // -- height="10.0" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="8"
             let height = this.sceneGraph.reader.getFloat(this.descendants, 'height');
@@ -22,8 +25,6 @@ class MyLeaf {
         }
         if (this.type == "sphere")
             this.primitive = new MySphere(this.sceneGraph.scene, 8, 8);
-        if (this.type == "torus")
-            this.primitive = new MyRectangle(this.sceneGraph.scene, 0, 0, 0, 0);
         if (this.type == "rectangle") {
             let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
             let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
