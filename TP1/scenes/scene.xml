@@ -313,6 +313,7 @@
             <descendants>
                 <noderef id="window-decoration-spiral" />
                 <noderef id="window-decoration-armor" />
+                <noderef id="window-decoration-swords" />
             </descendants>
         </node>
 
@@ -911,6 +912,94 @@
             </descendants>
         </node>
 
+        <node id="window-decoration-swords">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="9.5" z="-25.0" />
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="window-sword-1" />
+                <noderef id="window-sword-2" />
+                <noderef id="window-sword-3" />
+                <noderef id="window-sword-4" />
+            </descendants>
+        </node>
+
+        <node id="window-sword-1">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-50.0" y="0.0" z="0.0" />
+                <rotation axis="z" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <node id="window-sword-2">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-50.0" y="20.0" z="0.0" />
+                <rotation axis="z" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <node id="window-sword-3">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="50.0" y="0.0" z="0.0" />
+                <rotation axis="z" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <node id="window-sword-4">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="50.0" y="20.0" z="0.0" />
+                <rotation axis="z" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
         <!-- Node representing the door of the main wall at the right -->
         <node id="door-right">
             <material id="null" />
@@ -977,7 +1066,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.0" outer="3.5" slices="15" loops="40" />
+                <leaf type="torus" inner="0.6" outer="5.1" slices="15" loops="40" />
             </descendants>
         </node>
 
@@ -1033,7 +1122,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="2.0" topRadius="0.8" bottomRadius="0.5" stacks="10" slices="10"/>
+                <leaf type="cylinder" height="2.0" topRadius="0.5" bottomRadius="0.8" stacks="10" slices="10"/>
             </descendants>
         </node>
 
@@ -1050,7 +1139,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="2.0" topRadius="0.8" bottomRadius="0.5" stacks="10" slices="10"/>
+                <leaf type="cylinder" height="2.0" topRadius="0.5" bottomRadius="0.8" stacks="10" slices="10"/>
             </descendants>
         </node>
 
@@ -1243,6 +1332,22 @@
             </texture>
 
             <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="throne-back-swords" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the swords composing the throne back -->
+        <node id="throne-back-swords">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
                 <translation x="-1.6" y="2.0" z="0.0" />
                 <rotation axis="y" angle="-90" />
                 <scale sx="0.1" sy="0.1" sz="0.1" />
@@ -1258,6 +1363,8 @@
                 <noderef id="sword-7" />
                 <noderef id="sword-8" />
                 <noderef id="sword-9" />
+                <noderef id="sword-10" />
+                <noderef id="sword-11" />
             </descendants>
         </node>
 
@@ -1413,6 +1520,40 @@
             </descendants>
         </node>
 
+        <!-- Node representing the tenth throne sword -->
+        <node id="sword-10">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the eleventh throne sword -->
+        <node id="sword-11">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
         <!-- Node representing a sword -->
         <node id="sword">
             <material id="null" />
@@ -1422,7 +1563,6 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -1603,6 +1743,7 @@
             </texture>
 
             <transformations>
+                <translation x="0.0" y="0.0" z="2.0" />
                 <rotation axis="x" angle="-90" />
                 <scale sx="60" sy="60" sz="1.0" />
             </transformations>
@@ -1780,8 +1921,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-5.0" />
-                <scale sx="60.0" sy="1.0" sz="30.0" />
+                <translation x="0.0" y="0.0" z="-2.5" />
+                <scale sx="60.0" sy="1.0" sz="25.0" />
             </transformations>
 
             <descendants>
@@ -1797,8 +1938,8 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-5.0" />
-                <scale sx="60.0" sy="0.5" sz="35.0" />
+                <translation x="0.0" y="0.0" z="-2.5" />
+                <scale sx="60.0" sy="0.5" sz="30.0" />
             </transformations>
 
             <descendants>
