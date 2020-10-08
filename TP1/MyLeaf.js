@@ -10,8 +10,15 @@ class MyLeaf {
         this.initPrimitive();
     }
     initPrimitive() {
-        if (this.type == "cylinder") {
-            // -- height="10.0" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="8"
+        if (this.type == "torus") {  // NOT COMPLETE
+            let inner = this.sceneGraph.reader.getFloat(this.descendants, 'inner');
+            let outer = this.sceneGraph.reader.getFloat(this.descendants, 'outer');
+            let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
+            let loops = this.sceneGraph.reader.getFloat(this.descendants, 'loops');
+
+            this.primitive = new MyTorus(this.sceneGraph.scene, inner, outer, slices, loops);
+        }
+        if (this.type == "cylinder") {  // NOT COMPLETE
             let height = this.sceneGraph.reader.getFloat(this.descendants, 'height');
             let topRadius = this.sceneGraph.reader.getFloat(this.descendants, 'topRadius');
             let bottomRadius = this.sceneGraph.reader.getFloat(this.descendants, 'bottomRadius');
@@ -20,10 +27,13 @@ class MyLeaf {
 
             this.primitive = new MyCylinder(this.sceneGraph.scene, height, topRadius, bottomRadius, stacks, slices);
         }
-        if (this.type == "sphere")
-            this.primitive = new MySphere(this.sceneGraph.scene, 8, 8);
-        if (this.type == "torus")
-            this.primitive = new MyRectangle(this.sceneGraph.scene, 0, 0, 0, 0);
+        if (this.type == "sphere") { // NOT COMPLETE
+            let radius = this.sceneGraph.reader.getFloat(this.descendants, 'radius');
+            let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
+            let stacks = this.sceneGraph.reader.getFloat(this.descendants, 'stacks');
+
+            this.primitive = new MySphere(this.sceneGraph.scene, radius, slices, stacks);
+        }
         if (this.type == "rectangle") {
             let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
             let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
