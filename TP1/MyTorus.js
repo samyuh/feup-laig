@@ -19,13 +19,13 @@ class MyTorus extends CGFobject {
         this.normals = [];
         this.texCoords = [];
 
-		var amplitude_increment = (2 * Math.PI) / this.loops;
-        
-        // BODY
 		var angle = 0;
+		var amplitude_increment = (2 * Math.PI) / this.slices;
+
 		let theta = 0;
+		var theta_increment = (2 * Math.PI) / this.loops;
         for(var h = 0; h <= this.loops; h++) {
-			theta += amplitude_increment;
+			theta += theta_increment;
             for (var i = 0; i < this.slices; i++) {
 	
                 let x = Math.cos(theta) * (this.outer + Math.cos(angle) * this.inner);
