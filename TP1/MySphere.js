@@ -10,7 +10,7 @@ class MySphere extends CGFobject {
      * @param  {integer} slices - number of slices around Y axis
      * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
      */
-    constructor(scene, slices, stacks) {
+    constructor(scene, radius, slices, stacks) {
       super(scene);
       this.latDivs = stacks * 2;
       this.longDivs = slices;
