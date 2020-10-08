@@ -155,9 +155,10 @@
 
             <descendants>
                 <noderef id="main-wall" />
-                <noderef id="window" />
                 <noderef id="door-right" />
                 <noderef id="door-left" />
+                <noderef id="sword-left" />
+                <noderef id="sword-right" />
             </descendants>
         </node>
 
@@ -490,6 +491,7 @@
             </descendants>
         </node>
 
+        <!-- Node representing the seventh triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side7">
             <material id="null" />
 
@@ -564,7 +566,6 @@
                 <noderef id="cube" />
             </descendants>
         </node>
-
 
         <node id="armor2">
             <material id="null" />
@@ -1086,6 +1087,42 @@
             </descendants>
         </node>
 
+        <!-- Node representing the left sword on the wall -->
+        <node id="sword-left">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-9.0" y="9.0" z="-25.0" />
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the right sword on the wall -->
+        <node id="sword-right">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="9.0" y="9,0" z="-25.0" />
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
         <!-- Node representing the throne -->
         <node id="throne">
             <material id="null" />
@@ -1103,6 +1140,7 @@
                 <noderef id="throne-seat" />
                 <noderef id="throne-supports" />
                 <noderef id="throne-back" />
+                <noderef id="throne-swords" />
             </descendants>
         </node>
 
@@ -1193,6 +1231,348 @@
 
             <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the swords composing the throne -->
+        <node id="throne-swords">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.6" y="2.0" z="0.0" />
+                <rotation axis="y" angle="-90" />
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword-1" />
+                <noderef id="sword-2" />
+                <noderef id="sword-3" />
+                <noderef id="sword-4" />
+                <noderef id="sword-5" />
+                <noderef id="sword-6" />
+                <noderef id="sword-7" />
+                <noderef id="sword-8" />
+                <noderef id="sword-9" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the first throne sword -->
+        <node id="sword-1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the second throne sword -->
+        <node id="sword-2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the third throne sword -->
+        <node id="sword-3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the fourth throne sword -->
+        <node id="sword-4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the fifth throne sword -->
+        <node id="sword-5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the sixth throne sword -->
+        <node id="sword-6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="30" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the seventh throne sword -->
+        <node id="sword-7">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-30" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the eighth throne sword -->
+        <node id="sword-8">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="40" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the ninth throne sword -->
+        <node id="sword-9">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-40" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing a sword -->
+        <node id="sword">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sword-pommel" />
+                <noderef id="sword-grip" />
+                <noderef id="sword-chappe" />
+                <noderef id="sword-body" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the sword pommel -->
+        <node id="sword-pommel">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.5" slices="32" stacks="32"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the sword grip -->
+        <node id="sword-grip">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="6" topRadius="0.7" bottomRadius="0.5" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the sword chappe -->
+        <node id="sword-chappe">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="6.0" z="0.0" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chappe-left" />
+                <noderef id="chappe-right" />
+                <noderef id="chappe-sphere-left" />
+                <noderef id="chappe-sphere-right" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the left part of the chappe -->
+        <node id="chappe-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.6" bottomRadius="0.8" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the right part of the chappe -->
+        <node id="chappe-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-5.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.8" bottomRadius="0.6" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the left sphere of the chappe -->
+        <node id="chappe-sphere-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-5.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.5" slices="32" stacks="32"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the right sphere of the chappe -->
+        <node id="chappe-sphere-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="5.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.5" slices="32" stacks="32"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the sword body -->
+        <node id="sword-body">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="6.5" z="0.0" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="1.0" sy="0.5" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="30" topRadius="0.01" bottomRadius="1" stacks="8" slices="8" />
             </descendants>
         </node>
 
