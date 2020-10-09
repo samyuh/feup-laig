@@ -46,7 +46,29 @@ class MyTorus extends CGFobject {
                 this.vertices.push(z);
 
                 // -- Normals -- //
-                this.normals.push(x, y, z);
+
+                // Font: https://web.cs.ucdavis.edu/~amenta/s12/findnorm.pdf
+                let tx = -Math.sin(theta);
+                let ty = Math.cos(theta);
+                let tz = 0;
+
+                /* tangent vector with respect to little circle */
+                let sx = Math.cos(theta)*(-Math.sin(angle));
+                let sy = Math.sin(theta)*(-Math.sin(angle));
+                let sz = Math.cos(angle);
+                
+                /* normal is cross-product of tangents */
+                let nx = ty*sz - tz*sy;
+                let ny = tz*sx - tx*sz;
+                let nz = tx*sy - ty*sx;
+
+                /* normalize normal */
+                let length = Math.sqrt(nx*nx + ny*ny + nz*nz);
+                nx /= length;
+                ny /= length;
+                nz /= length;
+
+                this.normals.push(nx, ny, nz);
 
                 /*
                 // -- Texture Coordinates -- //
