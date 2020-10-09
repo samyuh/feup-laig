@@ -22,13 +22,14 @@ class MyTorus extends CGFobject {
         this.indices = [];
         this.normals = [];
         this.texCoords = [];
-
-		var amplitude_increment = (2 * Math.PI) / this.loops;
         
         // BODY
-		var angle = 0;
+        var angle = 0;
+        var amplitude_increment = (2 * Math.PI) / this.slices;
+
 		let theta = 0;
-		var theta_increment = (2 * Math.PI) / this.loops;
+        var theta_increment = (2 * Math.PI) / this.loops;
+        
         for (var loop = 0; loop <= this.loops; loop++) {
 
             theta += theta_increment;
