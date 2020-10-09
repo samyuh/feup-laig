@@ -2,6 +2,10 @@
  * MyTorus
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param inner - Reference to MyScene object
+ * @param outer - Reference to MyScene object
+ * @param slices - Reference to MyScene object
+ * @param loops - Reference to MyScene object
  */
 class MyTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
@@ -24,10 +28,13 @@ class MyTorus extends CGFobject {
         // BODY
 		var angle = 0;
 		let theta = 0;
-        for(var h = 0; h <= this.loops; h++) {
-			theta += amplitude_increment;
-            for (var i = 0; i < this.slices; i++) {
-	
+		var theta_increment = (2 * Math.PI) / this.loops;
+        for (var loop = 0; loop <= this.loops; loop++) {
+
+            theta += theta_increment;
+            for (var slice = 0; slice <= this.slices; slice++) {
+
+                // Parametric equations of Torus
                 let x = Math.cos(theta) * (this.outer + Math.cos(angle) * this.inner);
                 let y = Math.sin(theta) * (this.outer + Math.cos(angle) * this.inner)
                 let z = Math.sin(angle) * this.inner;
@@ -55,24 +62,23 @@ class MyTorus extends CGFobject {
                 this.texCoords.push(1 - i / this.slices, 0);
 
                 */
-
 				angle += amplitude_increment;
             }
         }
 
-		// BODY
-		for (let i = 0; i < this.loops; i++) {
-			for (let j = 0; j < this.slices - 1; j++) {
-				var val = (this.slices) * (i);
+        // -- Join vertices by slices, and then by loops. Same logic as cylinder
+		for (let loop = 0; loop < this.loops; loop++) {
+			for (let slice = 0; slice < this.slices; slice++) {
+				var startVertice = this.slices * loop + loop;
 
-				this.indices.push(val + j);
-				this.indices.push(val + j + this.slices);
-				this.indices.push((val + j + 1));
-				
-
-				this.indices.push((val + j + 1));
-				this.indices.push((val + j + this.slices));
-				this.indices.push((val + j + this.slices + 1));	
+                this.indices.push(startVertice + slice);
+                this.indices.push(startVertice + slice + this.slices + 1);
+                this.indices.push(startVertice + slice + 1);
+               
+                
+                this.indices.push(startVertice + slice + 1);
+                this.indices.push(startVertice + slice + this.slices + 1); 
+                this.indices.push(startVertice + slice + this.slices + 2);
 			}
 		}
 		
