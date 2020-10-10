@@ -349,7 +349,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.0" outer="3.0" slices="8" loops="8" />
+                <leaf type="torus" inner="0.2" outer="3.8" slices="15" loops="40" />
             </descendants>
         </node>
 
@@ -1062,11 +1062,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="10.0" z="0.0" />
+                <translation x="0.0" y="10.6" z="0.0" />
+                <rotation axis="z" angle="-5" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.6" outer="5.1" slices="15" loops="40" />
+                <leaf type="halftorus" inner="0.6" outer="5.0" slices="15" loops="40" />
             </descendants>
         </node>
 

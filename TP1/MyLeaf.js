@@ -3,7 +3,7 @@ class MyLeaf {
         this.sceneGraph = sceneGraph;
         this.descendants = descendants;
 
-        this.type = this.sceneGraph.reader.getItem(this.descendants, 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus']);
+        this.type = this.sceneGraph.reader.getItem(this.descendants, 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
 
         this.primitive = null;
 
@@ -17,6 +17,14 @@ class MyLeaf {
             let loops = this.sceneGraph.reader.getFloat(this.descendants, 'loops');
 
             this.primitive = new MyTorus(this.sceneGraph.scene, inner, outer, slices, loops);
+        }
+        if (this.type == "halftorus") {  // NOT COMPLETE
+            let inner = this.sceneGraph.reader.getFloat(this.descendants, 'inner');
+            let outer = this.sceneGraph.reader.getFloat(this.descendants, 'outer');
+            let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
+            let loops = this.sceneGraph.reader.getFloat(this.descendants, 'loops');
+
+            this.primitive = new MyHalfTorus(this.sceneGraph.scene, inner, outer, slices, loops);
         }
         if (this.type == "cylinder") {  // NOT COMPLETE
             let height = this.sceneGraph.reader.getFloat(this.descendants, 'height');
