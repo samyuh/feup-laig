@@ -10,7 +10,7 @@ class MyLeaf {
         this.initPrimitive();
     }
     initPrimitive() {
-        if (this.type == "torus") {  // NOT COMPLETE
+        if (this.type == "torus") {
             let inner = this.sceneGraph.reader.getFloat(this.descendants, 'inner');
             let outer = this.sceneGraph.reader.getFloat(this.descendants, 'outer');
             let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
@@ -18,7 +18,7 @@ class MyLeaf {
 
             this.primitive = new MyTorus(this.sceneGraph.scene, inner, outer, slices, loops);
         }
-        if (this.type == "halftorus") {  // NOT COMPLETE
+        else if (this.type == "halftorus") {
             let inner = this.sceneGraph.reader.getFloat(this.descendants, 'inner');
             let outer = this.sceneGraph.reader.getFloat(this.descendants, 'outer');
             let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
@@ -26,7 +26,7 @@ class MyLeaf {
 
             this.primitive = new MyHalfTorus(this.sceneGraph.scene, inner, outer, slices, loops);
         }
-        if (this.type == "cylinder") {  // NOT COMPLETE
+        else if (this.type == "cylinder") {
             let height = this.sceneGraph.reader.getFloat(this.descendants, 'height');
             let topRadius = this.sceneGraph.reader.getFloat(this.descendants, 'topRadius');
             let bottomRadius = this.sceneGraph.reader.getFloat(this.descendants, 'bottomRadius');
@@ -35,14 +35,14 @@ class MyLeaf {
 
             this.primitive = new MyCylinder(this.sceneGraph.scene, height, topRadius, bottomRadius, stacks, slices);
         }
-        if (this.type == "sphere") { // NOT COMPLETE
+        else if (this.type == "sphere") {
             let radius = this.sceneGraph.reader.getFloat(this.descendants, 'radius');
             let slices = this.sceneGraph.reader.getFloat(this.descendants, 'slices');
             let stacks = this.sceneGraph.reader.getFloat(this.descendants, 'stacks');
 
             this.primitive = new MySphere(this.sceneGraph.scene, radius, slices, stacks);
         }
-        if (this.type == "rectangle") {
+        else if (this.type == "rectangle") {
             let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
             let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
             let x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');
@@ -50,7 +50,7 @@ class MyLeaf {
 
             this.primitive = new MyRectangle(this.sceneGraph.scene, x1, y1, x2, y2);
         }
-        if (this.type == "triangle") {
+        else if (this.type == "triangle") {
             let x1 = this.sceneGraph.reader.getFloat(this.descendants, 'x1');
             let y1 = this.sceneGraph.reader.getFloat(this.descendants, 'y1');
             let x2 = this.sceneGraph.reader.getFloat(this.descendants, 'x2');

@@ -1067,7 +1067,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="halftorus" inner="0.6" outer="5.0" slices="15" loops="40" />
+                <leaf type="halftorus" inner="0.4" outer="5.0" slices="15" loops="40" />
             </descendants>
         </node>
 
@@ -1123,7 +1123,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="2.0" topRadius="0.5" bottomRadius="0.8" stacks="10" slices="10"/>
+                <leaf type="cylinder" height="2.0" topRadius="0.3" bottomRadius="0.5" stacks="10" slices="10"/>
             </descendants>
         </node>
 
@@ -1140,7 +1140,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="2.0" topRadius="0.5" bottomRadius="0.8" stacks="10" slices="10"/>
+                <leaf type="cylinder" height="2.0" topRadius="0.3" bottomRadius="0.5" stacks="10" slices="10"/>
             </descendants>
         </node>
 

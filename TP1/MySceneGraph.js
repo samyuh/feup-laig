@@ -959,8 +959,14 @@ class MySceneGraph {
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             // --
-            this.onXMLMinorError("To do: Parse nodes.");
+            // this.onXMLMinorError("To do: Parse nodes.");
+
             // Transformations
+            
+            if (transformationsIndex == -1) {
+                return ("<transformations> tag missing from node " + nodeID + " in <nodes>");
+            }
+
             var transformations = children[i].children[transformationsIndex].children;
             for (var j = 0; j < transformations.length; j++) {
                 console.log(transformations[j].nodeName);
@@ -969,20 +975,30 @@ class MySceneGraph {
                     let y = this.reader.getFloat(transformations[j], 'y');
                     let z = this.reader.getFloat(transformations[j], 'z');
 
+                    if (x == null || y == null || z == null)
+                        return ("Invalid values of x, y and z in transformations on " + nodeID);
+
                     mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
                 }
                 if(transformations[j].nodeName == "rotation") {
                     let axis = this.reader.getString(transformations[j], 'axis');
                     let angle = this.reader.getFloat(transformations[j], 'angle');
                     
-                    console.log(axis);
-                    if(axis == 'x' || axis == 'y' || axis == 'z')
-                        mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * 3.14 / 180, this.axisCoords[axis]);
+                    if (angle == null)
+                        return ("Invalid values of angle in transformations on " + nodeID);
+
+                    if (axis == 'x' || axis == 'y' || axis == 'z')
+                        mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
+                    else
+                        return ("Invalid axis in transformations on " + nodeID);
                 }
                 if(transformations[j].nodeName == "scale") {
                     let sx = this.reader.getFloat(transformations[j], 'sx');
                     let sy = this.reader.getFloat(transformations[j], 'sy');
                     let sz = this.reader.getFloat(transformations[j], 'sz');
+
+                    if (sx == null || sy == null || sz == null)
+                        return ("Invalid values of sx, sy and sz in transformations on " + nodeID);
 
                     mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
                 }
@@ -1025,20 +1041,39 @@ class MySceneGraph {
             }
 
             // ---------- Descendants ----------
-            console.log(nodeID);
-
             var descendants = children[i].children[descendantsIndex].children;
-           
+            
+            if (descendantsIndex == -1) {
+                return ("<descendents> tag missing from node " + nodeID + " in <nodes>");
+            }
+
             for (var j = 0; j < descendants.length; j++) {
                 if (descendants[j].nodeName == "noderef") {
-                    var type = this.reader.getString(descendants[j], 'id');
-                    console.log("New Node: " + type);
-                    this.nodes[nodeID].addDescendants(type);
+                    let id = this.reader.getString(descendants[j], 'id');
+
+                    if (id == null) {
+                        return ("Invalid nodeID on descendents of" + nodeID);
+                    }
+                    else if (nodeID == id) {
+                        return ("A node can't be a child and father at same time. Error on node " + nodeID);
+                    }
+
+                    this.nodes[nodeID].addDescendants(id);
                 }
-                if (descendants[j].nodeName == "leaf") {
-                    this.nodes.push(new MyLeaf(this, descendants[j]));
-                    console.log("New Primitive: ");
-                    this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+                else if (descendants[j].nodeName == "leaf") {
+                    let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
+
+                    if (type == null) {
+                        return ("Type of leaf not found on " + nodeID + " in <nodes>");
+                    }
+                    else {
+                        this.nodes.push(new MyLeaf(this, descendants[j]));
+                        console.log("New Primitive: ");
+                        this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+                    }
+                }
+                else {
+                    return ("Error on descendents of " + nodeID + " in <nodes>");
                 }
             }
         }
