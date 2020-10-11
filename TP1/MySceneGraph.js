@@ -336,8 +336,8 @@ class MySceneGraph {
             var grandChildren = children[i].children;
             var nodeNames = [];
 
-            for (var i = 0; i < grandChildren.length; i++)
-                nodeNames.push(grandChildren[i].nodeName);
+            for (var j = 0; j < grandChildren.length; j++)
+                nodeNames.push(grandChildren[j].nodeName);
             
             var fromIndex = nodeNames.indexOf("from");
             var toIndex = nodeNames.indexOf("to");
@@ -426,8 +426,16 @@ class MySceneGraph {
             }
 
             // Obtained all data, adding camera to the scene cameras
-            this.cameras[id] = camera;
+            if (nodeType === "perspective") {
+                this.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
+            }
+            else if (nodeType === "ortho") {
+                this.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
+            }
         }
+
+        this.scene.camera = this.cameras[default_view];
+        this.scene.interface.setActiveCamera(this.scene.camera);
         
         this.log("Parsed Views.");
 
