@@ -980,7 +980,23 @@ class MySceneGraph {
                 }
             }
             
-            // Material
+            // ---------- Material ----------
+
+            // Check if <material> tag is present
+            if (materialIndex == -1) {
+                return ("<material> tag missing from node " + nodeID + " in <nodes>");
+            }
+
+            var materialID = this.reader.getString(grandChildren[materialIndex], 'id');
+
+            // Check if the material ID is present
+            if (materialID == null)
+                return ("Material ID missing from <material> tag, node " + nodeID + " in <nodes>");
+
+            // Check if the material ID is valid
+            if (this.materials[materialID] == null && materialID != "null") {
+                return ("Material ID invalid (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>");
+            }
 
             // ---------- Texture ----------
 
