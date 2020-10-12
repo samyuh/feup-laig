@@ -92,6 +92,8 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
+    // ---------------- Parse XML --------------- //
+
     /**
      * Parses the XML file, processing each block.
      * @param {XML root element} rootElement
@@ -589,7 +591,8 @@ class MySceneGraph {
                 return "Texture with no file path found on <textures> (" + id + ")";
             }
 
-            this.textures[id] = file;
+            let new_texture = new CGFtexture(this.scene, file);
+            this.textures[id] = new_texture;
         }
 
         this.log("Parsed textures");
@@ -851,7 +854,6 @@ class MySceneGraph {
                 this.onXMLMinorError("Invalid value 'r' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using r = 0.0");
                 emissive_values.r = 0.0;
             }
-
             // 'G' component of "emissive"
             emissive_values.g = this.reader.getFloat(grandChildren[emissiveIndex], 'g');
 
@@ -859,7 +861,6 @@ class MySceneGraph {
                 this.onXMLMinorError("Value 'g' missing from <emissive> tag, in material " + materialID + " in <materials>. Using g = 0.0");
                 emissive_values.g = 0.0;
             }
-
             else if (emissive_values.g < 0.0 || emissive_values.g > 1.0) {
                 this.onXMLMinorError("Invalid value 'g' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using g = 0.0");
                 emissive_values.g = 0.0;
@@ -872,7 +873,6 @@ class MySceneGraph {
                 this.onXMLMinorError("Value 'b' missing from <emissive> tag, in material " + materialID + " in <materials>. Using b = 0.0");
                 emissive_values.b = 0.0;
             }
-
             else if (emissive_values.b < 0.0 || emissive_values.b > 1.0) {
                 this.onXMLMinorError("Invalid value 'b' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using b = 0.0");
                 emissive_values.b = 0.0;
@@ -885,23 +885,25 @@ class MySceneGraph {
                 this.onXMLMinorError("Value 'a' missing from <emissive> tag, in material " + materialID + " in <materials>. Using a = 1.0");
                 emissive_values.a = 1.0;
             }
-
             else if (emissive_values.a < 0.0 || emissive_values.a > 1.0) {
                 this.onXMLMinorError("Invalid value 'a' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using a = 1.0");
                 emissive_values.a = 1.0;
             }
 
-            // ----- Create material and add to scene materials -----
-            var material = new CGFappearance(this.scene);
+            // ----- Create material and add to scene materials ----- //
+
+            let material = new CGFappearance(this.scene);
+
             material.setShininess(shininess_value);
             material.setAmbient(ambient_values.r, ambient_values.g, ambient_values.b, ambient_values.a);
             material.setDiffuse(diffuse_values.r, diffuse_values.g, diffuse_values.b, diffuse_values.a);
             material.setSpecular(specular_values.r, specular_values.g, specular_values.b, specular_values.a);
             material.setEmission(emissive_values.r, emissive_values.g, emissive_values.b, emissive_values.a);
+
             this.materials[materialID] = material;
+
             no_materials_defined = false;
         }
-
         if (no_materials_defined) {
             return "No materials found in tag <materials>. At least one material should be present.";
         }
@@ -925,9 +927,7 @@ class MySceneGraph {
         var grandgrandChildren = [];
         var nodeNames = [];
 
-        // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
-             // -- Check if node is right
             if (children[i].nodeName != "node") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -943,9 +943,7 @@ class MySceneGraph {
                 return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
 
             this.nodes[nodeID] = new MyNode(this, nodeID);
-            console.log("New Root: " + nodeID);
             
-            // -- Nomes das tags dentro do node
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -958,104 +956,104 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            // --
-            // this.onXMLMinorError("To do: Parse nodes.");
-
-            // Transformations
+            // ---------- Transformations --------------- //
             
             if (transformationsIndex == -1) {
-                return ("<transformations> tag missing from node " + nodeID + " in <nodes>");
+                return ("[TRANSFORMATIONS] <transformations> tag missing from node " + nodeID + " in <nodes>");
             }
 
-            var transformations = children[i].children[transformationsIndex].children;
+            var transformations = grandChildren[transformationsIndex].children;
             for (var j = 0; j < transformations.length; j++) {
-                console.log(transformations[j].nodeName);
-                if(transformations[j].nodeName == "translation") {
+                if (transformations[j].nodeName == "translation") {
                     let x = this.reader.getFloat(transformations[j], 'x');
                     let y = this.reader.getFloat(transformations[j], 'y');
                     let z = this.reader.getFloat(transformations[j], 'z');
 
                     if (x == null || y == null || z == null)
-                        return ("Invalid values of x, y and z in transformations on " + nodeID);
+                        return ("[TRANSFORMATIONS] Invalid values of x, y and z in transformations on " + nodeID);
 
                     mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
                 }
-                if(transformations[j].nodeName == "rotation") {
+                else if (transformations[j].nodeName == "rotation") {
                     let axis = this.reader.getString(transformations[j], 'axis');
                     let angle = this.reader.getFloat(transformations[j], 'angle');
                     
                     if (angle == null)
-                        return ("Invalid values of angle in transformations on " + nodeID);
+                        return ("[TRANSFORMATIONS] Invalid values of angle in transformations on " + nodeID);
 
                     if (axis == 'x' || axis == 'y' || axis == 'z')
                         mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
                     else
-                        return ("Invalid axis in transformations on " + nodeID);
+                        return ("[TRANSFORMATIONS] Invalid axis in transformations on " + nodeID);
                 }
-                if(transformations[j].nodeName == "scale") {
+                else if (transformations[j].nodeName == "scale") {
                     let sx = this.reader.getFloat(transformations[j], 'sx');
                     let sy = this.reader.getFloat(transformations[j], 'sy');
                     let sz = this.reader.getFloat(transformations[j], 'sz');
 
                     if (sx == null || sy == null || sz == null)
-                        return ("Invalid values of sx, sy and sz in transformations on " + nodeID);
+                        return ("[TRANSFORMATIONS] Invalid values of sx, sy and sz in transformations on " + nodeID);
 
                     mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
                 }
             }
             
-            // ---------- Material ----------
+            // ---------- Material ---------- //
 
-            // Check if <material> tag is present
             if (materialIndex == -1) {
-                return ("<material> tag missing from node " + nodeID + " in <nodes>");
+                return ("[MATERIAL] <material> tag missing from node " + nodeID + " in <nodes>");
             }
 
             var materialID = this.reader.getString(grandChildren[materialIndex], 'id');
 
-            // Check if the material ID is present
             if (materialID == null)
-                return ("Material ID missing from <material> tag, node " + nodeID + " in <nodes>");
+                return ("[MATERIAL] Material ID missing from <material> tag, node " + nodeID + " in <nodes>");
 
-            // Check if the material ID is valid
-            if (this.materials[materialID] == null && materialID != "null") {
-                return ("Material ID invalid (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>");
+            else if (this.materials[materialID] == null && materialID != "null") {
+                return ("[MATERIAL] Material ID invalid (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>");
+            }
+            else {
+                this.nodes[nodeID].material = materialID;
             }
 
-            // ---------- Texture ----------
+            // ---------- Texture ---------- //
 
-            // Check if <texture> tag is present
             if (textureIndex == -1) {
-                return ("<texture> tag missing from node " + nodeID + " in <nodes>");
+                return ("[TEXTURE] <texture> tag missing from node " + nodeID + " in <nodes>");
             }
 
-            var textureID = this.reader.getString(grandChildren[textureIndex], 'id');
+            let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
-            // Check if the texture ID is present
-            if (textureID == null)
-                return ("Texture ID missing from <texture> tag, node " + nodeID + " in <nodes>");
-
-            // Check if the texture ID is valid
-            if (this.textures[textureID] == null && textureID != "null" && textureID != "clear") {
-                return ("Texture ID invalid (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>");
+            if (textureID == null) {
+                return ("[TEXTURE] Texture ID missing from <texture> tag, node " + nodeID + " in <nodes>");
+            }
+            else if (this.textures[textureID] == null && textureID != "null" && textureID != "clear")  {
+                return ("[TEXTURE] Texture ID invalid (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>");
+            }
+            else {
+                this.nodes[nodeID].texture = textureID;
             }
 
-            // ---------- Descendants ----------
+            // ---------- Descendants ---------- //
+
             var descendants = children[i].children[descendantsIndex].children;
             
             if (descendantsIndex == -1) {
-                return ("<descendents> tag missing from node " + nodeID + " in <nodes>");
+                return ("[DESCENDANTS] <descendants> tag missing from node " + nodeID + " in <nodes>");
             }
 
-            for (var j = 0; j < descendants.length; j++) {
+            if (descendants.length == 0) {
+                return ("[DESCENDANTS] " + nodeID + " in <nodes> don't have any descendant");
+            }
+            for (let j = 0; j < descendants.length; j++) {
                 if (descendants[j].nodeName == "noderef") {
                     let id = this.reader.getString(descendants[j], 'id');
 
                     if (id == null) {
-                        return ("Invalid nodeID on descendents of" + nodeID);
+                        return ("[DESCENDANTS] Invalid nodeID on descendants of" + nodeID);
                     }
                     else if (nodeID == id) {
-                        return ("A node can't be a child and father at same time. Error on node " + nodeID);
+                        return ("[DESCENDANTS] A node can't be a child and father at same time. Error on node " + nodeID);
                     }
 
                     this.nodes[nodeID].addDescendants(id);
@@ -1064,23 +1062,31 @@ class MySceneGraph {
                     let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
 
                     if (type == null) {
-                        return ("Type of leaf not found on " + nodeID + " in <nodes>");
+                        return ("[DESCENDANTS] Type of leaf not found on " + nodeID + " in <nodes>");
                     }
                     else {
                         this.nodes.push(new MyLeaf(this, descendants[j]));
-                        console.log("New Primitive: ");
                         this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
                     }
                 }
                 else {
-                    return ("Error on descendents of " + nodeID + " in <nodes>");
+                    return ("[DESCENDANTS] All descendants of " + nodeID + " in <nodes> should be leafs or noderef");
                 }
-            }
+            } 
         }
     }
 
+    // -------- Parse Leafs -----------//
 
-    parseBoolean(node, name, messageError){
+    // -------- Auxiliar parser functions -----------//
+
+    /**
+     * Parse the 
+     * @param {} node
+     * @param {} name
+     * @param {} messageError
+     */
+    parseBoolean(node, name, messageError) {
         var boolVal = true;
         boolVal = this.reader.getBoolean(node, name);
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
@@ -1088,6 +1094,7 @@ class MySceneGraph {
 
         return boolVal || 1;
     }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
@@ -1174,23 +1181,57 @@ class MySceneGraph {
         return color;
     }
 
+    // -------- Display Scene -----------//
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
-        this.processNode(this.idRoot);
+       // Display loop for transversing the scene graph, calling the root node's display function
+       let new_texture = new CGFtexture(this.scene, "./scenes/images/glass.jpg");
+
+        this.processNode(this.idRoot, this.nodes[this.idRoot].material, new_texture);
     }
 
-    processNode(node) {
-        // Aplicar texturas
-
+    /**
+    * Process each node
+    * @param {nodeID} node
+    */
+    processNode(node, material, texture) {
+        let currentMaterial = material;
+        let currentTexture = texture;
+        let currentNode = this.nodes[node];
+        
         this.scene.pushMatrix();
         this.scene.multMatrix(this.nodes[node].transformation);
 
+        if (currentNode.material != "null") {
+            currentMaterial = this.materials[currentNode.material];
+        }
+/*
+        if (currentNode.texture != "null") {  
+            if (currentNode.texture != "clear") {
+                currentTexture = currentNode.texture;
+            } else currentTexture = null;
+
+*/          
+
+            
+/* 
+            if (this.nodes[node].texture == "clear")
+                console.log("asd");
+                // currentMaterial.setTexture(null);
+            else {
+                console.log(this.textures[this.nodes[node].texture]);
+                // currentTexture.bind();
+            } 
+        }
+*/
+        currentMaterial.setTexture(currentTexture);
+        currentMaterial.apply();
+
         for(var i = 0; i < this.nodes[node].descendants.length; i++) {
-            this.processNode(this.nodes[node].descendants[i]);
+            this.processNode(this.nodes[node].descendants[i], currentMaterial, currentTexture);
         }
         
         for(var i = 0; i < this.nodes[node].leaves.length; i++) {

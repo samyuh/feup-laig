@@ -116,6 +116,14 @@
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
+
+        <material id="blueMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.7" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
     </materials>
 
     <nodes>
@@ -164,7 +172,7 @@
 
         <!-- Node representing the window decoration of the main wall -->
         <node id="main-wall">
-            <material id="null" />
+            <material id="orangeMaterial" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
@@ -286,16 +294,18 @@
 
         <!-- Node representing the glass of the window -->
         <node id="glass">
-            <material id="null" />
+            <material id="blueMaterial" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+            <translation x="0.0" y="13.0" z="-30.0" />
             </transformations>
 
             <descendants>
+                <leaf type="rectangle" x1="-10" y1="-10" x2="10" y2="10" />
             </descendants>
         </node>
 
