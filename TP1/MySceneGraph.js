@@ -1,5 +1,6 @@
 const DEGREE_TO_RAD = Math.PI / 180;
 
+
 // Order of the groups in the XML document.
 var INITIALS_INDEX = 0;
 var VIEWS_INDEX = 1;
@@ -1188,9 +1189,8 @@ class MySceneGraph {
      */
     displayScene() {
        // Display loop for transversing the scene graph, calling the root node's display function
-       let new_texture = new CGFtexture(this.scene, "./scenes/images/glass.jpg");
-
-        this.processNode(this.idRoot, this.nodes[this.idRoot].material, new_texture);
+       
+        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
     }
 
     /**
@@ -1200,34 +1200,41 @@ class MySceneGraph {
     processNode(node, material, texture) {
         let currentMaterial = material;
         let currentTexture = texture;
+
         let currentNode = this.nodes[node];
         
         this.scene.pushMatrix();
         this.scene.multMatrix(this.nodes[node].transformation);
-
-        if (currentNode.material != "null") {
+     
+        // ----- Material ------ //
+        if(currentNode.material != "null") {
             currentMaterial = this.materials[currentNode.material];
         }
-/*
-        if (currentNode.texture != "null") {  
-            if (currentNode.texture != "clear") {
-                currentTexture = currentNode.texture;
-            } else currentTexture = null;
-
-*/          
-
-            
-/* 
-            if (this.nodes[node].texture == "clear")
-                console.log("asd");
-                // currentMaterial.setTexture(null);
-            else {
-                console.log(this.textures[this.nodes[node].texture]);
-                // currentTexture.bind();
-            } 
+        else {
+            currentMaterial = material;
         }
-*/
-        currentMaterial.setTexture(currentTexture);
+
+
+        // ------ Texture ------ //
+        if (currentNode.texture != "clear" && currentNode.texture != "null") {
+            currentTexture = currentNode.texture;
+
+            currentMaterial.setTexture(this.textures[currentNode.texture]);
+            currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        }
+        else if (currentNode.texture == "clear") {
+            currentTexture = null;
+            currentMaterial.setTexture(null);
+        }
+        else if (currentNode.texture == "null") {
+            // Erro aqui probably. currentTexture vem null.
+            if(currentTexture == "null") currentMaterial.setTexture(null);
+            else {
+                currentMaterial.setTexture(this.textures[currentTexture]);
+                currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
+            }
+        }
+        
         currentMaterial.apply();
 
         for(var i = 0; i < this.nodes[node].descendants.length; i++) {
