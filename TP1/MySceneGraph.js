@@ -1196,46 +1196,48 @@ class MySceneGraph {
     /**
     * Process each node
     * @param {nodeID} node
+    * @param {materialID} material
+    * @param {textureID} texture
     */
     processNode(node, material, texture) {
-        let currentMaterial = material;
-        let currentTexture = texture;
-
         let currentNode = this.nodes[node];
-        
-        this.scene.pushMatrix();
-        this.scene.multMatrix(this.nodes[node].transformation);
      
-        // ----- Material ------ //
-        if(currentNode.material != "null") {
-            currentMaterial = this.materials[currentNode.material];
-        }
-        else {
+        // ------- Material ------ //
+        let currentMaterial;
+
+        // -- If node material is null, then it will inherit parent's material
+        if(currentNode.material == "null")
             currentMaterial = material;
-        }
+        // -- Otherwise, it will have the material ID
+        else currentMaterial = this.materials[currentNode.material];
 
 
-        // ------ Texture ------ //
-        if (currentNode.texture != "clear" && currentNode.texture != "null") {
+        // -------- Texture ------ //
+        let currentTexture;
+
+        // -- If node texture is clear, then it will don't have texture
+        if (currentNode.texture == "clear")
+            currentTexture = "null";
+        // -- If node texture is null, then it will inherit parent's texture
+        else if (currentNode.texture == "null")
+            currentTexture = texture
+        // -- Otherwise, it will have the texture ID
+        else 
             currentTexture = currentNode.texture;
-
-            currentMaterial.setTexture(this.textures[currentNode.texture]);
-            currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
-        }
-        else if (currentNode.texture == "clear") {
-            currentTexture = null;
+        
+        // Bind texture   
+        if (currentTexture == "null") {
             currentMaterial.setTexture(null);
         }
-        else if (currentNode.texture == "null") {
-            // Erro aqui probably. currentTexture vem null.
-            if(currentTexture == "null") currentMaterial.setTexture(null);
-            else {
-                currentMaterial.setTexture(this.textures[currentTexture]);
-                currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
-            }
+        else {
+            currentMaterial.setTexture(this.textures[currentTexture]);
+            currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
         }
-        
+
         currentMaterial.apply();
+
+        this.scene.pushMatrix();
+        this.scene.multMatrix(currentNode.transformation);
 
         for(var i = 0; i < this.nodes[node].descendants.length; i++) {
             this.processNode(this.nodes[node].descendants[i], currentMaterial, currentTexture);
