@@ -38,15 +38,15 @@
             <position x="10" y="12" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />             <!-- diffuse component -->
-            <specular r="0.1" g="0.1" b="0.1" a="1.0" />            <!-- specular component -->
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />            <!-- specular component -->
         </light>
 
         <light id="windowLight">            <!-- window light -->
             <enable value="0" />
             <position x="0" y="15" z="-20" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
-            <diffuse r="0.1" g="0.7" b="1.0" a="1.0" />              <!-- diffuse component -->
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
+            <specular r="0.1" g="0.7" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
 
         <light id="rightLight">            <!-- right torch light -->
@@ -70,8 +70,9 @@
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
         <texture id="wallTexture" path="./scenes/images/stones.jpg" />
-        <texture id="glassTexture" path="./scenes/images/glass.jpg" />
+        <texture id="glassTexture" path="./scenes/images/vidral.jpg" />
         <texture id="throneTexture" path="./scenes/images/swords.jpg" />
+        <texture id="floorTexture" path="./scenes/images/floor.jpg" />
     </textures>
 
     <materials>
@@ -88,39 +89,7 @@
         <material id="floorMaterial">
             <shininess value="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.86" g="0.85" b="0.7" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="blackMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="orangeMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="0.5" b="0.0" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="lightOrangeMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="0.7" b="0.4" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="blueMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.7" a="1.0" />
+            <diffuse r="0.92" g="0.72" b="0.42" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -154,7 +123,7 @@
         <node id="wall">
             <material id="null" />
 
-            <texture id="defaultTexture">
+            <texture id="wallTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -172,7 +141,7 @@
 
         <!-- Node representing the window decoration of the main wall -->
         <node id="main-wall">
-            <material id="orangeMaterial" />
+            <material id="defaultMaterial" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -294,9 +263,9 @@
 
         <!-- Node representing the glass of the window -->
         <node id="glass">
-            <material id="blueMaterial" />
+            <material id="null" />
 
-            <texture id="null">
+            <texture id="glassTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -313,7 +282,7 @@
         <node id="window-decoration">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -331,7 +300,7 @@
         <node id="window-decoration-spiral">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -349,9 +318,9 @@
 
         <!-- Node representing the wheel of the window decoration of the main wall -->
         <node id="window-decoration-wheel">
-            <material id="blackMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -365,9 +334,9 @@
 
         <!-- Node representing the inner sphere of the window decoration of the main wall -->
         <node id="window-decoration-sphere">
-            <material id="orangeMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -381,9 +350,9 @@
 
         <!-- Node representing the spirals of the window decoration of the main wall -->
         <node id="window-decoration-spirals">
-            <material id="lightOrangeMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -405,7 +374,7 @@
         <node id="window-decoration-spiral-side1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -421,7 +390,7 @@
         <node id="window-decoration-spiral-side2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -438,7 +407,7 @@
         <node id="window-decoration-spiral-side3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -455,7 +424,7 @@
         <node id="window-decoration-spiral-side4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -472,7 +441,7 @@
         <node id="window-decoration-spiral-side5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -489,7 +458,7 @@
         <node id="window-decoration-spiral-side6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -506,7 +475,7 @@
         <node id="window-decoration-spiral-side7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -522,7 +491,7 @@
         <node id="window-decoration-spiral-object">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -536,9 +505,9 @@
         </node>
 
         <node id="window-decoration-armor">
-            <material id="blackMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -564,7 +533,7 @@
         <node id="armor1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -581,7 +550,7 @@
         <node id="armor2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -598,7 +567,7 @@
         <node id="armor3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -615,7 +584,7 @@
         <node id="armor4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -632,7 +601,7 @@
         <node id="armor5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -649,7 +618,7 @@
         <node id="armor-thin1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -666,7 +635,7 @@
         <node id="armor-thin2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -683,7 +652,7 @@
         <node id="armor-thin3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -700,7 +669,7 @@
         <node id="armor-arc">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -726,7 +695,7 @@
         <node id="armor-arc1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
                 
             </texture>
@@ -745,7 +714,7 @@
         <node id="armor-arc2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -763,7 +732,7 @@
         <node id="armor-arc3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -781,7 +750,7 @@
         <node id="armor-arc4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -799,7 +768,7 @@
         <node id="armor-arc5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -817,7 +786,7 @@
         <node id="armor-arc6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -835,7 +804,7 @@
         <node id="armor-arc7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -853,7 +822,7 @@
         <node id="armor-arc8">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -871,7 +840,7 @@
         <node id="armor-arc9">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -889,7 +858,7 @@
         <node id="armor-arc10">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -907,7 +876,7 @@
         <node id="armor-arc11">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -925,7 +894,7 @@
         <node id="window-decoration-swords">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -945,7 +914,7 @@
         <node id="window-sword-1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -962,7 +931,7 @@
         <node id="window-sword-2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -979,7 +948,7 @@
         <node id="window-sword-3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -996,7 +965,7 @@
         <node id="window-sword-4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1048,7 +1017,7 @@
         <node id="door">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1067,7 +1036,7 @@
         <node id="door-arc">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1085,7 +1054,7 @@
         <node id="door-side1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1105,7 +1074,7 @@
         <node id="door-side2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1124,7 +1093,7 @@
         <node id="door-cylinder-bot">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1140,7 +1109,7 @@
         <node id="door-cylinder-top">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1157,7 +1126,7 @@
         <node id="door-cylinder">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1174,7 +1143,7 @@
         <node id="door-cube">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1191,7 +1160,7 @@
         <node id="sword-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1209,7 +1178,7 @@
         <node id="sword-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1569,7 +1538,7 @@
         <node id="sword">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1731,7 +1700,7 @@
         <node id="floor">
             <material id="floorMaterial" />
 
-            <texture id="clear">
+            <texture id="floorTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1749,7 +1718,7 @@
         <node id="floor-bottom">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1768,7 +1737,7 @@
         <node id="floor-top">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1788,7 +1757,7 @@
         <node id="stair1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1805,7 +1774,7 @@
         <node id="stair2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1822,7 +1791,7 @@
         <node id="side-stair2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1839,7 +1808,7 @@
         <node id="stair3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1856,7 +1825,7 @@
         <node id="side-stair3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1874,7 +1843,7 @@
         <node id="floor-stairs">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1893,7 +1862,7 @@
         <node id="stair4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1910,7 +1879,7 @@
         <node id="stair5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1927,7 +1896,7 @@
         <node id="stair6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1944,7 +1913,7 @@
         <node id="stair7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1962,7 +1931,7 @@
         <node id="columns">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1980,7 +1949,7 @@
         <node id="column-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1997,7 +1966,7 @@
         <node id="column-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2031,7 +2000,7 @@
         <node id="column-base">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2048,7 +2017,7 @@
         <node id="column-cylinder">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2066,7 +2035,7 @@
         <node id="cube">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2088,7 +2057,7 @@
         <node id="cubeface1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2104,7 +2073,7 @@
         <node id="cubeface2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2121,7 +2090,7 @@
         <node id="cubeface3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2138,7 +2107,7 @@
         <node id="cubeface4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2155,7 +2124,7 @@
         <node id="cubeface5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2172,7 +2141,7 @@
         <node id="cubeface6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
