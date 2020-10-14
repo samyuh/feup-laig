@@ -20,7 +20,7 @@ class MyInterface extends CGFinterface {
 
         this.gui = new dat.GUI();
 
-        // add a group of controls (and open/expand by defult)
+        // add a group of controls (and open/expand by default)
 
         this.initKeys();
 
@@ -34,6 +34,30 @@ class MyInterface extends CGFinterface {
         this.scene.gui=this;
         this.processKeyboard=function(){};
         this.activeKeys={};
+    }
+
+    initCameras() {
+        // Views Dropdown
+        this.gui.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
+            () => {
+                this.scene.camera = this.scene.cameras[this.scene.selectedView];
+                this.setActiveCamera(this.scene.camera);
+            }
+        );
+    }
+
+    initLights() {
+        // Light Checkboxes in GUI
+        this.lights = this.gui.addFolder('Lights');
+        for(const light of this.scene.lights) {
+            if (light.light_id != undefined) {
+                this.lights.add(light, 'enabled').name(light.light_id).onChange(
+                    () => {
+                        light.update();
+                    }
+                );
+            }
+        }
     }
 
     processKeyDown(event) {

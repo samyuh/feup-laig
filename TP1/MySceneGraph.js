@@ -247,12 +247,14 @@ class MySceneGraph {
     parseViews(viewsNode) {
         this.onXMLMinorError("To do: Parse views.");
 
-        this.cameras = {};
+        this.scene.viewIDs = [];
         var children = viewsNode.children;
 
         var default_view = this.reader.getString(viewsNode, 'default');
         if (default_view == null)
             this.onXMLMinorError("no default_view defined for scene");  // Use defaultView?
+
+        this.scene.selectedView = default_view;
 
         if (children.length === 0)
             this.onXMLMinorError("No views declared in <views>");  // Use defaultView?
@@ -270,6 +272,8 @@ class MySceneGraph {
                 this.onXMLMinorError("Camera with no 'id' atribute in <views>. Ignoring camera...");
                 continue;
             }
+
+            this.scene.viewIDs.push(id);
 
             // Process common atributes between perspective and ortho cameras (near and far)
             var near = this.reader.getFloat(children[i], 'near');
@@ -427,17 +431,16 @@ class MySceneGraph {
 
             // Obtained all data, adding camera to the scene cameras
             if (nodeType === "perspective") {
-                this.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
+                this.scene.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
             }
             else if (nodeType === "ortho") {
-                this.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
+                this.scene.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
             }
         }
-
-        this.scene.camera = this.cameras[default_view];
-        this.scene.interface.setActiveCamera(this.scene.camera);
         
         this.log("Parsed Views.");
+
+        this.scene.initCameras();
 
         return null;
     }
