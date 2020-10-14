@@ -39,6 +39,8 @@ class MyCylinder extends CGFobject {
         this.vertices.push(0, 0, 0);
         this.normals.push(0, 0, -1);
 
+        this.texCoords.push(0.5, 0.5);
+
         for (var i = 0; i < this.slices; i++) {
             let x = Math.cos(angle);
             var y = Math.sin(angle);
@@ -47,14 +49,17 @@ class MyCylinder extends CGFobject {
 
             this.normals.push(0, 0, -1);
 
-            angle += amplitude_increment;
-        }
+            this.texCoords.push(0.5 * Math.cos(angle) + 0.5, 0.5 * Math.sin(angle) + 0.5);   
 
+            angle += amplitude_increment;      
+        }
         
         // Cylinder side vertices
-        var angle = 0;
+        
         for(var h = 0; h <= this.stacks; h++) {
+            let angle = 0;
             for (var i = 0; i <= this.slices; i++) {
+                console.log(angle);
                 let x = Math.cos(angle) * (this.bottomRadius - radius_increment * h);
                 let y = Math.sin(angle) * (this.bottomRadius - radius_increment * h);
                 let z = h * height_increment;
@@ -77,9 +82,9 @@ class MyCylinder extends CGFobject {
                 *  1
                 *  To map a texture, each side will have 1/this.slices
                 * */
-               /*
-                this.texCoords.push(1 - i / this.slices, 1);
-                */
+               
+                this.texCoords.push(1 - i / this.slices, h / this.stacks);
+                
 
                 angle += amplitude_increment;
             }
@@ -91,6 +96,7 @@ class MyCylinder extends CGFobject {
         this.vertices.push(0);
         this.vertices.push(this.height);
         this.normals.push(0, 0, 1);
+        this.texCoords.push(0.5, 0.5);
 
         for (var i = 0; i < this.slices; i++) {
             var x = Math.cos(angle);
@@ -101,6 +107,8 @@ class MyCylinder extends CGFobject {
             this.vertices.push(this.height);
 
             this.normals.push(0, 0, 1);
+
+            this.texCoords.push(0.5 * Math.cos(angle) + 0.5, 0.5 * Math.sin(angle) + 0.5);   
 
             angle += amplitude_increment;
         }
@@ -168,8 +176,9 @@ class MyCylinder extends CGFobject {
             this.indices.push(val + j + 2);
             this.indices.push(val);
             this.indices.push(val + j + 1);
-           
         }  
+
+        
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();

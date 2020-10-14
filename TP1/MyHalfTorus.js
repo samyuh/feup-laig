@@ -80,11 +80,8 @@ class MyHalfTorus extends CGFobject {
                 *  1
                 *  To map a texture, each side will have 1/this.slices
                 * */
-               /*
-                this.texCoords.push(1 - i / this.slices, 1);
-                this.texCoords.push(1 - i / this.slices, 0);
+               this.texCoords.push(1 - slice / this.slices, loop / this.loops);
 
-                */
 				angle += amplitude_increment;
             }
         }
