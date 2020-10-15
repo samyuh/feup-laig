@@ -110,7 +110,13 @@ class MyHalfTorus extends CGFobject {
     }
     
     updateTexCoords(afs, aft) {
-		// To Do
+		this.texCoords = [];
+        
+        for (var loop = 0; loop <= this.loops; loop++) {
+            for (var slice = 0; slice <= this.slices; slice++) {
+                this.texCoords.push((1 - slice / this.slices) / afs, (loop / this.loops) / aft);
+            }
+        }
 
 		this.updateTexCoordsGLBuffers();
 	}

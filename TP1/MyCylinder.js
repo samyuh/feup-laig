@@ -184,7 +184,36 @@ class MyCylinder extends CGFobject {
     }
 
     updateTexCoords(afs, aft) {
-		// To Do
+        this.texCoords = [];
+        
+        let amplitude_increment = (2 * Math.PI) / this.slices;
+
+        // Bottom
+        let angle = 0;
+
+        this.texCoords.push(0.5 / afs, 0.5 / aft);
+        for (var i = 0; i < this.slices; i++) {
+            this.texCoords.push((0.5 * Math.cos(angle) + 0.5) / afs, (0.5 * Math.sin(angle) + 0.5) / aft);  
+        
+            angle += amplitude_increment;
+        }
+
+        // Side
+        for(var h = 0; h <= this.stacks; h++) {
+            for (var i = 0; i <= this.slices; i++) {
+                this.texCoords.push((1 - i / this.slices) / afs, (h / this.stacks) / aft);
+            }
+        }
+
+        // Top
+        angle = 0;
+
+        this.texCoords.push(0.5 / afs, 0.5 / aft);
+        for (var i = 0; i < this.slices; i++) {
+            this.texCoords.push((0.5 * Math.cos(angle) + 0.5) / afs, (0.5 * Math.sin(angle) + 0.5) / aft);  
+        
+            angle += amplitude_increment;
+        }
 
 		this.updateTexCoordsGLBuffers();
 	}

@@ -64,6 +64,7 @@ class MyLeaf {
     display() {
         this.primitive.display();
     }
+    
     updateTexCoords(afs, aft) {
         this.primitive.updateTexCoords(afs, aft) ;
     }
