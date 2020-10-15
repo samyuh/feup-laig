@@ -15,6 +15,10 @@ class MyNode {
         // Material
         this.material = null;
 
+        // Amplification
+        this.afs = 1.0;
+        this.aft = 1.0;
+
         // All descendants nodes and leaves
         this.descendants = [];
         this.leaves = [];

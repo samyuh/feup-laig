@@ -59,7 +59,6 @@ class MyCylinder extends CGFobject {
         for(var h = 0; h <= this.stacks; h++) {
             let angle = 0;
             for (var i = 0; i <= this.slices; i++) {
-                console.log(angle);
                 let x = Math.cos(angle) * (this.bottomRadius - radius_increment * h);
                 let y = Math.sin(angle) * (this.bottomRadius - radius_increment * h);
                 let z = h * height_increment;
@@ -183,4 +182,10 @@ class MyCylinder extends CGFobject {
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
+
+    updateTexCoords(afs, aft) {
+		// To Do
+
+		this.updateTexCoordsGLBuffers();
+	}
 }

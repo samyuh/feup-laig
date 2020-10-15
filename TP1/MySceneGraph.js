@@ -1035,6 +1035,19 @@ class MySceneGraph {
                 this.nodes[nodeID].texture = textureID;
             }
 
+            let amplification = grandChildren[textureIndex].children[0];
+
+            if (amplification.nodeName != "amplification") { // Minor error probably here
+                return ("[TEXTURE] No amplification on nodeID" + nodeID);
+            }
+            else {
+                let afs = this.reader.getFloat(amplification, 'afs');
+                let aft = this.reader.getFloat(amplification, 'aft');
+
+                this.nodes[nodeID].afs = afs;
+                this.nodes[nodeID].aft = aft;
+            }
+
             // ---------- Descendants ---------- //
 
             var descendants = children[i].children[descendantsIndex].children;
@@ -1190,41 +1203,52 @@ class MySceneGraph {
     displayScene() {
        // Display loop for transversing the scene graph, calling the root node's display function
        
-        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
+        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture, this.nodes[this.idRoot].afs, this.nodes[this.idRoot].aft);
     }
 
     /**
     * Process each node
-    * @param {nodeID} node
-    * @param {materialID} material
-    * @param {textureID} texture
+    * @param {nodeID} parentNode
+    * @param {materialID} parentMaterial
+    * @param {textureID} parentTexture
+    * @param {parentAFS} parentAFS
+    * @param {parentAFT} parentAFT
     */
-    processNode(node, material, texture) {
-        let currentNode = this.nodes[node];
+    processNode(parentNode, parentMaterial, parentTexture, parentAFS, parentAFT) {
+        let currentNode = this.nodes[parentNode];
      
         // ------- Material ------ //
         let currentMaterial;
 
         // -- If node material is null, then it will inherit parent's material
         if(currentNode.material == "null")
-            currentMaterial = material;
+            currentMaterial = parentMaterial;
         // -- Otherwise, it will have the material ID
         else currentMaterial = this.materials[currentNode.material];
 
 
         // -------- Texture ------ //
         let currentTexture;
+        let currentAFS;
+        let currentAFT;
 
         // -- If node texture is clear, then it will don't have texture
-        if (currentNode.texture == "clear")
+        if (currentNode.texture == "clear") {
             currentTexture = "null";
+        }
         // -- If node texture is null, then it will inherit parent's texture
-        else if (currentNode.texture == "null")
-            currentTexture = texture
+        else if (currentNode.texture == "null") {
+            currentTexture = parentTexture;
+            currentAFS = parentAFS;
+            currentAFT = parentAFT;
+        }
         // -- Otherwise, it will have the texture ID
-        else 
+        else { 
             currentTexture = currentNode.texture;
-        
+            currentAFS = currentNode.afs;
+            currentAFT = currentNode.aft;
+        }
+
         // Bind texture   
         if (currentTexture == "null") {
             currentMaterial.setTexture(null);
@@ -1236,15 +1260,21 @@ class MySceneGraph {
 
         currentMaterial.apply();
 
+        // ------ Transformation ------ //
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.transformation);
 
-        for(var i = 0; i < this.nodes[node].descendants.length; i++) {
-            this.processNode(this.nodes[node].descendants[i], currentMaterial, currentTexture);
+        // ------ Process next node ------ //
+        for(var i = 0; i < currentNode.descendants.length; i++) {
+            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture, currentAFS, currentAFT);
         }
         
-        for(var i = 0; i < this.nodes[node].leaves.length; i++) {
-            this.nodes[node].leaves[i].display();
+        // ------ Display Leaves ------ //
+        for(var i = 0; i < this.nodes[parentNode].leaves.length; i++) {
+            if (currentTexture != "null")
+                currentNode.leaves[i].updateTexCoords(currentAFS, currentAFT);
+
+            currentNode.leaves[i].display();
         }
         
         this.scene.popMatrix();
