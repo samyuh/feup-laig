@@ -250,12 +250,14 @@ class MySceneGraph {
     parseViews(viewsNode) {
         this.onXMLMinorError("To do: Parse views.");
 
-        this.cameras = {};
+        this.scene.viewIDs = [];
         var children = viewsNode.children;
 
         var default_view = this.reader.getString(viewsNode, 'default');
         if (default_view == null)
             this.onXMLMinorError("no default_view defined for scene");  // Use defaultView?
+
+        this.scene.selectedView = default_view;
 
         if (children.length === 0)
             this.onXMLMinorError("No views declared in <views>");  // Use defaultView?
@@ -273,6 +275,8 @@ class MySceneGraph {
                 this.onXMLMinorError("Camera with no 'id' atribute in <views>. Ignoring camera...");
                 continue;
             }
+
+            this.scene.viewIDs.push(id);
 
             // Process common atributes between perspective and ortho cameras (near and far)
             var near = this.reader.getFloat(children[i], 'near');
@@ -430,17 +434,16 @@ class MySceneGraph {
 
             // Obtained all data, adding camera to the scene cameras
             if (nodeType === "perspective") {
-                this.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
+                this.scene.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
             }
             else if (nodeType === "ortho") {
-                this.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
+                this.scene.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
             }
         }
-
-        this.scene.camera = this.cameras[default_view];
-        this.scene.interface.setActiveCamera(this.scene.camera);
         
         this.log("Parsed Views.");
+
+        this.scene.initCameras();
 
         return null;
     }
@@ -664,242 +667,46 @@ class MySceneGraph {
                 return ("<ambient> tag missing from material " + materialID + " in <materials>");
             }
 
-            var ambient_values = {};
+            var ambient_values = [];
 
-            // 'R' component of "ambient"
-            ambient_values.r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-
-            if (ambient_values.r == null) {
-                this.onXMLMinorError("Value 'r' missing from <ambient> tag, in material " + materialID + " in <materials>. Using r = 0.0");
-                ambient_values.r = 0.0;
-            }
-
-            else if (ambient_values.r < 0.0 || ambient_values.r > 1.0) {
-                this.onXMLMinorError("Invalid value 'r' from <ambient> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using r = 0.0");
-                ambient_values.r = 0.0;
-            }
-
-            // 'G' component of "ambient"
-            ambient_values.g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-
-            if (ambient_values.g == null) {
-                this.onXMLMinorError("Value 'g' missing from <ambient> tag, in material " + materialID + " in <materials>. Using g = 0.0");
-                ambient_values.g = 0.0;
-            }
-
-            else if (ambient_values.g < 0.0 || ambient_values.g > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <ambient> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using g = 0.0");
-                ambient_values.g = 0.0;
-            }
-
-            // 'B' component of "ambient"
-            ambient_values.b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-
-            if (ambient_values.b == null) {
-                this.onXMLMinorError("Value 'b' missing from <ambient> tag, in material " + materialID + " in <materials>. Using b = 0.0");
-                ambient_values.b = 0.0;
-            }
-
-            else if (ambient_values.b < 0.0 || ambient_values.b > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <ambient> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using b = 0.0");
-                ambient_values.b = 0.0;
-            }
-
-            // 'A' component of "ambient"
-            ambient_values.a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-
-            if (ambient_values.a == null) {
-                this.onXMLMinorError("Value 'a' missing from <ambient> tag, in material " + materialID + " in <materials>. Using a = 1.0");
-                ambient_values.a = 1.0;
-            }
-
-            else if (ambient_values.a < 0.0 || ambient_values.a > 1.0) {
-                this.onXMLMinorError("Invalid value 'a' from <ambient> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using a = 1.0");
-                ambient_values.a = 1.0;
-            }
+            ambient_values = this.parseColor(grandChildren[ambientIndex], "<ambient> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "diffuse" data of the material -----
             if (diffuseIndex == -1) {
                 return ("<diffuse> tag missing from material " + materialID + " in <materials>");
             }
 
-            var diffuse_values = {};
+            var diffuse_values = [];
 
-            // 'R' component of "diffuse"
-            diffuse_values.r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-
-            if (diffuse_values.r == null) {
-                this.onXMLMinorError("Value 'r' missing from <diffuse> tag, in material " + materialID + " in <materials>. Using r = 0.0");
-                diffuse_values.r = 0.0;
-            }
-
-            else if (diffuse_values.r < 0.0 || diffuse_values.r > 1.0) {
-                this.onXMLMinorError("Invalid value 'r' from <diffuse> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using r = 0.0");
-                diffuse_values.r = 0.0;
-            }
-
-            // 'G' component of "diffuse"
-            diffuse_values.g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-
-            if (diffuse_values.g == null) {
-                this.onXMLMinorError("Value 'g' missing from <diffuse> tag, in material " + materialID + " in <materials>. Using g = 0.0");
-                diffuse_values.g = 0.0;
-            }
-
-            else if (diffuse_values.g < 0.0 || diffuse_values.g > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <diffuse> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using g = 0.0");
-                diffuse_values.g = 0.0;
-            }
-
-            // 'B' component of "diffuse"
-            diffuse_values.b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-
-            if (diffuse_values.b == null) {
-                this.onXMLMinorError("Value 'b' missing from <diffuse> tag, in material " + materialID + " in <materials>. Using b = 0.0");
-                diffuse_values.b = 0.0;
-            }
-
-            else if (diffuse_values.b < 0.0 || diffuse_values.b > 1.0) {
-                this.onXMLMinorError("Invalid value 'b' from <diffuse> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using b = 0.0");
-                diffuse_values.b = 0.0;
-            }
-
-            // 'A' component of "diffuse"
-            diffuse_values.a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-
-            if (diffuse_values.a == null) {
-                this.onXMLMinorError("Value 'a' missing from <diffuse> tag, in material " + materialID + " in <materials>. Using a = 1.0");
-                diffuse_values.a = 1.0;
-            }
-
-            else if (diffuse_values.a < 0.0 || diffuse_values.a > 1.0) {
-                this.onXMLMinorError("Invalid value 'a' from <diffuse> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using a = 1.0");
-                diffuse_values.a = 1.0;
-            }
+            diffuse_values = this.parseColor(grandChildren[diffuseIndex], "<diffuse> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "specular" data of the material -----
             if (specularIndex == -1) {
                 return ("<specular> tag missing from material " + materialID + " in <materials>");
             }
 
-            var specular_values = {};
+            var specular_values = [];
 
-            // 'R' component of "specular"
-            specular_values.r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-
-            if (specular_values.r == null) {
-                this.onXMLMinorError("Value 'r' missing from <specular> tag, in material " + materialID + " in <materials>. Using r = 0.0");
-                specular_values.r = 0.0;
-            }
-
-            else if (specular_values.r < 0.0 || specular_values.r > 1.0) {
-                this.onXMLMinorError("Invalid value 'r' from <specular> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using r = 0.0");
-                specular_values.r = 0.0;
-            }
-
-            // 'G' component of "specular"
-            specular_values.g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-
-            if (specular_values.g == null) {
-                this.onXMLMinorError("Value 'g' missing from <specular> tag, in material " + materialID + " in <materials>. Using g = 0.0");
-                specular_values.g = 0.0;
-            }
-
-            else if (specular_values.g < 0.0 || specular_values.g > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <specular> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using g = 0.0");
-                specular_values.g = 0.0;
-            }
-
-            // 'B' component of "specular"
-            specular_values.b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-
-            if (specular_values.b == null) {
-                this.onXMLMinorError("Value 'b' missing from <specular> tag, in material " + materialID + " in <materials>. Using b = 0.0");
-                specular_values.b = 0.0;
-            }
-
-            else if (specular_values.b < 0.0 || specular_values.b > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <specular> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using b = 0.0");
-                specular_values.b = 0.0;
-            }
-
-            // 'A' component of "specular"
-            specular_values.a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-
-            if (specular_values.a == null) {
-                this.onXMLMinorError("Value 'a' missing from <specular> tag, in material " + materialID + " in <materials>. Using a = 1.0");
-                specular_values.a = 1.0;
-            }
-
-            else if (specular_values.a < 0.0 || specular_values.a > 1.0) {
-                this.onXMLMinorError("Invalid value 'a' from <specular> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using a = 1.0");
-                specular_values.a = 1.0;
-            }
+            specular_values = this.parseColor(grandChildren[specularIndex], "<specular> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "emissive" data of the material -----
             if (emissiveIndex == -1) {
                 return ("<emissive> tag missing from material " + materialID + " in <materials>");
             }
 
-            var emissive_values = {};
+            var emissive_values = [];
 
-            // 'R' component of "emissive"
-            emissive_values.r = this.reader.getFloat(grandChildren[emissiveIndex], 'r');
-
-            if (emissive_values.r == null) {
-                this.onXMLMinorError("Value 'r' missing from <emissive> tag, in material " + materialID + " in <materials>. Using r = 0.0");
-                emissive_values.r = 0.0;
-            }
-
-            else if (emissive_values.r < 0.0 || emissive_values.r > 1.0) {
-                this.onXMLMinorError("Invalid value 'r' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using r = 0.0");
-                emissive_values.r = 0.0;
-            }
-            // 'G' component of "emissive"
-            emissive_values.g = this.reader.getFloat(grandChildren[emissiveIndex], 'g');
-
-            if (emissive_values.g == null) {
-                this.onXMLMinorError("Value 'g' missing from <emissive> tag, in material " + materialID + " in <materials>. Using g = 0.0");
-                emissive_values.g = 0.0;
-            }
-            else if (emissive_values.g < 0.0 || emissive_values.g > 1.0) {
-                this.onXMLMinorError("Invalid value 'g' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using g = 0.0");
-                emissive_values.g = 0.0;
-            }
-
-            // 'B' component of "emissive"
-            emissive_values.b = this.reader.getFloat(grandChildren[emissiveIndex], 'b');
-
-            if (emissive_values.b == null) {
-                this.onXMLMinorError("Value 'b' missing from <emissive> tag, in material " + materialID + " in <materials>. Using b = 0.0");
-                emissive_values.b = 0.0;
-            }
-            else if (emissive_values.b < 0.0 || emissive_values.b > 1.0) {
-                this.onXMLMinorError("Invalid value 'b' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using b = 0.0");
-                emissive_values.b = 0.0;
-            }
-
-            // 'A' component of "emissive"
-            emissive_values.a = this.reader.getFloat(grandChildren[emissiveIndex], 'a');
-
-            if (emissive_values.a == null) {
-                this.onXMLMinorError("Value 'a' missing from <emissive> tag, in material " + materialID + " in <materials>. Using a = 1.0");
-                emissive_values.a = 1.0;
-            }
-            else if (emissive_values.a < 0.0 || emissive_values.a > 1.0) {
-                this.onXMLMinorError("Invalid value 'a' from <emissive> tag, in material " + materialID + " in <materials>. It must be between 0 and 1. Using a = 1.0");
-                emissive_values.a = 1.0;
-            }
+            emissive_values = this.parseColor(grandChildren[emissiveIndex], "<emissive> tag, in material " + materialID + " in <materials>.");
 
             // ----- Create material and add to scene materials ----- //
 
             let material = new CGFappearance(this.scene);
 
             material.setShininess(shininess_value);
-            material.setAmbient(ambient_values.r, ambient_values.g, ambient_values.b, ambient_values.a);
-            material.setDiffuse(diffuse_values.r, diffuse_values.g, diffuse_values.b, diffuse_values.a);
-            material.setSpecular(specular_values.r, specular_values.g, specular_values.b, specular_values.a);
-            material.setEmission(emissive_values.r, emissive_values.g, emissive_values.b, emissive_values.a);
+            material.setAmbient(ambient_values[0], ambient_values[1], ambient_values[2], ambient_values[3]);
+            material.setDiffuse(diffuse_values[0], diffuse_values[1], diffuse_values[2], diffuse_values[3]);
+            material.setSpecular(specular_values[0], specular_values[1], specular_values[2], specular_values[3]);
+            material.setEmission(emissive_values[0], emissive_values[1], emissive_values[2], emissive_values[3]);
 
             this.materials[materialID] = material;
 
