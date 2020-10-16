@@ -46,7 +46,7 @@
             <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
-            <specular r="0.1" g="0.7" b="1.0" a="1.0" />             <!-- specular component -->
+            <specular r="0.3" g="0.3" b="0.4" a="1.0" />             <!-- specular component -->
         </light>
 
         <light id="rightLight">            <!-- right torch light -->
@@ -73,7 +73,6 @@
         <texture id="stonepillarTexture" path="./scenes/images/stonepillar.jpg" />
         <texture id="ironTexture" path="./scenes/images/iron.jpg" />
         <texture id="glassTexture" path="./scenes/images/vidral.jpg" />
-        <texture id="throneTexture" path="./scenes/images/swords.jpg" />
         <texture id="floorTexture" path="./scenes/images/floor.jpg" />
         <texture id="floorBotTexture" path="./scenes/images/floor-bot.jpg" />
         <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
@@ -87,14 +86,6 @@
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="floorMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.92" g="0.72" b="0.42" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -1329,7 +1320,7 @@
         <node id="throne">
             <material id="null" />
 
-            <texture id="throneTexture">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1355,7 +1346,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0.0" z="0.0" />
+                <translation x="0.0" y="0.0" z="0.0" />
                 <scale sx="2.0" sy="1.0" sz="1.8" />
             </transformations>
 
@@ -1373,7 +1364,6 @@
             </texture>
 
             <transformations>
-                <scale sx="1.0" sy="0.8" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -1391,12 +1381,13 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-1.3" />
-                <scale sx="1.2" sy="2.0" sz="0.8" />
+                <translation x="0.0" y="0.0" z="-0.9" />
             </transformations>
 
             <descendants>
-                <noderef id="cube" />
+                <noderef id="throne-support-front-cylinder" />
+                <noderef id="throne-support-back-cylinder" />
+                <noderef id="throne-support-cube" />
             </descendants>
         </node>
 
@@ -1409,12 +1400,65 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="1.3" />
-                <scale sx="1.2" sy="2.0" sz="0.8" />
+                <translation x="0.0" y="0.0" z="0.9" />
+            </transformations>
+
+            <descendants>
+                <noderef id="throne-support-front-cylinder" />
+                <noderef id="throne-support-back-cylinder" />
+                <noderef id="throne-support-cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-cube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.8" sy="1.6" sz="0.4" />
             </transformations>
 
             <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-back-cylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="2.0" sy="0.8" sz="1.0" />
+                <translation x="-0.4" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.0" topRadius="0.2" bottomRadius="0.3" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-front-cylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.4" sy="0.8" sz="1.0" />
+                <translation x="0.6" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.0" topRadius="0.2" bottomRadius="0.8" stacks="8" slices="8" />
             </descendants>
         </node>
 
@@ -1428,7 +1472,7 @@
 
             <transformations>
                 <translation x="-1.0" y="0.0" z="0.0" />
-                <scale sx="1.0" sy="3.0" sz="1.8" />
+                <scale sx="0.2" sy="3.0" sz="1.8" />
             </transformations>
 
             <descendants>
@@ -1461,28 +1505,28 @@
             </texture>
 
             <transformations>
-                <translation x="-1.6" y="2.0" z="0.0" />
+                <translation x="-1.0" y="2.0" z="0.0" />
                 <rotation axis="y" angle="-90" />
-                <scale sx="0.1" sy="0.1" sz="0.1" />
+                <scale sx="0.1" sy="0.1" sz="0.2" />
             </transformations>
 
             <descendants>
-                <noderef id="sword-1" />
-                <noderef id="sword-2" />
-                <noderef id="sword-3" />
-                <noderef id="sword-4" />
-                <noderef id="sword-5" />
-                <noderef id="sword-6" />
-                <noderef id="sword-7" />
-                <noderef id="sword-8" />
-                <noderef id="sword-9" />
-                <noderef id="sword-10" />
-                <noderef id="sword-11" />
+                <noderef id="arc-chair-1" />
+                <noderef id="arc-chair-2" />
+                <noderef id="arc-chair-3" />
+                <noderef id="arc-chair-4" />
+                <noderef id="arc-chair-5" />
+                <noderef id="arc-chair-6" />
+                <noderef id="arc-chair-7" />
+                <noderef id="arc-chair-8" />
+                <noderef id="arc-chair-9" />
+                <noderef id="arc-chair-10" />
+                <noderef id="arc-chair-11" />
             </descendants>
         </node>
 
         <!-- Node representing the first throne sword -->
-        <node id="sword-1">
+        <node id="arc-chair-1">
             <material id="null" />
 
             <texture id="null">
@@ -1493,12 +1537,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the second throne sword -->
-        <node id="sword-2">
+        <node id="arc-chair-2">
             <material id="null" />
 
             <texture id="null">
@@ -1510,12 +1554,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the third throne sword -->
-        <node id="sword-3">
+        <node id="arc-chair-3">
             <material id="null" />
 
             <texture id="null">
@@ -1527,12 +1571,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the fourth throne sword -->
-        <node id="sword-4">
+        <node id="arc-chair-4">
             <material id="null" />
 
             <texture id="null">
@@ -1544,12 +1588,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the fifth throne sword -->
-        <node id="sword-5">
+        <node id="arc-chair-5">
             <material id="null" />
 
             <texture id="null">
@@ -1561,12 +1605,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the sixth throne sword -->
-        <node id="sword-6">
+        <node id="arc-chair-6">
             <material id="null" />
 
             <texture id="null">
@@ -1578,12 +1622,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the seventh throne sword -->
-        <node id="sword-7">
+        <node id="arc-chair-7">
             <material id="null" />
 
             <texture id="null">
@@ -1595,12 +1639,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the eighth throne sword -->
-        <node id="sword-8">
+        <node id="arc-chair-8">
             <material id="null" />
 
             <texture id="null">
@@ -1612,12 +1656,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the ninth throne sword -->
-        <node id="sword-9">
+        <node id="arc-chair-9">
             <material id="null" />
 
             <texture id="null">
@@ -1629,12 +1673,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the tenth throne sword -->
-        <node id="sword-10">
+        <node id="arc-chair-10">
             <material id="null" />
 
             <texture id="null">
@@ -1646,12 +1690,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the eleventh throne sword -->
-        <node id="sword-11">
+        <node id="arc-chair-11">
             <material id="null" />
 
             <texture id="null">
@@ -1663,7 +1707,22 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
+            </descendants>
+        </node>
+
+        <node id="arch-throne">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="sword-body" />
             </descendants>
         </node>
 
