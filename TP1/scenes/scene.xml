@@ -43,15 +43,15 @@
 
         <light id="windowLight">            <!-- window light -->
             <enable value="0" />
-            <position x="0" y="15" z="-20" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
-            <specular r="0.1" g="0.7" b="1.0" a="1.0" />            <!-- specular component -->
+            <specular r="0.1" g="0.7" b="1.0" a="1.0" />             <!-- specular component -->
         </light>
 
         <light id="rightLight">            <!-- right torch light -->
             <enable value="0" />
-            <position x="25" y="15" z="38" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="25" y="15" z="0" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -59,7 +59,7 @@
 
         <light id="leftLight">            <!-- left torch light -->
             <enable value="0" />
-            <position x="25" y="15" z="2" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="-25" y="15" z="0" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -69,10 +69,14 @@
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
-        <texture id="wallTexture" path="./scenes/images/stones.jpg" />
+        <texture id="stoneTexture" path="./scenes/images/stones.jpg" />
+        <texture id="stonepillarTexture" path="./scenes/images/stonepillar.jpg" />
+        <texture id="ironTexture" path="./scenes/images/iron.jpg" />
         <texture id="glassTexture" path="./scenes/images/vidral.jpg" />
         <texture id="throneTexture" path="./scenes/images/swords.jpg" />
         <texture id="floorTexture" path="./scenes/images/floor.jpg" />
+        <texture id="floorBotTexture" path="./scenes/images/floor-bot.jpg" />
+        <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
     </textures>
 
     <materials>
@@ -90,6 +94,22 @@
             <shininess value="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.92" g="0.72" b="0.42" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="redMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.92" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="yellowMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.88" g="0.88" b="0.4" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -123,8 +143,8 @@
         <node id="wall">
             <material id="null" />
 
-            <texture id="wallTexture">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="stoneTexture">
+                <amplification afs="0.4" aft="0.4" />
             </texture>
 
             <transformations>
@@ -167,7 +187,7 @@
 
             <transformations>
                 <translation x="-17.0" y="0.0" z="-26.5" />
-                <scale sx="26.0" sy="20.0" sz="3.0" />
+                <scale sx="26.0" sy="30.0" sz="3.0" />
             </transformations>
 
             <descendants>
@@ -184,7 +204,7 @@
 
             <transformations>
                 <translation x="17.0" y="0.0" z="-26.5" />
-                <scale sx="26.0" sy="20.0" sz="3.0" />
+                <scale sx="26.0" sy="30.0" sz="3.0" />
             </transformations>
 
             <descendants>
@@ -195,8 +215,8 @@
         <node id="wall-bot">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="stoneTexture">
+                <amplification afs="1.5" aft="1.5" />
             </texture>
 
             <transformations>
@@ -235,7 +255,6 @@
             </texture>
 
             <transformations>
-                
                 <scale sx="4.0" sy="4.0" sz="4.0" />
             </transformations>
 
@@ -270,11 +289,11 @@
             </texture>
 
             <transformations>
-            <translation x="0.0" y="13.0" z="-30.0" />
+                <translation x="0.0" y="10.0" z="-30.0" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-10" y1="-10" x2="10" y2="10" />
+                <leaf type="rectangle" x1="-20" y1="-20" x2="20" y2="20" />
             </descendants>
         </node>
 
@@ -310,17 +329,18 @@
             </transformations>
 
             <descendants>
-                <noderef id="window-decoration-wheel" />
                 <noderef id="window-decoration-sphere" />
+                <noderef id="window-decoration-wheel-outer" />
+                <noderef id="window-decoration-wheel-inner" />
                 <noderef id="window-decoration-spirals" />
             </descendants>
         </node>
 
         <!-- Node representing the wheel of the window decoration of the main wall -->
-        <node id="window-decoration-wheel">
+        <node id="window-decoration-wheel-outer">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -332,9 +352,24 @@
             </descendants>
         </node>
 
+        <node id="window-decoration-wheel-inner">
+            <material id="defaultMaterial" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.2" outer="0.8" slices="15" loops="40" />
+            </descendants>
+        </node>
+
         <!-- Node representing the inner sphere of the window decoration of the main wall -->
         <node id="window-decoration-sphere">
-            <material id="null" />
+            <material id="redMaterial" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -344,7 +379,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.5" slices="32" stacks="32"/>
+                <leaf type="sphere" radius="0.8" slices="32" stacks="32"/>
             </descendants>
         </node>
 
@@ -496,18 +531,67 @@
             </texture>
 
             <transformations>
+                <scale sx="1.5" sy="1.0" sz="1.0" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="-0.3" y1="1.5" x2="0.3" y2="1.5" x3="0.0" y3="2.5" />
-                <leaf type="rectangle"  x1="-0.1" y1="2.0" x2="0.1" y2="3.5" />
+                <noderef id="window-decoration-spiral-object-front-triangle" />
+                <noderef id="window-decoration-spiral-object-back-triangle" />
+                <noderef id="window-decoration-spiral-object-rectangle" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-back-triangle">
+            <material id="defaultMaterial" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-0.05" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-0.7" y1="0.0" x2="0.7" y2="0.0" x3="0.0" y3="2.4" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-front-triangle">
+            <material id="yellowMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-0.5" y1="0.0" x2="0.5" y2="0.0" x3="0.0" y3="2.1" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-rectangle">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.05" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle"  x1="-0.1" y1="2.0" x2="0.1" y2="3.8" />
             </descendants>
         </node>
 
         <node id="window-decoration-armor">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -702,7 +786,7 @@
 
             <transformations>
                 <rotation axis="z" angle="15" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="3.5" sz="0.2" />
             </transformations>
 
@@ -720,7 +804,7 @@
 
             <transformations>
                 <rotation axis="z" angle="30" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="4.5" sz="0.2" />
             </transformations>
 
@@ -738,7 +822,7 @@
 
             <transformations>
                 <rotation axis="z" angle="45" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="5.5" sz="0.2" />
             </transformations>
 
@@ -756,7 +840,7 @@
 
             <transformations>
                 <rotation axis="z" angle="60" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="6.5" sz="0.2" />
             </transformations>
 
@@ -774,7 +858,7 @@
 
             <transformations>
                 <rotation axis="z" angle="75" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="7.5" sz="0.2" />
             </transformations>
 
@@ -792,7 +876,7 @@
 
             <transformations>
                 <rotation axis="z" angle="90" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="8.5" sz="0.2" />
             </transformations>
 
@@ -810,7 +894,7 @@
 
             <transformations>
                 <rotation axis="z" angle="105" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="7.5" sz="0.2" />
             </transformations>
 
@@ -828,7 +912,7 @@
 
             <transformations>
                 <rotation axis="z" angle="120" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="6.5" sz="0.2" />
             </transformations>
 
@@ -846,7 +930,7 @@
 
             <transformations>
                 <rotation axis="z" angle="135" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="5.5" sz="0.2" />
             </transformations>
 
@@ -864,7 +948,7 @@
 
             <transformations>
                 <rotation axis="z" angle="150" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="4.5" sz="0.2" />
             </transformations>
 
@@ -882,7 +966,7 @@
 
             <transformations>
                 <rotation axis="z" angle="165" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="3.5" sz="0.2" />
             </transformations>
 
@@ -919,7 +1003,7 @@
             </texture>
 
             <transformations>
-                <translation x="-50.0" y="0.0" z="0.0" />
+                <translation x="-50.0" y="-5.0" z="0.0" />
                 <rotation axis="z" angle="-90" />
             </transformations>
 
@@ -936,7 +1020,7 @@
             </texture>
 
             <transformations>
-                <translation x="-50.0" y="20.0" z="0.0" />
+                <translation x="-50.0" y="7.5" z="0.0" />
                 <rotation axis="z" angle="-90" />
             </transformations>
 
@@ -953,7 +1037,7 @@
             </texture>
 
             <transformations>
-                <translation x="50.0" y="0.0" z="0.0" />
+                <translation x="50.0" y="-5.0" z="0.0" />
                 <rotation axis="z" angle="90" />
             </transformations>
 
@@ -970,7 +1054,7 @@
             </texture>
 
             <transformations>
-                <translation x="50.0" y="20.0" z="0.0" />
+                <translation x="50.0" y="7.5" z="0.0" />
                 <rotation axis="z" angle="90" />
             </transformations>
 
@@ -983,7 +1067,7 @@
         <node id="door-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1000,7 +1084,7 @@
         <node id="door-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1027,12 +1111,61 @@
 
             <descendants>
                 <noderef id="door-arc" />
+                <noderef id="door-inside" />
                 <noderef id="door-side1" />
                 <noderef id="door-side2" />
             </descendants>
         </node>
 
         <!-- Node representing the door arc -->
+        <node id="door-inside">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="door-top" />
+                <noderef id="door-bot" />
+            </descendants>
+        </node>
+
+        <node id="door-top">
+            <material id="null" />
+
+            <texture id="darkRoomTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="10.6" z="-0.4" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.5" topRadius="5.0" bottomRadius="5.0" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="door-bot">
+            <material id="null" />
+
+            <texture id="darkRoomTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0." z="0.2" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-5.0" y1="-5.0" x2="5.0" y2="10.0" />
+            </descendants>
+        </node>
+
         <node id="door-arc">
             <material id="null" />
 
@@ -1538,7 +1671,7 @@
         <node id="sword">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1698,7 +1831,7 @@
 
         <!-- Node representing the floor of the scene -->
         <node id="floor">
-            <material id="floorMaterial" />
+            <material id="defaultMaterial" />
 
             <texture id="floorTexture">
                 <amplification afs="1.0" aft="1.0" />
@@ -1718,7 +1851,7 @@
         <node id="floor-bottom">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="floorBotTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1936,7 +2069,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="10.0" />
+                <translation x="0.0" y="0.0" z="14.0" />
             </transformations>
 
             <descendants>
@@ -1954,7 +2087,7 @@
             </texture>
 
             <transformations>
-                <translation x="-15.0" y="0.0" z="0.0" />
+                <translation x="-17.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -1971,7 +2104,7 @@
             </texture>
 
             <transformations>
-                <translation x="15.0" y="0.0" z="0.0" />
+                <translation x="17.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -2000,12 +2133,12 @@
         <node id="column-base">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="stoneTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <scale sx="4" sy="4" sz="4" />
+                <scale sx="8" sy="2" sz="8" />
             </transformations>
 
             <descendants>
@@ -2017,17 +2150,17 @@
         <node id="column-cylinder">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0.0" y="4.0" z="0.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="20" topRadius="1" bottomRadius="1" stacks="8" slices="8" />
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="8" />
             </descendants>
         </node>
 
