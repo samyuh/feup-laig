@@ -280,11 +280,11 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="10.0" z="-30.0" />
+                <translation x="-15.0" y="0.0" z="-28.0" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-20" y1="-20" x2="20" y2="20" />
+                <leaf type="rectangle" x1="0" y1="1" x2="30" y2="30" />
             </descendants>
         </node>
 
@@ -1153,7 +1153,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-5.0" y1="-5.0" x2="5.0" y2="10.0" />
+                <leaf type="rectangle" x1="-5.0" y1="0.0" x2="5.0" y2="10.0" />
             </descendants>
         </node>
 
@@ -2183,8 +2183,377 @@
             </transformations>
 
             <descendants>
+                <noderef id="column-firepit" />
                 <noderef id="column-base" />
                 <noderef id="column-cylinder" />
+            </descendants>
+        </node>
+
+        <node id="column-firepit">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="firepit-torus-bottom" />
+                <noderef id="firepit-torus-middle" />
+                <noderef id="firepit-torus-top" />
+                <noderef id="firepit-stick" />
+            </descendants>
+        </node>
+
+        <node id="firepit-torus-bottom">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="2.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="torus" inner="0.2" outer="3.5" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <node id="firepit-torus-middle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="3.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="torus" inner="0.2" outer="3.8" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <node id="firepit-torus-top">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="4.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="torus" inner="0.2" outer="4.1" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                 <noderef id="firepit-stick1" />
+                 <noderef id="firepit-stick2" />
+                 <noderef id="firepit-stick3" />
+                 <noderef id="firepit-stick4" />
+                 <noderef id="firepit-stick5" />
+                 <noderef id="firepit-stick6" />
+                 <noderef id="firepit-stick7" />
+                 <noderef id="firepit-stick8" />
+                 <noderef id="firepit-stick9" />
+                 <noderef id="firepit-stick10" />
+                 <noderef id="firepit-stick11" />
+                 <noderef id="firepit-stick12" />
+                 <noderef id="firepit-stick13" />
+                 <noderef id="firepit-stick14" />
+                 <noderef id="firepit-stick15" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="24" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="48" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="72" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="96" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="120" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick7">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="144" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick8">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="168" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick9">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="192" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick10">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="216" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick11">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="240" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick12">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="264" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick13">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="288" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick14">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="312" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
+            </descendants>
+        </node>
+
+        <node id="firepit-stick15">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="336" />
+                <translation x="0.0" y="2.0" z="3.0" />
+                <rotation axis="x" angle="20" />
+            </transformations>
+
+            <descendants>
+                 <leaf type="rectangle" x1="-0.2" y1="0" x2="0.2" y2="4" />
             </descendants>
         </node>
 
