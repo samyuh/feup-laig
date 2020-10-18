@@ -6,6 +6,7 @@
         <!-- identifier of root node of the scene graph; this node -->
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
+    
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -68,7 +69,7 @@
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
                 <translation x="0" y="1.0" z="1.0" />
-                <rotation axis="yy" angle="45" />
+                <rotation axis="y" angle="45" />
                 <scale sx="2" sy="1" sz="1" />
             </transformations>
 

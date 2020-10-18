@@ -218,23 +218,23 @@ class MySceneGraph {
 
         // Get root of the scene.
         if(rootIndex == -1)
-            return "No root id defined for scene.";
+            return "No root id defined for scene - tag <root> missing from <initials> tag.";
 
         var rootNode = children[rootIndex];
         var id = this.reader.getString(rootNode, 'id');
         if (id == null)
-            return "No root id defined for scene.";
+            return "No root id defined for scene - 'id' atribute missing from tag <root>, in <initials> tag.";
 
         this.idRoot = id;
 
         // Get axis length        
         if(referenceIndex == -1)
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+            this.onXMLMinorError("no axis_length defined for scene - tag <reference> missing from <initials> tag; assuming 'length = 1'");
 
         var refNode = children[referenceIndex];
         var axis_length = this.reader.getFloat(refNode, 'length');
         if (axis_length == null)
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+            this.onXMLMinorError("no axis_length defined for scene - 'length' atribute missing from tag <reference>, in <initials> tag; assuming 'length = 1'");
 
         this.referenceLength = axis_length || 1;
 
@@ -248,19 +248,17 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views.");
-
         this.scene.viewIDs = [];
         var children = viewsNode.children;
 
         var default_view = this.reader.getString(viewsNode, 'default');
         if (default_view == null)
-            this.onXMLMinorError("no default_view defined for scene");  // Use defaultView?
+            return "No default View defined for scene - atribute 'default' missing from tag <views>";
 
         this.scene.selectedView = default_view;
 
         if (children.length === 0)
-            this.onXMLMinorError("No views declared in <views>");  // Use defaultView?
+            return "No views declared in <views>";
 
         for (var i = 0; i < children.length; i++) {
             var camera = {};
@@ -349,60 +347,70 @@ class MySceneGraph {
             var fromIndex = nodeNames.indexOf("from");
             var toIndex = nodeNames.indexOf("to");
 
-            if (fromIndex == -1) {
-                return ('Camera ' + id + " is missing the 'from' attribute");
-            }
-            if (toIndex == -1) {
-                return ('Camera ' + id + " is missing the 'to' attribute");
-            }
-
             camera.from = {};
             camera.to = {};
             var x, y, z;
 
-            x = this.reader.getFloat(grandChildren[fromIndex], 'x');
-            if (x == null) {
-                this.onXMLMinorError("Camera with no 'x' value of 'from' atribute in <views>. Using x = 30");
-                x = 30;
+            if (fromIndex == -1) {
+                this.onXMLMinorError("Camera " + id + " is missing the 'from' attribute. Using FROM: x = 0, y = 15, z = 60");
+                camera.from.x = 0;
+                camera.from.y = 15;
+                camera.from.z = 60;
+            }
+            if (toIndex == -1) {
+                this.onXMLMinorError("Camera " + id + " is missing the 'to' attribute. Using TO: x = 0, y = 10, z = 0");
+                camera.to.x = 0;
+                camera.to.y = 10;
+                camera.to.z = 0;
             }
 
-            y = this.reader.getFloat(grandChildren[fromIndex], 'y');
-            if (y == null) {
-                this.onXMLMinorError("Camera with no 'y' value of 'from' atribute in <views>. Using y = 15");
-                y = 15;
+            if (fromIndex != -1) {
+                x = this.reader.getFloat(grandChildren[fromIndex], 'x');
+                if (x == null) {
+                    this.onXMLMinorError("Camera with no 'x' value of 'from' atribute in <views>. Using x = 0");
+                    x = 0;
+                }
+
+                y = this.reader.getFloat(grandChildren[fromIndex], 'y');
+                if (y == null) {
+                    this.onXMLMinorError("Camera with no 'y' value of 'from' atribute in <views>. Using y = 15");
+                    y = 15;
+                }
+
+                z = this.reader.getFloat(grandChildren[fromIndex], 'z');
+                if (z == null) {
+                    this.onXMLMinorError("Camera with no 'z' value of 'from' atribute in <views>. Using z = 60");
+                    z = 60;
+                }
+
+                camera.from.x = x;
+                camera.from.y = y;
+                camera.from.z = z;
             }
 
-            z = this.reader.getFloat(grandChildren[fromIndex], 'z');
-            if (z == null) {
-                this.onXMLMinorError("Camera with no 'z' value of 'from' atribute in <views>. Using z = 30");
-                z = 30;
+            if (toIndex != -1) {
+                x = this.reader.getFloat(grandChildren[toIndex], 'x');
+                if (x == null) {
+                    this.onXMLMinorError("Camera with no 'x' value of 'to' atribute in <views>. Using x = 0");
+                    x = 0;
+                }
+
+                y = this.reader.getFloat(grandChildren[toIndex], 'y');
+                if (y == null) {
+                    this.onXMLMinorError("Camera with no 'y' value of 'to' atribute in <views>. Using y = 10");
+                    y = 10;
+                }
+
+                z = this.reader.getFloat(grandChildren[toIndex], 'z');
+                if (z == null) {
+                    this.onXMLMinorError("Camera with no 'z' value of 'to' atribute in <views>. Using z = 0");
+                    z = 0;
+                }
+
+                camera.to.x = x;
+                camera.to.y = y;
+                camera.to.z = z;
             }
-
-            camera.from.x = x;
-            camera.from.y = y;
-            camera.from.z = z;
-
-            x = this.reader.getFloat(grandChildren[toIndex], 'x');
-            if (x == null) {
-                this.onXMLMinorError("Camera with no 'x' value of 'to' atribute in <views>. Using x = 30");
-                x = 30;
-            }
-
-            y = this.reader.getFloat(grandChildren[toIndex], 'y');
-            if (y == null) {
-                this.onXMLMinorError("Camera with no 'y' value of 'to' atribute in <views>. Using y = 15");
-                y = 15;
-            }
-
-            z = this.reader.getFloat(grandChildren[toIndex], 'z');
-            if (z == null) {
-                this.onXMLMinorError("Camera with no 'z' value of 'to' atribute in <views>. Using z = 30");
-                z = 30;
-            }
-
-            camera.to.x = x;
-            camera.to.y = y;
-            camera.to.z = z;
 
             // Process "up" point of ortho cameras
             if (nodeType === "ortho") {
@@ -467,17 +475,35 @@ class MySceneGraph {
         var ambientIndex = nodeNames.indexOf("ambient");
         var backgroundIndex = nodeNames.indexOf("background");
 
-        var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.ambient = color;
+        var color = [];
 
-        color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
-        else
+        if(ambientIndex == -1) {
+            this.onXMLMinorError("Missing tag <ambient> from <illumination> tag");
+            color.push(...[0.2, 0.2, 0.2, 1.0]);
+            this.ambient = color;
+        }
+
+        if(backgroundIndex == -1) {
+            this.onXMLMinorError("Missing tag <background> from <illumination> tag");
+            color.push(...[0.1, 0.1, 0.1, 1.0]);
             this.background = color;
+        }
+
+        if (ambientIndex != -1) {
+            color = this.parseColor(children[ambientIndex], "ambient");
+            if (!Array.isArray(color))
+                return color;
+            else
+                this.ambient = color;
+        }
+
+        if (backgroundIndex != -1) {
+            color = this.parseColor(children[backgroundIndex], "background");
+            if (!Array.isArray(color))
+                return color;
+            else
+                this.background = color;
+        }
 
         this.log("Parsed Illumination.");
 
@@ -570,8 +596,6 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
-
         this.textures = {};
 
         var children = texturesNode.children;
@@ -581,18 +605,21 @@ class MySceneGraph {
 
             // Check if texture has no ID
             if (id == null) {
-                return "Texture with no ID found on <textures>";
+                this.onXMLMinorError("Texture with no ID found on <textures>. Ignoring texture...");
+                continue;
             }
             // Check if texture has repeated ID
             if (this.textures[id] != null) {
-                return "Texture with repeated ID found on <textures> (" + id + ")";
+                this.onXMLMinorError("Texture with repeated ID found on <textures> (" + id + "). Ignoring texture...");
+                continue;
             }
 
             var file = this.reader.getString(children[i], 'path');
 
             // Check if texture has no file path
             if (file == null) {
-                return "Texture with no file path found on <textures> (" + id + ")";
+                this.onXMLMinorError("Texture with no file path found on <textures> (" + id + "). Ignoring texture...");
+                continue;
             }
 
             let new_texture = new CGFtexture(this.scene, file);
@@ -620,18 +647,22 @@ class MySceneGraph {
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "material") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">. Ignoring tag...");
                 continue;
             }
 
             // Get id of the current material.
             var materialID = this.reader.getString(children[i], 'id');
-            if (materialID == null)
-                return "no ID defined for material";
+            if (materialID == null) {
+                this.onXMLMinorError("No ID defined for material in <materials>. Ignoring material...");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            else if (this.materials[materialID] != null)
-                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
+            else if (this.materials[materialID] != null) {
+                this.onXMLMinorError("ID must be unique for each material (conflict: ID = " + materialID + "). Ignoring material...");
+                continue;
+            }
 
             grandChildren = children[i].children;
 
@@ -646,11 +677,14 @@ class MySceneGraph {
             var emissiveIndex = nodeNames.indexOf("emissive");
 
             // ----- Process "shininess" data of the material -----
-            if (shininessIndex == -1) {
-                return ("<shininess> tag missing from material " + materialID + " in <materials>");
-            }
+            var shininess_value;
 
-            var shininess_value = this.reader.getFloat(grandChildren[shininessIndex], 'value');
+            if (shininessIndex == -1) {
+                this.onXMLMinorError("<shininess> tag missing from material " + materialID + " in <materials>. Using shininess value = 1.0");
+                shininess_value = 1.0;
+            }
+            else 
+                shininess_value = this.reader.getFloat(grandChildren[shininessIndex], 'value');
 
             if (shininess_value == null) {
                 this.onXMLMinorError("Missing 'value' of <shininess> tag, from material " + materialID + " in <materials>. Using value = 1.0");
@@ -663,40 +697,44 @@ class MySceneGraph {
             }
 
             // ----- Process "ambient" data of the material -----
-            if (ambientIndex == -1) {
-                return ("<ambient> tag missing from material " + materialID + " in <materials>");
-            }
-
             var ambient_values = [];
 
-            ambient_values = this.parseColor(grandChildren[ambientIndex], "<ambient> tag, in material " + materialID + " in <materials>.");
+            if (ambientIndex == -1) {
+                this.onXMLMinorError("<ambient> tag missing from material " + materialID + " in <materials>. Using Ambient R = 0.5, G = 0.5, B = 0.5, A = 1.0");
+                ambient_values.push(...[0.5, 0.5, 0.5, 1.0]);
+            }
+            else
+                ambient_values = this.parseColor(grandChildren[ambientIndex], "<ambient> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "diffuse" data of the material -----
-            if (diffuseIndex == -1) {
-                return ("<diffuse> tag missing from material " + materialID + " in <materials>");
-            }
-
             var diffuse_values = [];
 
-            diffuse_values = this.parseColor(grandChildren[diffuseIndex], "<diffuse> tag, in material " + materialID + " in <materials>.");
+            if (diffuseIndex == -1) {
+                this.onXMLMinorError("<diffuse> tag missing from material " + materialID + " in <materials>. Using Diffuse R = 0.5, G = 0.5, B = 0.5, A = 1.0");
+                diffuse_values.push(...[0.5, 0.5, 0.5, 1.0]);
+            }
+            else
+                diffuse_values = this.parseColor(grandChildren[diffuseIndex], "<diffuse> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "specular" data of the material -----
-            if (specularIndex == -1) {
-                return ("<specular> tag missing from material " + materialID + " in <materials>");
-            }
-
             var specular_values = [];
 
-            specular_values = this.parseColor(grandChildren[specularIndex], "<specular> tag, in material " + materialID + " in <materials>.");
+            if (specularIndex == -1) {
+                this.onXMLMinorError("<specular> tag missing from material " + materialID + " in <materials>. Using Specular R = 0.5, G = 0.5, B = 0.5, A = 1.0");
+                specular_values.push(...[0.5, 0.5, 0.5, 1.0]);
+            }
+            else
+                specular_values = this.parseColor(grandChildren[specularIndex], "<specular> tag, in material " + materialID + " in <materials>.");
 
             // ----- Process "emissive" data of the material -----
-            if (emissiveIndex == -1) {
-                return ("<emissive> tag missing from material " + materialID + " in <materials>");
-            }
-
             var emissive_values = [];
 
-            emissive_values = this.parseColor(grandChildren[emissiveIndex], "<emissive> tag, in material " + materialID + " in <materials>.");
+            if (emissiveIndex == -1) {
+                this.onXMLMinorError("<emissive> tag missing from material " + materialID + " in <materials>. Using Specular R = 0.0, G = 0.0, B = 0.0, A = 1.0");
+                emissive_values.push(...[0.0, 0.0, 0.0, 1.0]);
+            }
+            else
+                emissive_values = this.parseColor(grandChildren[emissiveIndex], "<emissive> tag, in material " + materialID + " in <materials>.");
 
             // ----- Create material and add to scene materials ----- //
 
@@ -716,9 +754,8 @@ class MySceneGraph {
             return "No materials found in tag <materials>. At least one material should be present.";
         }
 
-        this.onXMLMinorError("To do: Parse materials.");
-
         this.log("Parsed materials");
+
         return null;
     }
 
@@ -732,23 +769,26 @@ class MySceneGraph {
         this.nodes = [];
 
         var grandChildren = [];
-        var grandgrandChildren = [];
         var nodeNames = [];
 
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "node") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                this.onXMLMinorError("Unknown tag <" + children[i].nodeName + "> in <nodes> tag. Ignoring tag...");
                 continue;
             }
 
             // Get id of the current node.
             var nodeID = this.reader.getString(children[i], 'id');
-            if (nodeID == null)
-                return "no ID defined for nodeID";
+            if (nodeID == null) {
+                this.onXMLMinorError("No ID defined for node in <nodes>. Ignoring node...");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            if (this.nodes[nodeID] != null)
-                return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
+            if (this.nodes[nodeID] != null) {
+                this.onXMLMinorError("ID must be unique for each node (conflict: ID = " + nodeID + "). Ignoring node...");
+                continue;
+            }
 
             this.nodes[nodeID] = new MyNode(this, nodeID);
             
@@ -767,133 +807,172 @@ class MySceneGraph {
             // ---------- Transformations --------------- //
             
             if (transformationsIndex == -1) {
-                return ("[TRANSFORMATIONS] <transformations> tag missing from node " + nodeID + " in <nodes>");
+                this.onXMLMinorError("<transformations> tag missing from node " + nodeID + " in <nodes>. Considering no transformations...");
             }
+            else {
+                var transformations = grandChildren[transformationsIndex].children;
+                for (var j = 0; j < transformations.length; j++) {
+                    if (transformations[j].nodeName == "translation") {
+                        let x = this.reader.getFloat(transformations[j], 'x');
+                        let y = this.reader.getFloat(transformations[j], 'y');
+                        let z = this.reader.getFloat(transformations[j], 'z');
 
-            var transformations = grandChildren[transformationsIndex].children;
-            for (var j = 0; j < transformations.length; j++) {
-                if (transformations[j].nodeName == "translation") {
-                    let x = this.reader.getFloat(transformations[j], 'x');
-                    let y = this.reader.getFloat(transformations[j], 'y');
-                    let z = this.reader.getFloat(transformations[j], 'z');
+                        if (x == null || isNaN(x)) {
+                            this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using x = 0.0");
+                            x = 0.0;
+                        }
+                        if (y == null || isNaN(y)) {
+                            this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using y = 0.0");
+                            y = 0.0;
+                        }
+                        if (z == null || isNaN(z)) {
+                            this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using z = 0.0");
+                            z = 0.0;
+                        }
 
-                    if (x == null || y == null || z == null)
-                        return ("[TRANSFORMATIONS] Invalid values of x, y and z in transformations on " + nodeID);
+                        mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
+                    }
+                    else if (transformations[j].nodeName == "rotation") {
+                        let axis = this.reader.getString(transformations[j], 'axis');
+                        let angle = this.reader.getFloat(transformations[j], 'angle');
+                        
+                        if (angle == null || isNaN(angle)) {
+                            this.onXMLMinorError("Missing/Invalid value of 'angle' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using angle = 0.0");
+                            angle = 0.0;
+                        }
 
-                    mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
-                }
-                else if (transformations[j].nodeName == "rotation") {
-                    let axis = this.reader.getString(transformations[j], 'axis');
-                    let angle = this.reader.getFloat(transformations[j], 'angle');
-                    
-                    if (angle == null)
-                        return ("[TRANSFORMATIONS] Invalid values of angle in transformations on " + nodeID);
-
-                    if (axis == 'x' || axis == 'y' || axis == 'z')
+                        if (axis == null || (axis != 'x' && axis != 'y' && axis != 'z')) {
+                            this.onXMLMinorError("Missing/Invalid value of 'axis' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using axis = x");
+                            axis = 'x';
+                        }
+                        
                         mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-                    else
-                        return ("[TRANSFORMATIONS] Invalid axis in transformations on " + nodeID);
-                }
-                else if (transformations[j].nodeName == "scale") {
-                    let sx = this.reader.getFloat(transformations[j], 'sx');
-                    let sy = this.reader.getFloat(transformations[j], 'sy');
-                    let sz = this.reader.getFloat(transformations[j], 'sz');
+                    }
+                    else if (transformations[j].nodeName == "scale") {
+                        let sx = this.reader.getFloat(transformations[j], 'sx');
+                        let sy = this.reader.getFloat(transformations[j], 'sy');
+                        let sz = this.reader.getFloat(transformations[j], 'sz');
 
-                    if (sx == null || sy == null || sz == null)
-                        return ("[TRANSFORMATIONS] Invalid values of sx, sy and sz in transformations on " + nodeID);
+                        if (sx == null || isNaN(sx)) {
+                            this.onXMLMinorError("Missing/Invalid value of 'sx' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sx = 1.0");
+                            sx = 1.0;
+                        }
+                        if (sy == null || isNaN(sy)) {
+                            this.onXMLMinorError("Missing/Invalid value of 'sy' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sy = 1.0");
+                            sy = 1.0;
+                        }
+                        if (sz == null || isNaN(sz)) {
+                            this.onXMLMinorError("Missing/Invalid value of 'sz' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sz = 1.0");
+                            sz = 1.0;
+                        }
 
-                    mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
+                        mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
+                    }
                 }
             }
             
             // ---------- Material ---------- //
+            var materialID;
 
-            if (materialIndex == -1) {
-                return ("[MATERIAL] <material> tag missing from node " + nodeID + " in <nodes>");
+            if (materialIndex == -1 && this.idRoot == nodeID) {
+                return "<material> tag missing from Root Node (" + nodeID + ") in <nodes>. Ending execution...";
             }
-
-            var materialID = this.reader.getString(grandChildren[materialIndex], 'id');
-
-            if (materialID == null)
-                return ("[MATERIAL] Material ID missing from <material> tag, node " + nodeID + " in <nodes>");
-
-            else if (this.materials[materialID] == null && materialID != "null") {
-                return ("[MATERIAL] Material ID invalid (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>");
+            else if (materialIndex == -1 && this.idRoot != nodeID) {
+                this.onXMLMinorError("<material> tag missing from node " + nodeID + " in <nodes>. Considering material with id = 'null'");
+                this.nodes[nodeID].material = "null";
             }
             else {
-                this.nodes[nodeID].material = materialID;
+                materialID = this.reader.getString(grandChildren[materialIndex], 'id');
+
+                if (materialID == null) {
+                    this.onXMLMinorError("Atribute 'id' missing from <material> tag, node " + nodeID + " in <nodes>. Considering id = 'null'");
+                    materialID = "null";
+                }
+                else if (this.materials[materialID] == null && materialID != "null") {
+                    this.onXMLMinorError("Invalid atribute 'id' (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>. Considering id = 'null'");
+                    materialID = "null";
+                }
+                else {
+                    this.nodes[nodeID].material = materialID;
+                }
             }
 
             // ---------- Texture ---------- //
+            let textureID;
 
             if (textureIndex == -1) {
-                return ("[TEXTURE] <texture> tag missing from node " + nodeID + " in <nodes>");
-            }
-
-            let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
-
-            if (textureID == null) {
-                return ("[TEXTURE] Texture ID missing from <texture> tag, node " + nodeID + " in <nodes>");
-            }
-            else if (this.textures[textureID] == null && textureID != "null" && textureID != "clear")  {
-                return ("[TEXTURE] Texture ID invalid (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>");
+                this.onXMLMinorError("<texture> tag missing from node " + nodeID + " in <nodes>. Considering texture id = 'clear'");
+                this.nodes[nodeID].texture = "clear";
             }
             else {
-                this.nodes[nodeID].texture = textureID;
-            }
+                textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
-            let amplification = grandChildren[textureIndex].children[0];
+                if (textureID == null) {
+                    this.onXMLMinorError("Atribute 'id' missing from <texture> tag, node " + nodeID + " in <nodes>. Considering texture id = 'clear'");
+                    this.nodes[nodeID].texture = "clear";
+                }
+                else if (this.textures[textureID] == null && textureID != "null" && textureID != "clear")  {
+                    this.onXMLMinorError("Invalid 'id' (" + textureID + ") from <texture> tag, node " + nodeID + " in <nodes>. Considering texture id = 'clear'");
+                    this.nodes[nodeID].texture = "clear";
+                }
+                else {
+                    this.nodes[nodeID].texture = textureID;
+                }
 
-            if (amplification.nodeName != "amplification") { // Minor error probably here
-                return ("[TEXTURE] No amplification on nodeID" + nodeID);
-            }
-            else {
-                let afs = this.reader.getFloat(amplification, 'afs');
-                let aft = this.reader.getFloat(amplification, 'aft');
+                let amplification = grandChildren[textureIndex].children[0];
 
-                this.nodes[nodeID].afs = afs;
-                this.nodes[nodeID].aft = aft;
+                if (amplification.nodeName != "amplification") {
+                    this.onXMLMinorError("Missing/Invalid amplification tag from <texture> tag, node " + nodeID + " in <nodes>. Using afs = 1.0 and aft = 1.0");
+                    this.nodes[nodeID].afs = 1.0;
+                    this.nodes[nodeID].aft = 1.0;
+                }
+                else {
+                    let afs = this.reader.getFloat(amplification, 'afs');
+                    let aft = this.reader.getFloat(amplification, 'aft');
+
+                    this.nodes[nodeID].afs = afs;
+                    this.nodes[nodeID].aft = aft;
+                }
             }
 
             // ---------- Descendants ---------- //
-
-            var descendants = children[i].children[descendantsIndex].children;
-            
-            if (descendantsIndex == -1) {
-                return ("[DESCENDANTS] <descendants> tag missing from node " + nodeID + " in <nodes>");
-            }
-
-            if (descendants.length == 0) {
-                return ("[DESCENDANTS] " + nodeID + " in <nodes> don't have any descendant");
-            }
-            for (let j = 0; j < descendants.length; j++) {
-                if (descendants[j].nodeName == "noderef") {
-                    let id = this.reader.getString(descendants[j], 'id');
-
-                    if (id == null) {
-                        return ("[DESCENDANTS] Invalid nodeID on descendants of" + nodeID);
-                    }
-                    else if (nodeID == id) {
-                        return ("[DESCENDANTS] A node can't be a child and father at same time. Error on node " + nodeID);
-                    }
-
-                    this.nodes[nodeID].addDescendants(id);
+            if (descendantsIndex == -1)
+                this.onXMLMinorError("<descendants> tag missing from node " + nodeID + " in <nodes>. Considering no descendants...");
+            else {
+                var descendants = children[i].children[descendantsIndex].children;
+                
+                if (descendants.length == 0) {
+                    this.onXMLMinorError("No descendants from node " + nodeID + " in <nodes>");
                 }
-                else if (descendants[j].nodeName == "leaf") {
-                    let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
+                for (let j = 0; j < descendants.length; j++) {
+                    if (descendants[j].nodeName == "noderef") {
+                        let id = this.reader.getString(descendants[j], 'id');
 
-                    if (type == null) {
-                        return ("[DESCENDANTS] Type of leaf not found on " + nodeID + " in <nodes>");
+                        if (id == null) {
+                            this.onXMLMinorError("Missing atribute 'id' on descendant of " + nodeID + ". Ignoring descendant...");
+                        }
+                        else if (nodeID == id) {
+                            this.onXMLMinorError("Invalid atribute 'id' on descendant of " + nodeID + " - A node can't be a child and father at same time. Ignoring descendant...");
+                        }
+
+                        this.nodes[nodeID].addDescendants(id);
+                    }
+                    else if (descendants[j].nodeName == "leaf") {
+                        let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
+
+                        if (type == null) {
+                            this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
+                        }
+                        else {
+                            this.nodes.push(new MyLeaf(this, descendants[j]));
+                            this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+                        }
                     }
                     else {
-                        this.nodes.push(new MyLeaf(this, descendants[j]));
-                        this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+                        this.onXMLMinorError("Invalid descendant found in " + nodeID + ". All descendants in <nodes> should be leafs or noderef.");
                     }
                 }
-                else {
-                    return ("[DESCENDANTS] All descendants of " + nodeID + " in <nodes> should be leafs or noderef");
-                }
-            } 
+            }
         }
     }
 
@@ -979,23 +1058,31 @@ class MySceneGraph {
 
         // R
         var r = this.reader.getFloat(node, 'r');
-        if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-            return "unable to parse R component of the " + messageError;
+        if (!(r != null && !isNaN(r) && r >= 0 && r <= 1)) {
+            this.onXMLMinorError("Unable to parse R component of the " + messageError + ". Using r = 0.5");
+            r = 0.5;
+        }
 
         // G
         var g = this.reader.getFloat(node, 'g');
-        if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-            return "unable to parse G component of the " + messageError;
+        if (!(g != null && !isNaN(g) && g >= 0 && g <= 1)) {
+            this.onXMLMinorError("Unable to parse G component of the " + messageError + ". Using g = 0.5");
+            g = 0.5;
+        }
 
         // B
         var b = this.reader.getFloat(node, 'b');
-        if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-            return "unable to parse B component of the " + messageError;
+        if (!(b != null && !isNaN(b) && b >= 0 && b <= 1)) {
+            this.onXMLMinorError("Unable to parse B component of the " + messageError + ". Using b = 0.5");
+            b = 0.5;
+        }
 
         // A
         var a = this.reader.getFloat(node, 'a');
-        if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-            return "unable to parse A component of the " + messageError;
+        if (!(a != null && !isNaN(a) && a >= 0 && a <= 1)) {
+            this.onXMLMinorError("Unable to parse A component of the " + messageError + ". Using a = 1.0");
+            a = 1.0;
+        }
 
         color.push(...[r, g, b, a]);
 
