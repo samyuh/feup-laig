@@ -33,8 +33,8 @@ class MyTorus extends CGFobject {
         for (var loop = 0; loop <= this.loops; loop++) {
 
             theta += theta_increment;
+            angle = 0;
             for (var slice = 0; slice <= this.slices; slice++) {
-
                 // Parametric equations of Torus
                 let x = Math.cos(theta) * (this.outer + Math.cos(angle) * this.inner);
                 let y = Math.sin(theta) * (this.outer + Math.cos(angle) * this.inner)
@@ -80,12 +80,9 @@ class MyTorus extends CGFobject {
                 *  1
                 *  To map a texture, each side will have 1/this.slices
                 * */
-               /*
-                this.texCoords.push(1 - i / this.slices, 1);
-                this.texCoords.push(1 - i / this.slices, 0);
-
-                */
-				angle += amplitude_increment;
+                this.texCoords.push(1 - slice / this.slices, loop / this.loops);
+                
+                angle += amplitude_increment;
             }
         }
 
@@ -98,7 +95,6 @@ class MyTorus extends CGFobject {
                 this.indices.push(startVertice + slice + this.slices + 1);
                 this.indices.push(startVertice + slice + 1);
                
-                
                 this.indices.push(startVertice + slice + 1);
                 this.indices.push(startVertice + slice + this.slices + 1); 
                 this.indices.push(startVertice + slice + this.slices + 2);
@@ -110,5 +106,17 @@ class MyTorus extends CGFobject {
 		this.primitiveType = this.scene.gl.TRIANGLES;
 
 		this.initGLBuffers();
+    }
+    
+    updateTexCoords(afs, aft) {
+        this.texCoords = [];
+        
+        for (var loop = 0; loop <= this.loops; loop++) {
+            for (var slice = 0; slice <= this.slices; slice++) {
+                this.texCoords.push((1 - slice / this.slices) / afs, (loop / this.loops) / aft);
+            }
+        }
+
+		this.updateTexCoordsGLBuffers();
 	}
 }

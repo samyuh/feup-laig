@@ -38,20 +38,20 @@
             <position x="10" y="12" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />             <!-- diffuse component -->
-            <specular r="0.1" g="0.1" b="0.1" a="1.0" />            <!-- specular component -->
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />            <!-- specular component -->
         </light>
 
         <light id="windowLight">            <!-- window light -->
             <enable value="0" />
-            <position x="0" y="15" z="-20" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
-            <diffuse r="0.1" g="0.7" b="1.0" a="1.0" />              <!-- diffuse component -->
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
+            <specular r="0.3" g="0.3" b="0.4" a="1.0" />             <!-- specular component -->
         </light>
 
         <light id="rightLight">            <!-- right torch light -->
             <enable value="0" />
-            <position x="25" y="15" z="38" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="25" y="15" z="0" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -59,7 +59,7 @@
 
         <light id="leftLight">            <!-- left torch light -->
             <enable value="0" />
-            <position x="25" y="15" z="2" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="-25" y="15" z="0" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -69,9 +69,13 @@
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
-        <texture id="wallTexture" path="./scenes/images/stones.jpg" />
-        <texture id="glassTexture" path="./scenes/images/glass.jpg" />
-        <texture id="throneTexture" path="./scenes/images/swords.jpg" />
+        <texture id="stoneTexture" path="./scenes/images/stones.jpg" />
+        <texture id="stonepillarTexture" path="./scenes/images/stonepillar.jpg" />
+        <texture id="ironTexture" path="./scenes/images/iron.jpg" />
+        <texture id="glassTexture" path="./scenes/images/vidral.jpg" />
+        <texture id="floorTexture" path="./scenes/images/floor.jpg" />
+        <texture id="floorBotTexture" path="./scenes/images/floor-bot.jpg" />
+        <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
     </textures>
 
     <materials>
@@ -79,40 +83,24 @@
          requires a distinct "id". At least one material should be present. -->
          <material id="defaultMaterial">
             <shininess value="1.0" />
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="redMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.92" g="0.0" b="0.0" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
-        <material id="floorMaterial">
+        <material id="yellowMaterial">
             <shininess value="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.86" g="0.85" b="0.7" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="blackMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="orangeMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="0.5" b="0.0" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
-        <material id="lightOrangeMaterial">
-            <shininess value="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="0.7" b="0.4" a="1.0" />
+            <diffuse r="0.88" g="0.88" b="0.4" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -146,8 +134,8 @@
         <node id="wall">
             <material id="null" />
 
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="stoneTexture">
+                <amplification afs="0.4" aft="0.4" />
             </texture>
 
             <transformations>
@@ -164,9 +152,9 @@
 
         <!-- Node representing the window decoration of the main wall -->
         <node id="main-wall">
-            <material id="null" />
+            <material id="defaultMaterial" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -190,7 +178,7 @@
 
             <transformations>
                 <translation x="-17.0" y="0.0" z="-26.5" />
-                <scale sx="26.0" sy="20.0" sz="3.0" />
+                <scale sx="26.0" sy="30.0" sz="3.0" />
             </transformations>
 
             <descendants>
@@ -207,7 +195,7 @@
 
             <transformations>
                 <translation x="17.0" y="0.0" z="-26.5" />
-                <scale sx="26.0" sy="20.0" sz="3.0" />
+                <scale sx="26.0" sy="30.0" sz="3.0" />
             </transformations>
 
             <descendants>
@@ -218,8 +206,8 @@
         <node id="wall-bot">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="stoneTexture">
+                <amplification afs="1.5" aft="1.5" />
             </texture>
 
             <transformations>
@@ -258,7 +246,6 @@
             </texture>
 
             <transformations>
-                
                 <scale sx="4.0" sy="4.0" sz="4.0" />
             </transformations>
 
@@ -288,14 +275,16 @@
         <node id="glass">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="glassTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="0.0" y="10.0" z="-30.0" />
             </transformations>
 
             <descendants>
+                <leaf type="rectangle" x1="-20" y1="-20" x2="20" y2="20" />
             </descendants>
         </node>
 
@@ -303,7 +292,7 @@
         <node id="window-decoration">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -321,7 +310,7 @@
         <node id="window-decoration-spiral">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -331,17 +320,18 @@
             </transformations>
 
             <descendants>
-                <noderef id="window-decoration-wheel" />
                 <noderef id="window-decoration-sphere" />
+                <noderef id="window-decoration-wheel-outer" />
+                <noderef id="window-decoration-wheel-inner" />
                 <noderef id="window-decoration-spirals" />
             </descendants>
         </node>
 
         <!-- Node representing the wheel of the window decoration of the main wall -->
-        <node id="window-decoration-wheel">
-            <material id="blackMaterial" />
+        <node id="window-decoration-wheel-outer">
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -353,11 +343,10 @@
             </descendants>
         </node>
 
-        <!-- Node representing the inner sphere of the window decoration of the main wall -->
-        <node id="window-decoration-sphere">
-            <material id="orangeMaterial" />
+        <node id="window-decoration-wheel-inner">
+            <material id="defaultMaterial" />
 
-            <texture id="clear">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -365,15 +354,31 @@
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.5" slices="32" stacks="32"/>
+                <leaf type="torus" inner="0.2" outer="0.8" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the inner sphere of the window decoration of the main wall -->
+        <node id="window-decoration-sphere">
+            <material id="redMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.8" slices="32" stacks="32"/>
             </descendants>
         </node>
 
         <!-- Node representing the spirals of the window decoration of the main wall -->
         <node id="window-decoration-spirals">
-            <material id="lightOrangeMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -395,7 +400,7 @@
         <node id="window-decoration-spiral-side1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -411,7 +416,7 @@
         <node id="window-decoration-spiral-side2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -428,7 +433,7 @@
         <node id="window-decoration-spiral-side3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -445,7 +450,7 @@
         <node id="window-decoration-spiral-side4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -462,7 +467,7 @@
         <node id="window-decoration-spiral-side5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -479,7 +484,7 @@
         <node id="window-decoration-spiral-side6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -496,7 +501,7 @@
         <node id="window-decoration-spiral-side7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -512,7 +517,41 @@
         <node id="window-decoration-spiral-object">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.5" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="window-decoration-spiral-object-front-triangle" />
+                <noderef id="window-decoration-spiral-object-back-triangle" />
+                <noderef id="window-decoration-spiral-object-rectangle" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-back-triangle">
+            <material id="defaultMaterial" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-0.05" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-0.7" y1="0.0" x2="0.7" y2="0.0" x3="0.0" y3="2.4" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-front-triangle">
+            <material id="yellowMaterial" />
+
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -520,15 +559,30 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="-0.3" y1="1.5" x2="0.3" y2="1.5" x3="0.0" y3="2.5" />
-                <leaf type="rectangle"  x1="-0.1" y1="2.0" x2="0.1" y2="3.5" />
+                <leaf type="triangle" x1="-0.5" y1="0.0" x2="0.5" y2="0.0" x3="0.0" y3="2.1" />
+            </descendants>
+        </node>
+
+        <node id="window-decoration-spiral-object-rectangle">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.05" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle"  x1="-0.1" y1="2.0" x2="0.1" y2="3.8" />
             </descendants>
         </node>
 
         <node id="window-decoration-armor">
-            <material id="blackMaterial" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -554,7 +608,7 @@
         <node id="armor1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -571,7 +625,7 @@
         <node id="armor2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -588,7 +642,7 @@
         <node id="armor3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -605,7 +659,7 @@
         <node id="armor4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -622,7 +676,7 @@
         <node id="armor5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -639,7 +693,7 @@
         <node id="armor-thin1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -656,7 +710,7 @@
         <node id="armor-thin2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -673,7 +727,7 @@
         <node id="armor-thin3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -690,7 +744,7 @@
         <node id="armor-arc">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -716,14 +770,14 @@
         <node id="armor-arc1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
                 
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="15" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="3.5" sz="0.2" />
             </transformations>
 
@@ -735,13 +789,13 @@
         <node id="armor-arc2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="30" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="4.5" sz="0.2" />
             </transformations>
 
@@ -753,13 +807,13 @@
         <node id="armor-arc3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="45" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="5.5" sz="0.2" />
             </transformations>
 
@@ -771,13 +825,13 @@
         <node id="armor-arc4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="60" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="6.5" sz="0.2" />
             </transformations>
 
@@ -789,13 +843,13 @@
         <node id="armor-arc5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="75" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="7.5" sz="0.2" />
             </transformations>
 
@@ -807,13 +861,13 @@
         <node id="armor-arc6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="90" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="8.5" sz="0.2" />
             </transformations>
 
@@ -825,13 +879,13 @@
         <node id="armor-arc7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="105" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="7.5" sz="0.2" />
             </transformations>
 
@@ -843,13 +897,13 @@
         <node id="armor-arc8">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="120" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="6.5" sz="0.2" />
             </transformations>
 
@@ -861,13 +915,13 @@
         <node id="armor-arc9">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="135" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="5.5" sz="0.2" />
             </transformations>
 
@@ -879,13 +933,13 @@
         <node id="armor-arc10">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="150" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="4.5" sz="0.2" />
             </transformations>
 
@@ -897,13 +951,13 @@
         <node id="armor-arc11">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
                 <rotation axis="z" angle="165" />
-                <translation x="0.0" y="3.4" z="0.0" />
+                <translation x="0.0" y="3.0" z="0.0" />
                 <scale sx="0.2" sy="3.5" sz="0.2" />
             </transformations>
 
@@ -915,7 +969,7 @@
         <node id="window-decoration-swords">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -935,12 +989,12 @@
         <node id="window-sword-1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-50.0" y="0.0" z="0.0" />
+                <translation x="-50.0" y="-5.0" z="0.0" />
                 <rotation axis="z" angle="-90" />
             </transformations>
 
@@ -952,12 +1006,12 @@
         <node id="window-sword-2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-50.0" y="20.0" z="0.0" />
+                <translation x="-50.0" y="7.5" z="0.0" />
                 <rotation axis="z" angle="-90" />
             </transformations>
 
@@ -969,12 +1023,12 @@
         <node id="window-sword-3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="50.0" y="0.0" z="0.0" />
+                <translation x="50.0" y="-5.0" z="0.0" />
                 <rotation axis="z" angle="90" />
             </transformations>
 
@@ -986,12 +1040,12 @@
         <node id="window-sword-4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="50.0" y="20.0" z="0.0" />
+                <translation x="50.0" y="7.5" z="0.0" />
                 <rotation axis="z" angle="90" />
             </transformations>
 
@@ -1004,7 +1058,7 @@
         <node id="door-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1021,7 +1075,7 @@
         <node id="door-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1038,7 +1092,7 @@
         <node id="door">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1048,16 +1102,65 @@
 
             <descendants>
                 <noderef id="door-arc" />
+                <noderef id="door-inside" />
                 <noderef id="door-side1" />
                 <noderef id="door-side2" />
             </descendants>
         </node>
 
         <!-- Node representing the door arc -->
+        <node id="door-inside">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="door-top" />
+                <noderef id="door-bot" />
+            </descendants>
+        </node>
+
+        <node id="door-top">
+            <material id="null" />
+
+            <texture id="darkRoomTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="10.6" z="-0.4" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.5" topRadius="5.0" bottomRadius="5.0" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="door-bot">
+            <material id="null" />
+
+            <texture id="darkRoomTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0." z="0.2" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-5.0" y1="-5.0" x2="5.0" y2="10.0" />
+            </descendants>
+        </node>
+
         <node id="door-arc">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1075,7 +1178,7 @@
         <node id="door-side1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1095,7 +1198,7 @@
         <node id="door-side2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1114,7 +1217,7 @@
         <node id="door-cylinder-bot">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1130,7 +1233,7 @@
         <node id="door-cylinder-top">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1147,7 +1250,7 @@
         <node id="door-cylinder">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1164,7 +1267,7 @@
         <node id="door-cube">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1181,7 +1284,7 @@
         <node id="sword-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1199,7 +1302,7 @@
         <node id="sword-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1217,7 +1320,7 @@
         <node id="throne">
             <material id="null" />
 
-            <texture id="throneTexture">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1243,7 +1346,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0.0" z="0.0" />
+                <translation x="0.0" y="0.0" z="0.0" />
                 <scale sx="2.0" sy="1.0" sz="1.8" />
             </transformations>
 
@@ -1261,7 +1364,6 @@
             </texture>
 
             <transformations>
-                <scale sx="1.0" sy="0.8" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -1279,12 +1381,13 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="-1.3" />
-                <scale sx="1.2" sy="2.0" sz="0.8" />
+                <translation x="0.0" y="0.0" z="-0.9" />
             </transformations>
 
             <descendants>
-                <noderef id="cube" />
+                <noderef id="throne-support-front-cylinder" />
+                <noderef id="throne-support-back-cylinder" />
+                <noderef id="throne-support-cube" />
             </descendants>
         </node>
 
@@ -1297,12 +1400,65 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="1.3" />
-                <scale sx="1.2" sy="2.0" sz="0.8" />
+                <translation x="0.0" y="0.0" z="0.9" />
+            </transformations>
+
+            <descendants>
+                <noderef id="throne-support-front-cylinder" />
+                <noderef id="throne-support-back-cylinder" />
+                <noderef id="throne-support-cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-cube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.8" sy="1.6" sz="0.4" />
             </transformations>
 
             <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-back-cylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="2.0" sy="0.8" sz="1.0" />
+                <translation x="-0.4" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.0" topRadius="0.2" bottomRadius="0.3" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <node id="throne-support-front-cylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1.4" sy="0.8" sz="1.0" />
+                <translation x="0.6" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.0" topRadius="0.2" bottomRadius="0.8" stacks="8" slices="8" />
             </descendants>
         </node>
 
@@ -1316,7 +1472,7 @@
 
             <transformations>
                 <translation x="-1.0" y="0.0" z="0.0" />
-                <scale sx="1.0" sy="3.0" sz="1.8" />
+                <scale sx="0.2" sy="3.0" sz="1.8" />
             </transformations>
 
             <descendants>
@@ -1349,28 +1505,28 @@
             </texture>
 
             <transformations>
-                <translation x="-1.6" y="2.0" z="0.0" />
+                <translation x="-1.0" y="2.0" z="0.0" />
                 <rotation axis="y" angle="-90" />
-                <scale sx="0.1" sy="0.1" sz="0.1" />
+                <scale sx="0.1" sy="0.1" sz="0.2" />
             </transformations>
 
             <descendants>
-                <noderef id="sword-1" />
-                <noderef id="sword-2" />
-                <noderef id="sword-3" />
-                <noderef id="sword-4" />
-                <noderef id="sword-5" />
-                <noderef id="sword-6" />
-                <noderef id="sword-7" />
-                <noderef id="sword-8" />
-                <noderef id="sword-9" />
-                <noderef id="sword-10" />
-                <noderef id="sword-11" />
+                <noderef id="arc-chair-1" />
+                <noderef id="arc-chair-2" />
+                <noderef id="arc-chair-3" />
+                <noderef id="arc-chair-4" />
+                <noderef id="arc-chair-5" />
+                <noderef id="arc-chair-6" />
+                <noderef id="arc-chair-7" />
+                <noderef id="arc-chair-8" />
+                <noderef id="arc-chair-9" />
+                <noderef id="arc-chair-10" />
+                <noderef id="arc-chair-11" />
             </descendants>
         </node>
 
         <!-- Node representing the first throne sword -->
-        <node id="sword-1">
+        <node id="arc-chair-1">
             <material id="null" />
 
             <texture id="null">
@@ -1381,12 +1537,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the second throne sword -->
-        <node id="sword-2">
+        <node id="arc-chair-2">
             <material id="null" />
 
             <texture id="null">
@@ -1398,12 +1554,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the third throne sword -->
-        <node id="sword-3">
+        <node id="arc-chair-3">
             <material id="null" />
 
             <texture id="null">
@@ -1415,12 +1571,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the fourth throne sword -->
-        <node id="sword-4">
+        <node id="arc-chair-4">
             <material id="null" />
 
             <texture id="null">
@@ -1432,12 +1588,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the fifth throne sword -->
-        <node id="sword-5">
+        <node id="arc-chair-5">
             <material id="null" />
 
             <texture id="null">
@@ -1449,12 +1605,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the sixth throne sword -->
-        <node id="sword-6">
+        <node id="arc-chair-6">
             <material id="null" />
 
             <texture id="null">
@@ -1466,12 +1622,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the seventh throne sword -->
-        <node id="sword-7">
+        <node id="arc-chair-7">
             <material id="null" />
 
             <texture id="null">
@@ -1483,12 +1639,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the eighth throne sword -->
-        <node id="sword-8">
+        <node id="arc-chair-8">
             <material id="null" />
 
             <texture id="null">
@@ -1500,12 +1656,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the ninth throne sword -->
-        <node id="sword-9">
+        <node id="arc-chair-9">
             <material id="null" />
 
             <texture id="null">
@@ -1517,12 +1673,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the tenth throne sword -->
-        <node id="sword-10">
+        <node id="arc-chair-10">
             <material id="null" />
 
             <texture id="null">
@@ -1534,12 +1690,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
             </descendants>
         </node>
 
         <!-- Node representing the eleventh throne sword -->
-        <node id="sword-11">
+        <node id="arc-chair-11">
             <material id="null" />
 
             <texture id="null">
@@ -1551,7 +1707,22 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword" />
+                <noderef id="arch-throne" />
+            </descendants>
+        </node>
+
+        <node id="arch-throne">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="sword-body" />
             </descendants>
         </node>
 
@@ -1559,7 +1730,7 @@
         <node id="sword">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="ironTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1719,9 +1890,9 @@
 
         <!-- Node representing the floor of the scene -->
         <node id="floor">
-            <material id="floorMaterial" />
+            <material id="defaultMaterial" />
 
-            <texture id="clear">
+            <texture id="floorTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1739,7 +1910,7 @@
         <node id="floor-bottom">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="floorBotTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1758,7 +1929,7 @@
         <node id="floor-top">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1778,7 +1949,7 @@
         <node id="stair1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1795,7 +1966,7 @@
         <node id="stair2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1812,7 +1983,7 @@
         <node id="side-stair2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1829,7 +2000,7 @@
         <node id="stair3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1846,7 +2017,7 @@
         <node id="side-stair3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1864,7 +2035,7 @@
         <node id="floor-stairs">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1883,7 +2054,7 @@
         <node id="stair4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1900,7 +2071,7 @@
         <node id="stair5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1917,7 +2088,7 @@
         <node id="stair6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1934,7 +2105,7 @@
         <node id="stair7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1952,12 +2123,12 @@
         <node id="columns">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="10.0" />
+                <translation x="0.0" y="0.0" z="14.0" />
             </transformations>
 
             <descendants>
@@ -1970,12 +2141,12 @@
         <node id="column-left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-15.0" y="0.0" z="0.0" />
+                <translation x="-17.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -1987,12 +2158,12 @@
         <node id="column-right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="15.0" y="0.0" z="0.0" />
+                <translation x="17.0" y="0.0" z="0.0" />
             </transformations>
 
             <descendants>
@@ -2021,12 +2192,12 @@
         <node id="column-base">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stoneTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <scale sx="4" sy="4" sz="4" />
+                <scale sx="8" sy="2" sz="8" />
             </transformations>
 
             <descendants>
@@ -2038,17 +2209,17 @@
         <node id="column-cylinder">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="stonepillarTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0.0" y="4.0" z="0.0" />
+                <translation x="0.0" y="2.0" z="0.0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="20" topRadius="1" bottomRadius="1" stacks="8" slices="8" />
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="8" />
             </descendants>
         </node>
 
@@ -2056,7 +2227,7 @@
         <node id="cube">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2078,7 +2249,7 @@
         <node id="cubeface1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2094,7 +2265,7 @@
         <node id="cubeface2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2111,7 +2282,7 @@
         <node id="cubeface3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2128,7 +2299,7 @@
         <node id="cubeface4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2145,7 +2316,7 @@
         <node id="cubeface5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -2162,7 +2333,7 @@
         <node id="cubeface6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

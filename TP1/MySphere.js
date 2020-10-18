@@ -12,6 +12,7 @@ class MySphere extends CGFobject {
      */
     constructor(scene, radius, slices, stacks) {
       super(scene);
+      this.radius = radius;
       this.latDivs = stacks * 2;
       this.longDivs = slices;
   
@@ -39,8 +40,8 @@ class MySphere extends CGFobject {
   
       // -- build an all-around stack at a time, starting on "north pole" and proceeding "south" -- //
       for (let latitude = 0; latitude <= this.latDivs; latitude++) {
-        var sinPhi = Math.sin(phi);
-        var cosPhi = Math.cos(phi);
+        var sinPhi = this.radius * Math.sin(phi);
+        var cosPhi = this.radius * Math.cos(phi);
   
         // -- in each stack, build all the slices around, starting on longitude 0 -- //
         theta = 0;
@@ -83,5 +84,23 @@ class MySphere extends CGFobject {
   
       this.primitiveType = this.scene.gl.TRIANGLES;
       this.initGLBuffers();
+    }
+
+    updateTexCoords(afs, aft) {
+      this.texCoords = [];
+  
+      var longD = 1 / this.longDivs;
+      var latD = 1 / this.latDivs;
+  
+      for (let latitude = 0; latitude <= this.latDivs; latitude++) {
+        for (let longitude = 0; longitude <= this.longDivs; longitude++) {
+          var tu = 0.25 + longD * longitude;
+          var tv = latD * latitude;
+          
+          this.texCoords.push(tu / afs, tv / aft);
+        }
+      }
+  
+      this.updateTexCoordsGLBuffers();
     }
   }
