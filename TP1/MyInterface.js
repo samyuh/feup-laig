@@ -36,17 +36,20 @@ class MyInterface extends CGFinterface {
         this.activeKeys={};
     }
 
-    initCameras() {
+    
+    initInterfaceCameras() {
         // Views Dropdown
         this.gui.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
             () => {
-                this.scene.camera = this.scene.cameras[this.scene.selectedView];
+                this.scene.camera = this.scene.graph.cameras[this.scene.selectedView];
+
                 this.setActiveCamera(this.scene.camera);
             }
         );
     }
+     
 
-    initLights() {
+    initInterfaceLights() {
         // Light Checkboxes in GUI
         this.lights = this.gui.addFolder('Lights');
         for(const light of this.scene.lights) {

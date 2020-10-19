@@ -9,7 +9,7 @@
 
     <views default="frontCamera">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+        <perspective id="sideCamera" near="0.1" far="500" angle="45">
             <from x="50" y="15" z="40" />
             <to x="0" y="-2" z="0" />
         </perspective>

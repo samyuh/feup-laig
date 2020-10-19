@@ -66,6 +66,9 @@ class MySceneGraph {
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
+
+        this.scene.interface.initInterfaceCameras();
+        this.scene.interface.initInterfaceLights();
     }
 
     /*
@@ -248,7 +251,11 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+
+        this.cameras = [];
+
         this.scene.viewIDs = [];
+
         var children = viewsNode.children;
 
         var default_view = this.reader.getString(viewsNode, 'default');
@@ -442,16 +449,16 @@ class MySceneGraph {
 
             // Obtained all data, adding camera to the scene cameras
             if (nodeType === "perspective") {
-                this.scene.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
+                this.cameras[id] = new CGFcamera(camera.angle * Math.PI / 180.0, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z));
             }
             else if (nodeType === "ortho") {
-                this.scene.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
+                this.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
             }
         }
         
         this.log("Parsed Views.");
 
-        this.scene.initCameras();
+        //this.scene.initCameras();
 
         return null;
     }
