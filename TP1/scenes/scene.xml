@@ -2090,6 +2090,25 @@
 
             <descendants>
                 <noderef id="cube" />
+                <noderef id = "stair-cylinder" />
+            </descendants>
+        </node>
+
+        <node id="stair-cylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="1.0" z="0.0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="0.2" sy="0.3" sz="0.2" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1.0" topRadius="2.5" bottomRadius="2.5" stacks="15" slices="20" />
             </descendants>
         </node>
 
@@ -2107,6 +2126,7 @@
 
             <descendants>
                 <noderef id="cube" />
+                <noderef id = "stair-cylinder" />
             </descendants>
         </node>
 
@@ -2141,6 +2161,7 @@
 
             <descendants>
                 <noderef id="cube" />
+                <noderef id = "stair-cylinder" />
             </descendants>
         </node>
 
