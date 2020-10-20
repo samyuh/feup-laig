@@ -76,6 +76,8 @@
         <texture id="floorTexture" path="./scenes/images/floor.jpg" />
         <texture id="floorBotTexture" path="./scenes/images/floor-bot.jpg" />
         <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
+        <texture id="fireTexture" path="./scenes/images/fire.jpg" />
+        <texture id="darkwoodTexture" path="./scenes/images/darkwood.jpg" />
     </textures>
 
     <materials>
@@ -147,6 +149,8 @@
                 <noderef id="door-left" />
                 <noderef id="sword-left" />
                 <noderef id="sword-right" />
+                <noderef id="torch-left" />
+                <noderef id="torch-right" />
             </descendants>
         </node>
 
@@ -1313,6 +1317,132 @@
 
             <descendants>
                 <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <!-- Node representing a torch on the wall -->
+        <node id="torch-left">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-18.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="torch" />
+            </descendants>
+        </node>
+
+        <!-- Node representing a torch on the wall -->
+        <node id="torch-right">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="18.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="torch" />
+            </descendants>
+        </node>
+
+        <!-- Node representing a torch on the wall -->
+        <node id="torch">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="22.0" z="-24.0" />
+                <rotation axis="x" angle="30" />
+                <scale sx="0.7" sy="0.7" sz="0.7" />
+            </transformations>
+
+            <descendants>
+                <noderef id="torch-support" />
+                <noderef id="torch-body" />
+                <noderef id="torch-fire" />
+                <noderef id="torch-torus" />
+            </descendants>
+        </node>
+
+        <node id="torch-support">
+            <material id="null" />
+
+            <texture id="darkwoodTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="4" topRadius="0.01" bottomRadius="0.7" stacks="20" slices="15" />
+            </descendants>
+        </node>
+
+        <node id="torch-body">
+            <material id="null" />
+
+            <texture id="darkwoodTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            <translation x="0.0" y="0.5" z="-0.4" />
+                <rotation axis="x" angle="60" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.7" stacks="20" slices="15" />
+            </descendants>
+        </node>
+
+        <node id="torch-fire">
+            <material id="null" />
+
+            <texture id="fireTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="1.35" z="-0.9" />
+                <rotation axis="x" angle="60" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />
+            </descendants>
+        </node>
+
+        <node id="torch-torus">
+            <material id="null" />
+
+            <texture id="stonepillarTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="-0.5" z="0.2" />
+                <rotation axis="x" angle="-30" />
+                <scale sx="0.22" sy="0.22" sz="0.22" />
+            </transformations>
+
+            <descendants>
+                <noderef id="firepit-torus-bottom" />
+                <noderef id="firepit-torus-middle" />
+                <noderef id="firepit-torus-top" />
             </descendants>
         </node>
 
