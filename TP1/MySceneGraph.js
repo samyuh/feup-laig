@@ -1144,10 +1144,8 @@ class MySceneGraph {
      * @param {nodeID} parentNode
      * @param {materialID} parentMaterial
      * @param {textureID} parentTexture
-     * @param {parentAFS} parentAFS
-     * @param {parentAFT} parentAFT
      */
-    processNode(parentNode, parentMaterial, parentTexture, parentAFS, parentAFT) {
+    processNode(parentNode, parentMaterial, parentTexture) {
         let currentNode = this.nodes[parentNode];
 
         // ------- Material ------ //
@@ -1172,8 +1170,8 @@ class MySceneGraph {
         // -- If node texture is null, then it will inherit parent's texture
         else if (currentNode.texture == "null") {
             currentTexture = parentTexture;
-            currentAFS = parentAFS;
-            currentAFT = parentAFT;
+            currentAFS = currentNode.afs;
+            currentAFT = currentNode.aft;
         }
         // -- Otherwise, it will have the texture ID
         else {
@@ -1205,8 +1203,7 @@ class MySceneGraph {
 
         // Não fazer afs / aft aqui, fazer na inicialização do objeto 
         for (var i = 0; i < this.nodes[parentNode].leaves.length; i++) {
-            if (currentTexture != "null")
-                currentNode.leaves[i].updateTexCoords(currentAFS, currentAFT);
+            currentNode.leaves[i].updateTexCoords(currentAFS, currentAFT);
 
             currentNode.leaves[i].display();
         }
