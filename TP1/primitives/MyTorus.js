@@ -1,5 +1,5 @@
 /**
- * MyHalfTorus
+ * MyTorus
  * @constructor
  * @param scene - Reference to MyScene object
  * @param inner - Reference to MyScene object
@@ -7,7 +7,7 @@
  * @param slices - Reference to MyScene object
  * @param loops - Reference to MyScene object
  */
-class MyHalfTorus extends CGFobject {
+class MyTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
         this.inner = inner;
@@ -28,13 +28,13 @@ class MyHalfTorus extends CGFobject {
         var amplitude_increment = (2 * Math.PI) / this.slices;
 
 		let theta = 0;
-        var theta_increment = Math.PI / this.loops;
+        var theta_increment = (2 * Math.PI) / this.loops;
         
         for (var loop = 0; loop <= this.loops; loop++) {
 
             theta += theta_increment;
+            angle = 0;
             for (var slice = 0; slice <= this.slices; slice++) {
-
                 // Parametric equations of Torus
                 let x = Math.cos(theta) * (this.outer + Math.cos(angle) * this.inner);
                 let y = Math.sin(theta) * (this.outer + Math.cos(angle) * this.inner)
@@ -80,9 +80,9 @@ class MyHalfTorus extends CGFobject {
                 *  1
                 *  To map a texture, each side will have 1/this.slices
                 * */
-               this.texCoords.push(1 - slice / this.slices, loop / this.loops);
-
-				angle += amplitude_increment;
+                this.texCoords.push(slice / this.slices, 1 - loop / this.loops);
+                
+                angle += amplitude_increment;
             }
         }
 
@@ -95,7 +95,6 @@ class MyHalfTorus extends CGFobject {
                 this.indices.push(startVertice + slice + this.slices + 1);
                 this.indices.push(startVertice + slice + 1);
                
-                
                 this.indices.push(startVertice + slice + 1);
                 this.indices.push(startVertice + slice + this.slices + 1); 
                 this.indices.push(startVertice + slice + this.slices + 2);
@@ -110,11 +109,11 @@ class MyHalfTorus extends CGFobject {
     }
     
     updateTexCoords(afs, aft) {
-		this.texCoords = [];
+        this.texCoords = [];
         
         for (var loop = 0; loop <= this.loops; loop++) {
             for (var slice = 0; slice <= this.slices; slice++) {
-                this.texCoords.push((1 - slice / this.slices) / afs, (loop / this.loops) / aft);
+                this.texCoords.push((slice / this.slices) / afs, (1 - loop / this.loops) / aft);
             }
         }
 

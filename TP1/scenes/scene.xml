@@ -36,7 +36,7 @@
         <light id="ambientLight">            <!-- ambient light -->
             <enable value="1" />
             <position x="10" y="12" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />             <!-- diffuse component -->
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />            <!-- specular component -->
         </light>

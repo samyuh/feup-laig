@@ -13,13 +13,14 @@ class MyTriangle extends CGFobject {
 		this.y2 = y2;
 		this.x3 = x3;
 		this.y3 = y3; 
+		
 		this.initBuffers();
 	}
 	initBuffers() {
 		this.vertices = [
-			this.x1, this.y1, 0,	//0
-			this.x2, this.y2, 0,	//1
-			this.x3, this.y3, 0,	//2
+			this.x1, this.y1, 0,	
+			this.x2, this.y2, 0,	
+			this.x3, this.y3, 0,
 		];
 
 		// Counter-clockwise reference of vertices
@@ -55,10 +56,10 @@ class MyTriangle extends CGFobject {
 	}
 
 	updateTexCoords(afs, aft) {
-		this.texCoords = [
-			0, 						0,
-			this.a/afs, 		  	0,
-			this.c*this.cosA/afs, this.c*this.sinA/aft
+		this.texCoords = [	
+			0, 						1,
+			this.a/afs, 		  	1,
+			this.c*this.cosA / afs, (1 - this.c*this.sinA) /aft,
 		];
 
 		this.updateTexCoordsGLBuffers();

@@ -33,29 +33,33 @@ class MyCylinder extends CGFobject {
         let height_increment = this.height / this.stacks;
         let radius_increment = (this.bottomRadius - this.topRadius) / this.stacks;
         
+        /* [n] represents the n number
+        *  
+        * To create base is necessary [slices] plus [1] (base center) vertices.
+        * 
+        *   
+        * Every stack has [slices + 1] vertices.
+        * So for the n-th stack, we need to start at [n*stack + n]
+        * 
+        * In order to create the rectangles we need to take the following into consideration
+        * 
+        * If bottom-left corner was the start vertice, then would be [startVertice + slice], 
+        * where slice indicates the current position on the stack 
+        * bottom-left corner can be obtained by adding 1 to bottom-right corner
+        * 
+        * The same thing can be applied to top-right and top-left corner
+        * top-right corner will be plus [slices + 1] than the bottom right vertice, 
+        * since it is above in other stack
+        * and top-left corner can be obtained by adding 1 to top-right corner
+        *
+        * After this, just join vertices counterclockwise
+        */
 
-        // Bottom side vertices
-        var angle = 0;
-        this.vertices.push(0, 0, 0);
-        this.normals.push(0, 0, -1);
 
-        this.texCoords.push(0.5, 0.5);
-
-        for (var i = 0; i < this.slices; i++) {
-            let x = Math.cos(angle);
-            var y = Math.sin(angle);
-
-            this.vertices.push(x * this.bottomRadius, y * this.bottomRadius, 0);
-
-            this.normals.push(0, 0, -1);
-
-            this.texCoords.push(0.5 * Math.cos(angle) + 0.5, 0.5 * Math.sin(angle) + 0.5);   
-
-            angle += amplitude_increment;      
-        }
+        // --- Bottom Vertices --- //
+        this.createBases(amplitude_increment, 0, -1);
         
-        // Cylinder side vertices
-        
+        // ---  Side Vertices  --- //
         for(var h = 0; h <= this.stacks; h++) {
             let angle = 0;
             for (var i = 0; i <= this.slices; i++) {
@@ -71,81 +75,57 @@ class MyCylinder extends CGFobject {
                 // -- Normals -- //
                 this.normals.push(Math.cos(angle), Math.sin(angle), 0);
 
-                /*
                 // -- Texture Coordinates -- //
-                /*  0 ----------- 1
-                *  |
-                *  |
-                *  |
-                *  |
-                *  1
-                *  To map a texture, each side will have 1/this.slices
-                * */
-               
-                this.texCoords.push(1 - i / this.slices, h / this.stacks);
+                this.texCoords.push(i / this.slices, 1 - h / this.stacks);
                 
-
                 angle += amplitude_increment;
             }
         }
 
-        // Top side vertices
-        var angle = 0;
-        this.vertices.push(0);
-        this.vertices.push(0);
-        this.vertices.push(this.height);
-        this.normals.push(0, 0, 1);
+        // --- Top Vertices --- //
+        this.createBases(amplitude_increment, this.height, -1);
+
+        // -- Indices Push
+        this.createIndices();
+    
+        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.initGLBuffers();
+    }
+
+    /**
+     * @method createBases
+     * Creates Cylinder's bot and top base
+     * @param amplitude_increment - Amplitude increment between each slice
+     * @param height - Z Position
+     * @param zNormalDirection - 1 if position, -1 if negative
+     */
+    createBases(amplitude_increment, height, zNormalDirection) {
+        let angle = 0;
+        this.vertices.push(0, 0, height);
+        this.normals.push(0, 0, zNormalDirection);
+
         this.texCoords.push(0.5, 0.5);
 
         for (var i = 0; i < this.slices; i++) {
-            var x = Math.cos(angle);
+            let x = Math.cos(angle);
             var y = Math.sin(angle);
 
-            this.vertices.push(x * this.topRadius);
-            this.vertices.push(y * this.topRadius);
-            this.vertices.push(this.height);
+            this.vertices.push(x * this.bottomRadius, y * this.bottomRadius, height);
 
-            this.normals.push(0, 0, 1);
+            this.normals.push(0, 0, zNormalDirection);
 
             this.texCoords.push(0.5 * Math.cos(angle) + 0.5, 0.5 * Math.sin(angle) + 0.5);   
 
-            angle += amplitude_increment;
+            angle += amplitude_increment;      
         }
+    }
 
-        /* [n] represents the n number
-        *  
-        * To create base is necessary [slices] plus [1] (base center) vertices.
-        * 
-        *   
-        * Every stack has [slices + 1] vertices. So for first stack, 
-        * we should start at vertice [slices + 1].
-        * For second stack, we should start at [2*slices + 2] and go on
-        * For the n-th stack, we need to start at [n*stack + n]
-        * 
-        * 
-        * Now that we know how Vertices are aggregated, let's create our rectangles
-        * 
-        * |------------|
-        * |            |
-        * |            |
-        * |            |
-        * |            |
-        * |------------|
-        * 
-        * If bottom-left corner was the start vertice, then would be [startVertice + slice], 
-        * where slice indicates the current position on the stack 
-        * bottom-left corner can be obtained by adding 1 to bottom-right corner
-        * 
-        * The same thing can be applied to top-right and top-left corner
-        * top-right corner will be plus [slices + 1] than the bottom right vertice, 
-        * since it is above in other stack
-        * and top-left corner can be obtained by adding 1 to top-right corner
-        *
-        * After this, just join vertices counterclockwise
-        */
-
-        // -- Indices Push
-        // Bottom side of Cylinder
+    /**
+     * @method createIndices
+     * Join cylinder vertices counterclockwise
+     */
+    createIndices() {
+        // -- Bottom -- //
         for (let j = 0; j < this.slices; j++) {
             if(j == this.slices - 1) this.indices.push(1);
             else this.indices.push(j + 2);
@@ -153,7 +133,7 @@ class MyCylinder extends CGFobject {
             this.indices.push(0);
         }
 
-        // Cylinder Side
+        // -- Side -- //
         for (let stack = 0; stack < this.stacks; stack++) {
             for (let slice = 0; slice < this.slices; slice++) {
                 let startVertice = this.slices * (stack + 1) + (stack + 1);
@@ -168,7 +148,7 @@ class MyCylinder extends CGFobject {
             }
         }
 
-        // Top side of Cylinder
+        // -- Top -- //
         for (let j = 0; j < this.slices - 2; j++) {
             let val = this.vertices.length/3 - this.slices;
 
@@ -176,11 +156,6 @@ class MyCylinder extends CGFobject {
             this.indices.push(val);
             this.indices.push(val + j + 1);
         }  
-
-        
-    
-        this.primitiveType = this.scene.gl.TRIANGLES;
-        this.initGLBuffers();
     }
 
     updateTexCoords(afs, aft) {
@@ -188,7 +163,7 @@ class MyCylinder extends CGFobject {
         
         let amplitude_increment = (2 * Math.PI) / this.slices;
 
-        // Bottom
+        // -- Bottom -- //
         let angle = 0;
 
         this.texCoords.push(0.5 / afs, 0.5 / aft);
@@ -198,14 +173,15 @@ class MyCylinder extends CGFobject {
             angle += amplitude_increment;
         }
 
-        // Side
+        // -- Side -- //
         for(var h = 0; h <= this.stacks; h++) {
             for (var i = 0; i <= this.slices; i++) {
-                this.texCoords.push((1 - i / this.slices) / afs, (h / this.stacks) / aft);
+                
+                this.texCoords.push((i / this.slices) / afs, (1 - h / this.stacks) / aft);
             }
         }
 
-        // Top
+        // -- Top -- //
         angle = 0;
 
         this.texCoords.push(0.5 / afs, 0.5 / aft);

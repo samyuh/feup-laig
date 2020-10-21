@@ -972,7 +972,9 @@ class MySceneGraph {
                         }
                         else {
                             this.nodes.push(new MyLeaf(this, descendants[j]));
-                            this.nodes[nodeID].addLeaf(new MyLeaf(this, descendants[j]));
+
+                            let nLeaf = this.parseLeafs(descendants[j], type);
+                            this.nodes[nodeID].addLeaf(new MyLeaf(this, nLeaf));
                         }
                     }
                     else {
@@ -985,6 +987,62 @@ class MySceneGraph {
 
     // -------- Parse Leafs -----------//
 
+    parseLeafs(descendants, type) {
+        let primitive;
+
+        if (type == "torus") {
+            let inner = this.reader.getFloat(descendants, 'inner');
+            let outer = this.reader.getFloat(descendants, 'outer');
+            let slices = this.reader.getFloat(descendants, 'slices');
+            let loops = this.reader.getFloat(descendants, 'loops');
+
+            primitive = new MyTorus(this.scene, inner, outer, slices, loops);
+        }
+        else if (type == "halftorus") {
+            let inner = this.reader.getFloat(descendants, 'inner');
+            let outer = this.reader.getFloat(descendants, 'outer');
+            let slices = this.reader.getFloat(descendants, 'slices');
+            let loops = this.reader.getFloat(descendants, 'loops');
+
+            primitive = new MyHalfTorus(this.scene, inner, outer, slices, loops);
+        }
+        else if (type == "cylinder") {
+            let height = this.reader.getFloat(descendants, 'height');
+            let topRadius = this.reader.getFloat(descendants, 'topRadius');
+            let bottomRadius = this.reader.getFloat(descendants, 'bottomRadius');
+            let stacks = this.reader.getFloat(descendants, 'stacks');
+            let slices = this.reader.getFloat(descendants, 'slices');
+
+            primitive = new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices);
+        }
+        else if (type == "sphere") {
+            let radius = this.reader.getFloat(descendants, 'radius');
+            let slices = this.reader.getFloat(descendants, 'slices');
+            let stacks = this.reader.getFloat(descendants, 'stacks');
+
+            primitive = new MySphere(this.scene, radius, slices, stacks);
+        }
+        else if (type == "rectangle") {
+            let x1 = this.reader.getFloat(descendants, 'x1');
+            let y1 = this.reader.getFloat(descendants, 'y1');
+            let x2 = this.reader.getFloat(descendants, 'x2');
+            let y2 = this.reader.getFloat(descendants, 'y2');
+
+            primitive = new MyRectangle(this.scene, x1, y1, x2, y2);
+        }
+        else if (type == "triangle") {
+            let x1 = this.reader.getFloat(descendants, 'x1');
+            let y1 = this.reader.getFloat(descendants, 'y1');
+            let x2 = this.reader.getFloat(descendants, 'x2');
+            let y2 = this.reader.getFloat(descendants, 'y2');
+            let x3 = this.reader.getFloat(descendants, 'x3');
+            let y3 = this.reader.getFloat(descendants, 'y3');
+
+            primitive = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+        }
+
+        return primitive;
+    }
     // -------- Auxiliar parser functions -----------//
 
     /**
@@ -1171,6 +1229,8 @@ class MySceneGraph {
         }
         
         // ------ Display Leaves ------ //
+
+        // Não fazer afs / aft aqui, fazer na inicialização do objeto 
         for(var i = 0; i < this.nodes[parentNode].leaves.length; i++) {
             if (currentTexture != "null")
                 currentNode.leaves[i].updateTexCoords(currentAFS, currentAFT);
