@@ -38,8 +38,9 @@ class MyInterface extends CGFinterface {
 
     
     initInterfaceCameras() {
-        // Views Dropdown
-        this.gui.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
+        this.cameras = this.gui.addFolder('Cameras');
+
+        this.cameras.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
             () => {
                 this.scene.camera = this.scene.graph.cameras[this.scene.selectedView];
 
