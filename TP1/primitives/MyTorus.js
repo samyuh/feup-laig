@@ -52,17 +52,17 @@ class MyTorus extends CGFobject {
                 let ty = Math.cos(theta);
                 let tz = 0;
 
-                /* tangent vector with respect to little circle */
+                // Tangent vector with respect to little circle //
                 let sx = Math.cos(theta)*(-Math.sin(angle));
                 let sy = Math.sin(theta)*(-Math.sin(angle));
                 let sz = Math.cos(angle);
                 
-                /* normal is cross-product of tangents */
+                // Normal is cross-product of tangents //
                 let nx = ty*sz - tz*sy;
                 let ny = tz*sx - tx*sz;
                 let nz = tx*sy - ty*sx;
 
-                /* normalize normal */
+                // Normalize normal //
                 let length = Math.sqrt(nx*nx + ny*ny + nz*nz);
                 nx /= length;
                 ny /= length;
@@ -70,16 +70,7 @@ class MyTorus extends CGFobject {
 
                 this.normals.push(nx, ny, nz);
 
-                /*
                 // -- Texture Coordinates -- //
-                /*  0 ----------- 1
-                *  |
-                *  |
-                *  |
-                *  |
-                *  1
-                *  To map a texture, each side will have 1/this.slices
-                * */
                 this.texCoords.push(slice / this.slices, 1 - loop / this.loops);
                 
                 angle += amplitude_increment;
@@ -113,7 +104,7 @@ class MyTorus extends CGFobject {
         
         for (var loop = 0; loop <= this.loops; loop++) {
             for (var slice = 0; slice <= this.slices; slice++) {
-                this.texCoords.push((slice / this.slices) / afs, (1 - loop / this.loops) / aft);
+                this.texCoords.push((slice / this.slices) / afs, (loop / this.loops) / aft);
             }
         }
 
