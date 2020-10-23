@@ -784,7 +784,7 @@ class MySceneGraph {
                 continue;
             }
 
-            this.nodes[nodeID] = new MyNode(this, nodeID);
+            this.nodes[nodeID] = new MyNode(nodeID);
 
             grandChildren = children[i].children;
 
@@ -923,15 +923,16 @@ class MySceneGraph {
         } else {
             let afs = this.reader.getFloat(amplification, 'afs');
             let aft = this.reader.getFloat(amplification, 'aft');
-
+            
             this.nodes[nodeID].afs = afs;
+            
             this.nodes[nodeID].aft = aft;
         }
     }
 
     // -------- Parse Node Descendants -----------//
     parseNodeDescendents(nodeID, descendantsIndex, grandChildren) {
-        var descendants = grandChildren[descendantsIndex].children;
+        let descendants = grandChildren[descendantsIndex].children;
 
         if (descendants.length == 0) {
             this.onXMLMinorError("No descendants from node " + nodeID + " in <nodes>");
@@ -955,12 +956,16 @@ class MySceneGraph {
                 } else {
                     this.nodes.push(new MyLeaf(this, descendants[j]));
 
-                    let nLeaf = this.parseDescendantsLeafs(descendants[j], type, nodeID);
+                    let nPrimitive = this.parseDescendantsLeafs(descendants[j], type, nodeID);
 
-                    if (typeof nLeaf === 'string')
-                        this.onXMLMinorError(nLeaf);
-                    else
-                        this.nodes[nodeID].addLeaf(new MyLeaf(this, nLeaf));
+                    if (typeof nPrimitive === 'string')
+                        this.onXMLMinorError(nPrimitive);
+                    else {
+                        let nLeaf = new MyLeaf(nPrimitive, this.nodes[nodeID].afs, this.nodes[nodeID].aft)
+                        nLeaf.updateTexCoords();
+
+                        this.nodes[nodeID].addLeaf(nLeaf);
+                    }
                 }
             } else {
                 this.onXMLMinorError("Invalid descendant found in " + nodeID + ". All descendants in <nodes> should be leafs or noderef.");
@@ -970,152 +975,175 @@ class MySceneGraph {
 
     // -------- Parse Descendants Leafs -----------//
     parseDescendantsLeafs(descendants, type, messageError) {
-        let primitive;
+        switch (type) {
+            case "torus":
+                return this.parseTorus(descendants, messageError);
+            case "halftorus":
+                return this.parseHalfTorus(descendants, messageError);
+            case "cylinder":
+                return this.parseCylinder(descendants, messageError);
+            case "sphere": 
+                return this.parseSphere(descendants, messageError);
+            case "rectangle":
+                return  this.parseRectangle(descendants, messageError);
+            case "triangle":
+                return this.parseTriangle(descendants, messageError);
+            default:
+                return "not a valid leaf on node " + messageError;
+        }
+    }
 
-        if (type == "torus") {
-            let inner = this.reader.getFloat(descendants, 'inner');
-            if (!(inner != null && !isNaN(inner))) {
-                return "unable to parse inner value of the torus on node " + messageError;
-            }
-
-            let outer = this.reader.getFloat(descendants, 'outer');
-            if (!(outer != null && !isNaN(outer))) {
-                return "unable to parse outer value of the torus on node " + messageError;
-            }
-
-            let slices = this.reader.getFloat(descendants, 'slices');
-            if (!(slices != null && !isNaN(slices))) {
-                return "unable to parse slices value of the torus on node " + messageError;
-            }
-
-            let loops = this.reader.getFloat(descendants, 'loops');
-            if (!(loops != null && !isNaN(loops))) {
-                return "unable to parse loops value of the torus on node " + messageError;
-            }
-
-            primitive = new MyTorus(this.scene, inner, outer, slices, loops);
-        } else if (type == "halftorus") {
-            let inner = this.reader.getFloat(descendants, 'inner');
-            if (!(inner != null && !isNaN(inner))) {
-                return "unable to parse inner value of the Half Torus on node " + messageError;
-            }
-
-            let outer = this.reader.getFloat(descendants, 'outer');
-            if (!(outer != null && !isNaN(outer))) {
-                return "unable to parse outer value of the Half Torus on node " + messageError;
-            }
-
-            let slices = this.reader.getFloat(descendants, 'slices');
-            if (!(slices != null && !isNaN(slices))) {
-                return "unable to parse slices value of the Half Torus on node " + messageError;
-            }
-
-            let loops = this.reader.getFloat(descendants, 'loops');
-            if (!(loops != null && !isNaN(loops))) {
-                return "unable to parse loops value of the Half Torus on node " + messageError;
-            }
-
-            primitive = new MyHalfTorus(this.scene, inner, outer, slices, loops);
-        } else if (type == "cylinder") {
-            let height = this.reader.getFloat(descendants, 'height');
-            if (!(height != null && !isNaN(height))) {
-                return "unable to parse height value of the cylinder on node " + messageError;
-            }
-
-            let topRadius = this.reader.getFloat(descendants, 'topRadius');
-            if (!(topRadius != null && !isNaN(topRadius))) {
-                return "unable to parse topRadius value of the cylinder on node " + messageError;
-            }
-
-            let bottomRadius = this.reader.getFloat(descendants, 'bottomRadius');
-            if (!(bottomRadius != null && !isNaN(bottomRadius))) {
-                return "unable to parse bottomRadius value of the cylinder on node " + messageError;
-            }
-
-            let stacks = this.reader.getFloat(descendants, 'stacks');
-            if (!(stacks != null && !isNaN(stacks))) {
-                return "unable to parse stacks value of the cylinder on node " + messageError;
-            }
-
-            let slices = this.reader.getFloat(descendants, 'slices');
-            if (!(slices != null && !isNaN(slices))) {
-                return "unable to parse slices value of the cylinder on node " + messageError;
-            }
-
-            primitive = new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices);
-        } else if (type == "sphere") {
-            let radius = this.reader.getFloat(descendants, 'radius');
-            if (!(radius != null && !isNaN(radius))) {
-                return "unable to parse radius value of the sphere on node " + messageError;
-            }
-
-            let slices = this.reader.getFloat(descendants, 'slices');
-            if (!(slices != null && !isNaN(slices))) {
-                return "unable to parse slices value of the sphere on node " + messageError;
-            }
-
-            let stacks = this.reader.getFloat(descendants, 'stacks');
-            if (!(stacks != null && !isNaN(stacks))) {
-                return "unable to parse stacks value of the sphere on node " + messageError;
-            }
-
-            primitive = new MySphere(this.scene, radius, slices, stacks);
-        } else if (type == "rectangle") {
-            let x1 = this.reader.getFloat(descendants, 'x1');
-            if (!(x1 != null && !isNaN(x1))) {
-                return "unable to parse x1-coordinate of the rectangle on node " + messageError;
-            }
-
-            let y1 = this.reader.getFloat(descendants, 'y1');
-            if (!(y1 != null && !isNaN(y1))) {
-                return "unable to parse y1-coordinate of the rectangle on node " + messageError;
-            }
-
-            let x2 = this.reader.getFloat(descendants, 'x2');
-            if (!(x2 != null && !isNaN(x2))) {
-                return "unable to parse x2-coordinate of the rectangle on node " + messageError;
-            }
-
-            let y2 = this.reader.getFloat(descendants, 'y2');
-            if (!(y2 != null && !isNaN(y2))) {
-                return "unable to parse y2-coordinate of the rectangle on node " + messageError;
-            }
-
-            primitive = new MyRectangle(this.scene, x1, y1, x2, y2);
-        } else if (type == "triangle") {
-            let x1 = this.reader.getFloat(descendants, 'x1');
-            if (!(x1 != null && !isNaN(x1))) {
-                return "unable to parse x1-coordinate of the triangle on node " + messageError;
-            }
-
-            let y1 = this.reader.getFloat(descendants, 'y1');
-            if (!(y1 != null && !isNaN(y1))) {
-                return "unable to parse y1-coordinate of the triangle on node " + messageError;
-            }
-
-            let x2 = this.reader.getFloat(descendants, 'x2');
-            if (!(x2 != null && !isNaN(x2))) {
-                return "unable to parse x2-coordinate of the triangle on node " + messageError;
-            }
-
-            let y2 = this.reader.getFloat(descendants, 'y2');
-            if (!(y2 != null && !isNaN(y2)))
-            return "unable to parse y2-coordinate of the triangle on node " + messageError;
-
-            let x3 = this.reader.getFloat(descendants, 'x3');
-            if (!(x3 != null && !isNaN(x3))) {
-                return "unable to parse x3-coordinate of the triangle on node " + messageError;
-            }
-
-            let y3 = this.reader.getFloat(descendants, 'y3');
-            if (!(y3 != null && !isNaN(y3))) {
-                return "unable to parse y3-coordinate of the triangle on node " + messageError;
-            }
-
-            primitive = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+    parseTorus(descendants, messageError) {
+        let inner = this.reader.getFloat(descendants, 'inner');
+        if (!(inner != null && !isNaN(inner))) {
+            return "unable to parse inner value of the torus on node " + messageError;
         }
 
-        return primitive;
+        let outer = this.reader.getFloat(descendants, 'outer');
+        if (!(outer != null && !isNaN(outer))) {
+            return "unable to parse outer value of the torus on node " + messageError;
+        }
+
+        let slices = this.reader.getFloat(descendants, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            return "unable to parse slices value of the torus on node " + messageError;
+        }
+
+        let loops = this.reader.getFloat(descendants, 'loops');
+        if (!(loops != null && !isNaN(loops))) {
+            return "unable to parse loops value of the torus on node " + messageError;
+        }
+
+        return new MyTorus(this.scene, inner, outer, slices, loops);
+    }
+
+    parseHalfTorus(descendants, messageError) {
+        let inner = this.reader.getFloat(descendants, 'inner');
+        if (!(inner != null && !isNaN(inner))) {
+            return "unable to parse inner value of the Half Torus on node " + messageError;
+        }
+
+        let outer = this.reader.getFloat(descendants, 'outer');
+        if (!(outer != null && !isNaN(outer))) {
+            return "unable to parse outer value of the Half Torus on node " + messageError;
+        }
+
+        let slices = this.reader.getFloat(descendants, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            return "unable to parse slices value of the Half Torus on node " + messageError;
+        }
+
+        let loops = this.reader.getFloat(descendants, 'loops');
+        if (!(loops != null && !isNaN(loops))) {
+            return "unable to parse loops value of the Half Torus on node " + messageError;
+        }
+
+        return new MyHalfTorus(this.scene, inner, outer, slices, loops);
+    }
+
+    parseCylinder(descendants, messageError) {
+        let height = this.reader.getFloat(descendants, 'height');
+        if (!(height != null && !isNaN(height))) {
+            return "unable to parse height value of the cylinder on node " + messageError;
+        }
+
+        let topRadius = this.reader.getFloat(descendants, 'topRadius');
+        if (!(topRadius != null && !isNaN(topRadius))) {
+            return "unable to parse topRadius value of the cylinder on node " + messageError;
+        }
+
+        let bottomRadius = this.reader.getFloat(descendants, 'bottomRadius');
+        if (!(bottomRadius != null && !isNaN(bottomRadius))) {
+            return "unable to parse bottomRadius value of the cylinder on node " + messageError;
+        }
+
+        let stacks = this.reader.getFloat(descendants, 'stacks');
+        if (!(stacks != null && !isNaN(stacks))) {
+            return "unable to parse stacks value of the cylinder on node " + messageError;
+        }
+
+        let slices = this.reader.getFloat(descendants, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            return "unable to parse slices value of the cylinder on node " + messageError;
+        }
+
+        return new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices);
+    }
+
+    parseSphere(descendants, messageError) {
+        let radius = this.reader.getFloat(descendants, 'radius');
+        if (!(radius != null && !isNaN(radius))) {
+            return "unable to parse radius value of the sphere on node " + messageError;
+        }
+
+        let slices = this.reader.getFloat(descendants, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            return "unable to parse slices value of the sphere on node " + messageError;
+        }
+
+        let stacks = this.reader.getFloat(descendants, 'stacks');
+        if (!(stacks != null && !isNaN(stacks))) {
+            return "unable to parse stacks value of the sphere on node " + messageError;
+        }
+
+        return new MySphere(this.scene, radius, slices, stacks);
+    }
+
+    parseRectangle(descendants, messageError) {
+        let x1 = this.reader.getFloat(descendants, 'x1');
+        if (!(x1 != null && !isNaN(x1))) {
+            return "unable to parse x1-coordinate of the rectangle on node " + messageError;
+        }
+
+        let y1 = this.reader.getFloat(descendants, 'y1');
+        if (!(y1 != null && !isNaN(y1))) {
+            return "unable to parse y1-coordinate of the rectangle on node " + messageError;
+        }
+
+        let x2 = this.reader.getFloat(descendants, 'x2');
+        if (!(x2 != null && !isNaN(x2))) {
+            return "unable to parse x2-coordinate of the rectangle on node " + messageError;
+        }
+
+        let y2 = this.reader.getFloat(descendants, 'y2');
+        if (!(y2 != null && !isNaN(y2))) {
+            return "unable to parse y2-coordinate of the rectangle on node " + messageError;
+        }
+
+        return new MyRectangle(this.scene, x1, y1, x2, y2);
+    }
+
+    parseTriangle(descendants, messageError) {
+        let x1 = this.reader.getFloat(descendants, 'x1');
+        if (!(x1 != null && !isNaN(x1))) {
+            return "unable to parse x1-coordinate of the triangle on node " + messageError;
+        }
+
+        let y1 = this.reader.getFloat(descendants, 'y1');
+        if (!(y1 != null && !isNaN(y1))) {
+            return "unable to parse y1-coordinate of the triangle on node " + messageError;
+        }
+
+        let x2 = this.reader.getFloat(descendants, 'x2');
+        if (!(x2 != null && !isNaN(x2))) {
+            return "unable to parse x2-coordinate of the triangle on node " + messageError;
+        }
+
+        let y2 = this.reader.getFloat(descendants, 'y2');
+        if (!(y2 != null && !isNaN(y2)))
+        return "unable to parse y2-coordinate of the triangle on node " + messageError;
+
+        let x3 = this.reader.getFloat(descendants, 'x3');
+        if (!(x3 != null && !isNaN(x3))) {
+            return "unable to parse x3-coordinate of the triangle on node " + messageError;
+        }
+
+        let y3 = this.reader.getFloat(descendants, 'y3');
+        if (!(y3 != null && !isNaN(y3))) {
+            return "unable to parse y3-coordinate of the triangle on node " + messageError;
+        }
+
+        return new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
     }
 
     // -------- Auxiliary parser functions -----------//
@@ -1237,7 +1265,7 @@ class MySceneGraph {
     displayScene() {
         // Display loop for transversing the scene graph, calling the root node's display function
 
-        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture, this.nodes[this.idRoot].afs, this.nodes[this.idRoot].aft);
+        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
     }
 
     /**
@@ -1258,11 +1286,8 @@ class MySceneGraph {
         // -- Otherwise, it will have the material ID
         else currentMaterial = this.materials[currentNode.material];
 
-
         // -------- Texture ------ //
         let currentTexture;
-        let currentAFS;
-        let currentAFT;
 
         // -- If node texture is clear, then it will don't have texture
         if (currentNode.texture == "clear") {
@@ -1271,14 +1296,10 @@ class MySceneGraph {
         // -- If node texture is null, then it will inherit parent's texture
         else if (currentNode.texture == "null") {
             currentTexture = parentTexture;
-            currentAFS = currentNode.afs;
-            currentAFT = currentNode.aft;
         }
         // -- Otherwise, it will have the texture ID
         else {
             currentTexture = currentNode.texture;
-            currentAFS = currentNode.afs;
-            currentAFT = currentNode.aft;
         }
 
         // Bind texture   
@@ -1297,15 +1318,11 @@ class MySceneGraph {
 
         // ------ Process next node ------ //
         for (var i = 0; i < currentNode.descendants.length; i++) {
-            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture, currentAFS, currentAFT);
+            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
         }
 
         // ------ Display Leaves ------ //
-
-        // Não fazer afs / aft aqui, fazer na inicialização do objeto 
-        for (var i = 0; i < this.nodes[parentNode].leaves.length; i++) {
-            currentNode.leaves[i].updateTexCoords(currentAFS, currentAFT);
-
+        for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
             currentNode.leaves[i].display();
         }
 
