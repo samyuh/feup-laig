@@ -251,7 +251,6 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-
         this.cameras = [];
 
         this.scene.viewIDs = [];
@@ -453,8 +452,6 @@ class MySceneGraph {
         }
 
         this.log("Parsed Views.");
-
-        //this.scene.initCameras();
 
         return null;
     }
@@ -809,7 +806,12 @@ class MySceneGraph {
             } else if (materialIndex == -1 && this.idRoot != nodeID) {
                 this.onXMLMinorError("<material> tag missing from node " + nodeID + " in <nodes>. Considering material with id = 'null'");
                 this.nodes[nodeID].material = "null";
-            } else this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
+            } else {
+                let error = this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
+                if (typeof error === 'string')
+                        return error;
+                
+            }
 
             // ---------- Texture ---------- //
             if (textureIndex == -1) {
@@ -889,12 +891,14 @@ class MySceneGraph {
     parseNodeMaterial(nodeID, materialIndex, grandChildren) {
         let materialID = this.reader.getString(grandChildren[materialIndex], 'id');
 
-        if (materialID == null) {
+        if (this.idRoot == nodeID && materialID == "null") {
+            return "idRoot can't have a null material! Ending... ";
+        } else if (materialID == null) {
             this.onXMLMinorError("Atribute 'id' missing from <material> tag, node " + nodeID + " in <nodes>. Considering id = 'null'");
-            materialID = "null";
+            this.nodes[nodeID].material = "null";
         } else if (this.materials[materialID] == null && materialID != "null") {
             this.onXMLMinorError("Invalid atribute 'id' (" + materialID + ") from <material> tag, node " + nodeID + " in <nodes>. Considering id = 'null'");
-            materialID = "null";
+            this.nodes[nodeID].material = "null";
         } else {
             this.nodes[nodeID].material = materialID;
         }
@@ -916,16 +920,27 @@ class MySceneGraph {
 
         let amplification = grandChildren[textureIndex].children[0];
 
-        if (amplification.nodeName != "amplification") {
+        if (amplification == null) {
+            this.onXMLMinorError("Amplification is undefined on" + nodeID + ". Using afs = 1.0 and aft = 1.0");
+        }
+        else if (amplification.nodeName != "amplification") {
             this.onXMLMinorError("Missing/Invalid amplification tag from <texture> tag, node " + nodeID + " in <nodes>. Using afs = 1.0 and aft = 1.0");
             this.nodes[nodeID].afs = 1.0;
             this.nodes[nodeID].aft = 1.0;
         } else {
             let afs = this.reader.getFloat(amplification, 'afs');
             let aft = this.reader.getFloat(amplification, 'aft');
+
+            if (!(afs != null && !isNaN(afs))) {
+                this.onXMLMinorError("unable to parse afs value on node " + nodeID + ". Using afs = 1.0");
+                this.nodes[nodeID].afs = 1.0;
+            }
+            if (!(aft != null && !isNaN(aft))) {
+                this.onXMLMinorError("unable to parse afs value on node " + nodeID + ". Using aft = 1.0");
+                this.nodes[nodeID].aft = 1.0;
+            }
             
             this.nodes[nodeID].afs = afs;
-            
             this.nodes[nodeID].aft = aft;
         }
     }
@@ -946,8 +961,9 @@ class MySceneGraph {
                 } else if (nodeID == id) {
                     this.onXMLMinorError("Invalid atribute 'id' on descendant of " + nodeID + " - A node can't be a child and father at same time. Ignoring descendant...");
                 }
-
-                this.nodes[nodeID].addDescendants(id);
+                else {
+                    this.nodes[nodeID].addDescendants(id);
+                }
             } else if (descendants[j].nodeName == "leaf") {
                 let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
 

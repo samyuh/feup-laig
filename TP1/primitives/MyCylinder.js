@@ -57,7 +57,7 @@ class MyCylinder extends CGFobject {
 
 
         // --- Bottom Vertices --- //
-        this.createBases(amplitude_increment, 0, -1);
+        this.createBases(amplitude_increment, this.bottomRadius, 0, -1);
         
         // ---  Side Vertices  --- //
         for(var h = 0; h <= this.stacks; h++) {
@@ -83,7 +83,7 @@ class MyCylinder extends CGFobject {
         }
 
         // --- Top Vertices --- //
-        this.createBases(amplitude_increment, this.height, -1);
+        this.createBases(amplitude_increment, this.topRadius, this.height, -1);
 
         // -- Indices Push
         this.createIndices();
@@ -99,7 +99,7 @@ class MyCylinder extends CGFobject {
      * @param height - Z Position
      * @param zNormalDirection - 1 if position, -1 if negative
      */
-    createBases(amplitude_increment, height, zNormalDirection) {
+    createBases(amplitude_increment, radius, height, zNormalDirection) {
         let angle = 0;
         this.vertices.push(0, 0, height);
         this.normals.push(0, 0, zNormalDirection);
@@ -110,7 +110,7 @@ class MyCylinder extends CGFobject {
             let x = Math.cos(angle);
             var y = Math.sin(angle);
 
-            this.vertices.push(x * this.bottomRadius, y * this.bottomRadius, height);
+            this.vertices.push(x * radius, y * radius, height);
 
             this.normals.push(0, 0, zNormalDirection);
 
