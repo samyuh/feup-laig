@@ -55,6 +55,11 @@ class MyTriangle extends CGFobject {
 		this.initGLBuffers();
 	}
 
+	 /**
+     * Updates the list of texture coordinates
+     * @param afs - dx/afs
+     * @param aft - dy/aft
+     */
 	updateTexCoords(afs, aft) {
 		this.texCoords = [	
 			0, 						1,

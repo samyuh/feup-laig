@@ -255,9 +255,12 @@ class MySceneGraph {
 
         this.scene.viewIDs = [];
 
-        var children = viewsNode.children;
+        let default_cam_error = true;
+
+        let children = viewsNode.children;
 
         var default_view = this.reader.getString(viewsNode, 'default');
+
         if (default_view == null)
             return "No default View defined for scene - atribute 'default' missing from tag <views>";
 
@@ -269,6 +272,7 @@ class MySceneGraph {
         for (var i = 0; i < children.length; i++) {
             var camera = {};
             var nodeType = children[i].nodeName; // Either perspective or ortho
+
             if (nodeType == null) {
                 this.onXMLMinorError("Camera with no type in <views>");
                 continue; // Ignore camera with no type
@@ -280,6 +284,9 @@ class MySceneGraph {
                 continue;
             }
 
+            if (id == default_view) 
+                default_cam_error = false;
+            
             this.scene.viewIDs.push(id);
 
             // Process common atributes between perspective and ortho cameras (near and far)
@@ -450,6 +457,9 @@ class MySceneGraph {
                 this.cameras[id] = new CGFcameraOrtho(camera.left, camera.right, camera.bottom, camera.top, camera.near, camera.far, vec3.fromValues(camera.from.x, camera.from.y, camera.from.z), vec3.fromValues(camera.to.x, camera.to.y, camera.to.z), vec3.fromValues(camera.up.x, camera.up.y, camera.up.z));
             }
         }
+
+        if (default_cam_error)
+            return "Default View defined for scene have an invalid ID";
 
         this.log("Parsed Views.");
 
@@ -808,9 +818,8 @@ class MySceneGraph {
                 this.nodes[nodeID].material = "null";
             } else {
                 let error = this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
-                if (typeof error === 'string')
-                        return error;
-                
+
+                if (typeof error === 'string') return error;
             }
 
             // ---------- Texture ---------- //
@@ -822,72 +831,122 @@ class MySceneGraph {
             // ---------- Descendants ---------- //
             if (descendantsIndex == -1) {
                 this.onXMLMinorError("<descendants> tag missing from node " + nodeID + " in <nodes>. Considering no descendants...");
-            } else this.parseNodeDescendents(nodeID, descendantsIndex, grandChildren);
+            } else this.parseNodeDescendants(nodeID, descendantsIndex, grandChildren);
         }
     }
 
     // -------- Parse Node Transformations -----------//
+
+     /**
+     * Parse node transformations
+     * @param {} nodeID node that contains nodeID
+     * @param {} transformationsIndex index of transformation tag
+     * @param {} grandChildren 
+     */
     parseNodeTransformations(nodeID, transformationsIndex, grandChildren) {
+
         let transformations = grandChildren[transformationsIndex].children;
-        for (var j = 0; j < transformations.length; j++) {
-            if (transformations[j].nodeName == "translation") {
-                let x = this.reader.getFloat(transformations[j], 'x');
-                let y = this.reader.getFloat(transformations[j], 'y');
-                let z = this.reader.getFloat(transformations[j], 'z');
 
-                if (x == null || isNaN(x)) {
-                    this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using x = 0.0");
-                    x = 0.0;
-                }
-                if (y == null || isNaN(y)) {
-                    this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using y = 0.0");
-                    y = 0.0;
-                }
-                if (z == null || isNaN(z)) {
-                    this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using z = 0.0");
-                    z = 0.0;
-                }
-
-                mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
-            } else if (transformations[j].nodeName == "rotation") {
-                let axis = this.reader.getString(transformations[j], 'axis');
-                let angle = this.reader.getFloat(transformations[j], 'angle');
-
-                if (angle == null || isNaN(angle)) {
-                    this.onXMLMinorError("Missing/Invalid value of 'angle' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using angle = 0.0");
-                    angle = 0.0;
-                }
-
-                if (axis == null || (axis != 'x' && axis != 'y' && axis != 'z')) {
-                    this.onXMLMinorError("Missing/Invalid value of 'axis' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using axis = x");
-                    axis = 'x';
-                }
-
-                mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-            } else if (transformations[j].nodeName == "scale") {
-                let sx = this.reader.getFloat(transformations[j], 'sx');
-                let sy = this.reader.getFloat(transformations[j], 'sy');
-                let sz = this.reader.getFloat(transformations[j], 'sz');
-
-                if (sx == null || isNaN(sx)) {
-                    this.onXMLMinorError("Missing/Invalid value of 'sx' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sx = 1.0");
-                    sx = 1.0;
-                }
-                if (sy == null || isNaN(sy)) {
-                    this.onXMLMinorError("Missing/Invalid value of 'sy' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sy = 1.0");
-                    sy = 1.0;
-                }
-                if (sz == null || isNaN(sz)) {
-                    this.onXMLMinorError("Missing/Invalid value of 'sz' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sz = 1.0");
-                    sz = 1.0;
-                }
-
-                mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
+        for (let j = 0; j < transformations.length; j++) {
+            switch(transformations[j].nodeName) {
+                case "translation":
+                    this.parseTransformationTranslation(transformations[j], nodeID);
+                    break;
+                case "rotation":
+                    this.parseTransformationRotation(transformations[j], nodeID);
+                    break;
+                case "scale":
+                    this.parseTransformationScale(transformations[j], nodeID);
+                    break;
+                default:
+                    this.onXMLMinorError("Not a valid transformation on " + nodeID);
+                    break;
             }
         }
     }
 
+     /**
+     * Parse Translation Transformation
+     * @param {} transformation transformation tag and information
+     * @param {} nodeID  nodeID
+     */
+    parseTransformationTranslation(transformation, nodeID) {
+        let x = this.reader.getFloat(transformation, 'x');
+        let y = this.reader.getFloat(transformation, 'y');
+        let z = this.reader.getFloat(transformation, 'z');
+
+        if (x == null || isNaN(x)) {
+            this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using x = 0.0");
+            x = 0.0;
+        }
+        if (y == null || isNaN(y)) {
+            this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using y = 0.0");
+            y = 0.0;
+        }
+        if (z == null || isNaN(z)) {
+            this.onXMLMinorError("Missing/Invalid value of y in <translation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using z = 0.0");
+            z = 0.0;
+        }
+
+        mat4.translate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [x, y, z]);
+    }
+
+     /**
+     * Parse Rotation Transformation
+     * @param {} transformation transformation tag and information
+     * @param {} nodeID nodeID
+     */
+    parseTransformationRotation(transformation, nodeID) {
+        let axis = this.reader.getString(transformation, 'axis');
+        let angle = this.reader.getFloat(transformation, 'angle');
+
+        if (angle == null || isNaN(angle)) {
+            this.onXMLMinorError("Missing/Invalid value of 'angle' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using angle = 0.0");
+            angle = 0.0;
+        }
+
+        if (axis == null || (axis != 'x' && axis != 'y' && axis != 'z')) {
+            this.onXMLMinorError("Missing/Invalid value of 'axis' in <rotation> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using axis = x");
+            axis = 'x';
+        }
+
+        mat4.rotate(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
+    }
+
+    /**
+     * Parse Scale Transformation
+     * @param {} transformation transformation tag and information
+     * @param {} nodeID nodeID
+     */
+    parseTransformationScale(transformation, nodeID) {
+        let sx = this.reader.getFloat(transformation, 'sx');
+        let sy = this.reader.getFloat(transformation, 'sy');
+        let sz = this.reader.getFloat(transformation, 'sz');
+
+        if (sx == null || isNaN(sx)) {
+            this.onXMLMinorError("Missing/Invalid value of 'sx' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sx = 1.0");
+            sx = 1.0;
+        }
+        if (sy == null || isNaN(sy)) {
+            this.onXMLMinorError("Missing/Invalid value of 'sy' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sy = 1.0");
+            sy = 1.0;
+        }
+        if (sz == null || isNaN(sz)) {
+            this.onXMLMinorError("Missing/Invalid value of 'sz' in <scale> tag, from <transformations> tag on node " + nodeID + " in <nodes>. Using sz = 1.0");
+            sz = 1.0;
+        }
+
+        mat4.scale(this.nodes[nodeID].transformation, this.nodes[nodeID].transformation, [sx, sy, sz]);
+    }
+
     // -------- Parse Node Material ------------------//
+
+    /**
+     * Parse node material
+     * @param {} nodeID node that contains nodeID
+     * @param {} materialIndex index of material tag
+     * @param {} grandChildren 
+     */
     parseNodeMaterial(nodeID, materialIndex, grandChildren) {
         let materialID = this.reader.getString(grandChildren[materialIndex], 'id');
 
@@ -905,6 +964,13 @@ class MySceneGraph {
     }
 
     // -------- Parse Node Textures ------------ //
+
+    /**
+     * Parse node textures
+     * @param {} nodeID node that contains nodeID
+     * @param {} textureIndex index of texture tag
+     * @param {} grandChildren 
+     */
     parseNodeTexture(nodeID, textureIndex, grandChildren) {
         let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
 
@@ -946,7 +1012,14 @@ class MySceneGraph {
     }
 
     // -------- Parse Node Descendants -----------//
-    parseNodeDescendents(nodeID, descendantsIndex, grandChildren) {
+
+    /**
+     * Parse node descendants
+     * @param {} nodeID node that contains nodeID
+     * @param {} descendantsIndex index of descendants tag
+     * @param {} grandChildren 
+     */
+    parseNodeDescendants(nodeID, descendantsIndex, grandChildren) {
         let descendants = grandChildren[descendantsIndex].children;
 
         if (descendants.length == 0) {
@@ -990,6 +1063,13 @@ class MySceneGraph {
     }
 
     // -------- Parse Descendants Leafs -----------//
+
+    /**
+     * Parse triangle from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} type node that contains primitive type
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseDescendantsLeafs(descendants, type, messageError) {
         switch (type) {
             case "torus":
@@ -1009,6 +1089,11 @@ class MySceneGraph {
         }
     }
 
+    /**
+     * Parse Torus from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseTorus(descendants, messageError) {
         let inner = this.reader.getFloat(descendants, 'inner');
         if (!(inner != null && !isNaN(inner))) {
@@ -1033,6 +1118,11 @@ class MySceneGraph {
         return new MyTorus(this.scene, inner, outer, slices, loops);
     }
 
+    /**
+     * Parse Half Torus from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseHalfTorus(descendants, messageError) {
         let inner = this.reader.getFloat(descendants, 'inner');
         if (!(inner != null && !isNaN(inner))) {
@@ -1057,6 +1147,11 @@ class MySceneGraph {
         return new MyHalfTorus(this.scene, inner, outer, slices, loops);
     }
 
+    /**
+     * Parse cylinder from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseCylinder(descendants, messageError) {
         let height = this.reader.getFloat(descendants, 'height');
         if (!(height != null && !isNaN(height))) {
@@ -1086,6 +1181,11 @@ class MySceneGraph {
         return new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices);
     }
 
+    /**
+     * Parse sphere from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseSphere(descendants, messageError) {
         let radius = this.reader.getFloat(descendants, 'radius');
         if (!(radius != null && !isNaN(radius))) {
@@ -1105,6 +1205,11 @@ class MySceneGraph {
         return new MySphere(this.scene, radius, slices, stacks);
     }
 
+    /**
+     * Parse rectangle from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseRectangle(descendants, messageError) {
         let x1 = this.reader.getFloat(descendants, 'x1');
         if (!(x1 != null && !isNaN(x1))) {
@@ -1129,6 +1234,11 @@ class MySceneGraph {
         return new MyRectangle(this.scene, x1, y1, x2, y2);
     }
 
+    /**
+     * Parse triangle from XML
+     * @param {} descendants node that contains primitive information
+     * @param {} messageError error message given if some of value isn't parsable
+     */
     parseTriangle(descendants, messageError) {
         let x1 = this.reader.getFloat(descendants, 'x1');
         if (!(x1 != null && !isNaN(x1))) {
@@ -1296,26 +1406,33 @@ class MySceneGraph {
         // ------- Material ------ //
         let currentMaterial;
 
-        // -- If node material is null, then it will inherit parent's material
-        if (currentNode.material == "null")
-            currentMaterial = parentMaterial;
-        // -- Otherwise, it will have the material ID
-        else currentMaterial = this.materials[currentNode.material];
+        switch (currentNode.material) {
+            // -- If node material is null, then it will inherit parent's material
+            case "null":
+                currentMaterial = parentMaterial;
+                break;
+            // -- Otherwise, it will have the material ID
+            default:
+                currentMaterial = this.materials[currentNode.material];
+                break;
+        }
 
         // -------- Texture ------ //
         let currentTexture;
 
-        // -- If node texture is clear, then it will don't have texture
-        if (currentNode.texture == "clear") {
-            currentTexture = "null";
-        }
-        // -- If node texture is null, then it will inherit parent's texture
-        else if (currentNode.texture == "null") {
-            currentTexture = parentTexture;
-        }
-        // -- Otherwise, it will have the texture ID
-        else {
-            currentTexture = currentNode.texture;
+        switch (currentNode.texture) {
+            // -- If node texture is clear, then it will don't have texture
+            case "clear":
+                currentTexture = "null";
+                break;
+            // -- If node texture is null, then it will inherit parent's texture
+            case "null":
+                currentTexture = parentTexture;
+                break;
+            // -- Otherwise, it will have the texture ID
+            default:
+                currentTexture = currentNode.texture;
+                break;
         }
 
         // Bind texture   

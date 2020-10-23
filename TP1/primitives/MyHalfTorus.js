@@ -16,7 +16,11 @@ class MyHalfTorus extends CGFobject {
         this.loops = loops;
 
 		this.initBuffers();
-	}
+    }
+    
+    /**
+     * Initializes the half torus buffers
+     */
 	initBuffers() {
         this.vertices = [];
         this.indices = [];
@@ -99,6 +103,11 @@ class MyHalfTorus extends CGFobject {
 		this.initGLBuffers();
     }
     
+     /**
+     * Updates the list of texture coordinates
+     * @param afs - dx/afs
+     * @param aft - dy/aft
+     */
     updateTexCoords(afs, aft) {
         this.texCoords = [];
         

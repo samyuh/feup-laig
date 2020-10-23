@@ -20,7 +20,6 @@ class MySphere extends CGFobject {
     }
   
     /**
-     * @method initBuffers
      * Initializes the sphere buffers
      */
     initBuffers() {
@@ -86,6 +85,11 @@ class MySphere extends CGFobject {
       this.initGLBuffers();
     }
 
+     /**
+     * Updates the list of texture coordinates
+     * @param afs - dx/afs
+     * @param aft - dy/aft
+     */
     updateTexCoords(afs, aft) {
       this.texCoords = [];
   

@@ -93,7 +93,6 @@ class MyCylinder extends CGFobject {
     }
 
     /**
-     * @method createBases
      * Creates Cylinder's bot and top base
      * @param amplitude_increment - Amplitude increment between each slice
      * @param height - Z Position
@@ -121,7 +120,6 @@ class MyCylinder extends CGFobject {
     }
 
     /**
-     * @method createIndices
      * Join cylinder vertices counterclockwise
      */
     createIndices() {
@@ -158,13 +156,19 @@ class MyCylinder extends CGFobject {
         }  
     }
 
+     /**
+     * Updates the list of texture coordinates
+     * @param afs - dx/afs
+     * @param aft - dy/aft
+     */
     updateTexCoords(afs, aft) {
         this.texCoords = [];
         
         let amplitude_increment = (2 * Math.PI) / this.slices;
+        let angle;
 
         // -- Bottom -- //
-        let angle = 0;
+        angle = 0;
 
         this.texCoords.push(0.5 / afs, 0.5 / aft);
         for (var i = 0; i < this.slices; i++) {
@@ -174,12 +178,9 @@ class MyCylinder extends CGFobject {
         }
 
         // -- Side -- //
-        for(var h = 0; h <= this.stacks; h++) {
-            for (var i = 0; i <= this.slices; i++) {
-                
+        for(var h = 0; h <= this.stacks; h++)
+            for (var i = 0; i <= this.slices; i++) 
                 this.texCoords.push((i / this.slices) / afs, (1 - h / this.stacks) / aft);
-            }
-        }
 
         // -- Top -- //
         angle = 0;

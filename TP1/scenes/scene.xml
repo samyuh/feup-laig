@@ -83,7 +83,6 @@
         <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
         <texture id="fireTexture" path="./scenes/images/fire.jpg" />
         <texture id="darkwoodTexture" path="./scenes/images/darkwood.jpg" />
-        <texture id="marbleTexture" path="./scenes/images/marble.jpg" />
     </textures>
 
     <materials>

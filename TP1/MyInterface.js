@@ -37,6 +37,9 @@ class MyInterface extends CGFinterface {
     }
 
     
+    /**
+     * Init Interface Cameras
+     */
     initInterfaceCameras() {
         this.cameras = this.gui.addFolder('Cameras');
 
@@ -49,11 +52,13 @@ class MyInterface extends CGFinterface {
         );
     }
      
-
+    /**
+     * Init Interface Lights
+     */
     initInterfaceLights() {
-        // Light Checkboxes in GUI
         this.lights = this.gui.addFolder('Lights');
-        for(const light of this.scene.lights) {
+
+        for (const light of this.scene.lights) {
             if (light.light_id != undefined) {
                 this.lights.add(light, 'enabled').name(light.light_id).onChange(
                     () => {
