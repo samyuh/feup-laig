@@ -7,25 +7,25 @@
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
 
-    <views default="frontCamera">
+    <views default="Front Camera">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="sideCamera" near="0.1" far="500" angle="45">
+        <perspective id="Side Camera" near="0.1" far="500" angle="45">
             <from x="50" y="15" z="40" />
             <to x="0" y="-2" z="0" />
         </perspective>
 
-        <perspective id="frontCamera" near="0.1" far="500" angle="45">
+        <perspective id="Front Camera" near="0.1" far="500" angle="45">
             <from x="0" y="15" z="60" />
             <to x="0" y="10" z="0" />
         </perspective>
 
-        <ortho id="demoOrtho" near="0.2" far="100" left="-30" right="30" top="40" bottom="-20">
+        <ortho id="Ortho Camera" near="0.2" far="100" left="-30" right="30" top="40" bottom="-20">
             <from x="0" y="15" z="30" />
             <to x="0" y="0" z="0" />
             <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
         </ortho>
 
-        <perspective id="throneCamera" near="0.1" far="500" angle="45">
+        <perspective id="Throne Camera" near="0.1" far="500" angle="45">
             <from x="0" y="5" z="10" />
             <to x="0" y="7" z="0" />
         </perspective>
@@ -38,7 +38,7 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="ambientLight">            <!-- ambient light -->
+        <light id="Ambient Light">            <!-- ambient light -->
             <enable value="1" />
             <position x="0" y="25" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
@@ -46,7 +46,7 @@
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />            <!-- specular component -->
         </light>
 
-        <light id="windowLight">            <!-- window light -->
+        <light id="Window Light">            <!-- window light -->
             <enable value="1" />
             <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
@@ -54,7 +54,7 @@
             <specular r="0.3" g="0.3" b="0.4" a="1.0" />             <!-- specular component -->
         </light>
 
-        <light id="rightLight">            <!-- right torch light -->
+        <light id="Right Torch Light">            <!-- right torch light -->
             <enable value="0" />
             <position x="18.5" y="22" z="-24.5" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
@@ -62,7 +62,7 @@
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
         </light>
 
-        <light id="leftLight">            <!-- left torch light -->
+        <light id="Left Torch Light">            <!-- left torch light -->
             <enable value="0" />
             <position x="-18.5" y="22" z="-24.5" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
@@ -73,7 +73,6 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="defaultTexture" path="./scenes/images/rocks.jpg" />
         <texture id="stoneTexture" path="./scenes/images/stones.jpg" />
         <texture id="stonepillarTexture" path="./scenes/images/stonepillar.jpg" />
         <texture id="ironTexture" path="./scenes/images/iron.jpg" />
@@ -128,7 +127,7 @@
             <!-- next two lines are mandatory -->
             <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="defaultTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -146,7 +145,7 @@
             </descendants>
         </node>
 
-        <!-- Node representing the main wall, behind the throne -->
+        <!-- Start of Wall Section -->
         <node id="wall">
             <material id="null" />
 
@@ -168,7 +167,7 @@
             </descendants>
         </node>
 
-        <!-- Node representing the window decoration of the main wall -->
+        <!-- Node representing the main wall -->
         <node id="main-wall">
             <material id="defaultMaterial" />
 
@@ -218,7 +217,130 @@
 
             <descendants>
                 <noderef id="wall-cube" />
+            </descendants>
+        </node>
 
+         <!-- Node representing a cube -->
+        <node id="wall-cube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wallcubeface1" />
+                <noderef id="wallcubeface2" />
+                <noderef id="wallcubeface3" />
+                <noderef id="wallcubeface4" />
+                <noderef id="wallcubeface5" />
+                <noderef id="wallcubeface6" />
+            </descendants>
+        </node>
+
+        <!-- Cube Faces -->
+        <node id="wallcubeface1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="wallcubeface2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="wallcubeface3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="wallcubeface4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="wallcubeface5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="wallcubeface6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
@@ -273,7 +395,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the window of the main wall -->
         <node id="window">
             <material id="null" />
 
@@ -290,7 +411,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the glass of the window -->
         <node id="glass">
             <material id="null" />
 
@@ -307,7 +427,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the window decoration of the main wall -->
         <node id="window-decoration">
             <material id="null" />
 
@@ -325,7 +444,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the spiral of the window decoration of the main wall -->
         <node id="window-decoration-spiral">
             <material id="null" />
 
@@ -346,7 +464,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the wheel of the window decoration of the main wall -->
         <node id="window-decoration-wheel-outer">
             <material id="null" />
 
@@ -377,7 +494,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the inner sphere of the window decoration of the main wall -->
         <node id="window-decoration-sphere">
             <material id="redMaterial" />
 
@@ -393,7 +509,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the spirals of the window decoration of the main wall -->
         <node id="window-decoration-spirals">
             <material id="null" />
 
@@ -415,7 +530,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the first triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side1">
             <material id="null" />
 
@@ -431,7 +545,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the second triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side2">
             <material id="null" />
 
@@ -448,7 +561,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the third triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side3">
             <material id="null" />
 
@@ -465,7 +577,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the fourth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side4">
             <material id="null" />
 
@@ -482,7 +593,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the fifth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side5">
             <material id="null" />
 
@@ -499,7 +609,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sixth triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side6">
             <material id="null" />
 
@@ -516,7 +625,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the seventh triangle of the decoration of the main wall -->
         <node id="window-decoration-spiral-side7">
             <material id="null" />
 
@@ -1073,7 +1181,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the door of the main wall at the right -->
         <node id="door-right">
             <material id="null" />
 
@@ -1090,7 +1197,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the door of the main wall at the left -->
         <node id="door-left">
             <material id="null" />
 
@@ -1107,7 +1213,6 @@
             </descendants>
         </node>
         
-        <!-- Node representing a door -->
         <node id="door">
             <material id="null" />
 
@@ -1127,7 +1232,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the door arc -->
         <node id="door-inside">
             <material id="null" />
 
@@ -1193,7 +1297,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left side of the door -->
         <node id="door-side1">
             <material id="null" />
 
@@ -1213,7 +1316,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right side of the door -->
         <node id="door-side2">
             <material id="null" />
 
@@ -1299,7 +1401,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left sword on the wall -->
         <node id="sword-left">
             <material id="null" />
 
@@ -1317,7 +1418,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right sword on the wall -->
         <node id="sword-right">
             <material id="null" />
 
@@ -1335,7 +1435,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing a torch on the wall -->
         <node id="torch-left">
             <material id="null" />
 
@@ -1352,7 +1451,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing a torch on the wall -->
         <node id="torch-right">
             <material id="null" />
 
@@ -1369,7 +1467,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing a torch on the wall -->
         <node id="torch">
             <material id="null" />
 
@@ -1439,8 +1536,9 @@
                 <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />
             </descendants>
         </node>
+        <!-- Ending of Wall Section -->
 
-        <!-- Node representing the throne -->
+        <!-- Start of Throne Section -->
         <node id="throne">
             <material id="null" />
 
@@ -1496,7 +1594,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left arm-support of the throne -->
         <node id="throne-left-support">
             <material id="null" />
 
@@ -1515,7 +1612,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right arm-support of the throne -->
         <node id="throne-right-support">
             <material id="null" />
 
@@ -1586,7 +1682,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the back of the throne -->
         <node id="throne-back">
             <material id="null" />
 
@@ -1604,7 +1699,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the swords composing the throne -->
         <node id="throne-swords">
             <material id="null" />
 
@@ -1620,7 +1714,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the swords composing the throne back -->
         <node id="throne-back-swords">
             <material id="null" />
 
@@ -1649,7 +1742,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the first throne sword -->
         <node id="arc-chair-1">
             <material id="null" />
 
@@ -1665,7 +1757,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the second throne sword -->
         <node id="arc-chair-2">
             <material id="null" />
 
@@ -1682,7 +1773,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the third throne sword -->
         <node id="arc-chair-3">
             <material id="null" />
 
@@ -1699,7 +1789,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the fourth throne sword -->
         <node id="arc-chair-4">
             <material id="null" />
 
@@ -1716,7 +1805,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the fifth throne sword -->
         <node id="arc-chair-5">
             <material id="null" />
 
@@ -1733,7 +1821,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sixth throne sword -->
         <node id="arc-chair-6">
             <material id="null" />
 
@@ -1750,7 +1837,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the seventh throne sword -->
         <node id="arc-chair-7">
             <material id="null" />
 
@@ -1767,7 +1853,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the eighth throne sword -->
         <node id="arc-chair-8">
             <material id="null" />
 
@@ -1784,7 +1869,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the ninth throne sword -->
         <node id="arc-chair-9">
             <material id="null" />
 
@@ -1801,7 +1885,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the tenth throne sword -->
         <node id="arc-chair-10">
             <material id="null" />
 
@@ -1818,7 +1901,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the eleventh throne sword -->
         <node id="arc-chair-11">
             <material id="null" />
 
@@ -1846,11 +1928,10 @@
             </transformations>
 
             <descendants>
-                <noderef id="sword-body" />
+                <noderef id="sword" />
             </descendants>
         </node>
 
-        <!-- Node representing a sword -->
         <node id="sword">
             <material id="null" />
 
@@ -1869,7 +1950,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sword pommel -->
         <node id="sword-pommel">
             <material id="null" />
 
@@ -1886,7 +1966,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sword grip -->
         <node id="sword-grip">
             <material id="null" />
 
@@ -1904,7 +1983,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sword chappe -->
         <node id="sword-chappe">
             <material id="null" />
 
@@ -1925,7 +2003,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left part of the chappe -->
         <node id="chappe-left">
             <material id="null" />
 
@@ -1942,7 +2019,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right part of the chappe -->
         <node id="chappe-right">
             <material id="null" />
 
@@ -1959,7 +2035,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left sphere of the chappe -->
         <node id="chappe-sphere-left">
             <material id="null" />
 
@@ -1976,7 +2051,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right sphere of the chappe -->
         <node id="chappe-sphere-right">
             <material id="null" />
 
@@ -1993,7 +2067,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the sword body -->
         <node id="sword-body">
             <material id="null" />
 
@@ -2011,8 +2084,9 @@
                 <leaf type="cylinder" height="30" topRadius="0.01" bottomRadius="1" stacks="8" slices="8" />
             </descendants>
         </node>
+        <!-- End of Throne Section -->
 
-        <!-- Node representing the floor of the scene -->
+        <!-- Start of Floor Section -->
         <node id="floor">
             <material id="defaultMaterial" />
 
@@ -2030,7 +2104,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the main floor of the scene -->
         <node id="floor-bottom">
             <material id="null" />
 
@@ -2049,7 +2122,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the stairs in top floor -->
         <node id="floor-top">
             <material id="darkerMaterial" />
 
@@ -2176,7 +2248,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the stairs in bottom floor -->
         <node id="floor-stairs">
             <material id="null" />
 
@@ -2263,8 +2334,9 @@
                 <noderef id="cube" />
             </descendants>
         </node>
+        <!-- End of the floor section -->
 
-        <!-- Node representing the columns -->
+        <!-- Start of the columns section -->
         <node id="columns">
             <material id="null" />
 
@@ -2282,7 +2354,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the left column -->
         <node id="column-left">
             <material id="null" />
 
@@ -2299,7 +2370,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the right column -->
         <node id="column-right">
             <material id="null" />
 
@@ -2316,7 +2386,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing column -->
         <node id="column">
             <material id="null" />
 
@@ -2703,7 +2772,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the column base -->
         <node id="column-base">
             <material id="null" />
 
@@ -2720,7 +2788,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the column body -->
         <node id="column-cylinder">
             <material id="null" />
 
@@ -2738,7 +2805,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the column flag -->
         <node id="column-flag">
             <material id="null" />
 
@@ -2757,7 +2823,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the column flag support -->
         <node id="flag-support">
             <material id="null" />
 
@@ -2775,7 +2840,6 @@
             </descendants>
         </node>
 
-        <!-- Node representing the column flag -->
         <node id="flag">
             <material id="null" />
 
@@ -2792,130 +2856,7 @@
                 <leaf type="triangle" x1="-3.0" y1="0.0" x2="3.0" y2="0.0" x3="0.0" y3="10.0" />
             </descendants>
         </node>
-
-        <!-- Node representing a cube -->
-        <node id="wall-cube">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0.5" z="0" />
-            </transformations>
-
-            <descendants>
-                <noderef id="wallcubeface1" />
-                <noderef id="wallcubeface2" />
-                <noderef id="wallcubeface3" />
-                <noderef id="wallcubeface4" />
-                <noderef id="wallcubeface5" />
-                <noderef id="wallcubeface6" />
-            </descendants>
-        </node>
-
-        <!-- Cube Faces -->
-        <node id="wallcubeface1">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="wallcubeface2">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <rotation axis="y" angle="90" />
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="wallcubeface3">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <rotation axis="y" angle="180" />
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="wallcubeface4">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <rotation axis="y" angle="270" />
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="wallcubeface5">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <rotation axis="x" angle="90" />
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="wallcubeface6">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
-            </texture>
-
-            <transformations>
-                <rotation axis="x" angle="270" />
-                <translation x="-0.5" y="-0.5" z="0.5" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
-            </descendants>
-        </node>
+        <!-- End of Collumns Section -->
 
         <!-- Node representing a cube -->
         <node id="cube">
