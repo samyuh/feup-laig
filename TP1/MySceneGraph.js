@@ -987,7 +987,7 @@ class MySceneGraph {
         let amplification = grandChildren[textureIndex].children[0];
 
         if (amplification == null) {
-            this.onXMLMinorError("Amplification is undefined on" + nodeID + ". Using afs = 1.0 and aft = 1.0");
+            this.onXMLMinorError("Amplification is undefined on " + nodeID + ". Using afs = 1.0 and aft = 1.0");
         }
         else if (amplification.nodeName != "amplification") {
             this.onXMLMinorError("Missing/Invalid amplification tag from <texture> tag, node " + nodeID + " in <nodes>. Using afs = 1.0 and aft = 1.0");
@@ -1449,14 +1449,14 @@ class MySceneGraph {
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.transformation);
 
-        // ------ Process next node ------ //
-        for (var i = 0; i < currentNode.descendants.length; i++) {
-            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
-        }
-
         // ------ Display Leaves ------ //
         for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
             currentNode.leaves[i].display();
+        }
+
+        // ------ Process next node ------ //
+        for (var i = 0; i < currentNode.descendants.length; i++) {
+            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
         }
 
         this.scene.popMatrix();
