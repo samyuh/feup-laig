@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="2" />
+        <reference length="0" />
         <!-- axis length; "0" means no axis displayed -->
         <root id="iron-throne-room" />
         <!-- identifier of root node of the scene graph; this node -->
@@ -40,14 +40,14 @@
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
         <light id="ambientLight">            <!-- ambient light -->
             <enable value="1" />
-            <position x="10" y="12" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="25" z="9.5" w="1.0" />              <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />             <!-- diffuse component -->
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />            <!-- specular component -->
         </light>
 
         <light id="windowLight">            <!-- window light -->
-            <enable value="0" />
+            <enable value="1" />
             <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
@@ -56,7 +56,7 @@
 
         <light id="rightLight">            <!-- right torch light -->
             <enable value="0" />
-            <position x="25" y="15" z="0" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="18.5" y="22" z="-24.5" w="1.0" />               <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -64,7 +64,7 @@
 
         <light id="leftLight">            <!-- left torch light -->
             <enable value="0" />
-            <position x="-25" y="15" z="0" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="-18.5" y="22" z="-24.5" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.1" g="0.0" b="0.0" a="1.0" />           <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -83,6 +83,7 @@
         <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
         <texture id="fireTexture" path="./scenes/images/fire.jpg" />
         <texture id="darkwoodTexture" path="./scenes/images/darkwood.jpg" />
+        <texture id="flagTexture" path="./scenes/images/flag.png" />
     </textures>
 
     <materials>
@@ -260,7 +261,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="1.5" aft="1.5" />
+                <amplification afs="2.6" aft="2.5" />
             </texture>
 
             <transformations>
@@ -294,7 +295,7 @@
             <material id="null" />
 
             <texture id="glassTexture">
-                <amplification afs="1.0" aft="1.0" />
+                <amplification afs="30.0" aft="30.0" />
             </texture>
 
             <transformations>
@@ -2330,6 +2331,7 @@
                 <noderef id="column-firepit" />
                 <noderef id="column-base" />
                 <noderef id="column-cylinder" />
+                <noderef id="column-flag" />
             </descendants>
         </node>
 
@@ -2733,6 +2735,60 @@
 
             <descendants>
                 <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="8" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the column flag -->
+        <node id="column-flag">
+            <material id="null" />
+
+            <texture id="stonepillarTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="y" angle="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="flag-support" />
+                <noderef id="flag" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the column flag support -->
+        <node id="flag-support">
+            <material id="null" />
+
+            <texture id="stonepillarTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2.5" y="20.0" z="3.0" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5.0" topRadius="0.2" bottomRadius="0.2" stacks="15" slices="20" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the column flag -->
+        <node id="flag">
+            <material id="null" />
+
+            <texture id="flagTexture">
+                <amplification afs="6.0" aft="5.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="20.0" z="3.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-3.0" y1="0.0" x2="3.0" y2="0.0" x3="0.0" y3="10.0" />
             </descendants>
         </node>
 
