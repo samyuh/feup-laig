@@ -2747,7 +2747,7 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="0.0" z="0.0" />
+                <translation x="0.0" y="0.0" z="-0.5" />
                 <rotation axis="y" angle="0" />
             </transformations>
 
@@ -2785,6 +2785,7 @@
 
             <transformations>
                 <translation x="0.0" y="20.0" z="3.0" />
+                <rotation axis="z" angle="180" />
             </transformations>
 
             <descendants>

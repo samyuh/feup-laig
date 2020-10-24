@@ -109,6 +109,7 @@ class MyHalfTorus extends CGFobject {
      * @param aft - dy/aft
      */
     updateTexCoords(afs, aft) {
+        /*
         this.texCoords = [];
         
         for (var loop = 0; loop <= this.loops; loop++) {
@@ -117,6 +118,9 @@ class MyHalfTorus extends CGFobject {
             }
         }
 
-		this.updateTexCoordsGLBuffers();
+        this.updateTexCoordsGLBuffers();
+        */
+
+        // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
 	}
 }

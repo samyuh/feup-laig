@@ -91,6 +91,7 @@ class MySphere extends CGFobject {
      * @param aft - dy/aft
      */
     updateTexCoords(afs, aft) {
+      /*
       this.texCoords = [];
   
       var longD = 1 / this.longDivs;
@@ -106,5 +107,8 @@ class MySphere extends CGFobject {
       }
   
       this.updateTexCoordsGLBuffers();
+      */
+
+      // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
     }
   }

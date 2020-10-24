@@ -1,20 +1,31 @@
 # LAIG 2020/2021 - TP1
 
-## Group: T0xG0y
-
+## Group T01G04
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Diogo Fernandes  | 201806250 | 201806250@fe.up.pt |
+| Paulo Ribeiro    | 201806505 | 201806505@fe.up.pt |
+
 
 ----
 ## Project information
 
-- (items describing main strong points)
+Our scene was inspired in the iron throne room of the series Game of Thrones
+
+In addition, we added an extra primitive named HalfTorus to create better door. You can see the XML with this primitive [here]().
+
+- (items briefly describing main strong points)
 - Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
-----
+  - Iron throne
+  - Stairs to the iron throne
+  - Two torchs, each one with one light source
+  - One window, with light source and some decoration around it
+  - Flags of the House Targaryen, representing the current ruling house
+  - You can see our scene [here](scenes/scene.xml) (Without HalfTorus)
+  
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
+We did everything that was proposed to do in this project.
+
+
+

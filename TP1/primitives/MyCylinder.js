@@ -162,6 +162,7 @@ class MyCylinder extends CGFobject {
      * @param aft - dy/aft
      */
     updateTexCoords(afs, aft) {
+        /*
         this.texCoords = [];
         
         let amplitude_increment = (2 * Math.PI) / this.slices;
@@ -192,6 +193,9 @@ class MyCylinder extends CGFobject {
             angle += amplitude_increment;
         }
 
-		this.updateTexCoordsGLBuffers();
+        this.updateTexCoordsGLBuffers();
+        */
+
+        // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
 	}
 }
