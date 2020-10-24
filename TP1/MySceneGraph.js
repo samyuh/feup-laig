@@ -816,11 +816,7 @@ class MySceneGraph {
             } else if (materialIndex == -1 && this.idRoot != nodeID) {
                 this.onXMLMinorError("<material> tag missing from node " + nodeID + " in <nodes>. Considering material with id = 'null'");
                 this.nodes[nodeID].material = "null";
-            } else {
-                let error = this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
-
-                if (typeof error === 'string') return error;
-            }
+            } else this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
 
             // ---------- Texture ---------- //
             if (textureIndex == -1) {
@@ -951,7 +947,20 @@ class MySceneGraph {
         let materialID = this.reader.getString(grandChildren[materialIndex], 'id');
 
         if (this.idRoot == nodeID && materialID == "null") {
-            return "idRoot can't have a null material! Ending... ";
+            this.onXMLMinorError("idRoot can't have a null material! Creating a temporary material with ID: _TEMP_MATERIAL");
+
+            let tempMaterial = new CGFappearance(this.scene);
+
+            tempMaterial.setShininess(1.0);
+            tempMaterial.setAmbient(0.5, 0.5, 0.5, 1.0);
+            tempMaterial.setDiffuse(0.5, 0.5, 0.5, 1.0);
+            tempMaterial.setSpecular(0.5, 0.5, 0.5, 1.0);
+            tempMaterial.setEmission(0.5, 0.5, 0.5, 1.0);
+
+            this.materials["_TEMP_MATERIAL"] = tempMaterial;
+
+            this.nodes[nodeID].material = "_TEMP_MATERIAL";
+
         } else if (materialID == null) {
             this.onXMLMinorError("Atribute 'id' missing from <material> tag, node " + nodeID + " in <nodes>. Considering id = 'null'");
             this.nodes[nodeID].material = "null";

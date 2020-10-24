@@ -14,7 +14,10 @@ Our scene was inspired in the iron throne room of the series Game of Thrones
 
 In addition, we added an extra primitive named HalfTorus to create better door. You can see the XML with this primitive [here](scenes/full-scene.xml).
 
-- (items briefly describing main strong points)
+- We have another primitive, one half torus.
+- Code Documentation
+- We made an effort to make modular code. For example, we have a function to parse descendants of the node and other functions to parse each leaf.
+- We followed the week plan strictly 
 - Scene
   - Iron throne
   - Stairs to the iron throne
