@@ -12,7 +12,7 @@
 
 Our scene was inspired in the iron throne room of the series Game of Thrones
 
-In addition, we added an extra primitive named HalfTorus to create better door. You can see the XML with this primitive [here]().
+In addition, we added an extra primitive named HalfTorus to create better door. You can see the XML with this primitive [here](scenes/full-scene.xml).
 
 - (items briefly describing main strong points)
 - Scene
@@ -21,7 +21,7 @@ In addition, we added an extra primitive named HalfTorus to create better door. 
   - Two torchs, each one with one light source
   - One window, with light source and some decoration around it
   - Flags of the House Targaryen, representing the current ruling house
-  - You can see our scene [here](scenes/scene.xml) (Without HalfTorus)
+  - You can see our scene [here](scenes/LAIG_TP1_XML_T1_G04_v02.xml.xml) (Without HalfTorus)
   
 ## Issues/Problems
 
