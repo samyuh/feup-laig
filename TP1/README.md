@@ -26,7 +26,7 @@ We added an extra primitive named HalfTorus to create better door. You can see t
 - Two torchs, each one with one light source
 - One window, with one light source and some decoration around it
 - Flags of the House Targaryen, representing the current ruling house
-- You can see our scene [without half torus](scenes/LAIG_TP1_XML_T1_G04_v02.xml.xml) or [with half torus](scenes/full-scene.xml).
+- You can see our scene [without half torus](scenes/LAIG_TP1_XML_T1_G04_v02.xml) or [with half torus](scenes/full-scene.xml).
   
 ## Issues/Problems
 
