@@ -63,8 +63,8 @@ class XMLscene extends CGFscene {
      * Initializes the scene lights with the values read from the XML file.
      */
     initXMLLights() {
-        let i = 0;
         // Lights index.
+        let i = 0;
         
         // Reads the lights from the scene graph.
         for (let key in this.graph.lights) {

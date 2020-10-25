@@ -1,12 +1,12 @@
 /**
  * MyCylinder
- * @method constructor
- * @param scene - Reference to MyScene object
- * @param height - Cylinder height
- * @param topRadius - Cylinder top radius
- * @param bottomRadius - Cylinder base radius
- * @param stacks - Reference to number of stacks of cylinder
- * @param slices - Reference to number of slices of cylinder
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {integer} height - Cylinder height
+ * @param {integer} topRadius - Cylinder top radius
+ * @param {integer} bottomRadius - Cylinder base radius
+ * @param {integer} stacks - Reference to number of stacks of cylinder
+ * @param {integer} slices - Reference to number of slices of cylinder
  */
 class MyCylinder extends CGFobject {
     constructor(scene, height, topRadius, bottomRadius, stacks, slices) {
@@ -55,7 +55,6 @@ class MyCylinder extends CGFobject {
         * After this, just join vertices counterclockwise
         */
 
-
         // --- Bottom Vertices --- //
         this.createBases(amplitude_increment, this.bottomRadius, 0, -1);
         
@@ -94,9 +93,9 @@ class MyCylinder extends CGFobject {
 
     /**
      * Creates Cylinder's bot and top base
-     * @param amplitude_increment - Amplitude increment between each slice
-     * @param height - Z Position
-     * @param zNormalDirection - 1 if position, -1 if negative
+     * @param {integer} amplitude_increment - Amplitude increment between each slice
+     * @param {integer} height - Z Position
+     * @param {integer} zNormalDirection - 1 if positive, -1 if negative
      */
     createBases(amplitude_increment, radius, height, zNormalDirection) {
         let angle = 0;
@@ -158,8 +157,8 @@ class MyCylinder extends CGFobject {
 
      /**
      * Updates the list of texture coordinates
-     * @param afs - dx/afs
-     * @param aft - dy/aft
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
         /*

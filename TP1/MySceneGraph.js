@@ -829,15 +829,17 @@ class MySceneGraph {
                 this.onXMLMinorError("<descendants> tag missing from node " + nodeID + " in <nodes>. Considering no descendants...");
             } else this.parseNodeDescendants(nodeID, descendantsIndex, grandChildren);
         }
+
+        this.verifyInvalidNodes(this.idRoot);
     }
 
     // -------- Parse Node Transformations -----------//
 
      /**
      * Parse node transformations
-     * @param {} nodeID node that contains nodeID
-     * @param {} transformationsIndex index of transformation tag
-     * @param {} grandChildren 
+     * @param {nodeID} nodeID node that contains nodeID
+     * @param {transformationsIndex} transformationsIndex index of transformation tag
+     * @param {array} grandChildren contains transformation node
      */
     parseNodeTransformations(nodeID, transformationsIndex, grandChildren) {
 
@@ -863,8 +865,8 @@ class MySceneGraph {
 
      /**
      * Parse Translation Transformation
-     * @param {} transformation transformation tag and information
-     * @param {} nodeID  nodeID
+     * @param {node transformation} transformation transformation tag and information
+     * @param {nodeID} nodeID  nodeID
      */
     parseTransformationTranslation(transformation, nodeID) {
         let x = this.reader.getFloat(transformation, 'x');
@@ -889,8 +891,8 @@ class MySceneGraph {
 
      /**
      * Parse Rotation Transformation
-     * @param {} transformation transformation tag and information
-     * @param {} nodeID nodeID
+     * @param {node transformation} transformation transformation tag and information
+     * @param {nodeID} nodeID nodeID
      */
     parseTransformationRotation(transformation, nodeID) {
         let axis = this.reader.getString(transformation, 'axis');
@@ -911,8 +913,8 @@ class MySceneGraph {
 
     /**
      * Parse Scale Transformation
-     * @param {} transformation transformation tag and information
-     * @param {} nodeID nodeID
+     * @param {node transformation} transformation transformation tag and information
+     * @param {nodeID} nodeID nodeID
      */
     parseTransformationScale(transformation, nodeID) {
         let sx = this.reader.getFloat(transformation, 'sx');
@@ -939,15 +941,15 @@ class MySceneGraph {
 
     /**
      * Parse node material
-     * @param {} nodeID node that contains nodeID
-     * @param {} materialIndex index of material tag
-     * @param {} grandChildren 
+     * @param {nodeID} nodeID node that contains nodeID
+     * @param {materialIndex} materialIndex index of material tag
+     * @param {array} grandChildren contains texture node
      */
     parseNodeMaterial(nodeID, materialIndex, grandChildren) {
         let materialID = this.reader.getString(grandChildren[materialIndex], 'id');
 
-        if (this.idRoot == nodeID && materialID == "null") {
-            this.onXMLMinorError("idRoot can't have a null material! Creating a temporary material with ID: _TEMP_MATERIAL");
+        if (this.idRoot == nodeID && (materialID == null || this.materials[materialID] == null)) {
+            this.onXMLMinorError("idRoot doesn't have a valid material! Creating a temporary material with ID: _TEMP_MATERIAL");
 
             let tempMaterial = new CGFappearance(this.scene);
 
@@ -976,9 +978,9 @@ class MySceneGraph {
 
     /**
      * Parse node textures
-     * @param {} nodeID node that contains nodeID
-     * @param {} textureIndex index of texture tag
-     * @param {} grandChildren 
+     * @param {nodeID} nodeID node that contains nodeID
+     * @param {textureIndex} textureIndex index of texture tag
+     * @param {array} grandChildren contains texture node
      */
     parseNodeTexture(nodeID, textureIndex, grandChildren) {
         let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
@@ -1024,9 +1026,9 @@ class MySceneGraph {
 
     /**
      * Parse node descendants
-     * @param {} nodeID node that contains nodeID
-     * @param {} descendantsIndex index of descendants tag
-     * @param {} grandChildren 
+     * @param {nodeID} nodeID node that contains nodeID
+     * @param {descendantsIndex} descendantsIndex index of descendants tag
+     * @param {array} grandChildren contains all descendants from nodeID
      */
     parseNodeDescendants(nodeID, descendantsIndex, grandChildren) {
         let descendants = grandChildren[descendantsIndex].children;
@@ -1075,9 +1077,9 @@ class MySceneGraph {
 
     /**
      * Parse triangle from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} type node that contains primitive type
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {primitive type} type node that contains primitive type
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseDescendantsLeafs(descendants, type, messageError) {
         switch (type) {
@@ -1100,8 +1102,8 @@ class MySceneGraph {
 
     /**
      * Parse Torus from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseTorus(descendants, messageError) {
         let inner = this.reader.getFloat(descendants, 'inner');
@@ -1129,8 +1131,8 @@ class MySceneGraph {
 
     /**
      * Parse Half Torus from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseHalfTorus(descendants, messageError) {
         let inner = this.reader.getFloat(descendants, 'inner');
@@ -1158,8 +1160,8 @@ class MySceneGraph {
 
     /**
      * Parse cylinder from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseCylinder(descendants, messageError) {
         let height = this.reader.getFloat(descendants, 'height');
@@ -1192,8 +1194,8 @@ class MySceneGraph {
 
     /**
      * Parse sphere from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseSphere(descendants, messageError) {
         let radius = this.reader.getFloat(descendants, 'radius');
@@ -1216,8 +1218,8 @@ class MySceneGraph {
 
     /**
      * Parse rectangle from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseRectangle(descendants, messageError) {
         let x1 = this.reader.getFloat(descendants, 'x1');
@@ -1245,8 +1247,8 @@ class MySceneGraph {
 
     /**
      * Parse triangle from XML
-     * @param {} descendants node that contains primitive information
-     * @param {} messageError error message given if some of value isn't parsable
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseTriangle(descendants, messageError) {
         let x1 = this.reader.getFloat(descendants, 'x1');
@@ -1284,10 +1286,31 @@ class MySceneGraph {
     // -------- Auxiliary parser functions -----------//
 
     /**
+     * Iterates through the SceneGraph to find and delete Invalid Nodes
+     * @param {block element} nodeID nodeID
+     */
+    verifyInvalidNodes(nodeID) {
+        let currentNode = this.nodes[nodeID];
+
+        if(this.nodes[nodeID] == null)
+            return -1;
+        else {
+            for (let i = 0; i < currentNode.descendants.length; i++) 
+                if (this.verifyInvalidNodes(currentNode.descendants[i]) == -1) {
+                    this.onXMLMinorError("Deleting " + currentNode.descendants[i] + " from descendants of " + nodeID);
+
+                    currentNode.descendants.splice(i, 1);
+                }
+        }
+
+        return 0;
+    }
+
+    /**
      * Parse the Booleans
-     * @param {} node
-     * @param {} name
-     * @param {} messageError
+     * @param {block element} node
+     * @param {string} name
+     * @param {message to be displayed in case of error} messageError
      */
     parseBoolean(node, name, messageError) {
         var boolVal = true;
@@ -1328,7 +1351,7 @@ class MySceneGraph {
 
     /**
      * Parse the coordinates from a node with ID = id
-     * @param {block element} node
+     * @param {block element} node 
      * @param {message to be displayed in case of error} messageError
      */
     parseCoordinates4D(node, messageError) {

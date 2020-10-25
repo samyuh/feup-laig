@@ -1,7 +1,7 @@
 /**
  * MySphere
  * @constructor
- * @param scene - Reference to MyScene object
+ * @param {CGFscene} scene - Reference to MyScene object
  */
 class MySphere extends CGFobject {
     /**
@@ -87,8 +87,8 @@ class MySphere extends CGFobject {
 
      /**
      * Updates the list of texture coordinates
-     * @param afs - dx/afs
-     * @param aft - dy/aft
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
       /*

@@ -1,11 +1,11 @@
 /**
  * MyRectangle
  * @constructor
- * @param scene - Reference to MyScene object
- * @param x1 - x coordinate corner 1
- * @param y1 - y coordinate corner 1
- * @param x2 - x coordinate corner 2
- * @param y2 - y coordinate corner 2
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {integer} x1 - x coordinate corner 1
+ * @param {integer} y1 - y coordinate corner 1
+ * @param {integer} x2 - x coordinate corner 2
+ * @param {integer} y2 - y coordinate corner 2
  */
 class MyRectangle extends CGFobject {
 	constructor(scene, x1, y1, x2, y2) {
@@ -57,8 +57,8 @@ class MyRectangle extends CGFobject {
 
 	 /**
      * Updates the list of texture coordinates
-     * @param afs - dx/afs
-     * @param aft - dy/aft
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
      */
 	updateTexCoords(afs, aft) {
 		this.texCoords = [

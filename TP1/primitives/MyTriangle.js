@@ -1,7 +1,7 @@
 /**
  * MyTriangle
  * @constructor
- * @param scene - Reference to MyScene object
+ * @param {CGFscene} scene - Reference to MyScene object
  */
 class MyTriangle extends CGFobject {
 	constructor(scene, x1, y1, x2, y2, x3, y3) {
@@ -16,6 +16,10 @@ class MyTriangle extends CGFobject {
 		
 		this.initBuffers();
 	}
+
+	/**
+     * Init triangle buffers
+     */
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	
@@ -57,8 +61,8 @@ class MyTriangle extends CGFobject {
 
 	 /**
      * Updates the list of texture coordinates
-     * @param afs - dx/afs
-     * @param aft - dy/aft
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
      */
 	updateTexCoords(afs, aft) {
 		this.texCoords = [	

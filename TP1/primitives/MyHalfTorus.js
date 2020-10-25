@@ -1,11 +1,11 @@
 /**
  * MyHalfTorus
  * @constructor
- * @param scene - Reference to MyScene object
- * @param inner - Reference to MyScene object
- * @param outer - Reference to MyScene object
- * @param slices - Reference to MyScene object
- * @param loops - Reference to MyScene object
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {integer} inner - Reference to MyScene object
+ * @param {integer} outer - Reference to MyScene object
+ * @param {integer} slices - Reference to MyScene object
+ * @param {integer} loops - Reference to MyScene object
  */
 class MyHalfTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
@@ -105,8 +105,8 @@ class MyHalfTorus extends CGFobject {
     
      /**
      * Updates the list of texture coordinates
-     * @param afs - dx/afs
-     * @param aft - dy/aft
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
         /*
