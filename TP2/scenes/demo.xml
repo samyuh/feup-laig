@@ -61,6 +61,26 @@
         </material>
     </materials>
 
+    <animations>
+        <animation id="demoAni" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="2.0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <nodes>
         <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
@@ -73,6 +93,8 @@
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
             </transformations>
+
+            <animationref id="demoAni" />
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
@@ -88,6 +110,42 @@
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+
+                <!-- Novo embaixo -->
+                <!-- Nova primitiva: texto baseado em spritesheet -->
+                <leaf type="spritetext" text="ss" />
+
+                <!-- Nova primitiva: animação baseada em spritesheet -->
+                <!-- identifica a spritesheet a usar, a célula inicial e final da animação, e a duração -->
+                <leaf type="spriteanim" ssid="ss" startCell="ii" endCell="ii" duration="ff" />
+
+                <!-- Nova primitiva: plano, gerado por NURBS -->
+                <!-- ex: <plane npartsU=“5” npartsU=“8” />-->
+                <!-- um plano de dimensões 1 x 1 unidades assente -->
+                <!-- em XZ, centrado na origem -->
+                <!-- e com a face visível apontando para +Y -->
+                <!-- com divisão em cinco partes por oito partes -->
+                <leaf type="plane" npartsU="ii" npartsV="ii" />
+
+                <!-- Nova: primitiva: patch, gerada por NURBS -->
+                <!-- — parâmetros: -->
+                <!-- — npartsU: divisão em partes no domínio U a -->
+                <!-- ser usada para o cálculo da superfície -->
+                <!-- — npartsV: divisão em partes no domínio V -->
+                <!-- a ser usada para o cálculo da superficie -->
+                <!-- - o número de pontos de controlo dentro da -->
+                <!-- primitiva patch é npointsU * npointsV -->
+                <leaf type="patch" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii" >
+                    <controlpoint xx="ff" yy="ff" zz="ff" />
+                   <!-- ... -->
+                </leaf>
+
+                <!-- — Nova primitiva: forma de barril baseado em NURBS -->
+                <!-- parâmetros semelhantes ao cilindro original, mas sem tampas -->
+                <!-- base representa o raio na base e topo do cilindro -->
+                <!-- middle representa o raio no centro do objeto -->
+                <leaf type="defbarrel" base="ff" middle="ff" height="ff" slices="ii" stacks="ii" />
+                    
             </descendants>
         </node>
         <node id="cylinder">            <!-- defines one intermediate node; may be repeated as necessary -->

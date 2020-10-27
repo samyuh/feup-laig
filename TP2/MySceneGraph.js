@@ -8,6 +8,7 @@ var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
+var ANIMATIONS_INDEX = 6;
 var NODES_INDEX = 6;
 
 /**
@@ -191,11 +192,23 @@ class MySceneGraph {
                 return error;
         }
 
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            this.onXMLMinorError("tag <animations> missing");
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
         else {
-            if (index != NODES_INDEX)
+            if ((index != NODES_INDEX) && (index != (NODES_INDEX + 1)))
                 this.onXMLMinorError("tag <nodes> out of order");
 
             //Parse nodes block
@@ -761,6 +774,97 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <animations> block.
+     * @param {nodes block element} animationsNode
+     */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children; // -- Get all elements of node
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("Unknown tag <" + children[i].nodeName + "> in <animations> tag. Ignoring tag...");
+                continue;
+            }
+
+            let animationsID = this.reader.getString(children[i], 'id');
+            if (animationsID == null) {
+                this.onXMLMinorError("No ID defined for animation in <animations>. Ignoring node...");
+                continue;
+            }
+
+            console.log(animationsID);
+
+            let grandChildren = children[i].children;
+            for (var j = 0; j < grandChildren.length; j++) {
+                if (grandChildren[j].nodeName != "keyframe") {
+                    this.onXMLMinorError("Unknown tag <" + grandChildren[j].nodeName + "> in animation " + " animationsID " + " on <animations> tag. Ignoring tag...");
+                    continue;
+                }
+    
+                let keyframeInstant = this.reader.getFloat(grandChildren[j], 'instant');
+                console.log("Instant: " + keyframeInstant);
+                
+                let transformations = grandChildren[j].children;
+
+                let translation = transformations[0]; 
+                let rotationX = transformations[1]; 
+                let rotationY = transformations[2]; 
+                let rotationZ = transformations[3]; 
+                let scale = transformations[4]; 
+
+                if (translation.nodeName != "translation") {
+                    continue;
+                }
+                let xTranslation = this.reader.getFloat(translation, 'x');
+                let yTranslation = this.reader.getFloat(translation, 'y');
+                let zTranslation = this.reader.getFloat(translation, 'z');
+
+                if (rotationX.nodeName != "rotation") {
+                    continue;
+                }
+
+                let axisX = this.reader.getString(rotationX, 'axis');
+                let angleX = this.reader.getFloat(rotationX, 'angle');
+
+                if (rotationY.nodeName != "rotation") {
+                    continue;
+                }
+
+                let axisY = this.reader.getString(rotationY, 'axis');
+                let angleY = this.reader.getFloat(rotationY, 'angle');
+
+                if (rotationZ.nodeName != "rotation") {
+                    continue;
+                }
+
+                let axisZ = this.reader.getString(rotationZ, 'axis');
+                let angleZ = this.reader.getFloat(rotationZ, 'angle');
+
+                if (scale.nodeName != "scale") {
+                    continue;
+                }
+
+                let sx = this.reader.getFloat(scale, 'sx');
+                let sy = this.reader.getFloat(scale, 'sy');
+                let sz = this.reader.getFloat(scale, 'sz');
+
+                console.log(xTranslation + " " + yTranslation + " " + zTranslation);
+                console.log(axisX + " " + angleX);
+                console.log(axisY + " " + angleY);
+                console.log(axisZ + " " + angleZ);
+
+                console.log(sx + " " + sy + " " + sz);
+
+                console.log("fine");
+            }
+        }
+
+        this.log("Parsed animations");
+
+        return null;
+    }
+
+    /**
      * Parses the <nodes> block.
      * @param {nodes block element} nodesNode
      */
@@ -803,6 +907,7 @@ class MySceneGraph {
             var transformationsIndex = nodeNames.indexOf("transformations");
             var materialIndex = nodeNames.indexOf("material");
             var textureIndex = nodeNames.indexOf("texture");
+            var animationIndex = nodeNames.indexOf("animationref");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             // ---------- Transformations --------------- //
@@ -811,9 +916,7 @@ class MySceneGraph {
             } else this.parseNodeTransformations(nodeID, transformationsIndex, grandChildren);
 
             // ---------- Material ---------- //
-            if (materialIndex == -1 && this.idRoot == nodeID) {
-                return "<material> tag missing from Root Node (" + nodeID + ") in <nodes>. Ending execution...";
-            } else if (materialIndex == -1 && this.idRoot != nodeID) {
+            if (materialIndex == -1 && this.idRoot != nodeID) {
                 this.onXMLMinorError("<material> tag missing from node " + nodeID + " in <nodes>. Considering material with id = 'null'");
                 this.nodes[nodeID].material = "null";
             } else this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
@@ -824,6 +927,11 @@ class MySceneGraph {
                 this.nodes[nodeID].texture = "clear";
             } else this.parseNodeTexture(nodeID, textureIndex, grandChildren);
 
+            // ---------- Animation -------- //
+            if (animationIndex != -1) {
+                console.log(nodeID + " animated");
+            } 
+
             // ---------- Descendants ---------- //
             if (descendantsIndex == -1) {
                 this.onXMLMinorError("<descendants> tag missing from node " + nodeID + " in <nodes>. Considering no descendants...");
@@ -831,6 +939,8 @@ class MySceneGraph {
         }
 
         this.verifyInvalidNodes(this.idRoot);
+
+        this.log("Parsed nodes");
     }
 
     // -------- Parse Node Transformations -----------//
@@ -1049,7 +1159,8 @@ class MySceneGraph {
                     this.nodes[nodeID].addDescendants(id);
                 }
             } else if (descendants[j].nodeName == "leaf") {
-                let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus']);
+                let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus',
+                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel']);
 
                 if (type == null) {
                     this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
@@ -1095,6 +1206,16 @@ class MySceneGraph {
                 return  this.parseRectangle(descendants, messageError);
             case "triangle":
                 return this.parseTriangle(descendants, messageError);
+            case "spritetext":
+                return type + " missing implementation";
+            case "spriteanim":
+                return type + " missing implementation";
+            case "plane":
+                return type + " missing implementation";
+            case "patch":
+                return type + " missing implementation";
+            case "defbarrel":
+                return type + " missing implementation";
             default:
                 return "not a valid leaf on node " + messageError;
         }
