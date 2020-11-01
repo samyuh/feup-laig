@@ -107,7 +107,16 @@ class XMLscene extends CGFscene {
         
         this.initXMLCameras();
 
+        this.setUpdatePeriod(100);
+
         this.sceneInited = true;
+    }
+
+    update(t) {
+        // Update animation
+        // console.log("update" + t);
+        for (let k in this.graph.keyframesAnimation)
+            this.graph.keyframesAnimation[k].update(t / 1000);
     }
 
     /**

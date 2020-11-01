@@ -75,7 +75,7 @@ class MyTorus extends CGFobject {
                 this.normals.push(nx, ny, nz);
 
                 // -- Texture Coordinates -- //
-                this.texCoords.push(slice / this.slices, 1 - loop / this.loops);
+                this.texCoords.push(slice / this.slices, loop / this.loops);
                 
                 angle += amplitude_increment;
             }

@@ -811,9 +811,7 @@ class MySceneGraph {
             } else this.parseNodeTransformations(nodeID, transformationsIndex, grandChildren);
 
             // ---------- Material ---------- //
-            if (materialIndex == -1 && this.idRoot == nodeID) {
-                return "<material> tag missing from Root Node (" + nodeID + ") in <nodes>. Ending execution...";
-            } else if (materialIndex == -1 && this.idRoot != nodeID) {
+            if (materialIndex == -1 && this.idRoot != nodeID) {
                 this.onXMLMinorError("<material> tag missing from node " + nodeID + " in <nodes>. Considering material with id = 'null'");
                 this.nodes[nodeID].material = "null";
             } else this.parseNodeMaterial(nodeID, materialIndex, grandChildren);
