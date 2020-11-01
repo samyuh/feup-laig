@@ -39,9 +39,6 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
 
         this.selectedView;
-
-        // -- Update the scene every 12 milliseconds -- //
-        this.setUpdatePeriod(12);
     }
 
     /**
@@ -110,11 +107,16 @@ class XMLscene extends CGFscene {
         
         this.initXMLCameras();
 
+        this.setUpdatePeriod(100);
+
         this.sceneInited = true;
     }
 
     update(t) {
         // Update animation
+        // console.log("update" + t);
+        for (let k in this.graph.keyframesAnimation)
+            this.graph.keyframesAnimation[k].update((t % 15000) / 1000);
     }
 
     /**

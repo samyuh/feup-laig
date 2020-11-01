@@ -71,12 +71,28 @@
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
 
-            <keyframe instant="2.0">
-                <translation x="0" y="0" z="0" />
+            <keyframe instant="5">
+                <translation x="0" y="0" z="5" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="z" angle="0" />
                 <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+
+            <keyframe instant="15">
+                <translation x="0" y="10" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="6" sy="6" sz="6" />
             </keyframe>
         </animation>
     </animations>

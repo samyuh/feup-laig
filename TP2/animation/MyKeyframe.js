@@ -1,11 +1,11 @@
-class KeyFrame {
-    constructor(instant, translation, rotationX, rotationY, rotationZ, scale) {
+class MyKeyframe {
+    constructor(instant, translation, rotation, scale) {
+        // --- Time --- //
         this.instant = instant;
+
+        // --- Transformations --- //
         this.translation = translation;
-        this.rotationX = rotationX;
-        this.rotationY = rotationY;
-        this.rotationZ = rotationZ;
+        this.rotation = rotation;
         this.scale = scale;
-        this.values;    // Calculate final [x,y,z] values of keyframe
     }
 }

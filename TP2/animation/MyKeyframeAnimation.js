@@ -1,84 +1,114 @@
 class MyKeyframeAnimation extends MyAnimation {
-    constructor(startTime, endTime, startTransformations, endTransformations) {
+    constructor(scene, startTime, endTime, startTransformations, endTransformations) {
         super(startTime, endTime, startTransformations, endTransformations);
 
+        this.scene = scene;
+
+        // --- KeyFrame --- //
         this.keyframes = [];
-
         this.keyframeNumber = 0;
-        this.timePercentage = 0;
 
-        this.previousKeyframe;
-        this.nextKeyframe;
-
-        this.animation;
-    }
-
-    sortMethod(keyframe1, keyframe2) {
-        return keyframe1.instant < keyframe2.instant;
+        // --- Animation Matrix --- //
+        this.animation = mat4.create();
     }
 
     addKeyframe(keyframe) {
         this.keyframes.push(keyframe);
         
-        this.keyframes.sort(sortMethod);
+        // this.keyframes.sort(this.sortMethod);
     }
 
+    /*
+    sortMethod(keyframe1, keyframe2) {
+        return keyframe1.instant < keyframe2.instant;
+    }
+    */
+
     update(currentTime) {
+        console.log(currentTime);
+
+        if(currentTime < 1) {
+            this.keyframeNumber = 0;
+        }
+
         if (!this.active)
             return 0;
 
         if (currentTime < this.endTime) {
-            if (this.keyframeNumber == 0)
-                this.previousKeyframe = new MyKeyframe(0, [0,0,0],0,0,0,[1.0,1.0,1.0]);  // Keyframe with no changes
-            else
-                this.previousKeyframe = this.keyframes[this.keyframeNumber - 1];
-                
-            this.nextKeyframe = this.keyframes[this.keyframeNumber];
+            // --- Switch KeyFrame if needed --- //
+            if ((currentTime > this.keyframes[this.keyframeNumber].instant) && (this.keyframeNumber != (this.keyframes.length - 1))) {
+                console.log(this.keyframeNumber);
+                this.keyframeNumber++; 
+            }
 
-            this.timePercentage = (this.elapsedTime - this.previousKeyframe.instant) / (this.nextKeyframe.instant - this.previousKeyframe.instant);
+            // --- Previous KeyFrame --- //
+            let previousKeyframe;
+        
+            if (this.keyframeNumber == 0) 
+                previousKeyframe = new MyKeyframe(0, [0,0,0], [0,0,0], [1.0,1.0,1.0]);  // Keyframe with no changes
+            else 
+                previousKeyframe = this.keyframes[this.keyframeNumber - 1]; 
+
+            // --- Next KeyFrame --- //
+            let nextKeyframe = this.keyframes[this.keyframeNumber];
+
+            // --- Time Percentage --- //
+            let timePercentage = (currentTime - previousKeyframe.instant) / (nextKeyframe.instant - previousKeyframe.instant);
+            
+            /*
+            if (this.keyframeNumber == this.keyframes.length) {
+                this.keyframeNumber--;
+                this.active = false;
+                // dar apply da ultima
+            }
+            */
+    
+            // --- Calculate Values for each Transformation --- //
+            // --- Init transformation matrix --- //
+            let matrix = mat4.create();
+    
+            // ---- Translation ---- //
+            var translationVec3 = [0, 0, 0];
+    
+            var PKeyFrame = [previousKeyframe.translation[0], previousKeyframe.translation[1], previousKeyframe.translation[2]];
+            var NKeyFrame = [nextKeyframe.translation[0], nextKeyframe.translation[1], nextKeyframe.translation[2]];
+    
+            vec3.lerp(translationVec3, PKeyFrame, NKeyFrame, timePercentage);
+    
+            mat4.translate(matrix, matrix, translationVec3);
+    
+            // ---- Rotation ---- //
+            let rotationVec3 = [0, 0, 0];
+
+            let previousRotation = [previousKeyframe.rotation[0], previousKeyframe.rotation[1], previousKeyframe.rotation[2]];
+            let nextRotation = [nextKeyframe.rotation[0], nextKeyframe.rotation[1], nextKeyframe.rotation[2]];
+    
+            vec3.lerp(rotationVec3, previousRotation, nextRotation, timePercentage);
+            
+            mat4.rotate(matrix, matrix, rotationVec3[0] * (Math.PI / 180), [1, 0, 0]);
+            mat4.rotate(matrix, matrix, rotationVec3[1] * (Math.PI / 180), [0, 1, 0]);
+            mat4.rotate(matrix, matrix, rotationVec3[2] * (Math.PI / 180), [0, 0, 1]);
+    
+            // ---- Scale ---- //
+            let scaleVec3 = [0, 0, 0];
+    
+            let previousScaleFrame = [previousKeyframe.scale[0], previousKeyframe.scale[1], previousKeyframe.scale[2]];
+            let nextScaleFarme = [nextKeyframe.scale[0], nextKeyframe.scale[1], nextKeyframe.scale[2]];
+            
+            vec3.lerp(scaleVec3, previousScaleFrame, nextScaleFarme, timePercentage);
+    
+            mat4.scale(matrix, matrix, scaleVec3);
+    
+            this.animation = matrix;
         }
     }
 
     apply() {
+        // --- Check if animation is active --- //
         if (!this.active || this.keyframes.length == 0)
             return;     // Multiply by animation matrix before return?
-
-        if (this.elapsedTime > this.keyframes[this.keyframeNumber].instant) {
-            this.keyframeNumber++;  // Switch to next keyframe
-        }
-
-        if (this.keyframeNumber == this.keyframes.length) {
-            this.keyframeNumber--;
-            this.active = false;
-        }
-
-        this.update(this.currentTime);
-
-        let matrix = mat4.create();
-
-        // Process Translations
-        let translationX = lerp(this.previousKeyframe.translation[0], this.nextKeyframe.translation[0], this.timePercentage);
-        let translationY = lerp(this.previousKeyframe.translation[1], this.nextKeyframe.translation[1], this.timePercentage);
-        let translationZ = lerp(this.previousKeyframe.translation[2], this.nextKeyframe.translation[2], this.timePercentage);
-
-        mat4.translate(matrix, matrix, [translationX, translationY, translationZ]);
-
-        // Process Rotations
-        let rotationX = lerp(this.previousKeyframe.rotationX, this.nextKeyframe.rotationX, this.timePercentage) * DEGREE_TO_RAD;
-        let rotationY = lerp(this.previousKeyframe.rotationY, this.nextKeyframe.rotationY, this.timePercentage) * DEGREE_TO_RAD;
-        let rotationZ = lerp(this.previousKeyframe.rotationZ, this.nextKeyframe.rotationZ, this.timePercentage) * DEGREE_TO_RAD;
-
-        mat4.rotate(matrix, matrix, rotationX, [1, 0, 0]);
-        mat4.rotate(matrix, matrix, rotationY, [0, 1, 0]);
-        mat4.rotate(matrix, matrix, rotationZ, [0, 0, 1]);
-
-        // Process Scales
-        let scaleX = lerp(this.previousKeyframe.scale[0], this.nextKeyframe.scale[0], this.timePercentage);
-        let scaleY = lerp(this.previousKeyframe.scale[1], this.nextKeyframe.scale[1], this.timePercentage);
-        let scaleZ = lerp(this.previousKeyframe.scale[2], this.nextKeyframe.scale[2], this.timePercentage);
-
-        mat4.scale(matrix, matrix, [scaleX, scaleY, scaleZ]);
-
-        this.animation = matrix;
+        
+        // ---- Update Scene ---- //
+        this.scene.multMatrix(this.animation);
     }
 }

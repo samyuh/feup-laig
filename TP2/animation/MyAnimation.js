@@ -1,17 +1,22 @@
 
-class Animation {
+class MyAnimation {
     constructor(startTime, endTime, startTransformations, endTransformations) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+        // -- Used
+        this.startTime = 0;
+        this.endTime = 15;
+        this.active = true;
+
+        // -- Not used yet bellow
         this.totalTime = this.endTime - this.startTime;
         this.startTransformations = startTransformations; // [x, y, z]
         this.endTransformations = endTransformations;  // [x, y, z]
         this.currentTransformations;
         this.currentTime;
 
-        this.active = false;
+        this.active = true;
     }
 
+    /*
     update(currentTime) {
         if (!this.active)
             return 0;
@@ -28,4 +33,5 @@ class Animation {
             this.currentTransformations = [currentXValue, currentYValue, currentZValue];
         }
     }
+    */
 }

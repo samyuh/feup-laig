@@ -794,10 +794,9 @@ class MySceneGraph {
                 continue;
             }
 
-            var nKeyFrameAnim = new MyKeyframeAnimation(0, 2, [], []);
-            this.keyframesAnimation[animationID] = nKeyFrameAnim;
+            var nKeyFrameAnim = new MyKeyframeAnimation(this.scene, 0, 2, [], []);
 
-            console.log(animationsID);
+            console.log(animationID);
 
             let grandChildren = children[i].children;
             for (var j = 0; j < grandChildren.length; j++) {
@@ -853,8 +852,8 @@ class MySceneGraph {
                 let sy = this.reader.getFloat(scale, 'sy');
                 let sz = this.reader.getFloat(scale, 'sz');
                 
-                let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [axisX, angleX], [axisY, angleY], [axisZ, angleZ], [sx, sy, sz]);
-                keyframes.push(newKeyFrame);
+                let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [angleX, angleY, angleZ], [sx, sy, sz]);
+                nKeyFrameAnim.addKeyframe(newKeyFrame);
 
                 console.log(xTranslation + " " + yTranslation + " " + zTranslation);
                 console.log(axisX + " " + angleX);
@@ -865,6 +864,8 @@ class MySceneGraph {
 
                 console.log("fine");
             }
+
+            this.keyframesAnimation[animationID] = nKeyFrameAnim;
         }
 
         this.log("Parsed animations");
@@ -937,8 +938,8 @@ class MySceneGraph {
 
             // ---------- Animation -------- //
             if (animationIndex != -1) {
-                console.log(nodeID + " animated");
-                this.nodes[nodeID] = this.reader.getString(grandChildren[animationIndex], 'animationref');
+                this.nodes[nodeID].animationID = this.reader.getString(grandChildren[animationIndex], 'id');
+                console.log(this.nodes[nodeID].animationID);
             } 
 
             // ---------- Descendants ---------- //
@@ -1612,9 +1613,7 @@ class MySceneGraph {
         this.scene.multMatrix(currentNode.transformation);
 
         if(currentNode.animationID != null) {
-            console.log("Tem animação " + currentNode);
-            //this.keyframesAnimation[currentNode.animationID].apply();
-            // Continuar a processar descendentes se a animação estiver ativa
+            this.keyframesAnimation[currentNode.animationID].apply();
         }
 
         // ------ Display Leaves ------ //
