@@ -779,6 +779,8 @@ class MySceneGraph {
      */
     parseAnimations(animationsNode) {
         var children = animationsNode.children; // -- Get all elements of node
+        
+        this.keyframesAnimation = [];
 
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "animation") {
@@ -786,11 +788,14 @@ class MySceneGraph {
                 continue;
             }
 
-            let animationsID = this.reader.getString(children[i], 'id');
-            if (animationsID == null) {
+            let animationID = this.reader.getString(children[i], 'id');
+            if (animationID == null) {
                 this.onXMLMinorError("No ID defined for animation in <animations>. Ignoring node...");
                 continue;
             }
+
+            var nKeyFrameAnim = new MyKeyframeAnimation(0, 2, [], []);
+            this.keyframesAnimation[animationID] = nKeyFrameAnim;
 
             console.log(animationsID);
 
@@ -847,6 +852,9 @@ class MySceneGraph {
                 let sx = this.reader.getFloat(scale, 'sx');
                 let sy = this.reader.getFloat(scale, 'sy');
                 let sz = this.reader.getFloat(scale, 'sz');
+                
+                let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [axisX, angleX], [axisY, angleY], [axisZ, angleZ], [sx, sy, sz]);
+                keyframes.push(newKeyFrame);
 
                 console.log(xTranslation + " " + yTranslation + " " + zTranslation);
                 console.log(axisX + " " + angleX);
@@ -930,6 +938,7 @@ class MySceneGraph {
             // ---------- Animation -------- //
             if (animationIndex != -1) {
                 console.log(nodeID + " animated");
+                this.nodes[nodeID] = this.reader.getString(grandChildren[animationIndex], 'animationref');
             } 
 
             // ---------- Descendants ---------- //
@@ -1601,6 +1610,12 @@ class MySceneGraph {
         // ------ Transformation ------ //
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.transformation);
+
+        if(currentNode.animationID != null) {
+            console.log("Tem animação " + currentNode);
+            //this.keyframesAnimation[currentNode.animationID].apply();
+            // Continuar a processar descendentes se a animação estiver ativa
+        }
 
         // ------ Display Leaves ------ //
         for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {

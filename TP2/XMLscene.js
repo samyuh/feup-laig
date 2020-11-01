@@ -39,6 +39,9 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
 
         this.selectedView;
+
+        // -- Update the scene every 12 milliseconds -- //
+        this.setUpdatePeriod(12);
     }
 
     /**
@@ -108,6 +111,10 @@ class XMLscene extends CGFscene {
         this.initXMLCameras();
 
         this.sceneInited = true;
+    }
+
+    update(t) {
+        // Update animation
     }
 
     /**

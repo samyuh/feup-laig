@@ -25,6 +25,9 @@ class MyNode {
         // All descendants nodes and leaves
         this.descendants = [];
         this.leaves = [];
+
+        // Animation
+        this.animation = null;
     }
 
     /**
