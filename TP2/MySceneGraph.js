@@ -794,7 +794,7 @@ class MySceneGraph {
                 continue;
             }
 
-            var nKeyFrameAnim = new MyKeyframeAnimation(this.scene, 0, 2, [], []);
+            var nKeyFrameAnim = new MyKeyframeAnimation(this.scene);
 
             console.log(animationID);
 

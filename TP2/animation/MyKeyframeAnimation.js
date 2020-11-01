@@ -1,15 +1,10 @@
 class MyKeyframeAnimation extends MyAnimation {
-    constructor(scene, startTime, endTime, startTransformations, endTransformations) {
-        super(startTime, endTime, startTransformations, endTransformations);
-
-        this.scene = scene;
+    constructor(scene) {
+        super(scene);    
 
         // --- KeyFrame --- //
         this.keyframes = [];
         this.keyframeNumber = 0;
-
-        // --- Animation Matrix --- //
-        this.animation = mat4.create();
     }
 
     addKeyframe(keyframe) {
@@ -25,19 +20,19 @@ class MyKeyframeAnimation extends MyAnimation {
     */
 
     update(currentTime) {
-        console.log(currentTime);
-
-        if(currentTime < 1) {
-            this.keyframeNumber = 0;
-        }
-
         if (!this.active)
             return 0;
 
-        if (currentTime < this.endTime) {
+        if(this.startTime == null) {
+            this.startTime = currentTime;
+            this.endTime = this.keyframes[this.keyframes.length - 1].instant;
+        }
+
+        let elapsedTime = currentTime - this.startTime;
+
+        if (elapsedTime < this.endTime) {
             // --- Switch KeyFrame if needed --- //
-            if ((currentTime > this.keyframes[this.keyframeNumber].instant) && (this.keyframeNumber != (this.keyframes.length - 1))) {
-                console.log(this.keyframeNumber);
+            if ((elapsedTime > this.keyframes[this.keyframeNumber].instant) && (this.keyframeNumber != (this.keyframes.length - 1))) {
                 this.keyframeNumber++; 
             }
 
@@ -53,7 +48,7 @@ class MyKeyframeAnimation extends MyAnimation {
             let nextKeyframe = this.keyframes[this.keyframeNumber];
 
             // --- Time Percentage --- //
-            let timePercentage = (currentTime - previousKeyframe.instant) / (nextKeyframe.instant - previousKeyframe.instant);
+            let timePercentage = (elapsedTime - previousKeyframe.instant) / (nextKeyframe.instant - previousKeyframe.instant);
             
             /*
             if (this.keyframeNumber == this.keyframes.length) {

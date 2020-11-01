@@ -1,19 +1,20 @@
 
 class MyAnimation {
-    constructor(startTime, endTime, startTransformations, endTransformations) {
-        // -- Used
-        this.startTime = 0;
-        this.endTime = 15;
+    constructor(scene) {
+        this.scene = scene;
+
+        // --- Animation Start and Ending Time --- //
+        this.startTime = null;
+        this.endTime = null;
+
+        // --- Animation Matrix --- //
+        this.animation = mat4.create();
+
         this.active = true;
 
         // -- Not used yet bellow
-        this.totalTime = this.endTime - this.startTime;
-        this.startTransformations = startTransformations; // [x, y, z]
-        this.endTransformations = endTransformations;  // [x, y, z]
-        this.currentTransformations;
-        this.currentTime;
-
-        this.active = true;
+        //this.startTransformations = [];
+        //this.endTransformations = [];  
     }
 
     /*
