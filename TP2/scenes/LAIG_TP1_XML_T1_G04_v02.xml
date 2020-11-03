@@ -121,6 +121,208 @@
         </material>
     </materials>
 
+    <!-- NOTE: the "ANIMATIONS" block is optional, but when it exists, it must be
+     declared right before the block "NODES" -->
+    <animations>
+        <animation id="flagAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="15" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="15">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="15" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="wheelAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="720" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="yellowTrianglesAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="5">
+                <translation x="0" y="0" z="1" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="torchesAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="720" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="firepitAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="180" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="fireAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="180" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="swordsAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="10" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <nodes>
         <!-- The Root Node, representing the main scene - the iron throne room -->
         <node id="iron-throne-room">            <!-- defines one intermediate node; may be repeated as necessary -->
@@ -474,6 +676,8 @@
             <transformations>
             </transformations>
 
+            <animationref id="wheelAnimation" />
+
             <descendants>
                 <leaf type="torus" inner="0.2" outer="3.8" slices="15" loops="40" />
             </descendants>
@@ -489,6 +693,8 @@
             <transformations>
             </transformations>
 
+            <animationref id="yellowTrianglesAnimation" />
+
             <descendants>
                 <leaf type="torus" inner="0.2" outer="0.8" slices="15" loops="40" />
             </descendants>
@@ -503,6 +709,8 @@
 
             <transformations>
             </transformations>
+
+            <animationref id="wheelAnimation" />
 
             <descendants>
                 <leaf type="sphere" radius="0.8" slices="32" stacks="32"/>
@@ -684,6 +892,8 @@
 
             <transformations>
             </transformations>
+
+            <animationref id="yellowTrianglesAnimation" />
 
             <descendants>
                 <leaf type="triangle" x1="-0.5" y1="0.0" x2="0.5" y2="0.0" x3="0.0" y3="2.1" />
@@ -1532,6 +1742,8 @@
                 <rotation axis="x" angle="60" />
             </transformations>
 
+            <animationref id="torchesAnimation" />
+
             <descendants>
                 <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />
             </descendants>
@@ -1926,6 +2138,8 @@
 
             <transformations>
             </transformations>
+
+            <animationref id="swordsAnimation" />
 
             <descendants>
                 <noderef id="sword" />
@@ -2397,10 +2611,30 @@
             </transformations>
 
             <descendants>
+                <noderef id="column-fire" />
                 <noderef id="column-firepit" />
                 <noderef id="column-base" />
                 <noderef id="column-cylinder" />
                 <noderef id="column-flag" />
+            </descendants>
+        </node>
+
+        <node id="column-fire">
+            <material id="null" />
+
+            <texture id="fireTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="4.5" z="0.0" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <animationref id="fireAnimation" />
+
+            <descendants>
+                <leaf type="cylinder" height="4" topRadius="2.6" bottomRadius="2.51" stacks="8" slices="20"/>
             </descendants>
         </node>
 
@@ -2413,6 +2647,8 @@
 
             <transformations>
             </transformations>
+
+            <animationref id="firepitAnimation" />
 
             <descendants>
                 <noderef id="firepit-torus-bottom" />
@@ -2801,7 +3037,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="8" />
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
@@ -2851,6 +3087,8 @@
                 <translation x="0.0" y="20.0" z="3.0" />
                 <rotation axis="z" angle="180" />
             </transformations>
+
+            <animationref id="flagAnimation" />
 
             <descendants>
                 <leaf type="triangle" x1="-3.0" y1="0.0" x2="3.0" y2="0.0" x3="0.0" y3="10.0" />
