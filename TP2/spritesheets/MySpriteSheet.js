@@ -2,6 +2,7 @@ class MySpriteSheet extends CGFobject {
     constructor(scene, texture, sizeM, sizeN) {
         super(scene);    
 
+        this.scene = scene;
         this.texture = texture;
         this.sizeM = sizeM;
         this.sizeN = sizeN;
