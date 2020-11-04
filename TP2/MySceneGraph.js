@@ -861,9 +861,8 @@ class MySceneGraph {
                 console.log(axisZ + " " + angleZ);
 
                 console.log(sx + " " + sy + " " + sz);
-
-                console.log("fine");
             }
+            nKeyFrameAnim.updateTimeValues();
 
             this.keyframesAnimation[animationID] = nKeyFrameAnim;
         }
@@ -1612,18 +1611,21 @@ class MySceneGraph {
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.transformation);
 
+        let display;
         if(currentNode.animationID != null) {
-            this.keyframesAnimation[currentNode.animationID].apply();
+            display = this.keyframesAnimation[currentNode.animationID].apply();
         }
 
-        // ------ Display Leaves ------ //
-        for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
-            currentNode.leaves[i].display();
-        }
+        if (display != 0) {
+            // ------ Display Leaves ------ //
+            for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
+                currentNode.leaves[i].display();
+            }
 
-        // ------ Process next node ------ //
-        for (var i = 0; i < currentNode.descendants.length; i++) {
-            this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
+            // ------ Process next node ------ //
+            for (var i = 0; i < currentNode.descendants.length; i++) {
+                this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
+            }
         }
 
         this.scene.popMatrix();

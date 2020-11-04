@@ -113,10 +113,17 @@ class XMLscene extends CGFscene {
     }
 
     update(t) {
-        // Update animation
-        // console.log("update" + t);
+        let elapsedTime;
+
+        if(this.time == null) 
+            elapsedTime = 0;
+        else 
+            elapsedTime = t - this.time;
+
+        this.time = t;
+
         for (let k in this.graph.keyframesAnimation)
-            this.graph.keyframesAnimation[k].update(t / 1000);
+            this.graph.keyframesAnimation[k].update(elapsedTime / 1000);
     }
 
     /**
