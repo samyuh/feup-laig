@@ -1,7 +1,6 @@
-class MySpriteAnim {
+/*
+class MySpriteAnim extends MySpriteSheet {
     constructor(scene, spriteSheet, duration, startCell, endCell) {
-        super(scene);
-        
         this.scene = scene;
         this.spriteSheet = spriteSheet;
         this.duration = duration;
@@ -16,7 +15,7 @@ class MySpriteAnim {
     }
 
     update(currentTime) {
-        let elapsedTime = currentTime - this.startTime;
+        let elapsedTime = currentTime;
 
         // Calculate which sprite cell is active
         if (elapsedTime >= (this.cellDuration * (this.currentCell + 1))) {
@@ -35,3 +34,4 @@ class MySpriteAnim {
         this.background.display();
     }
 }
+*/

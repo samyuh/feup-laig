@@ -1,14 +1,14 @@
-class MySpriteSheet extends CGFobject {
-    constructor(scene, texture, sizeM, sizeN) {
-        super(scene);    
-
+class MySpriteSheet {
+    constructor(scene) {
         this.scene = scene;
+        /*
         this.texture = texture;
         this.sizeM = sizeM;
         this.sizeN = sizeN;
+        */
 
-        this.shader = new CGFshader(this.gl, "shaders/spriteShader.vert", "shaders/spriteShader.frag");
-        this.shader.setUniformValues({sizeM: this.sizeM, sizeN: this.sizeN});
+        this.shader = new CGFshader(this.scene.gl, "shaders/spriteShader.vert", "shaders/spriteShader.frag");
+        //this.shader.setUniformValues({sizeM: this.sizeM, sizeN: this.sizeN});
     }
 
     activateCellMN(m, n) {

@@ -1217,7 +1217,9 @@ class MySceneGraph {
             case "triangle":
                 return this.parseTriangle(descendants, messageError);
             case "spritetext":
-                return type + " missing implementation";
+                let spriteText = this.parseSpriteText(descendants, messageError);
+                spriteText.getPosition('a');
+                return "teste";
             case "spriteanim":
                 return type + " missing implementation";
             case "plane":
@@ -1412,6 +1414,22 @@ class MySceneGraph {
         }
 
         return new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+    }
+
+    /**
+     * Parse triangle from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
+    parseSpriteText(descendants, messageError) {
+        let text = this.reader.getString(descendants, 'text');
+        /*
+        if (!(x1 != null && !isNaN(x1))) {
+            return "unable to parse letter on node " + messageError;
+        }
+        */
+        console.log(text);
+        return new MySpriteText(this.scene, "a");
     }
 
     // -------- Auxiliary parser functions -----------//
