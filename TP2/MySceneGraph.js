@@ -796,7 +796,7 @@ class MySceneGraph {
 
             var nKeyFrameAnim = new MyKeyframeAnimation(this.scene);
 
-            console.log(animationID);
+            //console.log(animationID);
 
             let grandChildren = children[i].children;
             for (var j = 0; j < grandChildren.length; j++) {
@@ -806,7 +806,7 @@ class MySceneGraph {
                 }
     
                 let keyframeInstant = this.reader.getFloat(grandChildren[j], 'instant');
-                console.log("Instant: " + keyframeInstant);
+                //console.log("Instant: " + keyframeInstant);
                 
                 let transformations = grandChildren[j].children;
 
@@ -855,12 +855,13 @@ class MySceneGraph {
                 let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [angleX, angleY, angleZ], [sx, sy, sz]);
                 nKeyFrameAnim.addKeyframe(newKeyFrame);
 
+                /*
                 console.log(xTranslation + " " + yTranslation + " " + zTranslation);
                 console.log(axisX + " " + angleX);
                 console.log(axisY + " " + angleY);
                 console.log(axisZ + " " + angleZ);
-
                 console.log(sx + " " + sy + " " + sz);
+                */
             }
             nKeyFrameAnim.updateTimeValues();
 

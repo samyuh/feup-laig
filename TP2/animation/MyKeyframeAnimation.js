@@ -29,24 +29,24 @@ class MyKeyframeAnimation extends MyAnimation {
 
     update(elapsedTime) {
         this.totalTime += elapsedTime;
-        console.log(this.totalTime, this.startTime, this.endTime);
+        //console.log(this.totalTime, this.startTime, this.endTime);
 
         this.active = (this.startTime < this.totalTime);
-        console.log(this.active);
+        //console.log(this.active);
 
         if (!this.active)
             return;
 
         if (this.totalTime < this.endTime) {
             let lastState = ((this.state + 1) == this.keyframes.length) ? true : false;
-            console.log(this.state + " " + lastState);
+            //console.log(this.state + " " + lastState);
 
             if(!lastState) {
                 // --- Switch KeyFrame if needed --- //
                 if ((this.totalTime > this.keyframes[this.state + 1].instant))
                     this.state++; 
 
-                console.log("Next KeyFrame: " + this.keyframes[this.state + 1].instant);
+                //console.log("Next KeyFrame: " + this.keyframes[this.state + 1].instant);
 
                 // --- Previous KeyFrame --- //
                 let previousKeyframe = this.keyframes[this.state]; 
