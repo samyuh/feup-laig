@@ -110,7 +110,7 @@
             <transformations>
             </transformations>
 
-            <animationref id="demoAni" />
+            <!-- <animationref id="demoAni" /> -->
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
@@ -129,7 +129,7 @@
 
                 <!-- Novo embaixo -->
                 <!-- Nova primitiva: texto baseado em spritesheet -->
-                <leaf type="spritetext" text="a" />
+                <leaf type="spritetext" text="aaaaa" />
 
                 <!-- Nova primitiva: animação baseada em spritesheet -->
                 <!-- identifica a spritesheet a usar, a célula inicial e final da animação, e a duração -->

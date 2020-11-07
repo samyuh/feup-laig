@@ -1217,9 +1217,7 @@ class MySceneGraph {
             case "triangle":
                 return this.parseTriangle(descendants, messageError);
             case "spritetext":
-                let spriteText = this.parseSpriteText(descendants, messageError);
-                spriteText.getPosition('a');
-                return "teste";
+                return this.parseSpriteText(descendants, messageError);
             case "spriteanim":
                 return type + " missing implementation";
             case "plane":
@@ -1429,7 +1427,7 @@ class MySceneGraph {
         }
         */
         console.log(text);
-        return new MySpriteText(this.scene, "a");
+        return new MySpriteText(this.scene, text);
     }
 
     // -------- Auxiliary parser functions -----------//
@@ -1646,7 +1644,6 @@ class MySceneGraph {
                 this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
             }
         }
-
         this.scene.popMatrix();
     }
 }

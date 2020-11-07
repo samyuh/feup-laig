@@ -3,25 +3,30 @@ class MySpriteSheet {
         this.scene = scene;
         /*
         this.texture = texture;
-        this.sizeM = sizeM;
-        this.sizeN = sizeN;
         */
 
-        this.shader = new CGFshader(this.scene.gl, "shaders/spriteShader.vert", "shaders/spriteShader.frag");
-        //this.shader.setUniformValues({sizeM: this.sizeM, sizeN: this.sizeN});
+        // -- Passed as parameters -- //
+        this.sizeM = 10;
+        this.sizeN = 10;
+
+        this.texture = new CGFtexture(this.scene, './scenes/images/demoTexture.png');
+
+        this.shader = new CGFshader(this.scene.gl, "./shaders/spriteShader.vert", "./shaders/spriteShader.frag");
+
+        this.shader.setUniformsValues({texture: 0});
+        this.shader.setUniformsValues({sizeM: this.sizeM, sizeN: this.sizeN});
     }
 
     activateCellMN(m, n) {
-        // Definir os parâmetros da célula a desenhar e mandar para o shader com setUniformValues()
         this.scene.setActiveShader(this.shader);
-
-        this.scene.setActiveShader(this.scene.defaultShader);
+        this.texture.bind(0);
+        
     }
 
     activateCellP(p) {
         // Definir os parâmetros da célula a desenhar e mandar para o shader com setUniformValues()
-        this.scene.setActiveShader(this.shader);
+        //this.scene.setActiveShader(this.shader);
 
-        this.scene.setActiveShader(this.scene.defaultShader);
+        //this.scene.setActiveShader(this.scene.defaultShader);
     }
 }
