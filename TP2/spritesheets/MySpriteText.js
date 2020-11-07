@@ -1,21 +1,22 @@
 class MySpriteText {
     constructor(scene, text) { 
         this.scene = scene; 
+
         this.text = text;
-        console.log(text);
         this.background = new MyRectangle(scene, 0, 0, 1, 1);
-        this.spriteSheet = new MySpriteSheet(scene, "spridesheet.png", 16, 16);
+        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 6, 5);
     }
 
     getPosition(character) {
-        let charCode = character.charCodeAt();
-        let M, N;
-        if ((charCode >= 65) && (charCode <= 90)) {   // Normal Alphabet (without special ponctuation) in Uppercase
-            M = (charCode <= 79) ? 4 : 5;
-            N = (1 + charCode - 65) % 16;
-        }
+        if (character == " ") return [3, 4];
 
-        return [0, 0];
+        let charCode = character.charCodeAt();
+        charCode -= (65 + 32);
+
+        let M = charCode % this.spriteSheet.sizeM;
+        let N = Math.floor(charCode / this.spriteSheet.sizeM);
+        
+        return [M, N];
     }
 
     display() {

@@ -8,13 +8,15 @@ uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
-void main() {
-    vTextureCoord = aTextureCoord;
+uniform float actualN;
+uniform float actualM;
 
-    // vec3 offset = vec3(0.0, 0.0, 0.0);
+uniform float sizeN;
+uniform float sizeM;
 
-    // offset = aVertexNormal * sin(aVertexPosition.x);
+void main() { 
+    vTextureCoord = vec2((aTextureCoord.x + actualM) / sizeM, (aTextureCoord.y + actualN) / sizeN); 
+    
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0); 
 
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-}
+} 

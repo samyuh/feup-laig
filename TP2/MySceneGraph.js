@@ -1426,7 +1426,7 @@ class MySceneGraph {
             return "unable to parse letter on node " + messageError;
         }
         */
-        console.log(text);
+
         return new MySpriteText(this.scene, text);
     }
 

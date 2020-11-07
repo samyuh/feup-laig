@@ -129,7 +129,7 @@
 
                 <!-- Novo embaixo -->
                 <!-- Nova primitiva: texto baseado em spritesheet -->
-                <leaf type="spritetext" text="aaaaa" />
+                <leaf type="spritetext" text="teste" />
 
                 <!-- Nova primitiva: animação baseada em spritesheet -->
                 <!-- identifica a spritesheet a usar, a célula inicial e final da animação, e a duração -->

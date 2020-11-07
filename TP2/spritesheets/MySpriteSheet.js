@@ -1,15 +1,13 @@
 class MySpriteSheet {
-    constructor(scene) {
+    constructor(scene, texture, sizeM, sizeN) {
         this.scene = scene;
-        /*
-        this.texture = texture;
-        */
 
         // -- Passed as parameters -- //
-        this.sizeM = 10;
-        this.sizeN = 10;
+        this.sizeM = sizeM;
+        this.sizeN = sizeN;
 
-        this.texture = new CGFtexture(this.scene, './scenes/images/demoTexture.png');
+        // -- Texture -- // 
+        this.texture = new CGFtexture(this.scene, texture);
 
         this.shader = new CGFshader(this.scene.gl, "./shaders/spriteShader.vert", "./shaders/spriteShader.frag");
 
@@ -19,8 +17,9 @@ class MySpriteSheet {
 
     activateCellMN(m, n) {
         this.scene.setActiveShader(this.shader);
-        this.texture.bind(0);
         
+        this.shader.setUniformsValues({actualM: m, actualN: n});
+        this.texture.bind(0); 
     }
 
     activateCellP(p) {
