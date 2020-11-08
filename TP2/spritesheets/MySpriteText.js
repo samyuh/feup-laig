@@ -40,6 +40,6 @@ class MySpriteText {
     }
 
     updateTexCoords(afs, aft) {
-
+        // Do nothing
     }
 }

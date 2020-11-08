@@ -24,8 +24,10 @@ class MySpriteSheet {
 
     activateCellP(p) {
         // Definir os parâmetros da célula a desenhar e mandar para o shader com setUniformValues()
-        //this.scene.setActiveShader(this.shader);
+        let M = p % this.sizeM;
+        let N = Math.floor(p / this.sizeM);
 
+        this.activateCellMN(M, N);
         //this.scene.setActiveShader(this.scene.defaultShader);
     }
 }

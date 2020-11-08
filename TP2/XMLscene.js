@@ -124,6 +124,9 @@ class XMLscene extends CGFscene {
 
         for (let k in this.graph.keyframesAnimation)
             this.graph.keyframesAnimation[k].update(elapsedTime / 1000);
+
+        for (let k in this.graph.spritesAnim)
+            this.graph.spritesAnim[k].update(elapsedTime / 1000);
     }
 
     /**
