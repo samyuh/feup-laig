@@ -72,7 +72,16 @@ class MyCylinder extends CGFobject {
                 this.vertices.push(z);
 
                 // -- Normals -- //
-                this.normals.push(Math.cos(angle), Math.sin(angle), 0);
+                let a = Math.cos(angle);
+                let b = Math.sin(angle);
+                let c = -Math.atan((this.topRadius - this.bottomRadius) / this.height);
+
+                let length = Math.sqrt(a*a + b*b + c*c);
+                let nx = a / length;
+                let ny = b / length;
+                let nz = c / length;
+
+                this.normals.push(nx, ny, nz);
 
                 // -- Texture Coordinates -- //
                 this.texCoords.push(i / this.slices, 1 - h / this.stacks);
@@ -82,7 +91,7 @@ class MyCylinder extends CGFobject {
         }
 
         // --- Top Vertices --- //
-        this.createBases(amplitude_increment, this.topRadius, this.height, -1);
+        this.createBases(amplitude_increment, this.topRadius, this.height, 1);
 
         // -- Indices Push
         this.createIndices();
