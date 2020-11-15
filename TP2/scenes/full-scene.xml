@@ -83,6 +83,8 @@
         <texture id="fireTexture" path="./scenes/images/fire.jpg" />
         <texture id="darkwoodTexture" path="./scenes/images/darkwood.jpg" />
         <texture id="flagTexture" path="./scenes/images/flag.png" />
+        <texture id="daenerysTexture" path="./scenes/images/daenerys.jpg" />
+        <texture id="daenerysClothTexture" path="./scenes/images/cloth.jpg" />
     </textures>
 
     <!-- NOTE: this block "SPRITESHEETS" must be declared right after the block "TEXTURES" -->
@@ -123,6 +125,14 @@
             <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="brownMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.5" g="0.2" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
@@ -327,6 +337,1050 @@
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
         </animation>
+
+        <animation id="daenerysAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="15">
+                    <translation x="0" y="0" z="-31" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="16">
+                    <translation x="0" y="0.5" z="-32" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="17">
+                    <translation x="0" y="0.5" z="-35" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="18">
+                    <translation x="0" y="1.0" z="-36" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="19">
+                    <translation x="0" y="1.0" z="-39" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="20">
+                    <translation x="0" y="1.5" z="-40" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="21">
+                    <translation x="0" y="1.5" z="-42" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="22">
+                    <translation x="0" y="2.0" z="-43" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="23">
+                    <translation x="0" y="2.0" z="-47" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="24">
+                    <translation x="0" y="2.5" z="-48" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="26">
+                    <translation x="0" y="2.5" z="-54" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="27">
+                    <translation x="0" y="3.0" z="-55" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="29">
+                    <translation x="0" y="3.0" z="-59" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="30">
+                    <translation x="0" y="3.5" z="-60" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="32">
+                    <translation x="0" y="3.5" z="-60" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="180" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+            </animation>
+
+            <animation id="daenerysArmLeftAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+                <keyframe instant="33">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="34">
+                    <translation x="0" y="1.6" z="-1.5" />
+                    <rotation axis="x" angle="90" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="35">
+                    <translation x="0" y="4" z="0" />
+                    <rotation axis="x" angle="180" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+            </animation>
+
+            <animation id="daenerysLegRightAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="1">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="3">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="4">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="5">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="6">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="7">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="8">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="9">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="10">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="11">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="12">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="13">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="14">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="15">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="16">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="17">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="18">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="19">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="20">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="21">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="22">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="23">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="24">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="25">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="26">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="27">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="28">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="29">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="30">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="31">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="32">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="33">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+            </animation>
+
+            <animation id="daenerysArmRightAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="1">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="3">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="4">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="5">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="6">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="7">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="8">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="9">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="10">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="11">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="12">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="13">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="14">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="15">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="16">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="17">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="18">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="19">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="20">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="21">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="22">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="23">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="24">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="25">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="26">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="27">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="28">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="29">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="30">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="31">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="32">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="33">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+            </animation>
+
+            <animation id="daenerysLegLeftAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="1">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="3">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="4">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="5">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="6">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="7">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="8">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="9">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="10">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="11">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="12">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="13">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="14">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="15">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="16">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="17">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="18">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="19">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="20">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="21">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="22">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="23">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="24">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="25">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="26">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="27">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="28">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="29">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="30">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="31">
+                    <translation x="0" y="0" z="-0.5" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="32">
+                    <translation x="0" y="0" z="0.5" />
+                    <rotation axis="x" angle="-20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="33">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+            </animation>
+
+            
+            <animation id="daenerysSwordAnimation" >
+                <keyframe instant="0">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="14">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+                <keyframe instant="15">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="32">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="20" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="33">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="180" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="34">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="180" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="35">
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="-100" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="180" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+                
+            </animation>
     </animations>
 
     <nodes>
@@ -347,6 +1401,7 @@
              descendants may be mixed, nodes and leafs -->
             <descendants>
                 <noderef id="wall" />
+                <noderef id="daenerys" />
                 <noderef id="throne" />
                 <noderef id="floor" />
                 <noderef id="columns" />
@@ -3298,6 +4353,325 @@
 
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="daenerys">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.1" z="25.0" />
+                <scale sx="1.0" sy="1.0" sz="0.7" />
+            </transformations>
+
+             <animationref id="daenerysAnimation" />
+
+            <descendants>
+                    <noderef id="head"/>
+                    <noderef id="neck"/>
+                    <noderef id="body"/>
+                    <noderef id="boots"/>
+            </descendants>
+        </node>
+
+        <node id="head">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="daenerysTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="6.0" z="0.0" />
+                <scale sx="1.0" sy="1.5" sz="1.4" />
+                <rotation axis="y" angle="-90" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="sphere" radius="0.4" slices="32" stacks="32"/>
+            </descendants>
+        </node>
+
+        <node id="neck">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="daenerysClothTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+
+                <translation x="0.0" y="4.7" z="0.0" />
+                <scale sx="2.0" sy="1.0" sz="1.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="1.0" topRadius="0.15" bottomRadius="0.2" stacks="20" slices="20"/>
+            </descendants>
+        </node>
+
+        <node id="body">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="daenerysClothTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                    <noderef id="gola"/>
+                    <noderef id="body-top"/>
+                    <noderef id="body-bot"/>
+                    <noderef id="arms"/>
+            </descendants>
+        </node>
+
+        <node id="gola">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="5.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="0.2" topRadius="0.2" bottomRadius="1.2" stacks="20" slices="20"/>
+            </descendants>
+        </node>
+
+        <node id="body-top">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="3.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="2.0" topRadius="1.2" bottomRadius="0.3" stacks="20" slices="20"/>
+            </descendants>
+        </node>
+
+        <node id="body-bot">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.7" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="3.0" topRadius="0.5" bottomRadius="1.2" stacks="20" slices="20"/>
+            </descendants>
+        </node>
+
+        <node id="arms">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="daenerysClothTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                    <noderef id="arm-right"/>
+                    <noderef id="arm-left"/>
+            </descendants>
+        </node>
+
+        <node id="arm-right">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="3" z="0.0" />
+            </transformations>
+
+            <animationref id="daenerysArmRightAnimation" />
+
+            <descendants>
+                    <noderef id="arm"/>
+            </descendants>
+        </node>
+
+        <node id="arm-left">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="-1.0" y="3" z="0.0" />
+            </transformations>
+
+            <animationref id="daenerysArmLeftAnimation" />
+
+            <descendants>
+                    <noderef id="arm"/>
+                    <noderef id="arm-sword" />
+            </descendants>
+        </node>
+
+        <node id="arm">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                    <noderef id="arm-cylinder" />
+            </descendants>
+        </node>
+
+        <node id="arm-cylinder">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                    <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="2.0" topRadius="0.2" bottomRadius="0.2" stacks="20" slices="20"/>
+            </descendants>
+        </node>
+
+        <node id="arm-sword">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                    <rotation axis="x" angle="120" />
+                    <translation x="0.0" y="-0.5" z="0.0" />
+                    <scale sx="0.2" sy="0.2" sz="0.2" />
+            </transformations>
+
+            <animationref id="daenerysSwordAnimation" />
+
+            <descendants>
+                    <noderef id="sword" />
+            </descendants>
+        </node>
+
+        <node id="boots">
+            <material id="brownMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                    <noderef id="boot-right"/>
+                    <noderef id="boot-left"/>
+            </descendants>
+        </node>
+
+        <node id="boot-right">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.0" z="0.0" />
+            </transformations>
+            
+            <animationref id="daenerysLegRightAnimation" />
+
+            <descendants>
+                    <noderef id="boot"/>
+            </descendants>
+        </node>
+
+        <node id="boot-left">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <animationref id="daenerysLegLeftAnimation" />
+
+            <descendants>
+                    <noderef id="boot"/>
+                    
+            </descendants>
+        </node>
+
+        <node id="boot">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="cylinder" height="1.0" topRadius="0.3" bottomRadius="0.1" stacks="20" slices="20"/>
+                    <noderef id="shoe" />
+            </descendants>
+        </node>
+
+        <node id="shoe">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+                <scale sx="0.3" sy="0.5" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                    <noderef id="cube"/>
             </descendants>
         </node>
     </nodes>
