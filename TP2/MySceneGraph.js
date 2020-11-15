@@ -681,10 +681,33 @@ class MySceneGraph {
                 continue;
             }
 
+            // Get id of the current spritesheet.
             let spriteID = this.reader.getString(children[i], 'id');
+            if (spriteID == null) {
+                this.onXMLMinorError("No ID defined for spritesheet in <spritesheets>. Ignoring spritesheet...");
+                continue;
+            }
+
+            // Get the path of the current spritesheet.
             let path = this.reader.getString(children[i], 'path');
+            if (path == null) {
+                this.onXMLMinorError("No path defined for spritesheet with ID " + spriteID + " in <spritesheets>. Ignoring spritesheet...");
+                continue;
+            }
+
+            // Get the sizeM of the current spritesheet.
             let sizeM = this.reader.getString(children[i], 'sizeM');
+            if (sizeM == null) {
+                this.onXMLMinorError("No sizeM defined for spritesheet with ID " + spriteID + " in <spritesheets>. Ignoring spritesheet...");
+                continue;
+            }
+
+            // Get the sizeN of the current spritesheet.
             let sizeN = this.reader.getString(children[i], 'sizeN');
+            if (sizeN == null) {
+                this.onXMLMinorError("No sizeN defined for spritesheet with ID " + spriteID + " in <spritesheets>. Ignoring spritesheet...");
+                continue;
+            }
 
             this.spritesheets[spriteID] = new MySpriteSheet(this.scene, path, sizeM, sizeN);
         }
@@ -1467,11 +1490,13 @@ class MySceneGraph {
      */
     parseSpriteText(descendants, messageError) {
         let text = this.reader.getString(descendants, 'text');
-        /*
-        if (!(x1 != null && !isNaN(x1))) {
-            return "unable to parse letter on node " + messageError;
+
+        if (text == null) {
+            return "Parameter 'text' of spritetext leaf is missing on node " + messageError;
         }
-        */
+        else if (text == "") {
+            return "Parameter 'text' of spritetext leaf is empty on node " + messageError;
+        }
 
         return new MySpriteText(this.scene, text);
     }
@@ -1482,21 +1507,29 @@ class MySceneGraph {
      * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseSpriteAnim(descendants, messageError) {
-        let id = this.reader.getString(descendants, 'ssid');
 
+        // Get ssID of the current spriteanim.
+        let id = this.reader.getString(descendants, 'ssid');
+        if (id == null) {
+            return "No ssID defined for spriteanim on node " + messageError;
+        }
+
+        // Get startCell of the current spriteanim.
         let startCell = this.reader.getInteger(descendants, 'startCell');
         if (!(startCell != null && !isNaN(startCell))) {
-            return "unable to parse startCell on node " + messageError;
+            return "Missing/Invalid value for parameter 'startCell' of spriteAnim with ID " + id + " on node " + messageError;
         }
         
+        // Get endCell of the current spriteanim.
         let endCell = this.reader.getInteger(descendants, 'endCell');
         if (!(endCell != null && !isNaN(endCell))) {
-            return "unable to parse endCell on node " + messageError;
+            return "Missing/Invalid value for parameter 'endCell' of spriteAnim with ID " + id + " on node " + messageError;
         }
 
+        // Get duration of the current spriteanim.
         let duration = this.reader.getInteger(descendants, 'duration');
         if (!(duration != null && !isNaN(duration))) {
-            return "unable to parse duration on node " + messageError;
+            return "Missing/Invalid value for parameter 'duration' of spriteAnim with ID " + id + " on node " + messageError;
         }
 
         return new MySpriteAnim(this.scene, this.spritesheets[id], startCell, endCell, duration);

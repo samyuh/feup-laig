@@ -85,6 +85,12 @@
         <texture id="flagTexture" path="./scenes/images/flag.png" />
     </textures>
 
+    <!-- NOTE: this block "SPRITESHEETS" must be declared right after the block "TEXTURES" -->
+    <spritesheets>
+        <spritesheet id="torchSpriteSheet" path="./scenes/images/torchSpriteSheet.jpg" sizeM="4" sizeN="4" />
+        <spritesheet id="GoTcharactersSheet" path="./scenes/images/GoT-characters.jpg" sizeM="6" sizeN="5" />
+    </spritesheets>
+
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
@@ -344,6 +350,7 @@
                 <noderef id="throne" />
                 <noderef id="floor" />
                 <noderef id="columns" />
+                <noderef id="got-characters" />
             </descendants>
         </node>
 
@@ -1738,14 +1745,18 @@
             </texture>
 
             <transformations>
-                <translation x="0.0" y="1.35" z="-0.9" />
-                <rotation axis="x" angle="60" />
+                <!--<translation x="0.0" y="1.35" z="-0.9" />
+                <rotation axis="x" angle="60" /> Before SpriteSheet-->
+                <translation x="-1.0" y="0.0" z="-0.9" />
+                <rotation axis="x" angle="-30" />
+                <scale sx="2.0" sy="2.0" sz="2.0" />
             </transformations>
 
-            <animationref id="torchesAnimation" />
+            <!--<animationref id="torchesAnimation" /> Before SpriteSheet -->
 
             <descendants>
-                <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />
+                <leaf type="spriteanim" ssid="torchSpriteSheet" startCell="0" endCell="15" duration="1" />
+                <!--<leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />   Before SpriteSheet   -->
             </descendants>
         </node>
         <!-- Ending of Wall Section -->
@@ -2616,6 +2627,7 @@
                 <noderef id="column-base" />
                 <noderef id="column-cylinder" />
                 <noderef id="column-flag" />
+                <noderef id="column-text" />
             </descendants>
         </node>
 
@@ -3059,6 +3071,23 @@
             </descendants>
         </node>
 
+        <node id="column-text">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2.8" y="20.3" z="2.8" />
+                <scale sx="0.6" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="targaryen" />
+            </descendants>
+        </node>
+
         <node id="flag-support">
             <material id="null" />
 
@@ -3095,6 +3124,58 @@
             </descendants>
         </node>
         <!-- End of Collumns Section -->
+
+        <node id="got-characters">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="got-characters-text" />
+                <noderef id="got-characters-images" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-text">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-9.3" y="0.1" z="12.0" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="0.7" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="characters" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-images">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-7.3" y="0.1" z="16.5" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="3.0" sy="3.0" sz="3.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="GoTcharactersSheet" startCell="0" endCell="29" duration="10" />
+            </descendants>
+        </node>
 
         <!-- Node representing a cube -->
         <node id="cube">

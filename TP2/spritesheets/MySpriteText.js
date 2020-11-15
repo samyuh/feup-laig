@@ -4,7 +4,8 @@ class MySpriteText {
 
         this.text = text;
         this.background = new MyRectangle(scene, 0, 0, 1, 1);
-        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 6, 5);
+        //this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 6, 5);
+        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet2.jpg", 8, 6);
     }
 
     getPosition(character) {
@@ -35,8 +36,9 @@ class MySpriteText {
             this.background.display();
             this.scene.popMatrix();
 
-            this.scene.setActiveShader(this.scene.defaultShader);
+            //this.scene.setActiveShader(this.scene.defaultShader);
         }
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
 
     updateTexCoords(afs, aft) {
