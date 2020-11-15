@@ -7,9 +7,10 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var ANIMATIONS_INDEX = 6;
-var NODES_INDEX = 6;
+var SPRITE_SHEET_INDEX = 5;
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -179,6 +180,19 @@ class MySceneGraph {
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
         }
+
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            return "tag <spritesheets> missing";
+        else {
+            if (index != SPRITE_SHEET_INDEX)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse spritesheets block
+            if ((error = this.parseSpriteSheets(nodes[index])) != null)
+                return error;
+        }
+        
 
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
@@ -653,6 +667,32 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <spritesheets> block. 
+     * @param {spritesheets block element} spriteSheetsNode
+     */
+    parseSpriteSheets(spriteSheetsNode) {
+        var children = spriteSheetsNode.children;
+
+        this.spritesheets = [];
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "spritesheet") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">. Ignoring tag...");
+                continue;
+            }
+
+            let spriteID = this.reader.getString(children[i], 'id');
+            let path = this.reader.getString(children[i], 'path');
+            let sizeM = this.reader.getString(children[i], 'sizeM');
+            let sizeN = this.reader.getString(children[i], 'sizeN');
+
+            this.spritesheets[spriteID] = new MySpriteSheet(this.scene, path, sizeM, sizeN);
+        }
+
+        return null;
+    }
+
+    /**
      * Parses the <materials> node.
      * @param {materials block element} materialsNode
      */
@@ -881,6 +921,7 @@ class MySceneGraph {
         var children = nodesNode.children; // -- Get all elements of node
 
         this.nodes = [];
+        this.spritesAnim = [];
 
         var grandChildren = [];
         var nodeNames = [];
@@ -1186,6 +1227,11 @@ class MySceneGraph {
                         nLeaf.updateTexCoords();
 
                         this.nodes[nodeID].addLeaf(nLeaf);
+
+                        if (type =="spriteanim") {
+                            console.log(nPrimitive);
+                            this.spritesAnim.push(nPrimitive);
+                        }
                     }
                 }
             } else {
@@ -1217,9 +1263,9 @@ class MySceneGraph {
             case "triangle":
                 return this.parseTriangle(descendants, messageError);
             case "spritetext":
-                return type + " missing implementation";
+                return this.parseSpriteText(descendants, messageError);
             case "spriteanim":
-                return type + " missing implementation";
+                return this.parseSpriteAnim(descendants, messageError);
             case "plane":
                 return type + " missing implementation";
             case "patch":
@@ -1412,6 +1458,48 @@ class MySceneGraph {
         }
 
         return new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+    }
+
+    /**
+     * Parse SpriteText from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
+    parseSpriteText(descendants, messageError) {
+        let text = this.reader.getString(descendants, 'text');
+        /*
+        if (!(x1 != null && !isNaN(x1))) {
+            return "unable to parse letter on node " + messageError;
+        }
+        */
+
+        return new MySpriteText(this.scene, text);
+    }
+
+    /**
+     * Parse SpriteAnime from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
+    parseSpriteAnim(descendants, messageError) {
+        let id = this.reader.getString(descendants, 'ssid');
+
+        let startCell = this.reader.getInteger(descendants, 'startCell');
+        if (!(startCell != null && !isNaN(startCell))) {
+            return "unable to parse startCell on node " + messageError;
+        }
+        
+        let endCell = this.reader.getInteger(descendants, 'endCell');
+        if (!(endCell != null && !isNaN(endCell))) {
+            return "unable to parse endCell on node " + messageError;
+        }
+
+        let duration = this.reader.getInteger(descendants, 'duration');
+        if (!(duration != null && !isNaN(duration))) {
+            return "unable to parse duration on node " + messageError;
+        }
+
+        return new MySpriteAnim(this.scene, this.spritesheets[id], startCell, endCell, duration);
     }
 
     // -------- Auxiliary parser functions -----------//
@@ -1628,7 +1716,6 @@ class MySceneGraph {
                 this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
             }
         }
-
         this.scene.popMatrix();
     }
 }
