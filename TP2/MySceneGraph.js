@@ -1742,6 +1742,7 @@ class MySceneGraph {
             // ------ Display Leaves ------ //
             for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
                 currentNode.leaves[i].display();
+                currentMaterial.apply();
             }
 
             // ------ Process next node ------ //
