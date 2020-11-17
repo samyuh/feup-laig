@@ -1,4 +1,4 @@
-class Patch extends CGFobject {
+class MyPatch extends CGFobject {
 	constructor(scene, nPointsU, nPointsV, nPartsU, nPartsV, controlPoints) {
 		super(scene);
 
@@ -17,6 +17,6 @@ class Patch extends CGFobject {
      * @param {integer} aft - dy/aft
      */
 	updateTexCoords(afs, aft) {
-
+		// Do nothing
 	}
 }

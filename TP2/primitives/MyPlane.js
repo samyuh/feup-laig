@@ -1,4 +1,4 @@
-class Plane extends CGFobject {
+class MyPlane extends CGFobject {
     constructor(scene, npartsU, npartsV) {
         super(scene);
         this.npartsU = npartsU;

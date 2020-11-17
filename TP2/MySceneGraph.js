@@ -1547,7 +1547,7 @@ class MySceneGraph {
             return "Missing/Invalid value for parameter 'npartsV' of plane on node " + messageError;
         }
 
-        return new Plane(this.scene, npartsU, npartsV);
+        return new MyPlane(this.scene, npartsU, npartsV);
     }
     
     parsePatch(descendants, messageError) {
@@ -1610,7 +1610,7 @@ class MySceneGraph {
             controlPoints.push(pointsU);
         }
 
-        return new Patch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoints);
+        return new MyPatch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoints);
     }
 
     parseDefbarrel(descendants, messageError) {
@@ -1641,7 +1641,7 @@ class MySceneGraph {
             return "Missing/Invalid value for parameter 'stacks' of defbarrel on node " + messageError;
         }
  
-        return "missing";
+        return new MyDefBarrel(this.scene, base, middle, height, slices, stacks);
     }
 
     // -------- Auxiliary parser functions -----------//

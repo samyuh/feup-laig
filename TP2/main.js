@@ -30,8 +30,9 @@ serialInclude(['../lib/CGF.js',
                 './primitives/MySphere.js', 
                 './primitives/MyTorus.js', 
                 './primitives/MyHalfTorus.js',
+                './primitives/MyPlane.js',
                 './primitives/MyPatch.js',
-                './primitives/Plane.js',
+                './primitives/MyDefBarrel.js',
 
 main=function()
 {
