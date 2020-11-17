@@ -1,4 +1,4 @@
-class MyPlane extends CGFobject {
+class Plane extends CGFobject {
     constructor(scene, npartsU, npartsV) {
         super(scene);
         this.npartsU = npartsU;
@@ -32,9 +32,7 @@ class MyPlane extends CGFobject {
     }
     
     display() {
-        this.scene.pushMatrix();
         this.obj.display();
-        this.scene.popMatrix();
     }
 
     /**

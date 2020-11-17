@@ -152,7 +152,7 @@
                 <!-- em XZ, centrado na origem -->
                 <!-- e com a face visível apontando para +Y -->
                 <!-- com divisão em cinco partes por oito partes -->
-                <leaf type="plane" npartsU="ii" npartsV="ii" />
+                <leaf type="plane" npartsU="1" npartsV="1" />
 
                 <!-- Nova: primitiva: patch, gerada por NURBS -->
                 <!-- — parâmetros: -->
@@ -162,16 +162,22 @@
                 <!-- a ser usada para o cálculo da superficie -->
                 <!-- - o número de pontos de controlo dentro da -->
                 <!-- primitiva patch é npointsU * npointsV -->
-                <leaf type="patch" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii" >
-                    <controlpoint xx="ff" yy="ff" zz="ff" />
-                   <!-- ... -->
+                <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+
+                    <controlpoint xx="0" yy="-1.5" zz="3.0" />
+                    <controlpoint xx="0" yy="1.5" zz="3.0" />
+
+                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf>
 
                 <!-- — Nova primitiva: forma de barril baseado em NURBS -->
                 <!-- parâmetros semelhantes ao cilindro original, mas sem tampas -->
                 <!-- base representa o raio na base e topo do cilindro -->
                 <!-- middle representa o raio no centro do objeto -->
-                <leaf type="defbarrel" base="ff" middle="ff" height="ff" slices="ii" stacks="ii" />
+                <leaf type="defbarrel" base="1" middle="1" height="1" slices="1" stacks="1" />
                     
             </descendants>
         </node>

@@ -1507,7 +1507,6 @@ class MySceneGraph {
      * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
      */
     parseSpriteAnim(descendants, messageError) {
-
         // Get ssID of the current spriteanim.
         let id = this.reader.getString(descendants, 'ssid');
         if (id == null) {
@@ -1548,14 +1547,9 @@ class MySceneGraph {
             return "Missing/Invalid value for parameter 'npartsV' of plane on node " + messageError;
         }
 
-        return new MyPlane(this.scene, npartsU, npartsV);
+        return new Plane(this.scene, npartsU, npartsV);
     }
     
-    /*
-    <leaf type=”patch” npointsU=“ii” npointsV=“ii” npartsU=“ii” npartsV=“ii” >
-        <controlpoint xx=“ff” yy=“ff” zz=“ff” />
-    </leaf>
-    */
     parsePatch(descendants, messageError) {
         // Get npointsU of the current patch.
         let npointsU = this.reader.getInteger(descendants, 'npointsU');
@@ -1581,9 +1575,42 @@ class MySceneGraph {
             return "Missing/Invalid value for parameter 'npartsV' of patch  on node " + messageError;
         }
 
+        let children = descendants.children;
 
-        //return new Plane(this.scene, this.spritesheets[id], startCell, endCell, duration);
-        return "missing";
+        let vertexArray = [];
+
+        for(let i = 0; i < children.length; i++) {
+            let x = this.reader.getFloat(children[i], 'xx');
+            if (!(x != null && !isNaN(x)))
+                return "unable to parse x-coordinate of the " + messageError;
+
+            let y = this.reader.getFloat(children[i], 'yy');
+            if (!(y != null && !isNaN(y)))
+                return "unable to parse y-coordinate of the " + messageError;
+
+            let z = this.reader.getFloat(children[i], 'zz');
+            if (!(z != null && !isNaN(z)))
+                return "unable to parse z-coordinate of the " + messageError;
+            
+            vertexArray.push([x, y, z]);
+        }
+
+        let controlPoints = [];
+
+        for (let i = 0; i < npointsU; i++) {
+            let pointsU = [];
+            
+            for (let j = 0; j < npointsV; j++) {
+                let point = [];
+
+                point.push(...vertexArray[i * npointsV + j], 1);
+
+                pointsU.push(point);
+            }
+            controlPoints.push(pointsU);
+        }
+
+        return new Patch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoints);
     }
 
     parseDefbarrel(descendants, messageError) {
