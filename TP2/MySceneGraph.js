@@ -1290,11 +1290,11 @@ class MySceneGraph {
             case "spriteanim":
                 return this.parseSpriteAnim(descendants, messageError);
             case "plane":
-                return type + " missing implementation";
+                return this.parsePlane(descendants, messageError);
             case "patch":
-                return type + " missing implementation";
+                return this.parsePatch(descendants, messageError);
             case "defbarrel":
-                return type + " missing implementation";
+                return this.parseDefbarrel(descendants, messageError);
             default:
                 return "not a valid leaf on node " + messageError;
         }
@@ -1533,6 +1533,88 @@ class MySceneGraph {
         }
 
         return new MySpriteAnim(this.scene, this.spritesheets[id], startCell, endCell, duration);
+    }
+
+    parsePlane(descendants, messageError) {
+        // Get npartsU of the current plane.
+        let npartsU = this.reader.getInteger(descendants, 'npartsU');
+        if (!(npartsU != null && !isNaN(npartsU))) {
+            return "Missing/Invalid value for parameter 'npartsU' of plane on node " + messageError;
+        }
+
+        // Get npartsV of the current plane.
+        let npartsV = this.reader.getInteger(descendants, 'npartsV');
+        if (!(npartsV != null && !isNaN(npartsV))) {
+            return "Missing/Invalid value for parameter 'npartsV' of plane on node " + messageError;
+        }
+
+        return new MyPlane(this.scene, npartsU, npartsV);
+    }
+    
+    /*
+    <leaf type=”patch” npointsU=“ii” npointsV=“ii” npartsU=“ii” npartsV=“ii” >
+        <controlpoint xx=“ff” yy=“ff” zz=“ff” />
+    </leaf>
+    */
+    parsePatch(descendants, messageError) {
+        // Get npointsU of the current patch.
+        let npointsU = this.reader.getInteger(descendants, 'npointsU');
+        if (!(npointsU != null && !isNaN(npointsU))) {
+            return "Missing/Invalid value for parameter 'npointsU' of patch on node " + messageError;
+        }
+
+        // Get npointsV of the current patch.
+        let npointsV = this.reader.getInteger(descendants, 'npointsV');
+        if (!(npointsV != null && !isNaN(npointsV))) {
+            return "Missing/Invalid value for parameter 'npointsV' of patch on node " + messageError;
+        }
+        
+        // Get duration of the current patch.
+        let npartsU = this.reader.getInteger(descendants, 'npartsU');
+        if (!(npartsU != null && !isNaN(npartsU))) {
+            return "Missing/Invalid value for parameter 'npartsU' of patch  on node " + messageError;
+        }
+        
+        // Get duration of the current patch.
+        let npartsV = this.reader.getInteger(descendants, 'npartsV');
+        if (!(npartsV != null && !isNaN(npartsV))) {
+            return "Missing/Invalid value for parameter 'npartsV' of patch  on node " + messageError;
+        }
+
+
+        //return new Plane(this.scene, this.spritesheets[id], startCell, endCell, duration);
+        return "missing";
+    }
+
+    parseDefbarrel(descendants, messageError) {
+         // Get ssID of the current spriteanim.
+         let base = this.reader.getFloat(descendants, 'base');
+         if (!(base != null && !isNaN(base))) {
+            return "Missing/Invalid value for parameter 'base' of defbarrel on node " + messageError;
+        }
+        
+         let middle = this.reader.getFloat(descendants, 'middle');
+         if (!(middle != null && !isNaN(middle))) {
+            return "Missing/Invalid value for parameter 'middle' of defbarrel on node " + messageError;
+        }
+
+    
+         let height = this.reader.getFloat(descendants, 'height');
+         if (!(height != null && !isNaN(height))) {
+            return "Missing/Invalid value for parameter 'height' of defbarrel on node " + messageError;
+        }
+        
+         let slices = this.reader.getInteger(descendants, 'slices');
+         if (!(slices != null && !isNaN(slices))) {
+            return "Missing/Invalid value for parameter 'slices' of defbarrel on node " + messageError;
+        }
+
+         let stacks = this.reader.getInteger(descendants, 'stacks');
+         if (!(stacks != null && !isNaN(stacks))) {
+            return "Missing/Invalid value for parameter 'stacks' of defbarrel on node " + messageError;
+        }
+ 
+        return "missing";
     }
 
     // -------- Auxiliary parser functions -----------//
