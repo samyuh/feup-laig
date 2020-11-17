@@ -162,9 +162,15 @@
                 <!-- a ser usada para o cálculo da superficie -->
                 <!-- - o número de pontos de controlo dentro da -->
                 <!-- primitiva patch é npointsU * npointsV -->
-                <leaf type="patch" npointsU="1" npointsV="1" npartsU="1" npartsV="1" >
-                    <controlpoint xx="ff" yy="ff" zz="ff" />
-                   <!-- ... -->
+                <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+
+                    <controlpoint xx="0" yy="-1.5" zz="3.0" />
+                    <controlpoint xx="0" yy="1.5" zz="3.0" />
+
+                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf>
 
                 <!-- — Nova primitiva: forma de barril baseado em NURBS -->
