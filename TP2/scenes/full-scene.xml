@@ -89,8 +89,8 @@
 
     <!-- NOTE: this block "SPRITESHEETS" must be declared right after the block "TEXTURES" -->
     <spritesheets>
-        <spritesheet id="torchSpriteSheet" path="./scenes/images/torchSpriteSheet.jpg" sizeM="4" sizeN="4" />
-        <spritesheet id="GoTcharactersSheet" path="./scenes/images/GoT-characters.jpg" sizeM="6" sizeN="5" />
+        <spritesheet id="torchSpriteSheet" path="./scenes/images/torchesSpriteSheet.png" sizeM="4" sizeN="4" />
+        <spritesheet id="GoTcharactersSheet" path="./scenes/images/GoT-characters.png" sizeM="6" sizeN="5" />
     </spritesheets>
 
     <materials>
@@ -1326,7 +1326,7 @@
             
             <animation id="daenerysSwordAnimation" >
                 <keyframe instant="0">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="0" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="0" />
@@ -1334,14 +1334,14 @@
                 </keyframe>
 
                 <keyframe instant="14">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="0" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="0" />
                     <scale sx="1" sy="1" sz="1" />
                 </keyframe>
                 <keyframe instant="15">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="20" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="0" />
@@ -1349,7 +1349,7 @@
                 </keyframe>
 
                 <keyframe instant="32">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="20" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="0" />
@@ -1357,7 +1357,7 @@
                 </keyframe>
 
                 <keyframe instant="33">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />   <!-- -x -> DIREITA -->
                     <rotation axis="x" angle="0" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="180" />
@@ -1365,7 +1365,7 @@
                 </keyframe>
 
                 <keyframe instant="34">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="0" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="180" />
@@ -1373,7 +1373,7 @@
                 </keyframe>
 
                 <keyframe instant="35">
-                    <translation x="0" y="0" z="0" />
+                    <translation x="0" y="2.5" z="0" />
                     <rotation axis="x" angle="-100" />
                     <rotation axis="y" angle="0" />
                     <rotation axis="z" angle="180" />
