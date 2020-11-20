@@ -152,7 +152,7 @@
                 <!-- em XZ, centrado na origem -->
                 <!-- e com a face visível apontando para +Y -->
                 <!-- com divisão em cinco partes por oito partes -->
-                <leaf type="plane" npartsU="1" npartsV="1" />
+                <!-- <leaf type="plane" npartsU="1" npartsV="1" /> -->
 
                 <!-- Nova: primitiva: patch, gerada por NURBS -->
                 <!-- — parâmetros: -->
@@ -162,7 +162,7 @@
                 <!-- a ser usada para o cálculo da superficie -->
                 <!-- - o número de pontos de controlo dentro da -->
                 <!-- primitiva patch é npointsU * npointsV -->
-                <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                <!--<leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
                     <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
                     <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
 
@@ -171,13 +171,13 @@
 
                     <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
-                </leaf>
+                </leaf>-->
 
                 <!-- — Nova primitiva: forma de barril baseado em NURBS -->
                 <!-- parâmetros semelhantes ao cilindro original, mas sem tampas -->
                 <!-- base representa o raio na base e topo do cilindro -->
                 <!-- middle representa o raio no centro do objeto -->
-                <leaf type="defbarrel" base="1" middle="1" height="1" slices="1" stacks="1" />
+                <leaf type="defbarrel" base="4" middle="10" height="20" slices="20" stacks="20" />
                     
             </descendants>
         </node>
@@ -217,7 +217,7 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <leaf type="torus" inner="3" outer="8.1" slices="15" loops="40" />
+                <!--<leaf type="torus" inner="3" outer="8.1" slices="15" loops="40" />-->
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
