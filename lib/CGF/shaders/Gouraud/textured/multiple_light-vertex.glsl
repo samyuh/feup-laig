@@ -104,7 +104,6 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 	result += uGlobalAmbient * uFrontMaterial.ambient + uFrontMaterial.emission;
     result = clamp(result, vec4(0.0), vec4(1.0));
 
-    result.a = 1.0;
     return result;
 }
 

@@ -105,7 +105,6 @@ vec4 lighting(vec3 E, vec3 N) {
         }
     }
 
-    result.a = 1.0;
     return result;
 }
 
