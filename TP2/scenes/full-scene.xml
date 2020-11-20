@@ -15,8 +15,8 @@
         </perspective>
 
         <perspective id="Front Camera" near="0.1" far="500" angle="45">
-            <from x="0" y="15" z="60" />
-            <to x="0" y="10" z="0" />
+            <from x="0" y="20" z="72" />
+            <to x="0" y="15" z="0" />
         </perspective>
 
         <ortho id="Ortho Camera" near="0.2" far="100" left="-30" right="30" top="40" bottom="-20">
@@ -1405,7 +1405,6 @@
                 <noderef id="throne" />
                 <noderef id="floor" />
                 <noderef id="columns" />
-                <noderef id="got-characters" />
             </descendants>
         </node>
 
@@ -1443,10 +1442,242 @@
             </transformations>
 
             <descendants>
+                <noderef id="wall-top" />
                 <noderef id="wall-left" />
                 <noderef id="wall-right" />
                 <noderef id="wall-bot" />
                 <noderef id="window" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the main wall -->
+        <node id="wall-top">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="wall-cube-top" />
+                <noderef id="iron-bar" />
+                <noderef id="characters-board" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the main wall -->
+        <node id="wall-cube-top">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="30.0" z="-26.5" />
+                <scale sx="60.0" sy="15.0" sz="3.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wall-cube-top-wall" />
+            </descendants>
+        </node>
+
+        <!-- Node representing the main wall -->
+        <node id="iron-bar">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30.0" y="30.0" z="-25.0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="60" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <!-- Node representing the main wall -->
+        <node id="characters-board">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="got-characters-plane" />
+                <noderef id="got-characters" />
+                <noderef id="got-characters-board" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-plane">
+            <material id="null" />
+
+            <texture id="stonepillarTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="37.5" z="-24.9" />
+                <rotation axis="x" angle="90" />
+                <scale sx="10.0" sy="10.0" sz="10.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="1" npartsV="1" />
+            </descendants>
+        </node>
+
+        <node id="got-characters">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="got-characters-text" />
+                <noderef id="got-characters-images" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-text">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-4.5" y="40.0" z="-24.5" />
+                <scale sx="0.9" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="characters" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-images">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2.2" y="34.0" z="-24.5" />
+                <scale sx="4.0" sy="4.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="GoTcharactersSheet" startCell="0" endCell="29" duration="10" />
+            </descendants>
+        </node>
+
+        <node id="got-characters-board">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="board-top" />
+                <noderef id="board-bottom" />
+                <noderef id="board-left" />
+                <noderef id="board-right" />
+            </descendants>
+        </node>
+
+        <node id="board-top">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5.0" y="42.5" z="-24.9" />
+                <rotation axis="y" angle="90" />
+                <scale sx="1.0" sy="1.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="board-bottom">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5.0" y="32.5" z="-24.9" />
+                <rotation axis="y" angle="90" />
+                <scale sx="1.0" sy="1.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="board-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5.0" y="42.5" z="-24.9" />
+                <rotation axis="x" angle="90" />
+                <scale sx="1.0" sy="1.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="board-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.0" y="42.5" z="-24.9" />
+                <rotation axis="x" angle="90" />
+                <scale sx="1.0" sy="1.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
             </descendants>
         </node>
 
@@ -1484,7 +1715,7 @@
             </descendants>
         </node>
 
-         <!-- Node representing a cube -->
+        <!-- Node representing a cube -->
         <node id="wall-cube">
             <material id="null" />
 
@@ -1596,6 +1827,130 @@
 
             <texture id="null">
                 <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <!-- Node representing a wall cube of the top wall -->
+        <node id="wall-cube-top-wall">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.5" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="topwallcubeface1" />
+                <noderef id="topwallcubeface2" />
+                <noderef id="topwallcubeface3" />
+                <noderef id="topwallcubeface4" />
+                <noderef id="topwallcubeface5" />
+                <noderef id="topwallcubeface6" />
+            </descendants>
+        </node>
+
+        <!-- Cube Faces -->
+        <node id="topwallcubeface1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="topwallcubeface2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="topwallcubeface3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="topwallcubeface4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="topwallcubeface5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="topwallcubeface6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.3" aft="0.8" />
             </texture>
 
             <transformations>
@@ -2788,32 +3143,80 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.7" stacks="20" slices="15" />
+                <leaf type="defbarrel" base="0.5" middle="0.7" height="1.5" slices="20" stacks="20" />
             </descendants>
         </node>
 
         <node id="torch-fire">
             <material id="null" />
 
-            <texture id="fireTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <!--<translation x="0.0" y="1.35" z="-0.9" />
-                <rotation axis="x" angle="60" /> Before SpriteSheet-->
                 <translation x="-1.0" y="0.0" z="-0.9" />
                 <rotation axis="x" angle="-30" />
                 <scale sx="2.0" sy="2.0" sz="2.0" />
             </transformations>
 
-            <!--<animationref id="torchesAnimation" /> Before SpriteSheet -->
+            <descendants>
+                <noderef id="torch-fire-front" />
+                <noderef id="torch-fire-left" />
+                <noderef id="torch-fire-right" />
+            </descendants>
+        </node>
+
+        <node id="torch-fire-front">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.6" />
+            </transformations>
 
             <descendants>
                 <leaf type="spriteanim" ssid="torchSpriteSheet" startCell="0" endCell="15" duration="1" />
-                <!--<leaf type="cylinder" height="1" topRadius="0.7" bottomRadius="0.2" stacks="20" slices="15" />   Before SpriteSheet   -->
             </descendants>
         </node>
+
+        <node id="torch-fire-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.3" y="0.0" z="-0.2" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="torchSpriteSheet" startCell="0" endCell="15" duration="1" />
+            </descendants>
+        </node>
+
+        <node id="torch-fire-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.7" y="0.0" z="0.8" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="torchSpriteSheet" startCell="0" endCell="15" duration="1" />
+            </descendants>
+        </node>
+
         <!-- Ending of Wall Section -->
 
         <!-- Start of Throne Section -->
@@ -4179,58 +4582,6 @@
             </descendants>
         </node>
         <!-- End of Collumns Section -->
-
-        <node id="got-characters">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="got-characters-text" />
-                <noderef id="got-characters-images" />
-            </descendants>
-        </node>
-
-        <node id="got-characters-text">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="-9.3" y="0.1" z="12.0" />
-                <rotation axis="x" angle="-90" />
-                <scale sx="0.7" sy="1.0" sz="1.0" />
-            </transformations>
-
-            <descendants>
-                <leaf type="spritetext" text="characters" />
-            </descendants>
-        </node>
-
-        <node id="got-characters-images">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="-7.3" y="0.1" z="16.5" />
-                <rotation axis="x" angle="-90" />
-                <scale sx="3.0" sy="3.0" sz="3.0" />
-            </transformations>
-
-            <descendants>
-                <leaf type="spriteanim" ssid="GoTcharactersSheet" startCell="0" endCell="29" duration="10" />
-            </descendants>
-        </node>
 
         <!-- Node representing a cube -->
         <node id="cube">
