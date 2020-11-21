@@ -73,25 +73,28 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="stoneTexture" path="./scenes/images/stones.jpg" />
-        <texture id="stonepillarTexture" path="./scenes/images/stonepillar.jpg" />
-        <texture id="ironTexture" path="./scenes/images/iron.jpg" />
-        <texture id="glassTexture" path="./scenes/images/vidral.jpg" />
-        <texture id="floorTexture" path="./scenes/images/floor.jpg" />
-        <texture id="floorBotTexture" path="./scenes/images/floor-bot.jpg" />
-        <texture id="darkRoomTexture" path="./scenes/images/darkroom.jpg" />
-        <texture id="fireTexture" path="./scenes/images/fire.jpg" />
-        <texture id="darkwoodTexture" path="./scenes/images/darkwood.jpg" />
-        <texture id="flagTexture" path="./scenes/images/flag.png" />
-        <texture id="daenerysTexture" path="./scenes/images/daenerys.jpg" />
-        <texture id="daenerysClothTexture" path="./scenes/images/cloth.jpg" />
-        <texture id="stoneTexture2" path="./scenes/images/ceiling.jpg" />
+        
+        <texture id="glassTexture" path="./scenes/images/decoration/vidral.jpg" />
+        <texture id="fireTexture" path="./scenes/images/decoration/fire.jpg" />
+        <texture id="darkwoodTexture" path="./scenes/images/decoration/darkwood.jpg" />
+        <texture id="flagTexture" path="./scenes/images/decoration/flag.png" />
+
+        <texture id="stoneTexture" path="./scenes/images/struct/stones.jpg" />
+        <texture id="stonepillarTexture" path="./scenes/images/struct/stonepillar.jpg" />
+        <texture id="ironTexture" path="./scenes/images/struct/iron.jpg" />
+        <texture id="stoneCeiling" path="./scenes/images/struct/ceiling.jpg" />
+        <texture id="floorTexture" path="./scenes/images/struct/floor.jpg" />
+        <texture id="floorBotTexture" path="./scenes/images/struct/floor-bot.jpg" />
+        <texture id="darkRoomTexture" path="./scenes/images/struct/darkroom.jpg" />
+
+        <texture id="daenerysTexture" path="./scenes/images/daenerys/daenerys.jpg" />
+        <texture id="daenerysClothTexture" path="./scenes/images/daenerys/cloth.jpg" />
     </textures>
 
     <!-- NOTE: this block "SPRITESHEETS" must be declared right after the block "TEXTURES" -->
     <spritesheets>
-        <spritesheet id="torchSpriteSheet" path="./scenes/images/torchesSpriteSheet.png" sizeM="4" sizeN="4" />
-        <spritesheet id="GoTcharactersSheet" path="./scenes/images/GoT-characters.png" sizeM="6" sizeN="5" />
+        <spritesheet id="torchSpriteSheet" path="./scenes/images/spritesheet/torchesSpriteSheet.png" sizeM="4" sizeN="4" />
+        <spritesheet id="GoTcharactersSheet" path="./scenes/images/spritesheet/GoT-characters.png" sizeM="6" sizeN="5" />
     </spritesheets>
 
     <materials>
@@ -1414,7 +1417,7 @@
         <node id="roof">
             <material id="null" />
 
-            <texture id="stoneTexture2">
+            <texture id="stoneCeiling">
                 <amplification afs="0.4" aft="0.4" />
             </texture>
 
@@ -1548,7 +1551,7 @@
             </texture>
 
             <transformations>
-                <translation x="30.0" y="0.0" z="0" />
+                <translation x="30.0" y="0.0" z="3.5" />
                 <rotation axis="y" angle="180" />
             </transformations>
 
