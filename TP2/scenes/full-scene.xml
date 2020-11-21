@@ -85,6 +85,7 @@
         <texture id="flagTexture" path="./scenes/images/flag.png" />
         <texture id="daenerysTexture" path="./scenes/images/daenerys.jpg" />
         <texture id="daenerysClothTexture" path="./scenes/images/cloth.jpg" />
+        <texture id="stoneTexture2" path="./scenes/images/ceiling.jpg" />
     </textures>
 
     <!-- NOTE: this block "SPRITESHEETS" must be declared right after the block "TEXTURES" -->
@@ -1400,11 +1401,49 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
+                <noderef id="roof" />
                 <noderef id="wall" />
                 <noderef id="daenerys" />
                 <noderef id="throne" />
                 <noderef id="floor" />
                 <noderef id="columns" />
+            </descendants>
+        </node>
+
+        <!-- Start of Roof Section -->
+        <node id="roof">
+            <material id="null" />
+
+            <texture id="stoneTexture2">
+                <amplification afs="0.4" aft="0.4" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="30" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="4" npointsV="4" npartsU="20" npartsV="20" >
+                    <controlpoint xx="30" yy="0" zz="31" />
+                    <controlpoint xx="30" yy="0" zz="20" />
+                    <controlpoint xx="30" yy="-40" zz="-30" />
+                    <controlpoint xx="30" yy="15" zz="-25" />
+
+                    <controlpoint xx="30" yy="65" zz="31" />
+                    <controlpoint xx="30" yy="60" zz="30" />
+                    <controlpoint xx="30" yy="60" zz="-30" />
+                    <controlpoint xx="30" yy="15" zz="-25" />
+
+                    <controlpoint xx="-30" yy="65" zz="31" />
+                    <controlpoint xx="-30" yy="60" zz="30" />
+                    <controlpoint xx="-30" yy="60" zz="-30" />
+                    <controlpoint xx="-30" yy="15" zz="-25" />
+
+                    <controlpoint xx="-30" yy="0" zz="31" />
+                    <controlpoint xx="-30" yy="0" zz="20" />
+                    <controlpoint xx="-30" yy="-40" zz="-30" />
+                    <controlpoint xx="-30" yy="15" zz="-25" />
+                </leaf>
             </descendants>
         </node>
 
@@ -1446,11 +1485,11 @@
                 <noderef id="wall-left" />
                 <noderef id="wall-right" />
                 <noderef id="wall-bot" />
+                <noderef id="wall-side" />
                 <noderef id="window" />
             </descendants>
         </node>
 
-        <!-- Node representing the main wall -->
         <node id="wall-top">
             <material id="null" />
 
@@ -1462,13 +1501,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="wall-cube-top" />
                 <noderef id="iron-bar" />
+                <noderef id="wall-cube-top" />
                 <noderef id="characters-board" />
             </descendants>
         </node>
 
-        <!-- Node representing the main wall -->
         <node id="wall-cube-top">
             <material id="null" />
 
@@ -1486,7 +1524,124 @@
             </descendants>
         </node>
 
-        <!-- Node representing the main wall -->
+        <node id="wall-side">
+            <material id="null" />
+
+            <texture id="stoneTexture">
+                <amplification afs="0.4" aft="0.4" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="sideWall-left" />
+                <noderef id="sideWall-right" />
+            </descendants>
+        </node>
+
+        <node id="sideWall-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="30.0" y="0.0" z="0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sideWall-struct" />
+            </descendants>
+        </node>
+
+        <node id="sideWall-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30.0" y="0.0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sideWall-struct" />
+            </descendants>
+        </node>
+
+        <node id="sideWall-struct">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="iron-bar-side" />
+                <noderef id="sideWall-front" />
+                <noderef id="sideWall-back" />
+            </descendants>
+        </node>
+
+        <node id="sideWall-front">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-13" />
+                <rotation axis="y" angle="90" />
+                <scale sx="30.0" sy="30.0" sz="3.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wall-cube" />
+            </descendants>
+        </node>
+
+        <node id="sideWall-back">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            <translation x="0.0" y="0.0" z="16.5" />
+                <rotation axis="y" angle="90" />
+                <scale sx="30.0" sy="30.0" sz="3.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wall-cube" />
+            </descendants>
+        </node>
+
+        <node id="iron-bar-side">
+            <material id="null" />
+
+            <texture id="ironTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.5" y="30.0" z="-25.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="56" topRadius="0.5" bottomRadius="0.5" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
         <node id="iron-bar">
             <material id="null" />
 
@@ -1500,11 +1655,10 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="60" topRadius="0.2" bottomRadius="0.2" stacks="10" slices="10"/>
+                <leaf type="cylinder" height="60" topRadius="0.4" bottomRadius="0.4" stacks="10" slices="10"/>
             </descendants>
         </node>
 
-        <!-- Node representing the main wall -->
         <node id="characters-board">
             <material id="null" />
 
@@ -4084,6 +4238,7 @@
                 <noderef id="column-firepit" />
                 <noderef id="column-base" />
                 <noderef id="column-cylinder" />
+                <noderef id="column-top" />
                 <noderef id="column-flag" />
                 <noderef id="column-text" />
             </descendants>
@@ -4507,7 +4662,24 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <leaf type="cylinder" height="60" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+         <node id="column-top">
+            <material id="null" />
+
+            <texture id="stonepillarTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="62.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.5" topRadius="0" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
