@@ -35,10 +35,26 @@ class XMLscene extends CGFscene {
 
         this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress = 0;
+        this.musicActive = false;
+        this.audioIntroGOT = new Audio('scenes/music/music.mp3');
+        this.audioIntroGOT.volume = 0.3;
 
         this.defaultAppearance = new CGFappearance(this);
 
         this.selectedView;
+    }
+
+    /**
+     * Method for activate and deactivate music through interface
+     */
+    updateMusic() {
+        if (this.musicActive) {
+            this.audioIntroGOT.loop = true;
+            this.audioIntroGOT.play();
+        } else {
+            this.audioIntroGOT.pause();
+            this.audioIntroGOT.currentTime = 0;
+        }
     }
 
     /**
