@@ -43,7 +43,7 @@
     <spritesheets>
             <!-- Semelhante à declaração de textura,  -->
             <!-- mas inclui a definição do nº de colunas e linhas -->
-            <spritesheet id="demoSpritSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
+            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
     </spritesheets>
 
     <materials>
