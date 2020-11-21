@@ -71,6 +71,7 @@ class MySceneGraph {
 
         this.scene.interface.initInterfaceCameras();
         this.scene.interface.initInterfaceLights();
+        this.scene.interface.initMiscellaneous();
     }
 
     /*
@@ -859,8 +860,6 @@ class MySceneGraph {
 
             var nKeyFrameAnim = new MyKeyframeAnimation(this.scene);
 
-            //console.log(animationID);
-
             let grandChildren = children[i].children;
             for (var j = 0; j < grandChildren.length; j++) {
                 if (grandChildren[j].nodeName != "keyframe") {
@@ -869,7 +868,6 @@ class MySceneGraph {
                 }
     
                 let keyframeInstant = this.reader.getFloat(grandChildren[j], 'instant');
-                //console.log("Instant: " + keyframeInstant);
                 
                 let transformations = grandChildren[j].children;
 
@@ -917,14 +915,6 @@ class MySceneGraph {
                 
                 let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [angleX, angleY, angleZ], [sx, sy, sz]);
                 nKeyFrameAnim.addKeyframe(newKeyFrame);
-
-                /*
-                console.log(xTranslation + " " + yTranslation + " " + zTranslation);
-                console.log(axisX + " " + angleX);
-                console.log(axisY + " " + angleY);
-                console.log(axisZ + " " + angleZ);
-                console.log(sx + " " + sy + " " + sz);
-                */
             }
             nKeyFrameAnim.updateTimeValues();
 
@@ -1003,7 +993,6 @@ class MySceneGraph {
             // ---------- Animation -------- //
             if (animationIndex != -1) {
                 this.nodes[nodeID].animationID = this.reader.getString(grandChildren[animationIndex], 'id');
-                console.log(this.nodes[nodeID].animationID);
             } 
 
             // ---------- Descendants ---------- //
@@ -1252,7 +1241,6 @@ class MySceneGraph {
                         this.nodes[nodeID].addLeaf(nLeaf);
 
                         if (type =="spriteanim") {
-                            console.log(nPrimitive);
                             this.spritesAnim.push(nPrimitive);
                         }
                     }

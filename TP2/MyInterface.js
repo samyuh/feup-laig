@@ -21,7 +21,6 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         // add a group of controls (and open/expand by default)
-
         this.initKeys();
 
         return true;
@@ -67,6 +66,11 @@ class MyInterface extends CGFinterface {
                 );
             }
         }
+    }
+
+    initMiscellaneous() {
+        this.misc = this.gui.addFolder('Miscellaneous');
+        this.misc.add(this.scene, 'musicActive').name('Music').onChange(this.scene.updateMusic.bind(this.scene));
     }
 
     processKeyDown(event) {

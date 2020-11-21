@@ -99,7 +99,7 @@ class MyDefBarrel extends CGFobject {
 
         this.surfaces.push(obj);
 
-        console.log(nurbsSurface.getPoint(0.5, 0.5));
+        //console.log(nurbsSurface.getPoint(0.5, 0.5));
     }
     
 	display() {
