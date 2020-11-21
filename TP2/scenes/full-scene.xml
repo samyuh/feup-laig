@@ -10,8 +10,8 @@
     <views default="Front Camera">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="Side Camera" near="0.1" far="500" angle="45">
-            <from x="50" y="15" z="40" />
-            <to x="0" y="-2" z="0" />
+            <from x="30" y="20" z="60" />
+            <to x="0" y="5" z="0" />
         </perspective>
 
         <perspective id="Front Camera" near="0.1" far="500" angle="45">
@@ -28,6 +28,11 @@
         <perspective id="Throne Camera" near="0.1" far="500" angle="45">
             <from x="0" y="5" z="10" />
             <to x="0" y="7" z="0" />
+        </perspective>
+
+        <perspective id="Characters Camera" near="0.1" far="500" angle="45">
+            <from x="0" y="38" z="20" />
+            <to x="0" y="38" z="0" />
         </perspective>
     </views>
 
