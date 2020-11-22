@@ -16,18 +16,16 @@ class MySpriteSheet {
     }
 
     activateCellMN(m, n) {
-        this.scene.setActiveShader(this.shader);
+        this.scene.setActiveShaderSimple(this.shader);
         
         this.shader.setUniformsValues({actualM: m, actualN: n});
         this.texture.bind(0); 
     }
 
     activateCellP(p) {
-        // Definir os parâmetros da célula a desenhar e mandar para o shader com setUniformValues()
         let M = p % this.sizeM;
         let N = Math.floor(p / this.sizeM);
 
         this.activateCellMN(M, N);
-        //this.scene.setActiveShader(this.scene.defaultShader);
     }
 }

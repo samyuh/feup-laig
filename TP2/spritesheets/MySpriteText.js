@@ -35,7 +35,7 @@ class MySpriteText {
             this.background.display();
             this.scene.popMatrix();
         }
-        this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.setActiveShaderSimple(this.scene.defaultShader);
     }
 
     updateTexCoords(afs, aft) {
