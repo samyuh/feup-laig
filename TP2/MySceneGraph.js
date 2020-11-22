@@ -1509,7 +1509,7 @@ class MySceneGraph {
         if(this.spritesheets[id] == null) {
             return "Invalid ID for spriteanim on node " + messageError;
         }
-        
+
         // Get startCell of the current spriteanim.
         let startCell = this.reader.getInteger(descendants, 'startCell');
         if (!(startCell != null && !isNaN(startCell))) {
@@ -1596,9 +1596,9 @@ class MySceneGraph {
             vertexArray.push(coords);
         }
 
-        let size = npointsU + npointsV;
+        let size = npointsU * npointsV;
 
-        if((vertexArray.length-1) != size) {
+        if(vertexArray.length != size) {
             return "Invalid number of controlpoints (" + vertexArray.length + ") given " + npointsU + " points on U and " + npointsV +  " points on V on" + messageError;
         }
 
