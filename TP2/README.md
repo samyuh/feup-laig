@@ -15,7 +15,7 @@ We added an extra primitive named HalfTorus to create better door. You can see t
 
 For this second submission, we made the scene more complex, by adding some animations, spriteText and spriteAnims to it. The animations can be visible in firepit, the window decoration and the Daenerys model, who walks through the palace. The spriteText are present in the pillars and in the characters board above the throne, and the spriteAnims are present in that same board, showing the most important characters of the show, and in the torches, to simulate the fire.
 
-We also added an example of each new primitive to the scene. The primitive Plane makes the background of the characters panel, the primitive Patch makes the palace roof, and the primitive DefBarrel makes the body of the torches.
+We also added an example of each new primitive to the scene. The primitive Plane makes the background of the characters panel, the primitive Patch makes the palace dome, and the primitive DefBarrel makes the body of the torches.
 
 Every primitive can be seen in more detail in the scene made by "demo.xml" file.
 
@@ -26,6 +26,8 @@ Every primitive can be seen in more detail in the scene made by "demo.xml" file.
 - We followed the week plan strictly
 - Complex scene ("full-scene.xml"/"LAIG_TP1_XML_T1_G04_v02.xml")
 - Scene to check primitive details ("demo.xml")
+- Creative animations
+- Its possible to listen to GOT theme song. On interface, select Miscellaneous and them Music
 
 ### Scene
 - Iron throne
@@ -35,8 +37,8 @@ Every primitive can be seen in more detail in the scene made by "demo.xml" file.
 - Flags of the House Targaryen, representing the current ruling house
 - Pillars, with these flags, the name Targaryen and the firepits
 - Characters panel, showing the characters of the show
-- You can see our scene [without half torus](scenes/LAIG_TP1_XML_T1_G04_v02.xml) or [with half torus](scenes/full-scene.xml).
+- A Dome
+- You can see our scene [without half torus](scenes/LAIG_TP2_XML_T1_G04_v01.xml) or [with half torus](scenes/full-scene.xml).
 
 ## Issues/Problems
-
 We did everything that was proposed to do in this project.
