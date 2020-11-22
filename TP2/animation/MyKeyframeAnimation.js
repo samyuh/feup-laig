@@ -17,15 +17,9 @@ class MyKeyframeAnimation extends MyAnimation {
 
     addKeyframe(keyframe) {
         this.keyframes.push(keyframe);
-        
-        //this.keyframes.sort(this.sortMethod);
-    }
 
-    /*
-    sortMethod(keyframe1, keyframe2) {
-        return keyframe1.instant < keyframe2.instant;
+        this.keyframes.sort(function(a, b) { return a.instant > b.instant });
     }
-    */
 
     update(elapsedTime) {
         this.totalTime += elapsedTime;
