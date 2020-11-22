@@ -992,7 +992,12 @@ class MySceneGraph {
 
             // ---------- Animation -------- //
             if (animationIndex != -1) {
-                this.nodes[nodeID].animationID = this.reader.getString(grandChildren[animationIndex], 'id');
+                let animationID = this.reader.getString(grandChildren[animationIndex], 'id');
+
+                if(this.keyframesAnimation[animationID] == null) {
+                    this.onXMLMinorError("AnimationID " + animationID + " not defined on node " + nodeID);
+                }
+                else this.nodes[nodeID].animationID = animationID;
             } 
 
             // ---------- Descendants ---------- //
@@ -1501,6 +1506,10 @@ class MySceneGraph {
             return "No ssID defined for spriteanim on node " + messageError;
         }
 
+        if(this.spritesheets[id] == null) {
+            return "Invalid ID for spriteanim on node " + messageError;
+        }
+        
         // Get startCell of the current spriteanim.
         let startCell = this.reader.getInteger(descendants, 'startCell');
         if (!(startCell != null && !isNaN(startCell))) {
@@ -1517,6 +1526,20 @@ class MySceneGraph {
         let duration = this.reader.getInteger(descendants, 'duration');
         if (!(duration != null && !isNaN(duration))) {
             return "Missing/Invalid value for parameter 'duration' of spriteAnim with ID " + id + " on node " + messageError;
+        }
+
+        let last = this.spritesheets[id].sizeN * this.spritesheets[id].sizeM - 1;
+
+        if((startCell < 0) || (endCell < 0)) {
+            return "StartCell/EndCell can't be minus than 0 on spriteAnim with ID " + id;
+        }
+
+        if((startCell > last) || (endCell < last)) {
+            return "StartCell/EndCell can't be higher than" + last +  " on spriteAnim with ID " + id;
+        }
+
+        if(startCell > endCell) {
+            return "StartCell can't be higher than endCell on spriteAnime with ID " + id;
         }
 
         return new MySpriteAnim(this.scene, this.spritesheets[id], startCell, endCell, duration);
@@ -1571,6 +1594,12 @@ class MySceneGraph {
             let coords = this.parseCoordinates3D(children[i], messageError);
             
             vertexArray.push(coords);
+        }
+
+        let size = npointsU + npointsV;
+
+        if((vertexArray.length-1) != size) {
+            return "Invalid number of controlpoints (" + vertexArray.length + ") given " + npointsU + " points on U and " + npointsV +  " points on V on" + messageError;
         }
 
         let controlPoints = [];
