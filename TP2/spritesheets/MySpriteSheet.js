@@ -23,7 +23,6 @@ class MySpriteSheet {
 
     /**
      * Activates the current cell to be presented, based on the values of the column and row passed by parameters
-     * @method activateCellMN
      * @param {integer} m - Column of the cell to be presented
      * @param {integer} n - Line of the cell to be presented
      */
@@ -40,7 +39,6 @@ class MySpriteSheet {
 
     /**
      * Activates the current cell to be presented, based on the value corresponding to the number of the cell position passed by parameter
-     * @method activateCellP
      * @param {integer} p - Number of the cell position to be presented
      */
     activateCellP(p) {

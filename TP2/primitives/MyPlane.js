@@ -16,7 +16,6 @@ class MyPlane extends CGFobject {
 
     /**
      * Initialize the parameters (degrees and control vertexes) that make the Plane surface
-     * @method initSurface
      */
     initSurface() {
         this.makeSurface(1, // degree on U: 2 control vertexes U
@@ -37,7 +36,6 @@ class MyPlane extends CGFobject {
 
     /**
      * Creates the Plane surface based on the parameters received
-     * @method makeSurface
      * @param {integer} degree1 - Degree on U
      * @param {integer} degree2 - Degree on V
      * @param {Array} controlvertexes - Control Vertexes that form the Plane surface
@@ -51,14 +49,13 @@ class MyPlane extends CGFobject {
     
     /**
      * Display the nurbs object created which makes the Plane
-     * @method display
      */
     display() {
         this.obj.display();
     }
 
     /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MyPlane
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */

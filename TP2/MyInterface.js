@@ -1,10 +1,8 @@
 /**
 * MyInterface class, creating a GUI interface.
+* @constructor
 */
 class MyInterface extends CGFinterface {
-    /**
-     * @constructor
-     */
     constructor() {
         super();
     }
@@ -27,7 +25,7 @@ class MyInterface extends CGFinterface {
     }
 
     /**
-     * initKeys
+     * Keyboard Initialization
      */
     initKeys() {
         this.scene.gui=this;
@@ -68,6 +66,9 @@ class MyInterface extends CGFinterface {
         }
     }
 
+    /**
+     * Init Interface Music
+     */
     initMiscellaneous() {
         this.misc = this.gui.addFolder('Miscellaneous');
         this.misc.add(this.scene, 'musicActive').name('Music').onChange(this.scene.updateMusic.bind(this.scene));

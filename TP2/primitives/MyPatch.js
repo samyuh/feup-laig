@@ -19,14 +19,13 @@ class MyPatch extends CGFobject {
 	
 	/**
      * Display the nurbs object created which makes the Patch
-     * @method display
      */
 	display() {
 		this.primitive.display();
 	}
 
 	 /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MyPatch
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */

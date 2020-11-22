@@ -4,8 +4,9 @@
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} text - Text to be written to the sprite text
  */
-class MySpriteText {
+class MySpriteText extends CGFobject{
     constructor(scene, text) { 
+        super(scene);
         this.scene = scene; 
 
         this.text = text;
@@ -15,7 +16,6 @@ class MySpriteText {
 
     /**
      * Return the line and column of the cell of the sprite sheet with the character passed by parameter
-     * @method getPosition
      * @param {String} character - The character which we want to know its line and column in the sprite sheet
      */
     getPosition(character) {
@@ -43,7 +43,6 @@ class MySpriteText {
 
     /**
      * Displays the sprite text, by displaying its background (MyRectangle) and activating the shader of the sprite text, and then reset shader to the default
-     * @method display
      */
     display() {
         for (let i = 0; i < this.text.length; i++) {
@@ -66,7 +65,7 @@ class MySpriteText {
     }
 
     /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MySpriteText
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */

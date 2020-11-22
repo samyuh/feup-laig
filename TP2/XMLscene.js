@@ -128,6 +128,10 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
+    /**
+     * Method called periodically (as per setUpdatePeriod() in init())
+     * @param {integer} t 
+     */
     update(t) {
         let elapsedTime;
 

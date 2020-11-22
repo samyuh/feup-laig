@@ -1,3 +1,8 @@
+/**
+ * MyAnimation
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ */
 class MyKeyframeAnimation extends MyAnimation {
     constructor(scene) {
         super(scene);    
@@ -10,26 +15,36 @@ class MyKeyframeAnimation extends MyAnimation {
         this.active = false;
     }
 
+    /**
+    * Update start time and end time
+    */
     updateTimeValues() {
         this.startTime = this.keyframes[0].instant;
         this.endTime = this.keyframes[this.keyframes.length - 1].instant;
     }
 
+    /**
+    * Add a new keyframe
+    * @param {MyKeyframe} keyframe - keyframe to add
+    */
     addKeyframe(keyframe) {
         this.keyframes.push(keyframe);
 
         this.keyframes.sort(function(a, b) { return a.instant > b.instant });
     }
 
+    /** 
+    * Update animation matrix
+    * @param {integer} elapsedTime - elapsed time since last call
+    */
     update(elapsedTime) {
         this.totalTime += elapsedTime;
-        //console.log(this.totalTime, this.startTime, this.endTime);
 
         this.active = (this.startTime < this.totalTime);
-        //console.log(this.active);
 
         if (!this.active)
             return;
+
 
         if (this.totalTime < this.endTime) {
             let lastState = ((this.state + 1) == this.keyframes.length) ? true : false;
@@ -51,16 +66,20 @@ class MyKeyframeAnimation extends MyAnimation {
                 // --- Time Percentage --- //
                 let timePercentage = (this.totalTime - previousKeyframe.instant) / (nextKeyframe.instant - previousKeyframe.instant);
         
-                this.animation = this.transformations(previousKeyframe, nextKeyframe, timePercentage);
+                this.animation = this.transformationInterpolate(previousKeyframe, nextKeyframe, timePercentage);
             }
-            else {
-                // Apply last transformation
-                this.animation = this.transformations2(this.keyframes[this.state]);
-            }
+        }
+        else {
+            // Apply last transformation
+            this.animation = this.transformationsFinal();
         }
     }
 
-    transformations2(keyframe) {
+    /** 
+    * Calculate transformation for last keyframe
+    */
+    transformationsFinal() {
+        let keyframe = this.keyframes[this.keyframes.length - 1];
         let matrix = mat4.create();
 
         mat4.translate(matrix, matrix, [keyframe.translation[0], keyframe.translation[1], keyframe.translation[2]]);
@@ -76,7 +95,13 @@ class MyKeyframeAnimation extends MyAnimation {
         return matrix;
     }
 
-    transformations(previousKeyframe, nextKeyframe, timePercentage) {
+    /** 
+    * Calculate the interpolate transformation between two keyframes
+    * @param {MyKeyframe} previousKeyframe - previous key frame
+    * @param {MyKeyframe} nextKeyframe - next key frame
+    * @param {integer} timePercentage - time percentage between 0 and 1
+    */
+    transformationInterpolate(previousKeyframe, nextKeyframe, timePercentage) {
         // --- Calculate Values for each Transformation --- //
         // --- Init transformation matrix --- //
         let matrix = mat4.create();
@@ -116,6 +141,9 @@ class MyKeyframeAnimation extends MyAnimation {
         return matrix;
     }
 
+    /** 
+    * Apply the animation matrix to the scene
+    */
     apply() {
         // --- Check if animation is active --- //
         if (!this.active || this.keyframes.length == 0)

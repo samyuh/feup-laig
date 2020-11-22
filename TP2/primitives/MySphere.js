@@ -92,29 +92,11 @@ class MySphere extends CGFobject {
     }
 
      /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MySphere
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
-      /*
-      this.texCoords = [];
-  
-      var longD = 1 / this.longDivs;
-      var latD = 1 / this.latDivs;
-  
-      for (let latitude = 0; latitude <= this.latDivs; latitude++) {
-        for (let longitude = 0; longitude <= this.longDivs; longitude++) {
-          var tu = 0.25 + longD * longitude;
-          var tv = latD * latitude;
-          
-          this.texCoords.push(tu / afs, tv / aft);
-        }
-      }
-  
-      this.updateTexCoordsGLBuffers();
-      */
-
       // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
     }
   }

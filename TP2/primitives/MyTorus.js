@@ -104,23 +104,11 @@ class MyTorus extends CGFobject {
     }
     
      /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MyTorus
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
-        /*
-        this.texCoords = [];
-        
-        for (var loop = 0; loop <= this.loops; loop++) {
-            for (var slice = 0; slice <= this.slices; slice++) {
-                this.texCoords.push((slice / this.slices) / afs, (loop / this.loops) / aft);
-            }
-        }
-
-        this.updateTexCoordsGLBuffers();
-        */
-       
        // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
 	}
 }

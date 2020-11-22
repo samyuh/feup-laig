@@ -25,7 +25,6 @@ class MyDefBarrel extends CGFobject {
     
     /**
      * Initialize the parameters (degrees and control vertexes) that make the DefBarrel surface
-     * @method initSurface
      */
     initSurfaces() {
         let L = this.height;
@@ -106,7 +105,6 @@ class MyDefBarrel extends CGFobject {
 
     /**
      * Creates the DefBarrel surface based on the parameters received
-     * @method makeSurface
      * @param {integer} degree1 - Degree on U
      * @param {integer} degree2 - Degree on V
      * @param {Array} controlvertexes - Control Vertexes that form the DefBarrel surface
@@ -121,7 +119,6 @@ class MyDefBarrel extends CGFobject {
     
   /**
    * Display the nurbs object created which makes the DefBarrel
-   * @method display
    */
 	display() {
         for (let i = 0 ; i < this.surfaces.length ; i++) {
@@ -130,7 +127,7 @@ class MyDefBarrel extends CGFobject {
 	}
 
   /**
-   * Updates the list of texture coordinates
+   * Updates the list of texture coordinates - Not used on MyDefBarrel
    * @param {integer} afs - dx/afs
    * @param {integer} aft - dy/aft
    */

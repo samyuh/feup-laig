@@ -1,7 +1,7 @@
 /**
  * MyNode class, saving the node information of scenegraph
  * @constructor
- * @param root - Reference to root node
+ * @param {nodeID} root - Reference to root node
  */
 class MyNode {
 	constructor(root) {
@@ -32,7 +32,7 @@ class MyNode {
 
     /**
      * Add descendants nodes
-     * @param node Descendant node
+     * @param {nodeID} node Descendant node
      */
     addDescendants(node) {
         this.descendants.push(node);
@@ -40,7 +40,7 @@ class MyNode {
 
      /**
      * Add leaf nodes
-     * @param leaf Leaf node
+     * @param {CGFobject} leaf Leaf node
      */
     addLeaf(leaf) {
         this.leaves.push(leaf);

@@ -7,9 +7,9 @@
  * @param {integer} endCell - Final cell of the sprite animation
  * @param {integer} duration - Reference to number of stacks of cylinder
  */
-class MySpriteAnim {
+class MySpriteAnim extends CGFobject {
     constructor(scene, spriteSheet, startCell, endCell, duration) {
-        this.scene = scene;
+        super(scene);
         this.spriteSheet = spriteSheet;
         this.duration = duration;
         this.startCell = startCell;
@@ -27,7 +27,6 @@ class MySpriteAnim {
 
     /**
      * Updates the sprite animation, by changing the current cell being presented, based on the elapsed time since the beggining of the sprite animation
-     * @method update
      * @param {integer} currentTime - Time elapsed since the last call to this method
      */
     update(currentTime) {
@@ -47,7 +46,6 @@ class MySpriteAnim {
 
     /**
      * Displays the sprite animation, by displaying its background (MyRectangle), and activating the shader of the sprite animation
-     * @method display
      */
     display() {
         // Activate the current cell to be presented
@@ -70,7 +68,7 @@ class MySpriteAnim {
     }
 
     /**
-     * Updates the list of texture coordinates
+     * Updates the list of texture coordinates - Not used on MySpriteAnim
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */

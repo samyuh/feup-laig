@@ -1,6 +1,5 @@
 const DEGREE_TO_RAD = Math.PI / 180;
 
-
 // Order of the groups in the XML document.
 var INITIALS_INDEX = 0;
 var VIEWS_INDEX = 1;
@@ -1593,6 +1592,11 @@ class MySceneGraph {
         return new MySpriteAnim(this.scene, this.spritesheets[id], startCell, endCell, duration);
     }
 
+    /**
+     * Parse Plane from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
     parsePlane(descendants, messageError) {
         // Get npartsU of the current plane.
         let npartsU = this.reader.getInteger(descendants, 'npartsU');
@@ -1609,6 +1613,11 @@ class MySceneGraph {
         return new MyPlane(this.scene, npartsU, npartsV);
     }
     
+    /**
+     * Parse Patch from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
     parsePatch(descendants, messageError) {
         // Get npointsU of the current patch.
         let npointsU = this.reader.getInteger(descendants, 'npointsU');
@@ -1668,6 +1677,11 @@ class MySceneGraph {
         return new MyPatch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoints);
     }
 
+    /**
+     * Parse Defbarrel from XML
+     * @param {node leaf} descendants node that contains primitive information
+     * @param {message to be displayed in case of error} messageError error message given if some of value isn't parsable
+     */
     parseDefbarrel(descendants, messageError) {
          // Get ssID of the current spriteanim.
          let base = this.reader.getFloat(descendants, 'base');
