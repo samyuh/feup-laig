@@ -389,14 +389,14 @@
                 <!-- - o número de pontos de controlo dentro da -->
                 <!-- primitiva patch é npointsU * npointsV -->
                 <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
-                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
-                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="1.5" z="0.0" />
 
-                    <controlpoint xx="0" yy="-1.5" zz="3.0" />
-                    <controlpoint xx="0" yy="1.5" zz="3.0" />
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="3.0" />
 
-                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
-                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="1.5" z="0.0" />
                 </leaf>
             </descendants>
         </node>

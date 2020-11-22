@@ -1432,25 +1432,25 @@
 
             <descendants>
                 <leaf type="patch" npointsU="4" npointsV="4" npartsU="20" npartsV="20" >
-                    <controlpoint xx="30" yy="0" zz="31" />
-                    <controlpoint xx="30" yy="0" zz="20" />
-                    <controlpoint xx="30" yy="-40" zz="-30" />
-                    <controlpoint xx="30" yy="15" zz="-25" />
+                    <controlpoint x="30" y="0" z="31" />
+                    <controlpoint x="30" y="0" z="20" />
+                    <controlpoint x="30" y="-40" z="-30" />
+                    <controlpoint x="30" y="15" z="-25" />
 
-                    <controlpoint xx="30" yy="65" zz="31" />
-                    <controlpoint xx="30" yy="60" zz="30" />
-                    <controlpoint xx="30" yy="60" zz="-30" />
-                    <controlpoint xx="30" yy="15" zz="-25" />
+                    <controlpoint x="30" y="65" z="31" />
+                    <controlpoint x="30" y="60" z="30" />
+                    <controlpoint x="30" y="60" z="-30" />
+                    <controlpoint x="30" y="15" z="-25" />
 
-                    <controlpoint xx="-30" yy="65" zz="31" />
-                    <controlpoint xx="-30" yy="60" zz="30" />
-                    <controlpoint xx="-30" yy="60" zz="-30" />
-                    <controlpoint xx="-30" yy="15" zz="-25" />
+                    <controlpoint x="-30" y="65" z="31" />
+                    <controlpoint x="-30" y="60" z="30" />
+                    <controlpoint x="-30" y="60" z="-30" />
+                    <controlpoint x="-30" y="15" z="-25" />
 
-                    <controlpoint xx="-30" yy="0" zz="31" />
-                    <controlpoint xx="-30" yy="0" zz="20" />
-                    <controlpoint xx="-30" yy="-40" zz="-30" />
-                    <controlpoint xx="-30" yy="15" zz="-25" />
+                    <controlpoint x="-30" y="0" z="31" />
+                    <controlpoint x="-30" y="0" z="20" />
+                    <controlpoint x="-30" y="-40" z="-30" />
+                    <controlpoint x="-30" y="15" z="-25" />
                 </leaf>
             </descendants>
         </node>

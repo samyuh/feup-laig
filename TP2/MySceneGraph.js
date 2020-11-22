@@ -1568,19 +1568,9 @@ class MySceneGraph {
         let vertexArray = [];
 
         for(let i = 0; i < children.length; i++) {
-            let x = this.reader.getFloat(children[i], 'xx');
-            if (!(x != null && !isNaN(x)))
-                return "unable to parse x-coordinate of the " + messageError;
-
-            let y = this.reader.getFloat(children[i], 'yy');
-            if (!(y != null && !isNaN(y)))
-                return "unable to parse y-coordinate of the " + messageError;
-
-            let z = this.reader.getFloat(children[i], 'zz');
-            if (!(z != null && !isNaN(z)))
-                return "unable to parse z-coordinate of the " + messageError;
+            let coords = this.parseCoordinates3D(children[i], messageError);
             
-            vertexArray.push([x, y, z]);
+            vertexArray.push(coords);
         }
 
         let controlPoints = [];
@@ -1633,7 +1623,6 @@ class MySceneGraph {
     }
 
     // -------- Auxiliary parser functions -----------//
-
     /**
      * Iterates through the SceneGraph to find and delete Invalid Nodes
      * @param {block element} nodeID nodeID
