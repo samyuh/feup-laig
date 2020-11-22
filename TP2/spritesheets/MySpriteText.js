@@ -8,14 +8,23 @@ class MySpriteText {
     }
 
     getPosition(character) {
-        if (character == " ") return [3, 4];
+        if (character == " ") return [3, 5];
 
         let charCode = character.charCodeAt();
-        charCode -= (65 + 32);
+        if(charCode >= 97 && charCode <= 122) { // Lowercase
+            charCode -= 97; 
+        }
+        else if (charCode >= 65 && charCode <= 90) { // Upercase
+            charCode -= 65;
+        }
+        else if (charCode >= 48 && charCode <= 57) { // Number
+            charCode -= 22;
+        }
+        else return [6, 4]; // Show ? (invalid char)
 
         let M = charCode % this.spriteSheet.sizeM;
         let N = Math.floor(charCode / this.spriteSheet.sizeM);
-        
+
         return [M, N];
     }
 

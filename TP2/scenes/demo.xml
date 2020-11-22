@@ -308,7 +308,7 @@
              descendants may be mixed, nodes and leafs -->
             <descendants>
                 <!-- Nova primitiva: texto baseado em spritesheet -->
-                <leaf type="spritetext" text="demo" />
+                <leaf type="spritetext" text="demo 1" />
             </descendants>
         </node>
 
