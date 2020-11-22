@@ -1,3 +1,13 @@
+/**
+ * MyPatch
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {integer} nPointsU - the number of points on U
+ * @param {integer} nPointsV - the number of points on V
+ * @param {integer} nPartsU - the number of divisions in the U direction
+ * @param {integer} nPartsV - the number of divisions in the V direction
+ * @param {Array} controlPoints - Control Vertexes that form the Patch surface
+ */
 class MyPatch extends CGFobject {
 	constructor(scene, nPointsU, nPointsV, nPartsU, nPartsV, controlPoints) {
 		super(scene);
@@ -7,6 +17,10 @@ class MyPatch extends CGFobject {
 		this.primitive = new CGFnurbsObject(this.scene, nPartsU, nPartsV, nurbsSurface);
     }
 	
+	/**
+     * Display the nurbs object created which makes the Patch
+     * @method display
+     */
 	display() {
 		this.primitive.display();
 	}

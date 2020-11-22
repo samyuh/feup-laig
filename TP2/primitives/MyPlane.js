@@ -1,3 +1,10 @@
+/**
+ * MyPlane
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {integer} npartsU - the number of divisions in the U direction
+ * @param {integer} npartsV - the number of divisions in the V direction
+ */
 class MyPlane extends CGFobject {
     constructor(scene, npartsU, npartsV) {
         super(scene);
@@ -7,6 +14,10 @@ class MyPlane extends CGFobject {
         this.initSurface();
     }
 
+    /**
+     * Initialize the parameters (degrees and control vertexes) that make the Plane surface
+     * @method initSurface
+     */
     initSurface() {
         this.makeSurface(1, // degree on U: 2 control vertexes U
         1, // degree on V: 2 control vertexes on V
@@ -24,6 +35,13 @@ class MyPlane extends CGFobject {
         ]);
     }
 
+    /**
+     * Creates the Plane surface based on the parameters received
+     * @method makeSurface
+     * @param {integer} degree1 - Degree on U
+     * @param {integer} degree2 - Degree on V
+     * @param {Array} controlvertexes - Control Vertexes that form the Plane surface
+     */
     makeSurface(degree1, degree2, controlvertexes) {
 		this.nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlvertexes);
 
@@ -31,6 +49,10 @@ class MyPlane extends CGFobject {
 		this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, this.nurbsSurface);
     }
     
+    /**
+     * Display the nurbs object created which makes the Plane
+     * @method display
+     */
     display() {
         this.obj.display();
     }
@@ -40,7 +62,6 @@ class MyPlane extends CGFobject {
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
      */
-
     updateTexCoords(afs, aft) {
         // Do Nothing
     }
