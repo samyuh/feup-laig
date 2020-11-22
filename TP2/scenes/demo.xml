@@ -300,7 +300,7 @@
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-                <translation x="-65.0" y="-0.0" z="0.0" />
+                <translation x="-60.0" y="-0.0" z="0.0" />
                 <scale sx="5.0" sy="5.0" sz="1.0" />
             </transformations>
 
@@ -308,7 +308,7 @@
              descendants may be mixed, nodes and leafs -->
             <descendants>
                 <!-- Nova primitiva: texto baseado em spritesheet -->
-                <leaf type="spritetext" text="demo 1" />
+                <leaf type="spritetext" text="DEMO" />
             </descendants>
         </node>
 
@@ -345,7 +345,7 @@
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-                <translation x="5.0" y="-0.0" z="0.0" />
+                <translation x="0.0" y="-0.0" z="0.0" />
                 <rotation axis="x" angle="90" />
                 <scale sx="15.0" sy="15.0" sz="15.0" />
             </transformations>
