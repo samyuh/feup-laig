@@ -881,37 +881,85 @@ class MySceneGraph {
                     continue;
                 }
                 let xTranslation = this.reader.getFloat(translation, 'x');
+                if (!(xTranslation != null && !isNaN(xTranslation))) {
+                    this.onXMLMinorError("Missing/Invalid value for parameter 'xTranslation' in animation " + animationID + ". Using x = 0");
+                    xTranslation = 0;
+                }
+
                 let yTranslation = this.reader.getFloat(translation, 'y');
+                if (!(yTranslation != null && !isNaN(yTranslation))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'yTranslation' in animation " + animationID);
+                     yTranslation = 0;
+                }
+                
                 let zTranslation = this.reader.getFloat(translation, 'z');
+                if (!(zTranslation != null && !isNaN(zTranslation))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'zTranslation' in animation " + animationID);
+                     zTranslation = 0;
+                }
 
                 if (rotationX.nodeName != "rotation") {
                     continue;
                 }
 
                 let axisX = this.reader.getString(rotationX, 'axis');
+                if (axisX == null || axisX != 'x') {
+                     this.onXMLMinorError("Missing/Invalid value (valid = x) for parameter 'axis' in first rotation of animation " + animationID);
+                }
                 let angleX = this.reader.getFloat(rotationX, 'angle');
+                if (!(angleX != null && !isNaN(angleX))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'angle' in first rotation of animation " + animationID);
+                     angleX = 0;
+                }
+
 
                 if (rotationY.nodeName != "rotation") {
                     continue;
                 }
-
                 let axisY = this.reader.getString(rotationY, 'axis');
+                if (axisY == null || axisY != 'y') {
+                     this.onXMLMinorError("Missing/Invalid value (valid = y) or parameter 'axis' in second rotation of animation " + animationID);
+                }
                 let angleY = this.reader.getFloat(rotationY, 'angle');
+                if (!(angleY != null && !isNaN(angleY))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'angle' in second rotation of animation " + animationID);
+                     angleY = 0;
+                }
+
 
                 if (rotationZ.nodeName != "rotation") {
                     continue;
                 }
-
                 let axisZ = this.reader.getString(rotationZ, 'axis');
+                if (axisZ == null || axisZ != 'z') {
+                     this.onXMLMinorError("Missing/Invalid value (valid = z) for parameter 'axis' in third rotation of animation " + animationID);
+                }
                 let angleZ = this.reader.getFloat(rotationZ, 'angle');
+                if (!(angleZ != null && !isNaN(angleZ))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'angle' in third rotation of animation " + animationID);
+                     angleZ = 0;
+                }
 
                 if (scale.nodeName != "scale") {
                     continue;
                 }
-
                 let sx = this.reader.getFloat(scale, 'sx');
+                if (!(sx != null && !isNaN(sx))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'scale' in animation " + animationID);
+                     sx = 1;
+                }
+
                 let sy = this.reader.getFloat(scale, 'sy');
+                if (!(sy != null && !isNaN(sy))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'scale' in animation " + animationID);
+                     sy = 1;
+                }
+
                 let sz = this.reader.getFloat(scale, 'sz');
+                if (!(sz != null && !isNaN(sz))) {
+                     this.onXMLMinorError("Missing/Invalid value for parameter 'scale' in animation " + animationID);
+                     sz = 1;
+                }
                 
                 let newKeyFrame = new MyKeyframe(keyframeInstant, [xTranslation, yTranslation, zTranslation], [angleX, angleY, angleZ], [sx, sy, sz]);
                 nKeyFrameAnim.addKeyframe(newKeyFrame);
