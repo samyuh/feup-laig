@@ -21,7 +21,7 @@
 
         <ortho id="Ortho Camera" near="0.2" far="100" left="-30" right="30" top="40" bottom="-20">
             <from x="0" y="15" z="30" />
-            <to x="0" y="0" z="0" />
+            <to x="0" y="10" z="0" />
             <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
         </ortho>
 
