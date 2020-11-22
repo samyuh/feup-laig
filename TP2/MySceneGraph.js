@@ -1582,7 +1582,7 @@ class MySceneGraph {
             return "StartCell/EndCell can't be minus than 0 on spriteAnim with ID " + id;
         }
 
-        if((startCell > last) || (endCell < last)) {
+        if((startCell > last) || (endCell > last)) {
             return "StartCell/EndCell can't be higher than" + last +  " on spriteAnim with ID " + id;
         }
 

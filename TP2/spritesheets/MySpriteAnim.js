@@ -15,7 +15,7 @@ class MySpriteAnim {
         this.startCell = startCell;
         this.endCell = endCell;
 
-        this.background = new MyRectangle(this.scene, 0, 0, 1, 1);
+        this.background = new MyRectangle(this.scene, -0.5, -0.5, 0.5, 0.5);
 
         this.currentCell = startCell;
 
