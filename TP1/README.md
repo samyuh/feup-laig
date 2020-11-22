@@ -15,9 +15,9 @@ Our scene is inspired by the Iron Throne Room, from the Game of Thrones. It has 
 We added an extra primitive named HalfTorus to create better door. You can see the XML with this primitive [here](scenes/full-scene.xml).
 
 ### Strong points of our project
-- We have another primitive, one half torus.
+- We have another primitive, one half torus
 - Code Documentation
-- We made an effort to make modular code. We tried to divide the code in separate functions to make it more readable.
+- We made an effort to make modular code. We tried to divide the code in separate functions to make it more readable
 - We followed the week plan strictly 
 
 ### Scene
@@ -31,6 +31,3 @@ We added an extra primitive named HalfTorus to create better door. You can see t
 ## Issues/Problems
 
 We did everything that was proposed to do in this project.
-
-
-
