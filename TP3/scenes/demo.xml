@@ -1,0 +1,430 @@
+<lsf>
+    <initials>
+        <reference length="2" />
+        <!-- axis length; "0" means no axis displayed -->
+        <root id="demoRoot" />
+        <!-- identifier of root node of the scene graph; this node -->
+        <!-- must be defined in one of the following NODE declarations -->
+    </initials>
+    
+    <views default="mainCamera">
+        <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="mainCamera" near="0.1" far="500" angle="45">
+            <from x="17" y="8" z="100" />
+            <to x="17" y="8" z="-50" />
+        </perspective>
+    </views>
+
+    <illumination>
+        <ambient r="0.05" g="0.05" b="0.05" a="1.0" />           <!-- global ambient -->
+        <background r="0.05" g="0.05" b="0.05" a="1.0" />        <!-- background color -->
+    </illumination>
+
+    <lights>
+        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
+        <light id="demoLight">            <!-- light identifier -->
+            <enable value="1" />
+            <!-- enable/disable -->
+            <position x="20" y="0" z="40" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />             <!-- diffuse component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
+        </light>
+    </lights>
+
+    <textures>
+        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="demoTexture" path="./scenes/images/demo/demoTexture.png" />
+    </textures>
+
+    <!-- spritesheets -->
+    <!-- o bloco "spritesheets" deve ser declarado -->
+    <!-- imediatamente após o bloco "textures" -->
+    <spritesheets>
+            <!-- Semelhante à declaração de textura,  -->
+            <!-- mas inclui a definição do nº de colunas e linhas -->
+            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
+    </spritesheets>
+
+    <materials>
+        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
+         requires a distinct "id". At least one material should be present. -->
+        <material id="demoMaterial">
+            <shininess value="1.0" />
+            <ambient  r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular  r="1" g="1" b="1" a="1.0" />
+            <emissive  r="1" g="1" b="1" a="1.0" />
+        </material>
+    </materials>
+
+    <animations>
+        <animation id="demoAni" >
+            <keyframe instant="2.5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="5">
+                <translation x="0" y="0" z="10" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="10" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+    </animations>
+
+    <nodes>
+        <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- Primitives used in the first submission -->
+                <noderef id="primitives-group-1" />
+                <!-- Primitives used in the second submission -->
+                <noderef id="primitives-group-2" />
+            </descendants>
+        </node>
+
+        <node id="primitives-group-1">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="0.0" y="-10.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <noderef id="cylinder" />
+                <noderef id="torus" />
+                <noderef id="sphere" />
+                <noderef id="triangle" />
+                <noderef id="rectangle" />
+                <noderef id="halftorus" />
+            </descendants>
+        </node>
+
+        <node id="primitives-group-2">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="8.0" y="20.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <noderef id="spritetext" />
+                <noderef id="spriteanim" />
+                <noderef id="plane" />
+                <noderef id="patch" />
+                <noderef id="defbarrel" />
+            </descendants>
+        </node>
+
+        <node id="cylinder">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="-25.0" y="1.0" z="-10.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                    <leaf type="cylinder" height="20.0" topRadius="10.0" bottomRadius="10.0" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <node id="torus">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="5.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="torus" inner="3" outer="8.1" slices="15" loops="40" />
+            </descendants>
+        </node>
+
+        <node id="sphere">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="35.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="sphere" radius="10.0" slices="32" stacks="32"/>
+                <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+
+        <node id="triangle">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="20" aft="20" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="-47.0" y="-7.0" z="10.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="triangle" x1="-10" y1="0.0" x2="10" y2="0.0" x3="0.0" y3="20" />
+                <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+
+        <node id="rectangle">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="20.0" aft="20.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="62.0" y="0.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="rectangle"  x1="-10.0" y1="-10.0" x2="10.0" y2="10.0" />
+                <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+
+        <node id="halftorus">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="90.0" y="-5.0" z="0.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="halftorus" inner="0.8" outer="10.0" slices="15" loops="40" />
+                <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+
+        <node id="spritetext">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="-60.0" y="-0.0" z="0.0" />
+                <scale sx="5.0" sy="5.0" sz="1.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- Nova primitiva: texto baseado em spritesheet -->
+                <leaf type="spritetext" text="DEMO" />
+            </descendants>
+        </node>
+
+        <node id="spriteanim">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="-30.0" y="-0.0" z="0.0" />
+                <scale sx="5.0" sy="5.0" sz="1.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- Nova primitiva: animação baseada em spritesheet -->
+                <!-- identifica a spritesheet a usar, a célula inicial e final da animação, e a duração -->
+                <leaf type="spriteanim" ssid="demoSpriteSheet" startCell="0" endCell="15" duration="1" />
+            </descendants>
+        </node>
+
+        <node id="plane">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="0.0" y="-0.0" z="0.0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="15.0" sy="15.0" sz="15.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- Nova primitiva: plano, gerado por NURBS -->
+                <!-- ex: <plane npartsU=“5” npartsU=“8” />-->
+                <!-- um plano de dimensões 1 x 1 unidades assente -->
+                <!-- em XZ, centrado na origem -->
+                <!-- e com a face visível apontando para +Y -->
+                <!-- com divisão em cinco partes por oito partes -->
+                <leaf type="plane" npartsU="1" npartsV="1" />
+            </descendants>
+        </node>
+
+        <node id="patch">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="35.0" y="-0.0" z="0.0" />
+                <scale sx="5.0" sy="5.0" sz="5.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- Nova: primitiva: patch, gerada por NURBS -->
+                <!-- — parâmetros: -->
+                <!-- — npartsU: divisão em partes no domínio U a -->
+                <!-- ser usada para o cálculo da superfície -->
+                <!-- — npartsV: divisão em partes no domínio V -->
+                <!-- a ser usada para o cálculo da superficie -->
+                <!-- - o número de pontos de controlo dentro da -->
+                <!-- primitiva patch é npointsU * npointsV -->
+                <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="1.5" z="0.0" />
+
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="3.0" />
+
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="1.5" z="0.0" />
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="defbarrel">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="70.0" y="-10.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- — Nova primitiva: forma de barril baseado em NURBS -->
+                <!-- parâmetros semelhantes ao cilindro original, mas sem tampas -->
+                <!-- base representa o raio na base e topo do cilindro -->
+                <!-- middle representa o raio no centro do objeto -->
+                <leaf type="defbarrel" base="4" middle="8" height="20" slices="20" stacks="20" />
+            </descendants>
+        </node>
+    </nodes>
+</lsf>
