@@ -2,6 +2,8 @@ class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
         this.graph = null;
+
+        this.board = new MyBoard(scene, 7, 7);
     }
 
     initGraph(sceneGraph) {
@@ -13,6 +15,8 @@ class MyGameOrchestrator {
     }
 
     display() {
+        this.board.display();
+
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
 

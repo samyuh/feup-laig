@@ -9,7 +9,8 @@ var TEXTURES_INDEX = 4;
 var SPRITE_SHEET_INDEX = 5;
 var MATERIALS_INDEX = 6;
 var ANIMATIONS_INDEX = 7;
-var NODES_INDEX = 8;
+var BOARDGAME_INDEX = 8;
+var NODES_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -215,6 +216,18 @@ class MySceneGraph {
 
             //Parse animations block
             if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
+        // <boardgame>
+        if ((index = nodeNames.indexOf("boardgame")) == -1)
+            this.onXMLMinorError("tag <boardgame> missing");
+        else {
+            if (index != BOARDGAME_INDEX)
+                this.onXMLMinorError("tag <boardgame> out of order");
+
+            //Parse boardgame block
+            if ((error = this.parseBoardGame(nodes[index])) != null)
                 return error;
         }
 
@@ -970,6 +983,24 @@ class MySceneGraph {
 
         this.log("Parsed animations");
 
+        return null;
+    }
+
+    /**
+     * Parses the <boardgame> block. 
+     * @param {boardgame block element} boardGameNode
+     */
+    parseBoardGame(boardGameNode) {
+        var children = boardGameNode.children;
+        /*
+        var n = this.reader.getFloat(children, 'board');
+        var n1 = this.reader.getFloat(children, 'auxboard');
+        var n2 = this.reader.getFloat(children, 'piece');
+
+        console.log(n);
+        console.log(n1);
+        console.log(n2);
+*/
         return null;
     }
 
