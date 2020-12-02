@@ -3,11 +3,17 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
-        this.board = new MyBoard(scene, 7, 7);
+        this.board = null;
+        this.auxBoard = null;
+        this.pieces = null;
     }
 
     initGraph(sceneGraph) {
-        this.graph =  sceneGraph;
+        this.graph = sceneGraph;
+
+        this.board = sceneGraph.board;
+        this.auxBoard = sceneGraph.auxBoard;
+        this.pieces = sceneGraph.pieces;
     }
 
     update(graph) {

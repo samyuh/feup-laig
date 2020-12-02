@@ -992,15 +992,25 @@ class MySceneGraph {
      */
     parseBoardGame(boardGameNode) {
         var children = boardGameNode.children;
-        /*
-        var n = this.reader.getFloat(children, 'board');
-        var n1 = this.reader.getFloat(children, 'auxboard');
-        var n2 = this.reader.getFloat(children, 'piece');
 
-        console.log(n);
-        console.log(n1);
-        console.log(n2);
-*/
+        let board = children[0]; 
+        let auxBoard = children[1]; 
+        let piece = children[2]; 
+        
+        if(board.nodeName != "board") {
+            console.log("erro");
+        }
+        if(auxBoard.nodeName != "auxboard") {
+            console.log("erro");
+        }
+        if(piece.nodeName != "piece") {
+            console.log("erro");
+        }
+
+        this.board = new MyBoard(this.scene, 7, 7);
+        this.auxBoard = null;
+        this.piece = null;
+
         return null;
     }
 
