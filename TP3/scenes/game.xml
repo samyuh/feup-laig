@@ -14,8 +14,8 @@
     </views>
 
     <illumination>
-        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />           <!-- global ambient -->
-        <background r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- background color -->
+        <ambient r="0.05" g="0.05" b="0.05" a="0.05" />           <!-- global ambient -->
+        <background r="0.05" g="0.05" b="0.05" a="0.05" />        <!-- background color -->
     </illumination>
 
     <lights>
