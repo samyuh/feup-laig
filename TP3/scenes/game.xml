@@ -1,0 +1,118 @@
+<lsf>
+    <initials>
+        <reference length="2" />
+        <!-- axis length; "0" means no axis displayed -->
+        <root id="demoRoot" />
+        <!-- identifier of root node of the scene graph; this node -->
+        <!-- must be defined in one of the following NODE declarations -->
+    </initials>
+    
+    <views default="mainCamera">
+        <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="mainCamera" near="0.1" far="500" angle="45">
+            <from x="17" y="8" z="100" />
+            <to x="17" y="8" z="-50" />
+        </perspective>
+    </views>
+
+    <illumination>
+        <ambient r="0.05" g="0.05" b="0.05" a="1.0" />           <!-- global ambient -->
+        <background r="0.05" g="0.05" b="0.05" a="1.0" />        <!-- background color -->
+    </illumination>
+
+    <lights>
+        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
+        <light id="demoLight">            <!-- light identifier -->
+            <enable value="1" />
+            <!-- enable/disable -->
+            <position x="20" y="0" z="40" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />             <!-- diffuse component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
+        </light>
+    </lights>
+
+    <textures>
+        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="demoTexture" path="./scenes/images/demo/demoTexture.png" />
+    </textures>
+
+    <!-- spritesheets -->
+    <!-- o bloco "spritesheets" deve ser declarado -->
+    <!-- imediatamente após o bloco "textures" -->
+    <spritesheets>
+            <!-- Semelhante à declaração de textura,  -->
+            <!-- mas inclui a definição do nº de colunas e linhas -->
+            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
+    </spritesheets>
+
+    <materials>
+        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
+         requires a distinct "id". At least one material should be present. -->
+        <material id="demoMaterial">
+            <shininess value="1.0" />
+            <ambient  r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular  r="1" g="1" b="1" a="1.0" />
+            <emissive  r="1" g="1" b="1" a="1.0" />
+        </material>
+    </materials>
+
+    <animations>
+        <animation id="demoAni" >
+            <keyframe instant="2.5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="5">
+                <translation x="0" y="0" z="10" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="0" z="10" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+        </animation>
+    </animations>
+
+    <nodes>
+        <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <leaf type="rectangle"  x1="-10.0" y1="-10.0" x2="10.0" y2="10.0" />
+                <leaf board />
+            </descendants>
+        </node>
+    </nodes>
+</lsf>

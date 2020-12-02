@@ -61,7 +61,7 @@ class MySpriteText extends CGFobject{
             this.scene.popMatrix();
         }
 
-        this.scene.setActiveShaderSimple(this.scene.defaultShader);
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
 
     /**

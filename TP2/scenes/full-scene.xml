@@ -53,7 +53,7 @@
 
         <light id="Window Light">            <!-- window light -->
             <enable value="1" />
-            <position x="0" y="15" z="-40" w="0.0" />                <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="15" z="-40" w="1.0" />                <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- ambient component -->
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />              <!-- diffuse component -->
             <specular r="0.3" g="0.3" b="0.4" a="1.0" />             <!-- specular component -->
@@ -169,6 +169,14 @@
             <keyframe instant="10">
                 <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="15">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="15" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />

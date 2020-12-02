@@ -41,6 +41,8 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
+        this.gameOrchestrator = new MyGameOrchestrator(this);
+
         this.selectedView;
     }
 
@@ -126,6 +128,9 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
 
         this.sceneInited = true;
+
+        this.gameOrchestrator.initGraph(this.graph);
+
     }
 
     /**
@@ -147,6 +152,8 @@ class XMLscene extends CGFscene {
 
         for (let k in this.graph.spritesAnim)
             this.graph.spritesAnim[k].update(elapsedTime / 1000);
+
+        this.gameOrchestrator.update(this.graph);
     }
 
     /**
@@ -181,7 +188,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            this.gameOrchestrator.display();
         }
         else {
             // Show some "loading" visuals
