@@ -8,7 +8,7 @@ class MyBoard {
     buildInitialBoard(rows, columns) {
         for (let i = 1; i <= rows; i++) {
             for (let j = 1; j <= columns; j++) {
-                this.tiles.push(new MyTile(this.scene, i, j, this, "empty"));
+                this.tiles.push(new MyTile(this.scene, j, i, this, "empty"));
             }
         }
     }
@@ -16,6 +16,8 @@ class MyBoard {
     display() {
         this.scene.pushMatrix();
         for (let i = 0; i < this.tiles.length; i++) {
+            this.scene.registerForPick(i + 1, this.tiles[i]);
+
             this.tiles[i].display();
         }
         this.scene.popMatrix();

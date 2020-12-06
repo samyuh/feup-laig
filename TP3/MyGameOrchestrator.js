@@ -6,6 +6,11 @@ class MyGameOrchestrator {
         this.board = null;
         this.auxBoard = null;
         this.pieces = null;
+
+        this.gameSequence = new MyGameSequence();
+        this.animator = new MyAnimator(this, this.gameSequence);
+        this.theme;
+        this.prolog;
     }
 
     initGraph(sceneGraph) {
@@ -13,15 +18,25 @@ class MyGameOrchestrator {
 
         this.board = sceneGraph.board;
         this.auxBoard = sceneGraph.auxBoard;
-        this.pieces = sceneGraph.pieces;
+        
+        this.pieces = new MyPiece(this.scene);
     }
 
     update(graph) {
         this.graph = graph;
     }
 
+    updateTime(time) {
+        this.animator.update(time);
+    }
+
     display() {
         this.board.display();
+
+        this.scene.registerForPick(100, this.pieces);
+        this.pieces.display();
+
+        this.scene.clearPickRegistration();
 
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
