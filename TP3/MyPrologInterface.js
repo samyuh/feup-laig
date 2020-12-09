@@ -3,20 +3,32 @@
  * @constructor
  */
 class MyPrologInterface {
-	constructor() {}
-
-    testar() {
-        let requestString = 'initial('+7+')';
-
-        this.getPrologRequest(requestString, null, null, null);
+	constructor() {
+        this.data = null;
     }
 
-    getPrologRequest(requestString, onSuccess, onError, port) {
-        var requestPort = port || 8081
+    testar() {
+        let requestString = 'initial(' + 7 +  ')';
+        this.getPrologRequest(requestString, this.setValue, null, null);
+
+        return this.data;
+
+    }
+
+    setValue(data) {
+        console.log(data.target.response);
+
+        for(let i = 0; i <  data.target.response.length; i++) {
+            console.log( data.target.response[i]);
+        }
+    }
+
+    getPrologRequest(requestString, onSuccess, onError)  {
+        var requestPort =  8081;
         var request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
 
-        request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
+        request.onload = onSuccess;
         request.onerror = onError || function(){console.log("Error waiting for response");};
 
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
@@ -34,5 +46,5 @@ class MyPrologInterface {
     //Handle the Reply
     handleReply(data){
         document.querySelector("#query_result").innerHTML=data.target.response;
-    }
+    }  
 }

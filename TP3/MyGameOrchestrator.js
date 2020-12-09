@@ -10,7 +10,12 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme;
-        this.prolog;
+        
+        this.prologInterface = new MyPrologInterface();
+        
+
+        this.prologInterface.testar();
+
     }
 
     initGraph(sceneGraph) {

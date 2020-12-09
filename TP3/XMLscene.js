@@ -10,7 +10,6 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-        this.prologInterface = new MyPrologInterface();
     }
 
     /**
@@ -44,11 +43,12 @@ class XMLscene extends CGFscene {
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
 
+        this.themes = ["game.xml", "game2.xml"];
+
         this.selectedView;
+        this.selectedTheme = "game.xml";
 
         this.setPickEnabled(true);
-
-        this.prologInterface.testar();
 
         this.teste_lastobj = -1;
         this.teste_lastid = -1;
@@ -98,6 +98,13 @@ class XMLscene extends CGFscene {
             this.audioIntroGOT.pause();
             this.audioIntroGOT.currentTime = 0;
         }
+    }
+
+    /**
+     * Method for updating themes on a change made by the user
+     */
+    updateTheme() {
+        this.graph = new MySceneGraph(this.selectedTheme, this);   
     }
 
     /**

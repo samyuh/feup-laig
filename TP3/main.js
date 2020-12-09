@@ -24,6 +24,7 @@ serialInclude(['../lib/CGF.js',
                 'MyGameSequence.js',
                 'MyPrologInterface.js',
                 'MyGameOrchestrator.js',
+                'MyServer.js',
                 './animation/MyAnimation.js',
                 './animation/MyKeyframe.js',
                 './animation/MyKeyframeAnimation.js',
@@ -64,7 +65,7 @@ main=function()
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
 	var myGraph = new MySceneGraph(filename, myScene);
-	
+    
 	// start
     app.run();
 }
