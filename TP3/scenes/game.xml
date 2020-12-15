@@ -8,20 +8,20 @@
     <views default="mainCamera">
         
         <perspective id="mainCamera" near="0.1" far="500" angle="45">
-            <from x="17" y="8" z="100" />
-            <to x="17" y="8" z="-50" />
+            <from x="17" y="17" z="17" />
+            <to x="7" y="8" z="7" />
         </perspective>
     </views>
 
     <illumination>
-        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />           <!-- global ambient -->
-        <background r="0.05" g="0.05" b="0.05" a="1.0" />        <!-- background color -->
+         <ambient r="1.0" g="1.0" b="1.0" a="1.0" />           <!-- global ambient -->
+        <background r="0.5" g="0.81" b="0.92" a="1.0" />        <!-- background color -->
     </illumination>
 
     <lights>
         <light id="demoLight">          
             <enable value="1" />
-            <position x="20" y="0" z="40" w="1.0" />
+            <position x="5" y="10" z="5" w="1.0" />
             <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
             <diffuse r="0.9" g="0.9" b="0.9" a="1.0" /> 
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
