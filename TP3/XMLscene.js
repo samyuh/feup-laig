@@ -66,8 +66,8 @@ class XMLscene extends CGFscene {
                         customId = this.pickResults[i][1];
 
                         if(this.teste_lastid == 100) {
-                            let row = customId/7;
-                            let col = customId%7;
+                            let row = Math.floor((customId - 1)/7);
+                            let col = (customId - 1) % 7;
                             this.teste_lastobj.updatePosition(col, row);
                         }
                         this.teste_lastobj = obj;

@@ -6,8 +6,8 @@ class MyBoard {
     }
 
     buildInitialBoard(rows, columns) {
-        for (let i = 1; i <= rows; i++) {
-            for (let j = 1; j <= columns; j++) {
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
                 this.tiles.push(new MyTile(this.scene, j, i, this, "empty"));
             }
         }

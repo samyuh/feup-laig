@@ -88,7 +88,6 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <leaf type="sphere" radius="10.0" slices="32" stacks="32"/>
             </descendants>
         </node>
     </nodes>

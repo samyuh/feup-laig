@@ -46,8 +46,8 @@ class MyTile {
    */
     display() {
         this.scene.pushMatrix();
-        this.scene.translate(this.row, 0, this.column);
         this.tileMaterial.apply();
+        this.scene.translate(this.row, 0, this.column);
         this.tile.display();
         this.scene.popMatrix();
     }
