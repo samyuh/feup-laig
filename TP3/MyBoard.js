@@ -21,6 +21,7 @@ class MyBoard {
 
     display() {
         this.scene.pushMatrix();
+        this.scene.translate(-3, 0, 0);
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1, this.tiles[i]);
 
