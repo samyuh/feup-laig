@@ -6,7 +6,7 @@
  * * @param {CGFscene} piece - Reference to MyPiece object, which occupies this tile
  */
 class MyTile {
-	constructor(scene, row, column, gameboard, piece) {
+	constructor(scene, row, column, gameboard, piece, tileMaterial) {
         this.scene = scene;
         this.tile = new MyCube(scene);
         this.row = row;
@@ -14,9 +14,7 @@ class MyTile {
         this.gameboard = gameboard;
         this.piece = piece;
 
-        this.tileMaterial = new CGFappearance(scene);
-        this.emptyTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
-        this.tileMaterial.setTexture(this.emptyTexture);
+        this.tileMaterial = tileMaterial;
 
     }
 

@@ -2,13 +2,19 @@ class MyBoard {
 	constructor(scene, rows, columns) {
         this.scene = scene;
         this.tiles = [];
+
+        this.tileMaterial = new CGFappearance(scene);
+        this.tilesTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
+        this.tileMaterial.setTexture(this.tilesTexture);
+
         this.buildInitialBoard(rows, columns);
+        
     }
 
     buildInitialBoard(rows, columns) {
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
-                this.tiles.push(new MyTile(this.scene, j, i, this, "empty"));
+                this.tiles.push(new MyTile(this.scene, j, i, this, "empty", this.tileMaterial));
             }
         }
     }

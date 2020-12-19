@@ -6,7 +6,6 @@
     </initials>
     
     <views default="mainCamera">
-        
         <perspective id="mainCamera" near="0.1" far="500" angle="45">
             <from x="17" y="17" z="17" />
             <to x="7" y="8" z="7" />
@@ -30,6 +29,7 @@
 
     <textures>
         <texture id="demoTexture" path="./scenes/images/demo/demoTexture.png" />
+        <texture id="boardTexture" path="./scenes/images/demo/demoTexture.png" />
     </textures>
 
     <spritesheets>
@@ -67,7 +67,10 @@
     </animations>t
 
     <boardgame>
-      <board />
+      <board>
+        <texture id="boardTexture" />
+      </board>
+      
       <auxboard />
       <piece />
     </boardgame>
