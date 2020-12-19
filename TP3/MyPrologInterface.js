@@ -5,22 +5,32 @@
 class MyPrologInterface {
 	constructor() {
         this.data = null;
+
+        this.board = null;
     }
 
     testar() {
-        let requestString = 'initial(' + 7 +  ')';
-        this.getPrologRequest(requestString, this.setValue, null, null);
+        let requestString = 'initial(' + 7 + ')';
+        this.getPrologRequest(requestString, this.setInitialBoard, null, null);
 
         return this.data;
-
     }
 
-    setValue(data) {
-        console.log(data.target.response);
+    setInitialBoard(data) {
+        let boardList = JSON.parse(data.target.response)
+        
+        console.log("PIIIIIIIIIII");
 
-        for(let i = 0; i <  data.target.response.length; i++) {
-            console.log( data.target.response[i]);
+        //this.board = new MyBoard(boardList);
+
+        this.scene.pushMatrix();
+        for (let i = 0; i < this.boardList.length; i++) {
+            this.scene.registerForPick(i + 1, this.boardList[i]);
+            this.boardList[i].display();
         }
+        this.scene.popMatrix();
+
+        console.log(boardList);
     }
 
     getPrologRequest(requestString, onSuccess, onError)  {

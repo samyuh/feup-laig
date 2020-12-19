@@ -13,9 +13,28 @@ class MyGameOrchestrator {
         
         this.prologInterface = new MyPrologInterface();
         
+        this.initialBoard();
+    }
 
-        this.prologInterface.testar();
+    initialBoard() {
+        let boardString = 'initial(' + 7 + ')';
+        this.prologInterface.getPrologRequest(boardString, this.setInitialBoard, null, null);
+    }
 
+    setInitialBoard(data) {
+        let boardList = JSON.parse(data.target.response)
+
+        console.log('BOARDLIST');
+        console.log(boardList);
+
+        /*this.scene.pushMatrix();
+        for (let i = 0; i < this.boardList.length; i++) {
+            this.scene.registerForPick(i + 1, this.boardList[i]);
+            this.boardList[i].display();
+        }
+        this.scene.popMatrix();*/
+
+        console.log(this.board);
     }
 
     initGraph(sceneGraph) {
@@ -36,7 +55,8 @@ class MyGameOrchestrator {
     }
 
     display() {
-        this.board.display();
+        //board.display();
+        
 
         this.scene.registerForPick(100, this.pieces);
         this.pieces.display();

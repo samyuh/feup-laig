@@ -104,12 +104,12 @@ print_header_line(_).
 % Require your Prolog Files here
 
 :- consult('main.pl').
+:- use_module(library('json/examples/json_codes')).
 
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
-parse_input(initial(N), M1) :- initial(N, M1).
+parse_input(initial(N), Mjson) :- initial(N, M), json_to_atom(M, Mjson, [compact(true)]).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-	

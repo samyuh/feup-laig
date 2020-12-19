@@ -1,23 +1,16 @@
 class MyBoard {
-	constructor(scene, rows, columns) {
+	constructor(scene, boardList) {
         this.scene = scene;
-        this.tiles = [];
-        this.buildInitialBoard(rows, columns);
-    }
-
-    buildInitialBoard(rows, columns) {
-        for (let i = 1; i <= rows; i++) {
-            for (let j = 1; j <= columns; j++) {
-                this.tiles.push(new MyTile(this.scene, j, i, this, "empty"));
-            }
-        }
+        this.tiles = boardList;
     }
 
     display() {
+        console.log('NO BOARD');
+        console.log(this.tiles);
+
         this.scene.pushMatrix();
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1, this.tiles[i]);
-
             this.tiles[i].display();
         }
         this.scene.popMatrix();
