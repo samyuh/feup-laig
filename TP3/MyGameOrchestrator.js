@@ -12,35 +12,27 @@ class MyGameOrchestrator {
         this.theme;
         
         this.prologInterface = new MyPrologInterface();
+        this.server = new MyServer();
         
         this.initialBoard();
     }
 
     initialBoard() {
         let boardString = 'initial(' + 7 + ')';
-        this.prologInterface.getPrologRequest(boardString, this.setInitialBoard, null, null);
-    }
+        
+        this.server.makePrologRequest(boardString, null, null, false);
 
-    setInitialBoard(data) {
-        let boardList = JSON.parse(data.target.response)
+        let board = this.server.getResult();
 
-        console.log('BOARDLIST');
-        console.log(boardList);
+        this.board = new MyBoard(this.scene, board);
 
-        /*this.scene.pushMatrix();
-        for (let i = 0; i < this.boardList.length; i++) {
-            this.scene.registerForPick(i + 1, this.boardList[i]);
-            this.boardList[i].display();
-        }
-        this.scene.popMatrix();*/
-
-        console.log(this.board);
+        console.log('boaaaaaaad', this.board)
     }
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        this.board = sceneGraph.board;
+        //this.board = sceneGraph.board;
         this.auxBoard = sceneGraph.auxBoard;
         
         this.pieces = new MyPiece(this.scene);
@@ -55,10 +47,13 @@ class MyGameOrchestrator {
     }
 
     display() {
-        //board.display();
-        
-
         this.scene.registerForPick(100, this.pieces);
+
+        console.log(this.board)
+
+        if (this.board != undefined)
+            this.board.display();
+
         this.pieces.display();
 
         this.scene.clearPickRegistration();
@@ -129,7 +124,7 @@ class MyGameOrchestrator {
 
             // ------ Process next node ------ //
             for (var i = 0; i < currentNode.descendants.length; i++) {
-                this.graph.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
+                this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
             }
         }
         this.scene.popMatrix();

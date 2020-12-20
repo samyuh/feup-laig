@@ -1011,7 +1011,7 @@ class MySceneGraph {
             console.log("erro");
         }
 
-        this.board = new MyBoard(this.scene, 7, 7);
+        //this.board = new MyBoard(this.scene, 7, 7);
         this.auxBoard = null;
         this.piece = null;
 

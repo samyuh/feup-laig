@@ -18,10 +18,10 @@ class MyTile {
         this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
         this.tileMaterial = new CGFappearance(scene);
         this.tileMaterial.setTexture(this.emptyTexture);
-        if (row == 1 && column == 3)
+        /*if (row == 1 && column == 3)
             this.set_piece("white");
         if (row == 1 && column == 4)
-            this.set_piece("black");
+            this.set_piece("black");*/
     }
 
     get_piece() {
@@ -46,6 +46,7 @@ class MyTile {
    */
     display() {
         this.scene.pushMatrix();
+        console.log("Displaying Tile ", this.row, " - ", this.column)
         this.scene.translate(this.row, 0, this.column);
         this.tileMaterial.apply();
         this.tile.display();
