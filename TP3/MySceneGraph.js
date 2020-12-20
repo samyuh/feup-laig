@@ -1014,6 +1014,9 @@ class MySceneGraph {
         //this.board = new MyBoard(this.scene, 7, 7);
         this.auxBoard = null;
         this.piece = null;
+        this.auxBoardRight = new MyAuxBoard(this.scene, 1);
+        this.auxBoardLeft = new MyAuxBoard(this.scene, -1);
+        this.piece = new MyPiece(this.scene);
 
         return null;
     }

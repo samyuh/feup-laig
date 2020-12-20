@@ -6,6 +6,14 @@ class MyPiece {
         this.y = 2;
         this.z = 0;
 
+        this.whiteMaterial = new CGFappearance(scene);
+        this.blackMaterial = new CGFappearance(scene);
+        this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
+        this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
+
+        this.whiteMaterial.setTexture(this.whiteTexture);
+        this.blackMaterial.setTexture(this.blackTexture);
+
         this.initPieces();
     }
 
@@ -20,15 +28,16 @@ class MyPiece {
     }
 
     display() {
-        
         this.scene.pushMatrix();
         this.scene.translate(this.x, this.y, this.z);
         
         //this.scene.registerForPick(100, this.pieces[0]);
+        this.whiteMaterial.apply();
         this.pieces[0].display();
-        //this.scene.translate(1, 0, 0);
+        this.scene.translate(1, 0, 0);
         //this.scene.registerForPick(101, this.pieces[1]);
-        //this.pieces[1].display();
+        this.blackMaterial.apply();
+        this.pieces[1].display();
 
         
 

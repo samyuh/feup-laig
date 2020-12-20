@@ -34,8 +34,11 @@ class MyGameOrchestrator {
 
         //this.board = sceneGraph.board;
         this.auxBoard = sceneGraph.auxBoard;
+
+        this.auxBoardRight = sceneGraph.auxBoardLeft;
+        this.auxBoardLeft = sceneGraph.auxBoardRight;
         
-        this.pieces = new MyPiece(this.scene);
+        this.pieces = sceneGraph.piece;
     }
 
     update(graph) {
@@ -47,6 +50,9 @@ class MyGameOrchestrator {
     }
 
     display() {
+        this.auxBoardRight.display();
+        this.auxBoardLeft.display();
+
         this.scene.registerForPick(100, this.pieces);
 
         console.log(this.board)

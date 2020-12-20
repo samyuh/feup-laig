@@ -6,34 +6,18 @@
  * * @param {CGFscene} piece - Reference to MyPiece object, which occupies this tile
  */
 class MyTile {
-	constructor(scene, row, column, gameboard, piece) {
+	constructor(scene, row, column, gameboard, piece, tileMaterial) {
         this.scene = scene;
         this.tile = new MyCube(scene);
         this.row = row;
         this.column = column;
         this.gameboard = gameboard;
         this.piece = piece;
-        this.emptyTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
-        this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
-        this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
-        this.tileMaterial = new CGFappearance(scene);
-        this.tileMaterial.setTexture(this.emptyTexture);
-        /*if (row == 1 && column == 3)
-            this.set_piece("white");
-        if (row == 1 && column == 4)
-            this.set_piece("black");*/
+        this.tileMaterial = tileMaterial;
     }
 
     get_piece() {
         return this.piece;
-    }
-
-    set_piece(piece) {
-        this.piece = piece;
-        if (piece == "white")
-            this.tileMaterial.setTexture(this.whiteTexture);
-        if (piece == "black")
-            this.tileMaterial.setTexture(this.blackTexture);
     }
 
     unset_piece() {
