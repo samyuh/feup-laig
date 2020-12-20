@@ -49,43 +49,7 @@ class XMLscene extends CGFscene {
         this.selectedTheme = "game.xml";
 
         this.setPickEnabled(true);
-
-        this.teste_lastobj = -1;
-        this.teste_lastid = -1;
     }
-
-    logPicking() {
-		if (this.pickMode == false) {
-            var obj;
-            var customId;
-			if (this.pickResults != null && this.pickResults.length > 0) {
-
-				for (var i = 0; i < this.pickResults.length; i++) {
-					obj = this.pickResults[i][0];
-					if (obj) {
-                        customId = this.pickResults[i][1];
-
-                        if(this.teste_lastid == 100) {
-                            let row = Math.floor((customId - 1)/7);
-                            let col = (customId - 1) % 7;
-                            this.teste_lastobj.updatePosition(col, row);
-                        }
-                        this.teste_lastobj = obj;
-                        this.teste_lastid = customId;
-
-                        console.log("Picked object: " + obj + ", with pick id " + customId);
-					}
-                }
-
-                
-
-                
-                this.pickResults.splice(0, this.pickResults.length);
-            }
-            
-            
-		}
-	}
 
     /**
      * Method for activate and deactivate music through interface
@@ -208,7 +172,6 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
-        this.logPicking();
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene

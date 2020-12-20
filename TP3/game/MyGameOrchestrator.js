@@ -6,15 +6,19 @@ class MyGameOrchestrator {
         this.board = null;
         this.auxBoard = null;
         this.pieces = null;
+        this.adjacent = null;
 
         this.gameSequence = new MyGameSequence();
-        this.animator = new MyAnimator(this, this.gameSequence);
         this.theme;
         
         this.prologInterface = new MyPrologInterface();
         this.server = new MyServer();
         
+        this.prevPicked = null;
+
         this.initialBoard();
+
+        this.selectedTexture = new CGFtexture(scene, "scenes/images/white.jpg");   // MUDAR FUTURAMENTE
     }
 
     initialBoard() {
@@ -25,8 +29,6 @@ class MyGameOrchestrator {
         let board = this.server.getResult();
 
         this.board = new MyBoard(this.scene, board);
-
-        console.log('boaaaaaaad', this.board)
     }
 
     initGraph(sceneGraph) {
@@ -49,20 +51,90 @@ class MyGameOrchestrator {
         this.animator.update(time);
     }
 
+    adjacent_cells(id) {
+        let row = ((id - 1) % this.board.boardLength) + 1;
+        let column = Math.floor((id - 1) / this.board.boardLength) + 1;
+        
+        let prev_row = row - 1;
+        let prev_column = column - 1;
+        let next_row = row + 1;
+        let next_column = column + 1;
+
+        this.adjacent = [this.board.getTile(row, prev_column), this.board.getTile(row, next_column), this.board.getTile(prev_row, column), this.board.getTile(next_row, column)];
+
+        //adjacent_cells.filter(function(val) { return val !== null; });
+
+        for (var i = 0; i < this.adjacent.length; i++) {
+            if(this.adjacent[i] != null) {
+                this.adjacent[i].validMove(true);
+            }
+        }
+
+    }
+
+    clean_adjacent() {
+        if(this.adjacent != null) {
+            for (var i = 0; i < this.adjacent.length; i++) {
+                if(this.adjacent[i] != null) {
+                    this.adjacent[i].validMove(false);
+                }
+            }
+        }
+    }
+
+    putPiece(prev, actual) {
+        let rowP = ((prev - 1) % this.board.boardLength) + 1;
+        let columnP = Math.floor((prev - 1) / this.board.boardLength) + 1;
+
+        let rowA = ((actual - 1) % this.board.boardLength) + 1;
+        let columnA = Math.floor((actual - 1) / this.board.boardLength) + 1;
+
+        this.pieces.updatePosition(rowP, columnP, rowA, columnA);
+    }
+
+
+    choosePosition() {
+		if (this.scene.pickMode == false) {
+            let tile;
+            let customId;
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+
+				for (let i = 0; i < this.scene.pickResults.length; i++) {
+					tile = this.scene.pickResults[i][0];
+					if (tile) {
+                        customId = this.scene.pickResults[i][1];
+
+                        if (tile.isDiff) {
+                            this.putPiece(this.prevPicked, customId);
+                            this.clean_adjacent();
+                        }
+                        else {
+                            this.clean_adjacent();
+                            this.adjacent_cells(customId);
+                            
+                            this.prevPicked = customId;
+                        }
+
+                        console.log("Picked object: " + tile + ", with pick id " + customId + " Previous " + this.prevPicked);
+                        console.log("------");
+                    }
+                }
+                
+                this.scene.pickResults.splice(0, this.scene.pickResults.length);
+            }
+		}
+    }
+    
     display() {
+        this.choosePosition();
+
         this.auxBoardRight.display();
         this.auxBoardLeft.display();
-
-        this.scene.registerForPick(100, this.pieces);
-
-        console.log(this.board)
-
+        
         if (this.board != undefined)
             this.board.display();
 
         this.pieces.display();
-
-        this.scene.clearPickRegistration();
 
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
