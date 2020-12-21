@@ -117,14 +117,15 @@ class MyGameOrchestrator {
                             if (valid_result == "valid") {
                                 let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
                                 this.server.makePrologRequest(moveString, null, null, false);
-                                var nP = new MyPiece(this.scene);
-                                nP.updatePosition(this.pieces.x, this.pieces.z, this.pieces.xb, this.pieces.zb);
-                                this.piecesList.push(nP);
 
                                 let new_board = this.server.getResult();
 
                                 this.board.boardList = new_board;
                                 this.putPiece(this.prevPicked, customId);
+
+                                let nP = new MyPiece(this.scene);
+                                nP.updatePosition(this.pieces.x, this.pieces.z, this.pieces.xb, this.pieces.zb);
+                                this.piecesList.push(nP);
 
                                 let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
 
