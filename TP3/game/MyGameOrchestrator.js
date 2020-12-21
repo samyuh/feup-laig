@@ -7,6 +7,7 @@ class MyGameOrchestrator {
         this.auxBoard = null;
         this.pieces = null;
         this.adjacent = null;
+        this.piecesList = [];
 
         this.gameSequence = new MyGameSequence();
         this.theme;
@@ -116,6 +117,10 @@ class MyGameOrchestrator {
                             if (valid_result == "valid") {
                                 let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
                                 this.server.makePrologRequest(moveString, null, null, false);
+                                var nP = new MyPiece(this.scene);
+                                nP.updatePosition(this.pieces.x, this.pieces.z, this.pieces.xb, this.pieces.zb);
+                                this.piecesList.push(nP);
+
                                 let new_board = this.server.getResult();
 
                                 this.board.boardList = new_board;
@@ -161,6 +166,10 @@ class MyGameOrchestrator {
             this.board.display();
 
         this.pieces.display();
+
+        for(var i = 0; i < this.piecesList.length; i++) {
+            this.piecesList[i].display();
+        }
 
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }

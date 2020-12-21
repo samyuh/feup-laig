@@ -5,7 +5,9 @@ class MyPiece {
         this.x = 0;
         this.y = 1;
         this.z = 0;
-
+        this.xb = null;
+        this.zb = null;
+        
         this.turn = 'white';
         this.whiteMaterial = new CGFappearance(scene);
         this.blackMaterial = new CGFappearance(scene);
