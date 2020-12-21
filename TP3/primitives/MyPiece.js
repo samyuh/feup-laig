@@ -6,6 +6,7 @@ class MyPiece {
         this.y = 1;
         this.z = 0;
 
+        this.turn = 'white';
         this.whiteMaterial = new CGFappearance(scene);
         this.blackMaterial = new CGFappearance(scene);
         this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
@@ -30,20 +31,44 @@ class MyPiece {
         this.zb = zb;
     }
 
+    changeTurn() {
+        if(this.turn == 'white') {
+            this.turn = 'black';
+        }
+        else {
+            this.turn = 'white';
+        }
+    }
+
     display() {
         this.scene.pushMatrix();
 
-        this.scene.pushMatrix();
-        this.scene.translate(this.x-3, this.y, this.z);
-        this.whiteMaterial.apply();
-        this.pieces[0].display();
-        this.scene.popMatrix();
+        if(this.turn == 'black') {
+            this.scene.pushMatrix();
+            this.scene.translate(this.x-3, this.y, this.z);
+            this.whiteMaterial.apply();
+            this.pieces[0].display();
+            this.scene.popMatrix();
 
-        this.scene.pushMatrix();
-        this.scene.translate(this.xb-3, this.y, this.zb);
-        this.blackMaterial.apply();
-        this.pieces[1].display();
-        this.scene.popMatrix();
+            this.scene.pushMatrix();
+            this.scene.translate(this.xb-3, this.y, this.zb);
+            this.blackMaterial.apply();
+            this.pieces[1].display();
+            this.scene.popMatrix();
+        }
+        else {
+            this.scene.pushMatrix();
+            this.scene.translate(this.x-3, this.y, this.z);
+            this.blackMaterial.apply();
+            this.pieces[0].display();
+            this.scene.popMatrix();
+
+            this.scene.pushMatrix();
+            this.scene.translate(this.xb-3, this.y, this.zb);
+            this.whiteMaterial.apply();
+            this.pieces[1].display();
+            this.scene.popMatrix();
+        }
         
         this.scene.popMatrix();
     }

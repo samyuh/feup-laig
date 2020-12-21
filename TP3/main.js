@@ -18,8 +18,6 @@ serialInclude(['../lib/CGF.js',
                 'MyInterface.js', 
                 'MyLeaf.js', 
                 'MyNode.js',
-                
-                'MyAnimator.js',
                 './game/MyGameSequence.js',
                 'MyPrologInterface.js',
                 'MyServer.js',

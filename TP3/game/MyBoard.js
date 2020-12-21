@@ -16,6 +16,34 @@ class MyBoard {
         this.createTiles();
     }
 
+    convertId(id) {
+        let row = Math.floor(id / this.boardLength) + (((id % this.boardLength) == 0) ? 0 : 1);
+        let column = (((id % this.boardLength) == 0) ? 7 : id % this.boardLength)
+
+        return [row, column];
+    }
+
+    getOrientation(idA, idB) {
+        let init = this.convertId(idA);
+        console.log("INIT: ")
+        console.log(init)
+        let end = this.convertId(idB);
+        console.log("END: ")
+        console.log(end)
+        if(init[0] == end[0]) {
+            if(init[1] < end[1]) {
+                return "right";
+            }
+            else return "left";
+        }
+        else {
+            if(init[0] > end[0]) {
+                return "up";
+            }
+            else return "down";
+        }
+    }
+
     createTiles() {
         for (let i = 1; i <= this.boardLength; i++) {
             for (let j = 1; j <= this.boardLength; j++) {

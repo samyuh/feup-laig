@@ -17,8 +17,6 @@ class MyGameOrchestrator {
         this.prevPicked = null;
 
         this.initialBoard();
-
-        this.selectedTexture = new CGFtexture(scene, "scenes/images/white.jpg");   // MUDAR FUTURAMENTE
     }
 
     initialBoard() {
@@ -90,6 +88,7 @@ class MyGameOrchestrator {
         let columnA = Math.floor((actual - 1) / this.board.boardLength) + 1;
 
         this.pieces.updatePosition(rowP, columnP, rowA, columnA);
+        this.pieces.changeTurn();
     }
 
 
@@ -105,6 +104,25 @@ class MyGameOrchestrator {
                         customId = this.scene.pickResults[i][1];
 
                         if (tile.isDiff) {
+                            let move = this.board.convertId(this.prevPicked);  // [Row, Column]
+                            let orientation = this.board.getOrientation(this.prevPicked, customId);
+
+                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
+
+                            let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
+                            this.server.makePrologRequest(validString, null, null, false);
+                            let valid_result = this.server.getResult();
+
+                            if (valid_result != "valid")
+                                return;
+
+                            let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
+                            this.server.makePrologRequest(moveString, null, null, false);
+
+                            let new_board = this.server.getResult();
+
+                            console.log(new_board);
+
                             this.putPiece(this.prevPicked, customId);
                             this.clean_adjacent();
                         }

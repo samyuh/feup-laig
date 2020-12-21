@@ -110,6 +110,8 @@ parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 parse_input(initial(N), Mjson) :- initial(N, M), json_to_atom(M, Mjson, [compact(true)]).
+parse_input(valid_move(L-C-O, CurrentBoard), Vjson) :- valid_move(L-C-O, CurrentBoard), json_to_atom(valid, Vjson, [compact(true)]).
+parse_input(movePlayer(GameState, L-C-O-Color), Mjson) :- write('CurrentBoard: '), write(GameState), nl, write(L-C-O-Color), nl, move(GameState, L-C-O-Color, NewGameState), json_to_atom(NewGameState, Mjson, [compact(true)]).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
