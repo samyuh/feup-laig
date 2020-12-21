@@ -113,17 +113,25 @@ class MyGameOrchestrator {
                             this.server.makePrologRequest(validString, null, null, false);
                             let valid_result = this.server.getResult();
 
-                            if (valid_result != "valid")
-                                return;
+                            if (valid_result == "valid") {
+                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
+                                this.server.makePrologRequest(moveString, null, null, false);
+                                let new_board = this.server.getResult();
 
-                            let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
-                            this.server.makePrologRequest(moveString, null, null, false);
+                                this.board.boardList = new_board;
+                                this.putPiece(this.prevPicked, customId);
 
-                            let new_board = this.server.getResult();
+                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
 
-                            console.log(new_board);
+                                let gameOverString = 'game_over(' + stringNewBoard + ')';
+                                this.server.makePrologRequest(gameOverString, null, null, false);
+                                let gameOverData = this.server.getResult();
 
-                            this.putPiece(this.prevPicked, customId);
+                                if (gameOverData.length != 0) {
+                                    console.log("Game Ended!")
+                                }
+                            }
+
                             this.clean_adjacent();
                         }
                         else {
