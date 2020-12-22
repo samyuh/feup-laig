@@ -88,6 +88,18 @@ class MyInterface extends CGFinterface {
         );
     }
 
+    /**
+     * Init Game Interface
+     */
+    initGameInterface() {
+        this.gameInterface = this.gui.addFolder('Game');
+
+        this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'undo').name('Undo');
+
+        this.gameInterface.open();
+    }
+
     processKeyDown(event) {
         this.activeKeys[event.code]=true;
     };

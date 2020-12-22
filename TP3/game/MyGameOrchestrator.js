@@ -3,7 +3,7 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
-        this.board = null;
+        this.board = new MyBoard(this.scene, []);
         this.auxBoard = null;
         this.currentPiece = null;
         this.adjacent = null;
@@ -12,11 +12,15 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.theme;
         
-        this.prologInterface = new MyPrologInterface();
         this.server = new MyServer();
         
         this.prevPicked = null;
         this.lavaAnim = new MyWaveAnimation(this.scene);
+
+        this.gameEnded = false;
+
+        this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
+        this.blackTurn = new MySpriteText(this.scene, "Turn: black");
 
         this.initialBoard();
     }
@@ -24,23 +28,53 @@ class MyGameOrchestrator {
     initialBoard() {
         let boardString = 'initial(' + 7 + ')';
         
-        this.server.makePrologRequest(boardString, null, null, false);
+        try {
+            this.server.makePrologRequest(boardString, null, null, false);
+        }
+        catch(err) {
+            console.log('Prolog server not initialized!');
+        }
 
         let board = this.server.getResult();
 
-        this.board = new MyBoard(this.scene, board);
+        this.board.boardList = board;
+        this.board.boardLength = board.length;
+        this.board.createTiles();
+    }
+
+    reset() {
+        this.initialBoard();
+        this.piecesList = [];
+        this.currentPiece.turn = "white";
+    }
+
+    undo() {
+        if (this.piecesList.length == 0)
+            return;
+
+        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let piece = this.piecesList.pop();
+
+        let undoString = 'undo(' + stringBoard + ',' + piece.z + '-' + piece.x + '-' + piece.zb + '-' + piece.xb + ')';
+        console.log('PEDIDO: ');
+        console.log(undoString);
+        this.server.makePrologRequest(undoString, null, null, false);
+
+        let new_board = this.server.getResult();
+        this.board.boardList = new_board;
     }
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        //this.board = sceneGraph.board;
         this.auxBoard = sceneGraph.auxBoard;
 
         this.auxBoardRight = sceneGraph.auxBoardLeft;
         this.auxBoardLeft = sceneGraph.auxBoardRight;
         
         this.currentPiece = sceneGraph.piece;
+        this.currentPiece.turn = 'white';
     }
 
     update(graph) {
@@ -65,8 +99,6 @@ class MyGameOrchestrator {
         let next_column = column + 1;
 
         this.adjacent = [this.board.getTile(row, prev_column), this.board.getTile(row, next_column), this.board.getTile(prev_row, column), this.board.getTile(next_row, column)];
-
-        //adjacent_cells.filter(function(val) { return val !== null; });
 
         for (var i = 0; i < this.adjacent.length; i++) {
             if(this.adjacent[i] != null) {
@@ -97,13 +129,17 @@ class MyGameOrchestrator {
         this.currentPiece.changeTurn();
     }
 
+    createGameStats(gameOverData) {
+        this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
+        this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
+        this.gameEnded = true;
+    }
 
     choosePosition() {
 		if (this.scene.pickMode == false) {
             let tile;
             let customId;
 			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-
 				for (let i = 0; i < this.scene.pickResults.length; i++) {
 					tile = this.scene.pickResults[i][0];
 					if (tile) {
@@ -113,7 +149,7 @@ class MyGameOrchestrator {
                             let move = this.board.convertId(this.prevPicked);  // [Row, Column]
                             let orientation = this.board.getOrientation(this.prevPicked, customId);
 
-                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
+                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
                             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
                             this.server.makePrologRequest(validString, null, null, false);
@@ -133,14 +169,15 @@ class MyGameOrchestrator {
                                 nP.turn = this.currentPiece.turn;
                                 this.piecesList.push(nP);
 
-                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
+                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
                                 let gameOverString = 'game_over(' + stringNewBoard + ')';
                                 this.server.makePrologRequest(gameOverString, null, null, false);
                                 let gameOverData = this.server.getResult();
 
                                 if (gameOverData.length != 0) {
-                                    console.log("Game Ended!")
+                                    console.log("Game Ended!");
+                                    this.createGameStats(gameOverData);
                                 }
                             }
 
@@ -156,6 +193,9 @@ class MyGameOrchestrator {
                         console.log("Picked object: " + tile + ", with pick id " + customId + " Previous " + this.prevPicked);
                         console.log("------");
                     }
+                    else {
+                        this.clean_adjacent();
+                    }
                 }
                 
                 this.scene.pickResults.splice(0, this.scene.pickResults.length);
@@ -163,6 +203,28 @@ class MyGameOrchestrator {
 		}
     }
     
+    displayGameStats() {
+        this.scene.pushMatrix();
+        this.scene.translate(1, 6, 0);
+        this.gameWinner.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(1, 5, 0);
+        this.gameScore.display();
+        this.scene.popMatrix();
+    }
+
+    displayTurn() {
+        this.scene.pushMatrix();
+        this.scene.translate(1, 6, 0);
+        if (this.currentPiece.turn == "white")
+            this.whiteTurn.display();
+        else
+            this.blackTurn.display();
+        this.scene.popMatrix();
+    }
+
     display() {
         // Picking
         this.choosePosition();
@@ -173,6 +235,13 @@ class MyGameOrchestrator {
 
         this.auxBoardRight.display();
         this.auxBoardLeft.display();
+
+        if (this.gameEnded) {
+            this.displayGameStats();
+        }
+        else {
+            this.displayTurn();
+        }
         // -- Board -- //
 
         // -- Piece Display -- //

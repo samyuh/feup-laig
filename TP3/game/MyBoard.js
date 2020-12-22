@@ -4,7 +4,7 @@ class MyBoard {
         
         this.boardList = boardList;
         this.boardLength = boardList.length;
-        this.tiles = [];
+        this.tiles;
 
         this.tileMaterial = new CGFappearance(scene);
         this.tilesTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
@@ -13,7 +13,6 @@ class MyBoard {
         this.diff = new CGFappearance(scene);
         this.diffT = new CGFtexture(scene, "scenes/images/daenerys/cloth.jpg");
         this.diff.setTexture(this.diffT);
-        this.createTiles();
     }
 
     convertId(id) {
@@ -42,6 +41,7 @@ class MyBoard {
     }
 
     createTiles() {
+        this.tiles = [];
         for (let i = 1; i <= this.boardLength; i++) {
             for (let j = 1; j <= this.boardLength; j++) {
                 this.tiles.push(new MyTile(this.scene, j, i, this, this.boardList[i], this.tileMaterial, this.diff));
@@ -61,6 +61,7 @@ class MyBoard {
     display() {
         this.scene.pushMatrix();
         this.scene.translate(-3, 0, 0);
+
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1, this.tiles[i]);
             this.tiles[i].display();
