@@ -76,6 +76,7 @@ class MySceneGraph {
         this.scene.interface.initInterfaceLights();
         this.scene.interface.initMiscellaneous();
         this.scene.interface.initInterfaceThemes();
+        this.scene.interface.initGameInterface();
     }
 
     /*

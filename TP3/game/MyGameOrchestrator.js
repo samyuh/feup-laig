@@ -3,7 +3,7 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
-        this.board = null;
+        this.board = new MyBoard(this.scene, []);
         this.auxBoard = null;
         this.currentPiece = null;
         this.adjacent = null;
@@ -36,13 +36,20 @@ class MyGameOrchestrator {
 
         let board = this.server.getResult();
 
-        this.board = new MyBoard(this.scene, board);
+        this.board.boardList = board;
+        this.board.boardLength = board.length;
+        this.board.createTiles();
+    }
+
+    reset() {
+        this.initialBoard();
+        this.piecesList = [];
+        this.currentPiece.turn = "white";
     }
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        //this.board = sceneGraph.board;
         this.auxBoard = sceneGraph.auxBoard;
 
         this.auxBoardRight = sceneGraph.auxBoardLeft;
@@ -70,8 +77,6 @@ class MyGameOrchestrator {
         let next_column = column + 1;
 
         this.adjacent = [this.board.getTile(row, prev_column), this.board.getTile(row, next_column), this.board.getTile(prev_row, column), this.board.getTile(next_row, column)];
-
-        //adjacent_cells.filter(function(val) { return val !== null; });
 
         for (var i = 0; i < this.adjacent.length; i++) {
             if(this.adjacent[i] != null) {
@@ -204,8 +209,9 @@ class MyGameOrchestrator {
         this.auxBoardRight.display();
         this.auxBoardLeft.display();
         
-        if (this.board != undefined)
+        if (this.board != undefined) {
             this.board.display();
+        }
         
         if (this.gameEnded) {
             this.displayGameStats();
