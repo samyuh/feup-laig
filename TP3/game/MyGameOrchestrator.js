@@ -17,13 +17,20 @@ class MyGameOrchestrator {
         
         this.prevPicked = null;
 
+        this.gameEnded = false;
+
         this.initialBoard();
     }
 
     initialBoard() {
         let boardString = 'initial(' + 7 + ')';
         
-        this.server.makePrologRequest(boardString, null, null, false);
+        try {
+            this.server.makePrologRequest(boardString, null, null, false);
+        }
+        catch(err) {
+            console.log('Prolog server not initialized!');
+        }
 
         let board = this.server.getResult();
 
@@ -92,6 +99,11 @@ class MyGameOrchestrator {
         this.currentPiece.changeTurn();
     }
 
+    createGameStats(gameOverData) {
+        this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
+        this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
+        this.gameEnded = true;
+    }
 
     choosePosition() {
 		if (this.scene.pickMode == false) {
@@ -128,14 +140,15 @@ class MyGameOrchestrator {
                                 nP.turn = this.currentPiece.turn;
                                 this.piecesList.push(nP);
 
-                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
+                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
                                 let gameOverString = 'game_over(' + stringNewBoard + ')';
                                 this.server.makePrologRequest(gameOverString, null, null, false);
                                 let gameOverData = this.server.getResult();
 
                                 if (gameOverData.length != 0) {
-                                    console.log("Game Ended!")
+                                    console.log("Game Ended!");
+                                    this.createGameStats(gameOverData);
                                 }
                             }
 
@@ -158,6 +171,18 @@ class MyGameOrchestrator {
 		}
     }
     
+    displayGameStats() {
+        this.scene.pushMatrix();
+        this.scene.translate(3, 6, 0);
+        this.gameWinner.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(3, 5, 0);
+        this.gameScore.display();
+        this.scene.popMatrix();
+    }
+
     display() {
         this.choosePosition();
 
@@ -166,6 +191,10 @@ class MyGameOrchestrator {
         
         if (this.board != undefined)
             this.board.display();
+        
+        if (this.gameEnded) {
+            this.displayGameStats();
+        }
 
         this.currentPiece.display();
 
