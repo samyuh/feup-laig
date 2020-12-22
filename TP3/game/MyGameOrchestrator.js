@@ -6,18 +6,21 @@ class MyGameOrchestrator {
         this.currentPiece = null;
         this.adjacent = null;
         this.piecesList = [];
+        
+        this.theme = [
+            new MySceneGraph(), 
+            new MySceneGraph(),
+        ];
 
-        this.gameSequence = new MyGameSequence();
-        this.theme;
-        
-        this.server = new MyServer();
-        
-        this.prevPicked = null;
         this.lavaAnim = new MyWaveAnimation(this.scene);
+
+        this.prevPicked = null; 
 
         this.gameEnded = false;
 
-        
+        this.gameSequence = new MyGameSequence();
+
+        this.server = new MyServer();
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
         this.blackTurn = new MySpriteText(this.scene, "Turn: black");
 
@@ -25,6 +28,7 @@ class MyGameOrchestrator {
         this.initialBoard();
     }
 
+    /* Init Function */
     initialBoard() {
         let boardString = 'initial(' + 7 + ')';
         
@@ -40,6 +44,23 @@ class MyGameOrchestrator {
         this.boardSet.board.createTiles();
     }
 
+    initGraph(sceneGraph) {
+        this.graph = sceneGraph;
+
+        this.boardSet.auxBoardRight = sceneGraph.auxBoardLeft;
+        this.boardSet.auxBoardLeft = sceneGraph.auxBoardRight;
+        
+        this.currentPiece = sceneGraph.piece;
+        this.currentPiece.turn = 'white';
+
+        this.initializedScene = true;
+    }
+
+    update(graph) {
+        this.graph = graph;
+    }
+
+    /* Interface */
     reset() {
         this.initialBoard();
         this.piecesList = [];
@@ -63,30 +84,14 @@ class MyGameOrchestrator {
         this.boardSet.board.boardList = new_board;
     }
 
-    initGraph(sceneGraph) {
-        this.graph = sceneGraph;
-
-        this.boardSet.auxBoardRight = sceneGraph.auxBoardLeft;
-        this.boardSet.auxBoardLeft = sceneGraph.auxBoardRight;
-        
-        this.currentPiece = sceneGraph.piece;
-        this.currentPiece.turn = 'white';
-
-        this.initializedScene = true;
-    }
-
-    update(graph) {
-        this.graph = graph;
-    }
-
+    /* Update */
     updateTime(time) {
         //this.animator.update(time);
-
-        //console.log("time");
 
         this.lavaAnim.update(time);
     }
 
+    /* Picking */
     adjacent_cells(id) {
         let row = ((id - 1) % this.boardSet.board.boardLength) + 1;
         let column = Math.floor((id - 1) / this.boardSet.board.boardLength) + 1;
@@ -96,7 +101,12 @@ class MyGameOrchestrator {
         let next_row = row + 1;
         let next_column = column + 1;
 
-        this.adjacent = [this.boardSet.board.getTile(row, prev_column), this.boardSet.board.getTile(row, next_column), this.boardSet.board.getTile(prev_row, column), this.boardSet.board.getTile(next_row, column)];
+        this.adjacent = [
+            this.boardSet.board.getTile(row, prev_column), 
+            this.boardSet.board.getTile(row, next_column), 
+            this.boardSet.board.getTile(prev_row, column), 
+            this.boardSet.board.getTile(next_row, column)
+        ];
 
         for (var i = 0; i < this.adjacent.length; i++) {
             if(this.adjacent[i] != null) {
@@ -125,12 +135,6 @@ class MyGameOrchestrator {
 
         this.currentPiece.updatePosition(rowP, columnP, rowA, columnA);
         this.currentPiece.changeTurn();
-    }
-
-    createGameStats(gameOverData) {
-        this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
-        this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
-        this.gameEnded = true;
     }
 
     choosePosition() {
@@ -200,7 +204,9 @@ class MyGameOrchestrator {
             }
 		}
     }
-    
+    // ------ Picking ------ //
+
+    // ---- Game Stats ----- //
     displayGameStats() {
         this.scene.pushMatrix();
         this.scene.translate(1, 6, 0);
@@ -211,6 +217,12 @@ class MyGameOrchestrator {
         this.scene.translate(1, 5, 0);
         this.gameScore.display();
         this.scene.popMatrix();
+    }
+
+    createGameStats(gameOverData) {
+        this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
+        this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
+        this.gameEnded = true;
     }
 
     displayTurn() {
