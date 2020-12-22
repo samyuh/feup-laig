@@ -103,10 +103,19 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
+:- consult('main.pl').
+:- use_module(library('json/examples/json_codes')).
+
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
+parse_input(initial(N), Mjson) :- initial(N, M), json_to_atom(M, Mjson, [compact(true)]).
+parse_input(valid_move(L-C-O, CurrentBoard), Vjson) :- valid_move(L-C-O, CurrentBoard), json_to_atom(valid, Vjson, [compact(true)]).
+parse_input(valid_move(_, _), Vjson) :- json_to_atom(invalid, Vjson, [compact(true)]).
+parse_input(movePlayer(GameState, L-C-O-Color), Mjson) :- write('CurrentBoard: '), write(GameState), nl, write(L-C-O-Color), nl, move(GameState, L-C-O-Color, NewGameState), json_to_atom(NewGameState, Mjson, [compact(true)]).
+
+parse_input(game_over(GameBoard), Json) :- game_over(GameBoard, Winner-Number), json_to_atom([Winner, Number], Json, [compact(true)]).
+parse_input(game_over(_), Json) :- json_to_atom([], Json, [compact(true)]).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-	

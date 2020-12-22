@@ -41,7 +41,14 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
+        this.gameOrchestrator = new MyGameOrchestrator(this);
+
+        this.themes = ["game.xml", "game2.xml"];
+
         this.selectedView;
+        this.selectedTheme = "game.xml";
+
+        this.setPickEnabled(true);
     }
 
     /**
@@ -55,6 +62,13 @@ class XMLscene extends CGFscene {
             this.audioIntroGOT.pause();
             this.audioIntroGOT.currentTime = 0;
         }
+    }
+
+    /**
+     * Method for updating themes on a change made by the user
+     */
+    updateTheme() {
+        this.graph = new MySceneGraph(this.selectedTheme, this);   
     }
 
     /**
@@ -126,6 +140,9 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
 
         this.sceneInited = true;
+
+        this.gameOrchestrator.initGraph(this.graph);
+
     }
 
     /**
@@ -147,6 +164,8 @@ class XMLscene extends CGFscene {
 
         for (let k in this.graph.spritesAnim)
             this.graph.spritesAnim[k].update(elapsedTime / 1000);
+
+        this.gameOrchestrator.update(this.graph);
     }
 
     /**
@@ -181,7 +200,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            this.gameOrchestrator.display();
         }
         else {
             // Show some "loading" visuals

@@ -9,7 +9,8 @@ var TEXTURES_INDEX = 4;
 var SPRITE_SHEET_INDEX = 5;
 var MATERIALS_INDEX = 6;
 var ANIMATIONS_INDEX = 7;
-var NODES_INDEX = 8;
+var BOARDGAME_INDEX = 8;
+var NODES_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -45,6 +46,9 @@ class MySceneGraph {
          * After the file is read, the reader calls onXMLReady on this object.
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
+
+        this.filename = 
+
         this.reader.open('scenes/' + filename, this);
     }
 
@@ -71,6 +75,7 @@ class MySceneGraph {
         this.scene.interface.initInterfaceCameras();
         this.scene.interface.initInterfaceLights();
         this.scene.interface.initMiscellaneous();
+        this.scene.interface.initInterfaceThemes();
     }
 
     /*
@@ -215,6 +220,18 @@ class MySceneGraph {
 
             //Parse animations block
             if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
+        // <boardgame>
+        if ((index = nodeNames.indexOf("boardgame")) == -1)
+            this.onXMLMinorError("tag <boardgame> missing");
+        else {
+            if (index != BOARDGAME_INDEX)
+                this.onXMLMinorError("tag <boardgame> out of order");
+
+            //Parse boardgame block
+            if ((error = this.parseBoardGame(nodes[index])) != null)
                 return error;
         }
 
@@ -969,6 +986,37 @@ class MySceneGraph {
         }
 
         this.log("Parsed animations");
+
+        return null;
+    }
+
+    /**
+     * Parses the <boardgame> block. 
+     * @param {boardgame block element} boardGameNode
+     */
+    parseBoardGame(boardGameNode) {
+        var children = boardGameNode.children;
+
+        let board = children[0]; 
+        let auxBoard = children[1]; 
+        let piece = children[2]; 
+        
+        if(board.nodeName != "board") {
+            console.log("erro");
+        }
+        if(auxBoard.nodeName != "auxboard") {
+            console.log("erro");
+        }
+        if(piece.nodeName != "piece") {
+            console.log("erro");
+        }
+
+        //this.board = new MyBoard(this.scene, 7, 7);
+        this.auxBoard = null;
+        this.piece = null;
+        this.auxBoardRight = new MyAuxBoard(this.scene, 1);
+        this.auxBoardLeft = new MyAuxBoard(this.scene, -1);
+        this.piece = new MyPiece(this.scene);
 
         return null;
     }
@@ -1842,91 +1890,5 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
-    }
-
-    // -------- Display Scene -----------//
-
-    /**
-     * Displays the scene, processing each node, starting in the root node.
-     */
-    displayScene() {
-        // Display loop for transversing the scene graph, calling the root node's display function
-
-        this.processNode(this.idRoot, this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
-    }
-
-    /**
-     * Process each node
-     * @param {nodeID} parentNode
-     * @param {materialID} parentMaterial
-     * @param {textureID} parentTexture
-     */
-    processNode(parentNode, parentMaterial, parentTexture) {
-        let currentNode = this.nodes[parentNode];
-
-        // ------- Material ------ //
-        let currentMaterial;
-
-        switch (currentNode.material) {
-            // -- If node material is null, then it will inherit parent's material
-            case "null":
-                currentMaterial = parentMaterial;
-                break;
-            // -- Otherwise, it will have the material ID
-            default:
-                currentMaterial = this.materials[currentNode.material];
-                break;
-        }
-
-        // -------- Texture ------ //
-        let currentTexture;
-
-        switch (currentNode.texture) {
-            // -- If node texture is clear, then it will don't have texture
-            case "clear":
-                currentTexture = "null";
-                break;
-            // -- If node texture is null, then it will inherit parent's texture
-            case "null":
-                currentTexture = parentTexture;
-                break;
-            // -- Otherwise, it will have the texture ID
-            default:
-                currentTexture = currentNode.texture;
-                break;
-        }
-
-        // Bind texture   
-        if (currentTexture == "null") {
-            currentMaterial.setTexture(null);
-        } else {
-            currentMaterial.setTexture(this.textures[currentTexture]);
-            currentMaterial.setTextureWrap('REPEAT', 'REPEAT');
-        }
-
-        currentMaterial.apply();
-
-        // ------ Transformation ------ //
-        this.scene.pushMatrix();
-        this.scene.multMatrix(currentNode.transformation);
-
-        let display;
-        if(currentNode.animationID != null) {
-            display = this.keyframesAnimation[currentNode.animationID].apply();
-        }
-
-        if (display != 0) {
-            // ------ Display Leaves ------ //
-            for (let i = 0; i < this.nodes[parentNode].leaves.length; i++) {
-                currentNode.leaves[i].display();
-                currentMaterial.apply();
-            }
-
-            // ------ Process next node ------ //
-            for (var i = 0; i < currentNode.descendants.length; i++) {
-                this.processNode(currentNode.descendants[i], currentMaterial, currentTexture);
-            }
-        }
-        this.scene.popMatrix();
     }
 }

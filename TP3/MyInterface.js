@@ -74,6 +74,20 @@ class MyInterface extends CGFinterface {
         this.misc.add(this.scene, 'musicActive').name('Music').onChange(this.scene.updateMusic.bind(this.scene));
     }
 
+    /**
+     * Init Interface Themes
+     */
+    initInterfaceThemes() {
+        this.themes = this.gui.addFolder('Themes');
+
+        this.themes.add(this.scene, 'selectedTheme', this.scene.themes).name('Scene Theme').onChange(
+            () => {
+                this.scene.theme = this.scene.themes[this.scene.selectedTheme];
+                this.scene.updateTheme();
+            }
+        );
+    }
+
     processKeyDown(event) {
         this.activeKeys[event.code]=true;
     };

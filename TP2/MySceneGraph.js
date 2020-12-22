@@ -1863,7 +1863,7 @@ class MySceneGraph {
      */
     processNode(parentNode, parentMaterial, parentTexture) {
         let currentNode = this.nodes[parentNode];
-
+        
         // ------- Material ------ //
         let currentMaterial;
 

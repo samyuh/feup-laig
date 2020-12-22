@@ -18,12 +18,19 @@ serialInclude(['../lib/CGF.js',
                 'MyInterface.js', 
                 'MyLeaf.js', 
                 'MyNode.js',
+                './game/MyGameSequence.js',
+                './game/MyPrologInterface.js',
+                './game/MyServer.js',
+                './game/MyBoard.js',
+                './game/MyGameOrchestrator.js',
+                './game/MyAuxBoard.js',
                 './animation/MyAnimation.js',
                 './animation/MyKeyframe.js',
                 './animation/MyKeyframeAnimation.js',
                 './spritesheets/MySpriteAnim.js',
                 './spritesheets/MySpriteSheet.js',
                 './spritesheets/MySpriteText.js',
+                './primitives/MyPiece.js',
                 './primitives/MyRectangle.js', 
                 './primitives/MyCylinder.js', 
                 './primitives/MyTriangle.js', 
@@ -33,6 +40,8 @@ serialInclude(['../lib/CGF.js',
                 './primitives/MyPlane.js',
                 './primitives/MyPatch.js',
                 './primitives/MyDefBarrel.js',
+                './primitives/MyCube.js',
+                './primitives/MyTile.js',
 
 main=function()
 {
@@ -56,7 +65,7 @@ main=function()
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
 	var myGraph = new MySceneGraph(filename, myScene);
-	
+    
 	// start
     app.run();
 }
