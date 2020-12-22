@@ -47,6 +47,23 @@ class MyGameOrchestrator {
         this.currentPiece.turn = "white";
     }
 
+    undo() {
+        if (this.piecesList.length == 0)
+            return;
+
+        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let piece = this.piecesList.pop();
+
+        let undoString = 'undo(' + stringBoard + ',' + piece.z + '-' + piece.x + '-' + piece.zb + '-' + piece.xb + ')';
+        console.log('PEDIDO: ');
+        console.log(undoString);
+        this.server.makePrologRequest(undoString, null, null, false);
+
+        let new_board = this.server.getResult();
+        this.board.boardList = new_board;
+    }
+
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
@@ -127,7 +144,7 @@ class MyGameOrchestrator {
                             let move = this.board.convertId(this.prevPicked);  // [Row, Column]
                             let orientation = this.board.getOrientation(this.prevPicked, customId);
 
-                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
+                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
                             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
                             this.server.makePrologRequest(validString, null, null, false);

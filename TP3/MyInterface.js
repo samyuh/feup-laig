@@ -93,7 +93,9 @@ class MyInterface extends CGFinterface {
      */
     initGameInterface() {
         this.gameInterface = this.gui.addFolder('Game');
+
         this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'undo').name('Undo');
 
         this.gameInterface.open();
     }
