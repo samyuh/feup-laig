@@ -5,7 +5,7 @@ class MyGameOrchestrator {
 
         this.board = null;
         this.auxBoard = null;
-        this.pieces = null;
+        this.currentPiece = null;
         this.adjacent = null;
         this.piecesList = [];
 
@@ -39,7 +39,7 @@ class MyGameOrchestrator {
         this.auxBoardRight = sceneGraph.auxBoardLeft;
         this.auxBoardLeft = sceneGraph.auxBoardRight;
         
-        this.pieces = sceneGraph.piece;
+        this.currentPiece = sceneGraph.piece;
     }
 
     update(graph) {
@@ -88,8 +88,8 @@ class MyGameOrchestrator {
         let rowA = ((actual - 1) % this.board.boardLength) + 1;
         let columnA = Math.floor((actual - 1) / this.board.boardLength) + 1;
 
-        this.pieces.updatePosition(rowP, columnP, rowA, columnA);
-        this.pieces.changeTurn();
+        this.currentPiece.updatePosition(rowP, columnP, rowA, columnA);
+        this.currentPiece.changeTurn();
     }
 
 
@@ -115,7 +115,7 @@ class MyGameOrchestrator {
                             let valid_result = this.server.getResult();
 
                             if (valid_result == "valid") {
-                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.pieces.turn + ')';
+                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.currentPiece.turn + ')';
                                 this.server.makePrologRequest(moveString, null, null, false);
 
                                 let new_board = this.server.getResult();
@@ -124,7 +124,8 @@ class MyGameOrchestrator {
                                 this.putPiece(this.prevPicked, customId);
 
                                 let nP = new MyPiece(this.scene);
-                                nP.updatePosition(this.pieces.x, this.pieces.z, this.pieces.xb, this.pieces.zb);
+                                nP.updatePosition(this.currentPiece.x, this.currentPiece.z, this.currentPiece.xb, this.currentPiece.zb);
+                                nP.turn = this.currentPiece.turn;
                                 this.piecesList.push(nP);
 
                                 let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\\", "").replaceAll("\"", "");
@@ -166,7 +167,7 @@ class MyGameOrchestrator {
         if (this.board != undefined)
             this.board.display();
 
-        this.pieces.display();
+        this.currentPiece.display();
 
         for(var i = 0; i < this.piecesList.length; i++) {
             this.piecesList[i].display();
