@@ -166,6 +166,8 @@ class XMLscene extends CGFscene {
             this.graph.spritesAnim[k].update(elapsedTime / 1000);
 
         this.gameOrchestrator.update(this.graph);
+
+        this.gameOrchestrator.updateTime(t);
     }
 
     /**

@@ -323,7 +323,7 @@
 
             <transformations>
                 <translation x="0" y="20.0" z="0" />
-                <scale sx="180" sy="180" sz="180" />
+                <scale sx="200" sy="200" sz="200" />
             </transformations>
 
             <descendants>
