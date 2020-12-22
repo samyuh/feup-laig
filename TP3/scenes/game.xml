@@ -100,7 +100,6 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <noderef id="terrain" />
                 <noderef id="pit" />
                 <noderef id="columns" />
                 <noderef id="floating-base" />
@@ -212,6 +211,40 @@
             </descendants>
         </node>
 
+        <node id="floating-base">
+            <material id="null" />
+
+            <texture id="volcanic">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="top-base" />
+                <noderef id="column-base" />
+            </descendants>
+        </node>
+
+        <node id="top-base">
+            <material id="null" />
+
+            <texture id="volcanic">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-20.0" z="0" />
+                <scale sx="27.0" sy="1.0" sz="17.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
         <node id="columns">
             <material id="null" />
 
@@ -262,6 +295,23 @@
             </descendants>
         </node>
 
+        <node id="column-base">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="-50.0" z="0.0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
         <node id="column-interior">
             <material id="null" />
 
@@ -270,12 +320,12 @@
             </texture>
 
             <transformations>
-                <translation x="20.0" y="0.0" z="0.0" />
+                <translation x="20.0" y="-25.0" z="0.0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <leaf type="cylinder" height="50" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
@@ -287,30 +337,12 @@
             </texture>
 
             <transformations>
-                <translation x="30.0" y="0.0" z="0.0" />
+                <translation x="30.0" y="-20.0" z="0.0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
-            </descendants>
-        </node>
-
-        <node id="floating-base">
-            <material id="null" />
-
-            <texture id="volcanic">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="-15.0" z="0" />
-                <scale sx="27.0" sy="1.0" sz="17.0" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
+                <leaf type="cylinder" height="50" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
