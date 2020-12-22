@@ -5,10 +5,18 @@
 
     </initials>
     
-    <views default="mainCamera">
-        <perspective id="mainCamera" near="0.1" far="500" angle="45">
-            <from x="17" y="17" z="17" />
-            <to x="7" y="8" z="7" />
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="70" y="30" z="70" />
+            <to x="0" y="-15" z="0" />
+        </perspective>
+        <perspective id="whitePlayer" near="0.1" far="500" angle="45">
+            <from x="35" y="5" z="0" />
+            <to x="0" y="-15" z="0" />
+        </perspective>
+        <perspective id="blackPlayer" near="0.1" far="500" angle="45">
+            <from x="-35" y="5" z="0" />
+            <to x="0" y="-15" z="0" />
         </perspective>
     </views>
 

@@ -3,8 +3,6 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
-        this.board = new MyBoard(this.scene, []);
-        this.auxBoard = null;
         this.currentPiece = null;
         this.adjacent = null;
         this.piecesList = [];
@@ -19,9 +17,11 @@ class MyGameOrchestrator {
 
         this.gameEnded = false;
 
+        
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
         this.blackTurn = new MySpriteText(this.scene, "Turn: black");
 
+        this.initializedScene = false;
         this.initialBoard();
     }
 
@@ -36,10 +36,8 @@ class MyGameOrchestrator {
         }
 
         let board = this.server.getResult();
-
-        this.board.boardList = board;
-        this.board.boardLength = board.length;
-        this.board.createTiles();
+        this.boardSet = new MyBoardSet(this.scene, board);
+        this.boardSet.board.createTiles();
     }
 
     reset() {
@@ -52,7 +50,7 @@ class MyGameOrchestrator {
         if (this.piecesList.length == 0)
             return;
 
-        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+        let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
         let piece = this.piecesList.pop();
 
@@ -62,19 +60,19 @@ class MyGameOrchestrator {
         this.server.makePrologRequest(undoString, null, null, false);
 
         let new_board = this.server.getResult();
-        this.board.boardList = new_board;
+        this.boardSet.board.boardList = new_board;
     }
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        this.auxBoard = sceneGraph.auxBoard;
-
-        this.auxBoardRight = sceneGraph.auxBoardLeft;
-        this.auxBoardLeft = sceneGraph.auxBoardRight;
+        this.boardSet.auxBoardRight = sceneGraph.auxBoardLeft;
+        this.boardSet.auxBoardLeft = sceneGraph.auxBoardRight;
         
         this.currentPiece = sceneGraph.piece;
         this.currentPiece.turn = 'white';
+
+        this.initializedScene = true;
     }
 
     update(graph) {
@@ -90,15 +88,15 @@ class MyGameOrchestrator {
     }
 
     adjacent_cells(id) {
-        let row = ((id - 1) % this.board.boardLength) + 1;
-        let column = Math.floor((id - 1) / this.board.boardLength) + 1;
+        let row = ((id - 1) % this.boardSet.board.boardLength) + 1;
+        let column = Math.floor((id - 1) / this.boardSet.board.boardLength) + 1;
         
         let prev_row = row - 1;
         let prev_column = column - 1;
         let next_row = row + 1;
         let next_column = column + 1;
 
-        this.adjacent = [this.board.getTile(row, prev_column), this.board.getTile(row, next_column), this.board.getTile(prev_row, column), this.board.getTile(next_row, column)];
+        this.adjacent = [this.boardSet.board.getTile(row, prev_column), this.boardSet.board.getTile(row, next_column), this.boardSet.board.getTile(prev_row, column), this.boardSet.board.getTile(next_row, column)];
 
         for (var i = 0; i < this.adjacent.length; i++) {
             if(this.adjacent[i] != null) {
@@ -119,11 +117,11 @@ class MyGameOrchestrator {
     }
 
     putPiece(prev, actual) {
-        let rowP = ((prev - 1) % this.board.boardLength) + 1;
-        let columnP = Math.floor((prev - 1) / this.board.boardLength) + 1;
+        let rowP = ((prev - 1) % this.boardSet.board.boardLength) + 1;
+        let columnP = Math.floor((prev - 1) / this.boardSet.board.boardLength) + 1;
 
-        let rowA = ((actual - 1) % this.board.boardLength) + 1;
-        let columnA = Math.floor((actual - 1) / this.board.boardLength) + 1;
+        let rowA = ((actual - 1) % this.boardSet.board.boardLength) + 1;
+        let columnA = Math.floor((actual - 1) / this.boardSet.board.boardLength) + 1;
 
         this.currentPiece.updatePosition(rowP, columnP, rowA, columnA);
         this.currentPiece.changeTurn();
@@ -146,10 +144,10 @@ class MyGameOrchestrator {
                         customId = this.scene.pickResults[i][1];
 
                         if (tile.isDiff) {
-                            let move = this.board.convertId(this.prevPicked);  // [Row, Column]
-                            let orientation = this.board.getOrientation(this.prevPicked, customId);
+                            let move = this.boardSet.board.convertId(this.prevPicked);  // [Row, Column]
+                            let orientation = this.boardSet.board.getOrientation(this.prevPicked, customId);
 
-                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+                            let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
                             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
                             this.server.makePrologRequest(validString, null, null, false);
@@ -161,7 +159,7 @@ class MyGameOrchestrator {
 
                                 let new_board = this.server.getResult();
 
-                                this.board.boardList = new_board;
+                                this.boardSet.board.boardList = new_board;
                                 this.putPiece(this.prevPicked, customId);
 
                                 let nP = new MyPiece(this.scene);
@@ -169,7 +167,7 @@ class MyGameOrchestrator {
                                 nP.turn = this.currentPiece.turn;
                                 this.piecesList.push(nP);
 
-                                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+                                let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
                                 let gameOverString = 'game_over(' + stringNewBoard + ')';
                                 this.server.makePrologRequest(gameOverString, null, null, false);
@@ -230,11 +228,8 @@ class MyGameOrchestrator {
         this.choosePosition();
 
         // -- Board -- //
-        if (this.board != undefined)
-            this.board.display();
-
-        this.auxBoardRight.display();
-        this.auxBoardLeft.display();
+        if (this.boardSet.board != undefined)
+            this.boardSet.board.display();
 
         if (this.gameEnded) {
             this.displayGameStats();
