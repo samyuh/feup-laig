@@ -12,12 +12,14 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.theme;
         
-        this.prologInterface = new MyPrologInterface();
         this.server = new MyServer();
         
         this.prevPicked = null;
 
         this.gameEnded = false;
+
+        this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
+        this.blackTurn = new MySpriteText(this.scene, "Turn: black");
 
         this.initialBoard();
     }
@@ -47,6 +49,7 @@ class MyGameOrchestrator {
         this.auxBoardLeft = sceneGraph.auxBoardRight;
         
         this.currentPiece = sceneGraph.piece;
+        this.currentPiece.turn = 'white';
     }
 
     update(graph) {
@@ -110,7 +113,6 @@ class MyGameOrchestrator {
             let tile;
             let customId;
 			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-
 				for (let i = 0; i < this.scene.pickResults.length; i++) {
 					tile = this.scene.pickResults[i][0];
 					if (tile) {
@@ -164,6 +166,9 @@ class MyGameOrchestrator {
                         console.log("Picked object: " + tile + ", with pick id " + customId + " Previous " + this.prevPicked);
                         console.log("------");
                     }
+                    else {
+                        this.clean_adjacent();
+                    }
                 }
                 
                 this.scene.pickResults.splice(0, this.scene.pickResults.length);
@@ -173,13 +178,23 @@ class MyGameOrchestrator {
     
     displayGameStats() {
         this.scene.pushMatrix();
-        this.scene.translate(3, 6, 0);
+        this.scene.translate(1, 6, 0);
         this.gameWinner.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(3, 5, 0);
+        this.scene.translate(1, 5, 0);
         this.gameScore.display();
+        this.scene.popMatrix();
+    }
+
+    displayTurn() {
+        this.scene.pushMatrix();
+        this.scene.translate(1, 6, 0);
+        if (this.currentPiece.turn == "white")
+            this.whiteTurn.display();
+        else
+            this.blackTurn.display();
         this.scene.popMatrix();
     }
 
@@ -195,8 +210,9 @@ class MyGameOrchestrator {
         if (this.gameEnded) {
             this.displayGameStats();
         }
-
-        this.currentPiece.display();
+        else {
+            this.displayTurn();
+        }
 
         for(var i = 0; i < this.piecesList.length; i++) {
             this.piecesList[i].display();
