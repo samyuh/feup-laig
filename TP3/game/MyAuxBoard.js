@@ -9,9 +9,7 @@ class MyAuxBoard {
         this.tileMaterial.setTexture(this.tilesTexture);
 
         this.aux = new MyCube(this.scene);
-        
     }
-
 
     display() {
         this.scene.pushMatrix();

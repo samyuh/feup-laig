@@ -25,11 +25,8 @@ class MyBoard {
 
     getOrientation(idA, idB) {
         let init = this.convertId(idA);
-        console.log("INIT: ")
-        console.log(init)
         let end = this.convertId(idB);
-        console.log("END: ")
-        console.log(end)
+
         if(init[0] == end[0]) {
             if(init[1] < end[1]) {
                 return "right";
