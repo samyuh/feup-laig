@@ -40,12 +40,16 @@ class MyInterface extends CGFinterface {
     initInterfaceCameras() {
         this.cameras = this.gui.addFolder('Cameras');
 
-        this.cameras.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
-            () => {
-                this.scene.camera = this.scene.graph.cameras[this.scene.selectedView];
+        this.camItem = this.cameras.add(this.scene, 'selectedView', this.scene.graph[this.scene.selectedTheme].viewIDs).name('Camera View').onChange(
+            this.scene.updateInterfaceCameras.bind(this.scene)
+        );
+    }
 
-                this.setActiveCamera(this.scene.camera);
-            }
+    updateCameras() {
+        this.cameras.remove(this.camItem);
+
+        this.camItem = this.cameras.add(this.scene, 'selectedView', this.scene.graph[this.scene.selectedTheme].viewIDs).name('Camera View').onChange(
+            this.scene.updateInterfaceCameras.bind(this.scene)
         );
     }
      

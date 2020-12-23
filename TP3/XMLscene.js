@@ -43,12 +43,15 @@ class XMLscene extends CGFscene {
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
 
-        this.selectedView;
+        
         this.textureIds = {
             'Fire': 0,
             'Default': 1,
         };
+
+        this.numberLoadedThemes = 0;
         this.selectedTheme = 1;
+        this.selectedView = 0;
 
         this.setPickEnabled(true);
     }
@@ -58,6 +61,7 @@ class XMLscene extends CGFscene {
         let theme1 = new MySceneGraph("game.xml", this);
         let theme2 = new MySceneGraph("game2.xml", this);
 
+        
         //this.graph[0].onXMLReady();
     }
 
@@ -81,6 +85,25 @@ class XMLscene extends CGFscene {
         console.log(this.selectedTheme);
         
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
+
+        this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
+        this.gl.clearColor(...this.graph[this.selectedTheme].background);
+        this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
+        this.initXMLLights();
+        this.initXMLCameras();
+        this.setUpdatePeriod(100);
+        this.sceneInited = true;
+        this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
+
+        this.interface.updateCameras();
+
+        console.log(this.graph[this.selectedTheme].viewIDs)
+    }
+
+    updateInterfaceCameras() {
+        this.camera = this.graph[this.selectedTheme].cameras[this.selectedView];
+
+        this.interface.setActiveCamera(this.camera);
     }
 
     /**
@@ -96,7 +119,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene Cameras with the values read from the XML file.
      */
     initXMLCameras() {
-        this.camera = this.graph[this.selectedTheme].cameras[this.selectedView];
+        this.camera = this.graph[this.selectedTheme].cameras[this.graph[this.selectedTheme].selectedView];
 
         this.interface.setActiveCamera(this.camera);
     }
@@ -139,23 +162,32 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
 
-        this.gl.clearColor(...this.graph[this.selectedTheme].background);
+        if(this.numberLoadedThemes == 1) {
+            this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
+            this.gl.clearColor(...this.graph[this.selectedTheme].background);
+            this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
+            this.initXMLLights();
+            this.initXMLCameras();
+            this.setUpdatePeriod(100);
+            this.sceneInited = true;
+            this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
-        this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
+            // ---- CHANGE THIS ---- //
+            this.interface.initInterfaceCameras();
+            this.interface.initInterfaceLights();
+            this.interface.initMiscellaneous();
+            this.interface.initInterfaceThemes();
+            this.interface.initGameInterface();
+            // ---- CHANGE THIS ---- //
 
-        this.initXMLLights();
-        
-        this.initXMLCameras();
-
-        this.setUpdatePeriod(100);
-
-        this.sceneInited = true;
-
-        this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
+            console.log(this.textureIds);
+            console.log(this.graph[this.selectedTheme].viewIDs)
+        }
+        else {
+            this.numberLoadedThemes++;
+        }
     }
-
     /**
      * Method called periodically (as per setUpdatePeriod() in init())
      * @param {integer} t 

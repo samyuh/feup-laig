@@ -47,7 +47,7 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
 
-        this.filename = 
+        this.filename = filename;
 
         this.reader.open('scenes/' + filename, this);
     }
@@ -71,12 +71,6 @@ class MySceneGraph {
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
-
-        this.scene.interface.initInterfaceCameras();
-        this.scene.interface.initInterfaceLights();
-        this.scene.interface.initMiscellaneous();
-        this.scene.interface.initInterfaceThemes();
-        this.scene.interface.initGameInterface();
     }
 
     /*
@@ -298,7 +292,7 @@ class MySceneGraph {
     parseViews(viewsNode) {
         this.cameras = [];
 
-        this.scene.viewIDs = [];
+        this.viewIDs = [];
 
         let default_cam_error = true;
 
@@ -309,7 +303,7 @@ class MySceneGraph {
         if (default_view == null)
             return "No default View defined for scene - atribute 'default' missing from tag <views>";
 
-        this.scene.selectedView = default_view;
+        this.selectedView = default_view;
 
         if (children.length === 0)
             return "No views declared in <views>";
@@ -332,7 +326,7 @@ class MySceneGraph {
             if (id == default_view) 
                 default_cam_error = false;
             
-            this.scene.viewIDs.push(id);
+            this.viewIDs.push(id);
 
             // Process common atributes between perspective and ortho cameras (near and far)
             var near = this.reader.getFloat(children[i], 'near');
