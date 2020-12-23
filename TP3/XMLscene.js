@@ -42,12 +42,23 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
-        this.themes = ["game.xml", "game2.xml"];
 
         this.selectedView;
-        this.selectedTheme = "game.xml";
+        this.textureIds = {
+            'Fire': 0,
+            'Default': 1,
+        };
+        this.selectedTheme = 1;
 
         this.setPickEnabled(true);
+    }
+
+    initScene() {
+        this.graph = [];
+        let theme1 = new MySceneGraph("game.xml", this);
+        let theme2 = new MySceneGraph("game2.xml", this);
+
+        //this.graph[0].onXMLReady();
     }
 
     /**
@@ -66,8 +77,10 @@ class XMLscene extends CGFscene {
     /**
      * Method for updating themes on a change made by the user
      */
-    updateTheme() {
-        this.graph = new MySceneGraph(this.selectedTheme, this);   
+    updateSkyBoxTextures() {
+        console.log(this.selectedTheme);
+        
+        this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
     }
 
     /**
@@ -83,7 +96,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene Cameras with the values read from the XML file.
      */
     initXMLCameras() {
-        this.camera = this.graph.cameras[this.selectedView];
+        this.camera = this.graph[this.selectedTheme].cameras[this.selectedView];
 
         this.interface.setActiveCamera(this.camera);
     }
@@ -96,12 +109,12 @@ class XMLscene extends CGFscene {
         let i = 0;
         
         // Reads the lights from the scene graph.
-        for (let key in this.graph.lights) {
+        for (let key in this.graph[this.selectedTheme].lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
 
-            if (this.graph.lights.hasOwnProperty(key)) {
-                var graphLight = this.graph.lights[key];
+            if (this.graph[this.selectedTheme].lights.hasOwnProperty(key)) {
+                var graphLight = this.graph[this.selectedTheme].lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -126,11 +139,11 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
+        this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
 
-        this.gl.clearColor(...this.graph.background);
+        this.gl.clearColor(...this.graph[this.selectedTheme].background);
 
-        this.setGlobalAmbientLight(...this.graph.ambient);
+        this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
 
         this.initXMLLights();
         
@@ -140,7 +153,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
-        this.gameOrchestrator.initGraph(this.graph);
+        this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
     }
 
     /**
@@ -157,11 +170,11 @@ class XMLscene extends CGFscene {
 
         this.time = t;
 
-        for (let k in this.graph.keyframesAnimation)
-            this.graph.keyframesAnimation[k].update(elapsedTime / 1000);
+        for (let k in this.graph[this.selectedTheme].keyframesAnimation)
+            this.graph[this.selectedTheme].keyframesAnimation[k].update(elapsedTime / 1000);
 
-        for (let k in this.graph.spritesAnim)
-            this.graph.spritesAnim[k].update(elapsedTime / 1000);
+        for (let k in this.graph[this.selectedTheme].spritesAnim)
+            this.graph[this.selectedTheme].spritesAnim[k].update(elapsedTime / 1000);
 
         this.gameOrchestrator.update(t);
     }

@@ -80,12 +80,7 @@ class MyInterface extends CGFinterface {
     initInterfaceThemes() {
         this.themes = this.gui.addFolder('Themes');
 
-        this.themes.add(this.scene, 'selectedTheme', this.scene.themes).name('Scene Theme').onChange(
-            () => {
-                this.scene.theme = this.scene.themes[this.scene.selectedTheme];
-                this.scene.updateTheme();
-            }
-        );
+        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateSkyBoxTextures.bind(this.scene));
     }
 
     /**
