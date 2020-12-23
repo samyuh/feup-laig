@@ -8,12 +8,22 @@
  * * @param {MyBoard} board - Gameboard state before the move
  */
 class MyGameMove {
-	constructor(piece, color, tile1, tile2, board) {
-        this.piece = piece;
-        this.color = color;
-        this.tile1 = tile1;
-        this.tile2 = tile2;
-        this.board = board;
+	constructor(list, piece, boardTile) {
+        let position = this.putPiece(boardTile[0], boardTile[1]);
+                                
+        piece.updatePosition(position[0], position[1], position[2], position[3]);
+
+        list.push(piece);
+    }
+
+    putPiece(prev, actual) {
+        let rowP = ((prev - 1) % 7) + 1;
+        let columnP = Math.floor((prev - 1) / 7) + 1;
+
+        let rowA = ((actual - 1) % 7) + 1;
+        let columnA = Math.floor((actual - 1) / 7) + 1;
+
+        return [rowP, columnP, rowA, columnA];
     }
 
     animate() {

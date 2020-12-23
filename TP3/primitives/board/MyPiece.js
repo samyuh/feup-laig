@@ -1,5 +1,5 @@
 class MyPiece {
-	constructor(scene) {
+	constructor(scene, color) {
         this.scene = scene;
         this.pieces = [];
         this.x = 0;
@@ -8,7 +8,7 @@ class MyPiece {
         this.xb = null;
         this.zb = null;
         
-        this.turn = 'white';
+        this.color = color;
         this.whiteMaterial = new CGFappearance(scene);
         this.blackMaterial = new CGFappearance(scene);
         this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
@@ -33,19 +33,10 @@ class MyPiece {
         this.zb = zb;
     }
 
-    changeTurn() {
-        if(this.turn == 'white') {
-            this.turn = 'black';
-        }
-        else {
-            this.turn = 'white';
-        }
-    }
-
     display() {
         this.scene.pushMatrix();
 
-        if(this.turn == 'black') {
+        if(this.color == 'black') {
             this.scene.pushMatrix();
             this.scene.translate(this.x-3, this.y, this.z);
             this.whiteMaterial.apply();

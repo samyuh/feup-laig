@@ -1,8 +1,8 @@
 class MyBoardSet {
     constructor(scene, boardList) {
         this.board = new MyBoard(scene, boardList);
-        this.auxBoardRight = null;
-        this.auxBoardLeft = null;
+        this.auxBoardRight = new MyAuxBoard(scene, -1);
+        this.auxBoardLeft = new MyAuxBoard(scene, 1);
     }
 
     display() {

@@ -3,30 +3,36 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
-        this.currentPiece = null;
-        this.adjacent = null;
-        this.piecesList = [];
-        
-        /*
-        this.theme = [
-            new MySceneGraph(), 
-            new MySceneGraph(),
-        ];
-        */
 
-        this.lavaAnim = new MyWaveAnimation(this.scene);
+        this.stateEnum = {
+            "Loading" : 0,
+            "Menu" : 1,
+            "WhiteTurn" : 2,
+            "BlackTurn" : 3,
+            "EndGame" : 4,
+        }
 
-        this.prevPicked = null; 
-
-        this.gameEnded = false;
-
-        this.gameSequence = new MyGameSequence();
-
+        //------ Game Variables ----- //
+        this.currentTurnColor = "white";
+        //------ Game Variables ----- //
+        // ----- All Time Variables ---- //
         this.server = new MyServer();
+        this.gameSequence = new MyGameSequence(); // TO DO
+        //this.animator
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
         this.blackTurn = new MySpriteText(this.scene, "Turn: black");
 
-        this.initializedScene = false;
+        this.adjacent = null;
+        this.piecesList = [];
+
+        this.prevPicked = null; 
+        this.gameEnded = false;
+        // ----- All Time Variables ---- //
+
+        // REFACTOR
+        this.lavaAnim = new MyWaveAnimation(this.scene);
+        // REFACTOR
+
         this.initialBoard();
     }
 
@@ -42,27 +48,21 @@ class MyGameOrchestrator {
         }
 
         let board = this.server.getResult();
+
         this.boardSet = new MyBoardSet(this.scene, board);
         this.boardSet.board.createTiles();
     }
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
-
-        this.boardSet.auxBoardRight = sceneGraph.auxBoardLeft;
-        this.boardSet.auxBoardLeft = sceneGraph.auxBoardRight;
-        
-        this.currentPiece = sceneGraph.piece;
-        this.currentPiece.turn = 'white';
-
-        this.initializedScene = true;
     }
 
     /* Interface */
     reset() {
         this.initialBoard();
         this.piecesList = [];
-        this.currentPiece.turn = "white";
+
+        this.currentTurnColor = "white";
     }
 
     undo() {
@@ -124,17 +124,6 @@ class MyGameOrchestrator {
         }
     }
 
-    putPiece(prev, actual) {
-        let rowP = ((prev - 1) % this.boardSet.board.boardLength) + 1;
-        let columnP = Math.floor((prev - 1) / this.boardSet.board.boardLength) + 1;
-
-        let rowA = ((actual - 1) % this.boardSet.board.boardLength) + 1;
-        let columnA = Math.floor((actual - 1) / this.boardSet.board.boardLength) + 1;
-
-        this.currentPiece.updatePosition(rowP, columnP, rowA, columnA);
-        this.currentPiece.changeTurn();
-    }
-
     choosePosition() {
 		if (this.scene.pickMode == false) {
             let tile;
@@ -156,19 +145,18 @@ class MyGameOrchestrator {
                             let valid_result = this.server.getResult();
 
                             if (valid_result == "valid") {
-                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.currentPiece.turn + ')';
+                                // --- Game move --- //
+                                let piece = new MyPiece(this.scene, this.currentTurnColor);
+                                let gameMove = new MyGameMove(this.piecesList, piece, [this.prevPicked, customId]);
+
+                                 // --- Game move --- //
+                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.currentTurnColor + ')';
                                 this.server.makePrologRequest(moveString, null, null, false);
 
                                 let new_board = this.server.getResult();
 
                                 this.boardSet.board.boardList = new_board;
-                                this.putPiece(this.prevPicked, customId);
-
-                                let nP = new MyPiece(this.scene);
-                                nP.updatePosition(this.currentPiece.x, this.currentPiece.z, this.currentPiece.xb, this.currentPiece.zb);
-                                nP.turn = this.currentPiece.turn;
-                                this.piecesList.push(nP);
-
+                                
                                 let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
                                 let gameOverString = 'game_over(' + stringNewBoard + ')';
@@ -179,6 +167,8 @@ class MyGameOrchestrator {
                                     console.log("Game Ended!");
                                     this.createGameStats(gameOverData);
                                 }
+
+                                this.changeTurn();
                             }
 
                             this.clean_adjacent();
@@ -226,11 +216,19 @@ class MyGameOrchestrator {
     displayTurn() {
         this.scene.pushMatrix();
         this.scene.translate(1, 6, 0);
-        if (this.currentPiece.turn == "white")
+        if (this.currentTurnColor == "white")
             this.whiteTurn.display();
         else
             this.blackTurn.display();
         this.scene.popMatrix();
+    }
+
+    changeTurn() {
+        if(this.currentTurnColor == "white") {
+            this.currentTurnColor = "black";
+        } else {
+            this.currentTurnColor = "white";
+        }
     }
 
     display() {
@@ -239,7 +237,7 @@ class MyGameOrchestrator {
 
         // -- Board -- //
         if (this.boardSet.board != undefined)
-            this.boardSet.board.display();
+            this.boardSet.display();
 
         if (this.gameEnded) {
             this.displayGameStats();

@@ -50,7 +50,7 @@ class XMLscene extends CGFscene {
         };
 
         this.numberLoadedThemes = 0;
-        this.selectedTheme = 1;
+        this.selectedTheme = 0;
         this.selectedView = 0;
 
         this.setPickEnabled(true);
