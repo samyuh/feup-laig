@@ -7,10 +7,12 @@ class MyGameOrchestrator {
         this.adjacent = null;
         this.piecesList = [];
         
+        /*
         this.theme = [
             new MySceneGraph(), 
             new MySceneGraph(),
         ];
+        */
 
         this.lavaAnim = new MyWaveAnimation(this.scene);
 
@@ -56,10 +58,6 @@ class MyGameOrchestrator {
         this.initializedScene = true;
     }
 
-    update(graph) {
-        this.graph = graph;
-    }
-
     /* Interface */
     reset() {
         this.initialBoard();
@@ -85,7 +83,7 @@ class MyGameOrchestrator {
     }
 
     /* Update */
-    updateTime(time) {
+    update(time) {
         //this.animator.update(time);
 
         this.lavaAnim.update(time);

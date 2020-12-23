@@ -42,7 +42,6 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
-
         this.themes = ["game.xml", "game2.xml"];
 
         this.selectedView;
@@ -142,7 +141,6 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
 
         this.gameOrchestrator.initGraph(this.graph);
-
     }
 
     /**
@@ -165,9 +163,7 @@ class XMLscene extends CGFscene {
         for (let k in this.graph.spritesAnim)
             this.graph.spritesAnim[k].update(elapsedTime / 1000);
 
-        this.gameOrchestrator.update(this.graph);
-
-        this.gameOrchestrator.updateTime(t);
+        this.gameOrchestrator.update(t);
     }
 
     /**
