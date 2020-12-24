@@ -5,6 +5,7 @@ class MyBoard {
         this.boardList = boardList;
         this.boardLength = boardList.length;
         this.tiles;
+        this.pieceList = [];
 
         this.tileMaterial = new CGFappearance(scene);
         this.tilesTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
@@ -13,6 +14,8 @@ class MyBoard {
         this.diff = new CGFappearance(scene);
         this.diffT = new CGFtexture(scene, "scenes/images/daenerys/cloth.jpg");
         this.diff.setTexture(this.diffT);
+
+        this.createTiles();
     }
 
     convertId(id) {

@@ -1,6 +1,9 @@
 class GameStateLoading extends GameState {
-    constructor(gameOrchestrator) {
-        super(gameOrchestrator);
+    constructor(gameOrchestrator, board) {
+        super(gameOrchestrator, board);
+    }
 
+    display() {
+        console.log("Waiting Loading");
     }
 }
