@@ -3,15 +3,10 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null;
 
+        this.concreteState = new GameStateLoading(this);
+        this.state = "Loading";
 
-        this.stateEnum = {
-            "Loading" : 0,
-            "Menu" : 1,
-            "WhiteTurn" : 2,
-            "BlackTurn" : 3,
-            "EndGame" : 4,
-        }
-
+        // --- main class stuff --- //
         //------ Game Variables ----- //
         this.currentTurnColor = "white";
         //------ Game Variables ----- //
@@ -25,10 +20,7 @@ class MyGameOrchestrator {
         this.adjacent = null;
         this.piecesList = [];
 
-        this.animateMove = false;
-
         this.prevPicked = null; 
-        this.gameEnded = false;
         // ----- All Time Variables ---- //
 
         // REFACTOR
@@ -37,8 +29,12 @@ class MyGameOrchestrator {
         this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
         this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
         // REFACTOR
-
+        // --- main class stuff --- //
         this.initialBoard();
+    }
+
+    changeState(state) {
+        this.concreteState = state;
     }
 
     /* Init Function */
@@ -60,6 +56,9 @@ class MyGameOrchestrator {
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
+
+        this.state = "Game";
+        this.concreteState = new GameStateGame(this);
     }
 
     /* Interface */
@@ -97,6 +96,7 @@ class MyGameOrchestrator {
     }
 
     /* Picking */
+    // ------------------------ GAME ------------------------- //
     adjacent_cells(id) {
         let row = ((id - 1) % this.boardSet.board.boardLength) + 1;
         let column = Math.floor((id - 1) / this.boardSet.board.boardLength) + 1;
@@ -150,8 +150,18 @@ class MyGameOrchestrator {
         let gameOverData = this.server.getResult();
 
         if (gameOverData.length != 0) {
-            console.log("Game Ended!");
+
+            this.state = "End";
+
             this.createGameStats(gameOverData);
+        }
+    }
+
+    changeTurn() {
+        if(this.currentTurnColor == "white") {
+            this.currentTurnColor = "black";
+        } else {
+            this.currentTurnColor = "white";
         }
     }
 
@@ -186,7 +196,7 @@ class MyGameOrchestrator {
                                 this.updateBoardProlog();
 
                                 
-                                this.animateMove = true;
+                                this.state = "Anime";
 
                                 this.changeTurn();
                             }
@@ -212,8 +222,13 @@ class MyGameOrchestrator {
             }
 		}
     }
+     // ------------------------ GAME ------------------------- //
+
+
     // ------ Picking ------ //
 
+
+     // ------------------------ END ------------------------- //
     // ---- Game Stats ----- //
     displayGameStats() {
         this.scene.pushMatrix();
@@ -230,7 +245,6 @@ class MyGameOrchestrator {
     createGameStats(gameOverData) {
         this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
         this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
-        this.gameEnded = true;
     }
 
     displayTurn() {
@@ -243,46 +257,74 @@ class MyGameOrchestrator {
         this.scene.popMatrix();
     }
 
-    changeTurn() {
-        if(this.currentTurnColor == "white") {
-            this.currentTurnColor = "black";
-        } else {
-            this.currentTurnColor = "white";
-        }
-    }
+     // ------------------------ END ------------------------- //
 
     display() {
-        if(this.animateMove) {
+        if (this.state == "Loading") {
+            console.log("Waiting Loading");
+        }
+        else if (this.state == "Anime") {
             this.animation.display();
-            this.animateMove = false;
-        } else {
-            // Picking
-            this.choosePosition();
-        }
+            this.state = "Game";
+   
             // -- Board -- //
-            if (this.boardSet.board != undefined)
-                this.boardSet.display();
+            this.boardSet.display();
 
-            if (this.gameEnded) {
-                this.displayGameStats();
-            }
-            else {
-                this.displayTurn();
-            }
-        
-        // -- Board -- //
+            this.displayTurn();
+    
+            // -- Board -- //
 
-        // -- Piece Display -- //
-        for(var i = 0; i < this.piecesList.length; i++) {
-            this.piecesList[i].display();
+            // -- Piece Display -- //
+            for(var i = 0; i < this.piecesList.length; i++) {
+                this.piecesList[i].display();
+            }
+            // -- Piece Display -- //
+            
+            // -- Lava -- //
+            this.lavaAnim.apply();
+            // -- Lava -- //
+            this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
         }
-        // -- Piece Display -- //
+        else if (this.state == "Game") {
+            this.choosePosition();
         
-        // -- Lava -- //
-        this.lavaAnim.apply();
-        // -- Lava -- //
+            // -- Board -- //
+            this.boardSet.display();
 
-        this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
+            this.displayTurn();
+    
+            // -- Board -- //
+
+            // -- Piece Display -- //
+            for(var i = 0; i < this.piecesList.length; i++) {
+                this.piecesList[i].display();
+            }
+            // -- Piece Display -- //
+            
+            // -- Lava -- //
+            this.lavaAnim.apply();
+            // -- Lava -- //
+            this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
+        }
+        else if (this.state == "End") {
+            // -- Board -- //
+            this.boardSet.display();
+
+            this.displayGameStats();
+        
+            // -- Board -- //
+
+            // -- Piece Display -- //
+            for(var i = 0; i < this.piecesList.length; i++) {
+                this.piecesList[i].display();
+            }
+            // -- Piece Display -- //
+            
+            // -- Lava -- //
+            this.lavaAnim.apply();
+            // -- Lava -- //
+            this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
+        }
     }
 
     processNode(parentNode, parentMaterial, parentTexture) {
