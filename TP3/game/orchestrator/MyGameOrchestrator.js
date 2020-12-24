@@ -25,12 +25,17 @@ class MyGameOrchestrator {
         this.adjacent = null;
         this.piecesList = [];
 
+        this.animateMove = false;
+
         this.prevPicked = null; 
         this.gameEnded = false;
         // ----- All Time Variables ---- //
 
         // REFACTOR
         this.lavaAnim = new MyWaveAnimation(this.scene);
+
+        this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
+        this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
         // REFACTOR
 
         this.initialBoard();
@@ -85,7 +90,9 @@ class MyGameOrchestrator {
     /* Update */
     update(time) {
         //this.animator.update(time);
-
+        if(this.animation != null) {
+            this.animation.update(time);
+        }
         this.lavaAnim.update(time);
     }
 
@@ -124,6 +131,30 @@ class MyGameOrchestrator {
         }
     }
 
+    updateBoardProlog() {
+        let move = this.boardSet.board.convertId(this.lastMove[0]);  // [Row, Column]
+        let orientation = this.boardSet.board.getOrientation(this.lastMove[0], this.lastMove[1]);
+        let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+
+        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.currentTurnColor + ')';
+        this.server.makePrologRequest(moveString, null, null, false);
+
+        let new_board = this.server.getResult();
+
+        this.boardSet.board.boardList = new_board;
+                
+        let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+
+        let gameOverString = 'game_over(' + stringNewBoard + ')';
+        this.server.makePrologRequest(gameOverString, null, null, false);
+        let gameOverData = this.server.getResult();
+
+        if (gameOverData.length != 0) {
+            console.log("Game Ended!");
+            this.createGameStats(gameOverData);
+        }
+    }
+
     choosePosition() {
 		if (this.scene.pickMode == false) {
             let tile;
@@ -137,7 +168,6 @@ class MyGameOrchestrator {
                         if (tile.isDiff) {
                             let move = this.boardSet.board.convertId(this.prevPicked);  // [Row, Column]
                             let orientation = this.boardSet.board.getOrientation(this.prevPicked, customId);
-
                             let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
                             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
@@ -146,27 +176,17 @@ class MyGameOrchestrator {
 
                             if (valid_result == "valid") {
                                 // --- Game move --- //
-                                let piece = new MyPiece(this.scene, this.currentTurnColor);
+                                let piece = new MyPiece(this.scene, this.currentTurnColor, this.whiteTexture, this.blackTexture);
                                 let gameMove = new MyGameMove(this.piecesList, piece, [this.prevPicked, customId]);
 
-                                 // --- Game move --- //
-                                let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.currentTurnColor + ')';
-                                this.server.makePrologRequest(moveString, null, null, false);
+                                this.lastMove = [this.prevPicked, customId];
+                                this.animation = new MyPieceAnimation();
+                                // --- Game move --- //
 
-                                let new_board = this.server.getResult();
+                                this.updateBoardProlog();
 
-                                this.boardSet.board.boardList = new_board;
                                 
-                                let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
-
-                                let gameOverString = 'game_over(' + stringNewBoard + ')';
-                                this.server.makePrologRequest(gameOverString, null, null, false);
-                                let gameOverData = this.server.getResult();
-
-                                if (gameOverData.length != 0) {
-                                    console.log("Game Ended!");
-                                    this.createGameStats(gameOverData);
-                                }
+                                this.animateMove = true;
 
                                 this.changeTurn();
                             }
@@ -232,19 +252,24 @@ class MyGameOrchestrator {
     }
 
     display() {
-        // Picking
-        this.choosePosition();
-
-        // -- Board -- //
-        if (this.boardSet.board != undefined)
-            this.boardSet.display();
-
-        if (this.gameEnded) {
-            this.displayGameStats();
+        if(this.animateMove) {
+            this.animation.display();
+            this.animateMove = false;
+        } else {
+            // Picking
+            this.choosePosition();
         }
-        else {
-            this.displayTurn();
-        }
+            // -- Board -- //
+            if (this.boardSet.board != undefined)
+                this.boardSet.display();
+
+            if (this.gameEnded) {
+                this.displayGameStats();
+            }
+            else {
+                this.displayTurn();
+            }
+        
         // -- Board -- //
 
         // -- Piece Display -- //

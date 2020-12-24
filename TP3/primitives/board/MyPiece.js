@@ -1,5 +1,5 @@
 class MyPiece {
-	constructor(scene, color) {
+	constructor(scene, color, texturea, textureb) {
         this.scene = scene;
         this.pieces = [];
         this.x = 0;
@@ -11,8 +11,8 @@ class MyPiece {
         this.color = color;
         this.whiteMaterial = new CGFappearance(scene);
         this.blackMaterial = new CGFappearance(scene);
-        this.whiteTexture = new CGFtexture(scene, "scenes/images/white.jpg");
-        this.blackTexture = new CGFtexture(scene, "scenes/images/black.jpg");
+        this.whiteTexture = texturea;
+        this.blackTexture = textureb;
 
         this.whiteMaterial.setTexture(this.whiteTexture);
         this.blackMaterial.setTexture(this.blackTexture);
