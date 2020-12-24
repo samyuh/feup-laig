@@ -1,5 +1,5 @@
 /**
- * MyGameSequence
+ * MyGameMove
  * @constructor
  * @param {MyPiece} piece - Reference to MyPiece object
  * * @param {String} color - Color of the player that made the move
@@ -7,20 +7,14 @@
  * * @param {MyTile} tile2 - Reference to MyTile object, where the part of the piece with the opposite color will be placed
  * * @param {MyBoard} board - Gameboard state before the move
  */
-class MyGameSequence {
-	constructor() {
-        this.moves = [];
+class MyGameMove {
+	constructor(prevBoard, piece, color) {
+        this.prevBoard = prevBoard;
+        this.piece = piece;
+        this.color = color;
     }
 
-    addMove(move) {
-        this.moves.push(move);
-    }
-
-    undo() {
-        this.moves.pop(); // Futuramente adicionar o penultimo move em vez de dar pop maybe
-    }
-
-    replay() {
-        // Show replay of the game
+    animate() {
+        
     }
 }

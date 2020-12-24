@@ -6,26 +6,16 @@
  * * @param {CGFscene} piece - Reference to MyPiece object, which occupies this tile
  */
 class MyTile {
-	constructor(scene, row, column, gameboard, piece, tileMaterial,diffMaterial) {
+	constructor(scene, row, column, tileMaterial,diffMaterial) {
         this.scene = scene;
         this.tile = new MyCube(scene);
         this.row = row;
         this.column = column;
-        this.gameboard = gameboard;
-        this.piece = piece;
         this.isDiff = false;
         this.tileMaterial = tileMaterial;
         this.diffMaterial = diffMaterial;
     }
 
-    get_piece() {
-        return this.piece;
-    }
-
-    unset_piece() {
-        this.piece = "empty";
-        this.tileMaterial.setTexture(this.emptyTexture);
-    }
 
     validMove(value) {
         this.isDiff = value; 

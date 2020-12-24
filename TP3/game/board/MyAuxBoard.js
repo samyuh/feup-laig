@@ -1,28 +1,19 @@
 class MyAuxBoard {
-	constructor(scene, direction) {
+	constructor(scene) {
         this.scene = scene;
-
-        this.direction = direction;
 
         this.tileMaterial = new CGFappearance(scene);
         this.tilesTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
         this.tileMaterial.setTexture(this.tilesTexture);
 
-        this.aux = new MyCube(this.scene);
-
-        this.piece = new MyPiece(scene, 'white', this.tilesTexture, this.tilesTexture);
+        this.auxBoard = new MyCube(this.scene);
     }
 
     display() {
         this.scene.pushMatrix();
-        this.scene.translate(10 * this.direction, 0, 3);
-        this.scene.scale(3, 1, 7);
-        this.aux.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(10 * this.direction, 1, 3);
-        this.piece.display();
+        this.scene.scale(3, 1, 14);
+        this.tileMaterial.apply();
+        this.auxBoard.display();
         this.scene.popMatrix();
     }
 

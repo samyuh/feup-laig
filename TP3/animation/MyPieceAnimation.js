@@ -1,16 +1,16 @@
 class MyPieceAnimation {
-    constructor(scene, piece, board, finalPosition) {
+    constructor(scene, pieceToPlay, startPosition, finalPosition) {
+        // scene, piece, inicialFixedPos, finalFixedPos
+        // Position not in board, but in scenee!!
         this.scene = scene;
-        this.totalTime = 5;
+        this.totalTime = 0.5;
         this.currentTime = 0;
         this.startTime = null;
         this.active = true;
 
-        this.piece = piece;
-        this.board = board;
+        this.pieceToPlay = pieceToPlay;
 
-        let position = this.putPiece(finalPosition[0], finalPosition[1]);   
-        this.piece.updatePosition(position[0], position[1], position[2], position[3]);
+        this.position = this.putPiece(finalPosition[0], finalPosition[1]); 
     }
 
     putPiece(prev, actual) {
@@ -33,15 +33,12 @@ class MyPieceAnimation {
 
         if(this.totalTime*1000 <= this.currentTime) {
             this.active = false;
-            
-            this.board.addPiece(this.piece);
         }
     }
 
-    display() {
+    apply() {
         this.scene.pushMatrix();
-        this.scene.translate(0, 5 - this.currentTime/1000, 0);
-        this.piece.display();
+        this.pieceToPlay.updatePosition(this.position[0], this.position[1], this.position[2], this.position[3]);
         this.scene.popMatrix();
     }
 }

@@ -51,7 +51,7 @@ class MyBoard {
         this.tiles = [];
         for (let i = 1; i <= this.boardLength; i++) {
             for (let j = 1; j <= this.boardLength; j++) {
-                this.tiles.push(new MyTile(this.scene, j, i, this, this.boardList[i], this.tileMaterial, this.diff));
+                this.tiles.push(new MyTile(this.scene, j, i, this.tileMaterial, this.diff));
             }
         }
     }
@@ -66,15 +66,11 @@ class MyBoard {
 
 
     display() {
-        this.scene.pushMatrix();
-        this.scene.translate(-3, 0, 0);
-
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1, this.tiles[i]);
             this.tiles[i].display();
         }
         this.scene.clearPickRegistration();
-        this.scene.popMatrix(); 
     }
 
     updateTexCoords(afs, aft) {

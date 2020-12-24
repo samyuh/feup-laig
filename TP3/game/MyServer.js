@@ -17,7 +17,6 @@ class MyServer {
         if (async)
             request.timeout = 2000;
 
-        // Função apos timeout recebida como parâmetro?
         request.ontimeout = function() {
             console.log("Request timeout! Resending...");
             request.send();

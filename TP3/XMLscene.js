@@ -53,6 +53,8 @@ class XMLscene extends CGFscene {
         this.selectedTheme = 0;
         this.selectedView = 0;
 
+        this.animationCamera = null;
+
         this.setPickEnabled(true);
     }
 
@@ -101,8 +103,9 @@ class XMLscene extends CGFscene {
     }
 
     updateInterfaceCameras() {
-        this.camera = this.graph[this.selectedTheme].cameras[this.selectedView];
+        this.animationCamera = new MyCameraAnimation(this, this.camera, this.graph[this.selectedTheme].cameras[this.selectedView]);
 
+        this.camera = this.graph[this.selectedTheme].cameras[this.selectedView];
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -202,6 +205,9 @@ class XMLscene extends CGFscene {
 
         this.time = t;
 
+        if (this.animationCamera != null)
+            this.animationCamera.update(elapsedTime / 1000);
+
         for (let k in this.graph[this.selectedTheme].keyframesAnimation)
             this.graph[this.selectedTheme].keyframesAnimation[k].update(elapsedTime / 1000);
 
@@ -224,6 +230,10 @@ class XMLscene extends CGFscene {
         // Initialize Model-View matrix as identity (no transformation
         this.updateProjectionMatrix();
         this.loadIdentity();
+
+        // Camera animation if any
+        if (this.animationCamera != null)
+            this.animationCamera.apply();
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();

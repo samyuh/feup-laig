@@ -9,13 +9,20 @@ class GameStateGame extends GameState {
         this.blackTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/black.jpg");
     }
 
-    changeTurn() {
-        if(this.gameOrchestrator.currentTurnColor == "white") {
-            this.gameOrchestrator.currentTurnColor = "black";
-        } else {
-            this.gameOrchestrator.currentTurnColor = "white";
-        }
+    // --- Prolog -- //
+    updateBoardProlog() {
+        let move = this.board.convertId(this.lastMove[0]);  // [Row, Column]
+        let orientation = this.board.getOrientation(this.lastMove[0], this.lastMove[1]);
+        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.turn + ')';
+        this.gameOrchestrator.server.makePrologRequest(moveString, null, null, false);
+
+        let new_board = this.gameOrchestrator.server.getResult();
+
+        this.board.boardList = new_board;
     }
+    // --- Prolog -- //
 
     getAdjacentTiles(id) {
         let row = ((id - 1) % this.board.boardLength) + 1;
@@ -36,6 +43,7 @@ class GameStateGame extends GameState {
         for (var i = 0; i < this.adjacent.length; i++) {
             if(this.adjacent[i] != null) {
                 this.adjacent[i].validMove(true);
+                console.log(this.adjacent[i]);
             }
         }
 
@@ -51,34 +59,9 @@ class GameStateGame extends GameState {
         }
     }
 
-    updateBoardProlog() {
-        let move = this.board.convertId(this.lastMove[0]);  // [Row, Column]
-        let orientation = this.board.getOrientation(this.lastMove[0], this.lastMove[1]);
-        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.currentTurnColor + ')';
-        this.gameOrchestrator.server.makePrologRequest(moveString, null, null, false);
-
-        let new_board = this.gameOrchestrator.server.getResult();
-
-        this.board.boardList = new_board;
-                
-        let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-        let gameOverString = 'game_over(' + stringNewBoard + ')';
-        this.gameOrchestrator.server.makePrologRequest(gameOverString, null, null, false);
-        let gameOverData = this.gameOrchestrator.server.getResult();
-        console.log(gameOverData);
-        if (gameOverData.length != 0) {
-            console.log("endBoard");
-            this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
-
-            this.gameOrchestrator.createGameStats(gameOverData);
-        }
-    }
-
     handlePicking(tile, currentTileId) {
         if (tile.isDiff) {
+            // --- Prolog -- //
             let move = this.board.convertId(this.previousTileId);  // [Row, Column]
             let orientation = this.board.getOrientation(this.previousTileId, currentTileId);
             let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
@@ -86,23 +69,18 @@ class GameStateGame extends GameState {
             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
             this.gameOrchestrator.server.makePrologRequest(validString, null, null, false);
             let result = this.gameOrchestrator.server.getResult();
-
+            // --- Prolog -- //
             if (result == "valid") {
                 // --- Game move --- //
-                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.currentTurnColor, this.whiteTexture, this.blackTexture); 
-                // get pieces from auxboard
+                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.whiteTexture, this.blackTexture); 
 
                 // push move to animator    
-                //let gameMove = new MyGameMove(this.gameOrchestrator.piecesList, piece, [this.previousTileId, currentTileId]);
+                this.gameOrchestrator.gameSequence.addMove(new MyGameMove(this.gameOrchestrator.piecesList, piece, this.gameOrchestrator.turn));
 
                 this.lastMove = [this.previousTileId, currentTileId];
-                let animation = new MyPieceAnimation(this.gameOrchestrator.scene, piece, this.gameOrchestrator.board, [this.previousTileId, currentTileId]);
                 // --- Game move --- //
-                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.board, animation));
-
+                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, this.lastMove));
                 this.updateBoardProlog();
-
-                this.changeTurn();
             }
 
             this.cleanPicked();
@@ -117,7 +95,7 @@ class GameStateGame extends GameState {
 
    
 
-    choosePosition() {
+    pickBoardTile() {
 		if (this.gameOrchestrator.scene.pickMode == false) {
 			if (this.gameOrchestrator.scene.pickResults != null && this.gameOrchestrator.scene.pickResults.length > 0) {
 				for (let i = 0; i < this.gameOrchestrator.scene.pickResults.length; i++) {
@@ -141,24 +119,17 @@ class GameStateGame extends GameState {
     }
 
     display() {
-        this.choosePosition();
+        this.pickBoardTile();
         
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
-
-        this.gameOrchestrator.displayTurn();
-
+        this.gameOrchestrator.gameInfo.display();
         // -- Board -- //
-
-        // -- Piece Display -- //
-        for(var i = 0; i < this.gameOrchestrator.piecesList.length; i++) {
-            this.gameOrchestrator.piecesList[i].display();
-        }
-        // -- Piece Display -- //
         
         // -- Lava -- //
         this.gameOrchestrator.lavaAnim.apply();
         // -- Lava -- //
+
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
 }
