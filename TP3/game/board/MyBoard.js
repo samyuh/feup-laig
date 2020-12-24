@@ -4,7 +4,7 @@ class MyBoard {
         
         this.boardList = boardList;
         this.boardLength = boardList.length;
-        this.tiles;
+        this.tiles = [];
         this.pieceList = [];
 
         this.tileMaterial = new CGFappearance(scene);
@@ -16,6 +16,10 @@ class MyBoard {
         this.diff.setTexture(this.diffT);
 
         this.createTiles();
+    }
+
+    addPiece(piece) {
+        this.pieceList.push(piece);
     }
 
     convertId(id) {

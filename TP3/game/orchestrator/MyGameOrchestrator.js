@@ -45,7 +45,7 @@ class MyGameOrchestrator {
 
         this.boardSet = new MyBoardSet(this.scene, board);
         this.board = this.boardSet.board;
-        this.piecesList = this.board.pieceList;
+        this.piecesList = this.board.pieceList; // Pieces on board
         this.currentTurnColor = "white";
     }
 
@@ -83,15 +83,6 @@ class MyGameOrchestrator {
         this.boardSet.board.boardList = new_board;
     }
 
-    /* Update */
-    update(time) {
-        //this.animator.update(time);
-        if(this.animation != null) {
-            this.animation.update(time);
-        }
-        this.lavaAnim.update(time);
-    }
-
     createGameStats(gameOverData) {
         this.gameWinner = new MySpriteText(this.scene, "Winner: " +  gameOverData[0]);
         this.gameScore = new MySpriteText(this.scene, "Score: " +  gameOverData[1]);
@@ -105,6 +96,11 @@ class MyGameOrchestrator {
         else
             this.blackTurn.display();
         this.scene.popMatrix();
+    }
+
+    /* Update */
+    update(time) {
+        this.concreteState.update(time);
     }
 
     // --- General Display --- //

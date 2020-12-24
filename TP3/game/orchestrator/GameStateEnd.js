@@ -3,6 +3,10 @@ class GameStateEnd extends GameState {
         super(gameOrchestrator, board);
     }
 
+    update(time) {
+        this.gameOrchestrator.lavaAnim.update(time);
+    }
+
     displayGameStats() {
         this.gameOrchestrator.scene.pushMatrix();
         this.gameOrchestrator.scene.translate(1, 6, 0);

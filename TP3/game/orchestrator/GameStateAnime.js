@@ -1,10 +1,23 @@
 class GameStateAnime extends GameState {
-    constructor(gameOrchestrator, board) {
+    constructor(gameOrchestrator, board, animation) {
         super(gameOrchestrator, board);
+
+        this.animation = animation;
+    }
+
+    update(time) {
+        //this.animator.update(time);
+        this.animation.update(time);
+        
+        this.gameOrchestrator.lavaAnim.update(time);
     }
 
     display() {
-        this.gameOrchestrator.animation.display();
+        if(this.animation.active) {
+            this.animation.display();
+        } else {
+            this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.board));
+        }
 
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
@@ -24,6 +37,5 @@ class GameStateAnime extends GameState {
         // -- Lava -- //
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
 
-        this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.board));
     }
 }

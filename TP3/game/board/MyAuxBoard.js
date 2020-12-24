@@ -9,6 +9,8 @@ class MyAuxBoard {
         this.tileMaterial.setTexture(this.tilesTexture);
 
         this.aux = new MyCube(this.scene);
+
+        this.piece = new MyPiece(scene, 'white', this.tilesTexture, this.tilesTexture);
     }
 
     display() {
@@ -16,6 +18,11 @@ class MyAuxBoard {
         this.scene.translate(10 * this.direction, 0, 3);
         this.scene.scale(3, 1, 7);
         this.aux.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(10 * this.direction, 1, 3);
+        this.piece.display();
         this.scene.popMatrix();
     }
 

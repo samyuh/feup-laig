@@ -17,67 +17,6 @@ class GameStateGame extends GameState {
         }
     }
 
-    updateBoardProlog() {
-        let move = this.board.convertId(this.gameOrchestrator.lastMove[0]);  // [Row, Column]
-        let orientation = this.board.getOrientation(this.gameOrchestrator.lastMove[0], this.gameOrchestrator.lastMove[1]);
-        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.currentTurnColor + ')';
-        this.gameOrchestrator.server.makePrologRequest(moveString, null, null, false);
-
-        let new_board = this.gameOrchestrator.server.getResult();
-
-        this.board.boardList = new_board;
-                
-        let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-        let gameOverString = 'game_over(' + stringNewBoard + ')';
-        this.gameOrchestrator.server.makePrologRequest(gameOverString, null, null, false);
-        let gameOverData = this.gameOrchestrator.server.getResult();
-        console.log(gameOverData);
-        if (gameOverData.length != 0) {
-            console.log("endBoard");
-            this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
-
-            this.gameOrchestrator.createGameStats(gameOverData);
-        }
-    }
-
-    handlePicking(tile, currentTileId) {
-        if (tile.isDiff) {
-            let move = this.board.convertId(this.previousTileId);  // [Row, Column]
-            let orientation = this.board.getOrientation(this.previousTileId, currentTileId);
-            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-            let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
-            this.gameOrchestrator.server.makePrologRequest(validString, null, null, false);
-            let valid_result = this.gameOrchestrator.server.getResult();
-
-            if (valid_result == "valid") {
-                // --- Game move --- //
-                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.currentTurnColor, this.whiteTexture, this.blackTexture);
-                let gameMove = new MyGameMove(this.gameOrchestrator.piecesList, piece, [this.previousTileId, currentTileId]);
-
-                this.gameOrchestrator.lastMove = [this.previousTileId, currentTileId];
-                this.gameOrchestrator.animation = new MyPieceAnimation();
-                // --- Game move --- //
-                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.board));
-
-                this.updateBoardProlog();
-
-                this.changeTurn();
-            }
-
-            this.cleanPicked();
-        }
-        else {
-            this.cleanPicked();
-            this.getAdjacentTiles(currentTileId);
-            
-            this.previousTileId = currentTileId;
-        }
-    }
-
     getAdjacentTiles(id) {
         let row = ((id - 1) % this.board.boardLength) + 1;
         let column = Math.floor((id - 1) / this.board.boardLength) + 1;
@@ -112,6 +51,72 @@ class GameStateGame extends GameState {
         }
     }
 
+    updateBoardProlog() {
+        let move = this.board.convertId(this.lastMove[0]);  // [Row, Column]
+        let orientation = this.board.getOrientation(this.lastMove[0], this.lastMove[1]);
+        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.currentTurnColor + ')';
+        this.gameOrchestrator.server.makePrologRequest(moveString, null, null, false);
+
+        let new_board = this.gameOrchestrator.server.getResult();
+
+        this.board.boardList = new_board;
+                
+        let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let gameOverString = 'game_over(' + stringNewBoard + ')';
+        this.gameOrchestrator.server.makePrologRequest(gameOverString, null, null, false);
+        let gameOverData = this.gameOrchestrator.server.getResult();
+        console.log(gameOverData);
+        if (gameOverData.length != 0) {
+            console.log("endBoard");
+            this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
+
+            this.gameOrchestrator.createGameStats(gameOverData);
+        }
+    }
+
+    handlePicking(tile, currentTileId) {
+        if (tile.isDiff) {
+            let move = this.board.convertId(this.previousTileId);  // [Row, Column]
+            let orientation = this.board.getOrientation(this.previousTileId, currentTileId);
+            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+            let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
+            this.gameOrchestrator.server.makePrologRequest(validString, null, null, false);
+            let result = this.gameOrchestrator.server.getResult();
+
+            if (result == "valid") {
+                // --- Game move --- //
+                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.currentTurnColor, this.whiteTexture, this.blackTexture); 
+                // get pieces from auxboard
+
+                // push move to animator    
+                //let gameMove = new MyGameMove(this.gameOrchestrator.piecesList, piece, [this.previousTileId, currentTileId]);
+
+                this.lastMove = [this.previousTileId, currentTileId];
+                let animation = new MyPieceAnimation(this.gameOrchestrator.scene, piece, this.gameOrchestrator.board, [this.previousTileId, currentTileId]);
+                // --- Game move --- //
+                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.board, animation));
+
+                this.updateBoardProlog();
+
+                this.changeTurn();
+            }
+
+            this.cleanPicked();
+        }
+        else {
+            this.cleanPicked();
+            this.getAdjacentTiles(currentTileId);
+            
+            this.previousTileId = currentTileId;
+        }
+    }
+
+   
+
     choosePosition() {
 		if (this.gameOrchestrator.scene.pickMode == false) {
 			if (this.gameOrchestrator.scene.pickResults != null && this.gameOrchestrator.scene.pickResults.length > 0) {
@@ -129,6 +134,10 @@ class GameStateGame extends GameState {
                 this.gameOrchestrator.scene.pickResults.splice(0, this.gameOrchestrator.scene.pickResults.length);
             }
 		}
+    }
+
+    update(time) {
+        this.gameOrchestrator.lavaAnim.update(time);
     }
 
     display() {
