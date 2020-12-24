@@ -3,43 +3,17 @@ class GameStateGame extends GameState {
         super(gameOrchestrator, board);
 
         this.adjacent = null;
-        this.prevPicked = null;
+        this.previousTileId = null;
 
         this.whiteTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/white.jpg");
         this.blackTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/black.jpg");
     }
 
-    adjacent_cells(id) {
-        let row = ((id - 1) % this.board.boardLength) + 1;
-        let column = Math.floor((id - 1) / this.board.boardLength) + 1;
-        
-        let prev_row = row - 1;
-        let prev_column = column - 1;
-        let next_row = row + 1;
-        let next_column = column + 1;
-
-        this.adjacent = [
-            this.board.getTile(row, prev_column), 
-            this.board.getTile(row, next_column), 
-            this.board.getTile(prev_row, column), 
-            this.board.getTile(next_row, column)
-        ];
-
-        for (var i = 0; i < this.adjacent.length; i++) {
-            if(this.adjacent[i] != null) {
-                this.adjacent[i].validMove(true);
-            }
-        }
-
-    }
-
-    clean_adjacent() {
-        if(this.adjacent != null) {
-            for (var i = 0; i < this.adjacent.length; i++) {
-                if(this.adjacent[i] != null) {
-                    this.adjacent[i].validMove(false);
-                }
-            }
+    changeTurn() {
+        if(this.gameOrchestrator.currentTurnColor == "white") {
+            this.gameOrchestrator.currentTurnColor = "black";
+        } else {
+            this.gameOrchestrator.currentTurnColor = "white";
         }
     }
 
@@ -69,62 +43,86 @@ class GameStateGame extends GameState {
         }
     }
 
-    changeTurn() {
-        if(this.gameOrchestrator.currentTurnColor == "white") {
-            this.gameOrchestrator.currentTurnColor = "black";
-        } else {
-            this.gameOrchestrator.currentTurnColor = "white";
+    handlePicking(tile, currentTileId) {
+        if (tile.isDiff) {
+            let move = this.board.convertId(this.previousTileId);  // [Row, Column]
+            let orientation = this.board.getOrientation(this.previousTileId, currentTileId);
+            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+            let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
+            this.gameOrchestrator.server.makePrologRequest(validString, null, null, false);
+            let valid_result = this.gameOrchestrator.server.getResult();
+
+            if (valid_result == "valid") {
+                // --- Game move --- //
+                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.currentTurnColor, this.whiteTexture, this.blackTexture);
+                let gameMove = new MyGameMove(this.gameOrchestrator.piecesList, piece, [this.previousTileId, currentTileId]);
+
+                this.gameOrchestrator.lastMove = [this.previousTileId, currentTileId];
+                this.gameOrchestrator.animation = new MyPieceAnimation();
+                // --- Game move --- //
+                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.board));
+
+                this.updateBoardProlog();
+
+                this.changeTurn();
+            }
+
+            this.cleanPicked();
+        }
+        else {
+            this.cleanPicked();
+            this.getAdjacentTiles(currentTileId);
+            
+            this.previousTileId = currentTileId;
+        }
+    }
+
+    getAdjacentTiles(id) {
+        let row = ((id - 1) % this.board.boardLength) + 1;
+        let column = Math.floor((id - 1) / this.board.boardLength) + 1;
+        
+        let prev_row = row - 1;
+        let prev_column = column - 1;
+        let next_row = row + 1;
+        let next_column = column + 1;
+
+        this.adjacent = [
+            this.board.getTile(row, prev_column), 
+            this.board.getTile(row, next_column), 
+            this.board.getTile(prev_row, column), 
+            this.board.getTile(next_row, column)
+        ];
+
+        for (var i = 0; i < this.adjacent.length; i++) {
+            if(this.adjacent[i] != null) {
+                this.adjacent[i].validMove(true);
+            }
+        }
+
+    }
+
+    cleanPicked() {
+        if(this.adjacent != null) {
+            for (var i = 0; i < this.adjacent.length; i++) {
+                if(this.adjacent[i] != null) {
+                    this.adjacent[i].validMove(false);
+                }
+            }
         }
     }
 
     choosePosition() {
 		if (this.gameOrchestrator.scene.pickMode == false) {
-            let tile;
-            let customId;
 			if (this.gameOrchestrator.scene.pickResults != null && this.gameOrchestrator.scene.pickResults.length > 0) {
 				for (let i = 0; i < this.gameOrchestrator.scene.pickResults.length; i++) {
-					tile = this.gameOrchestrator.scene.pickResults[i][0];
+					let tile = this.gameOrchestrator.scene.pickResults[i][0];
 					if (tile) {
-                        customId = this.gameOrchestrator.scene.pickResults[i][1];
-
-                        if (tile.isDiff) {
-                            let move = this.board.convertId(this.prevPicked);  // [Row, Column]
-                            let orientation = this.board.getOrientation(this.prevPicked, customId);
-                            let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-                            let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
-                            this.gameOrchestrator.server.makePrologRequest(validString, null, null, false);
-                            let valid_result = this.gameOrchestrator.server.getResult();
-
-                            if (valid_result == "valid") {
-                                // --- Game move --- //
-                                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.currentTurnColor, this.whiteTexture, this.blackTexture);
-                                let gameMove = new MyGameMove(this.gameOrchestrator.piecesList, piece, [this.prevPicked, customId]);
-
-                                this.gameOrchestrator.lastMove = [this.prevPicked, customId];
-                                this.gameOrchestrator.animation = new MyPieceAnimation();
-                                // --- Game move --- //
-                                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.board));
-
-                                this.updateBoardProlog();
-
-                                this.changeTurn();
-                            }
-
-                            this.clean_adjacent();
-                        }
-                        else {
-                            this.clean_adjacent();
-                            this.adjacent_cells(customId);
-                            
-                            this.prevPicked = customId;
-                        }
-
-                        console.log("Picked object: " + tile + ", with pick id " + customId + " Previous " + this.prevPicked);
-                        console.log("------");
+                        let currentTileId = this.gameOrchestrator.scene.pickResults[i][1];
+                        this.handlePicking(tile, currentTileId);
                     }
                     else {
-                        this.clean_adjacent();
+                        this.cleanPicked();
                     }
                 }
                 
@@ -150,7 +148,7 @@ class GameStateGame extends GameState {
         // -- Piece Display -- //
         
         // -- Lava -- //
-        //this.gameOrchestrator.lavaAnim.apply();
+        this.gameOrchestrator.lavaAnim.apply();
         // -- Lava -- //
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
