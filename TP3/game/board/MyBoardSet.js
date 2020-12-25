@@ -1,19 +1,21 @@
 class MyBoardSet {
-    constructor(scene, boardList) {
+    constructor(scene, boardList, boardDisplacement, auxBoardDisplacement) {
         this.scene = scene;
 
-        this.board = new MyBoard(scene, boardList);
-        this.offset = this.board.boardLength/2;
+        this.boardDisplacement = boardDisplacement;
+        this.auxBoardDisplacement =  auxBoardDisplacement;
+
+        this.board = new MyBoard(scene, boardList, this.boardDisplacement);
         this.auxBoard = new MyAuxBoard(scene);
 
+        this.pieceAnimated = false;
+        this.pieceToPlay = new MyPiece(this.scene, 'white', null, null);
+
+        // --- Textures change this ---//
         this.tileMaterial = new CGFappearance(this.scene);
         this.tilesTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
         this.tileMaterial.setTexture(this.tilesTexture);
-
-        this.pieceToPlayPosition = [10, 0, 4];
-        this.pieceAnimated = false;
-        this.pieceToPlay = new MyPiece(this.scene, 'white', this.tilesTexture, this.tilesTexture);
-        this.pieceToPlay.updatePosition(0, 0, 0, 1);
+        // --- Textures change this ---//   
     }
 
     resetPiece() {
@@ -23,24 +25,17 @@ class MyBoardSet {
 
     display() {
         this.scene.pushMatrix();
-        //this.scene.translate(this.offset*3, -19, 0);
-        //this.auxBoard.display();
+        this.scene.translate(this.auxBoardDisplacement[0], this.auxBoardDisplacement[1], this.auxBoardDisplacement[2]);
+        this.auxBoard.display();
+
+        if(!this.pieceAnimated) {
+            this.pieceToPlay.display();
+        }
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        //this.scene.translate(-this.offset - 1, -19, -this.offset - 1);
+        this.scene.translate(this.boardDisplacement[0], this.boardDisplacement[1], this.boardDisplacement[2]);
         this.board.display();
-        
-        if(!this.pieceAnimated) {
-            this.scene.pushMatrix();
-            this.scene.translate(this.pieceToPlayPosition[0], this.pieceToPlayPosition[1], this.pieceToPlayPosition[2]);
-            this.pieceToPlay.display();
-            this.scene.popMatrix();
-        }
-        
-        for(var i = 0; i < this.board.pieceList.length; i++) {
-            this.board.pieceList[i].display();
-        }
         this.scene.popMatrix();
     }
 }

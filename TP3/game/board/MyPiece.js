@@ -1,26 +1,20 @@
 class MyPiece {
-	constructor(scene, color, texturea, textureb) {
+	constructor(scene, color, whiteTexture, blackTexture) {
         this.scene = scene;
         this.pieces = [];
-        this.x = 0;
         this.y = 1;
+
+        this.x = 0;
         this.z = 0;
-        this.xb = null;
-        this.zb = null;
+        this.xb = 0;
+        this.zb = 1;
         
         this.color = color;
-        this.whiteMaterial = new CGFappearance(scene);
-        this.blackMaterial = new CGFappearance(scene);
-        this.whiteTexture = texturea;
-        this.blackTexture = textureb;
 
-        this.whiteMaterial.setTexture(this.whiteTexture);
-        this.blackMaterial.setTexture(this.blackTexture);
+        this.pieceMaterial = new CGFappearance(scene);
+        this.whiteTexture = whiteTexture;
+        this.blackTexture = blackTexture;
 
-        this.initPieces();
-    }
-
-    initPieces() {
         this.pieces.push(new MyCube(this.scene));
         this.pieces.push(new MyCube(this.scene));
     }
@@ -36,29 +30,33 @@ class MyPiece {
     display() {
         this.scene.pushMatrix();
 
-        if(this.color == 'black') {
+        if(this.color == 'white') {
             this.scene.pushMatrix();
             this.scene.translate(this.x, this.y, this.z);
-            this.whiteMaterial.apply();
+            this.pieceMaterial.setTexture(this.whiteTexture);
+            this.pieceMaterial.apply();
             this.pieces[0].display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
             this.scene.translate(this.xb, this.y, this.zb);
-            this.blackMaterial.apply();
+            this.pieceMaterial.setTexture(this.blackTexture);
+            this.pieceMaterial.apply();
             this.pieces[1].display();
             this.scene.popMatrix();
         }
         else {
             this.scene.pushMatrix();
             this.scene.translate(this.x, this.y, this.z);
-            this.blackMaterial.apply();
+            this.pieceMaterial.setTexture(this.blackTexture);
+            this.pieceMaterial.apply();
             this.pieces[0].display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
             this.scene.translate(this.xb, this.y, this.zb);
-            this.whiteMaterial.apply();
+            this.pieceMaterial.setTexture(this.whiteTexture);
+            this.pieceMaterial.apply();
             this.pieces[1].display();
             this.scene.popMatrix();
         }

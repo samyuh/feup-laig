@@ -37,7 +37,7 @@ class MyGameOrchestrator {
 
         let board = this.server.getResult();
 
-        this.boardSet = new MyBoardSet(this.scene, board);
+        this.boardSet = new MyBoardSet(this.scene, board, [0, -19, 0], [10, -19, 4]);
         this.gameInfo = new MyGameInfo(this.scene, "white");
 
         this.board = this.boardSet.board;
@@ -106,8 +106,8 @@ class MyGameOrchestrator {
     }
 
     /* Update */
-    update(time) {
-        this.concreteState.update(time);
+    update(time, elapsedTime) {
+        this.concreteState.update(time, elapsedTime);
     }
 
     // --- General Display --- //

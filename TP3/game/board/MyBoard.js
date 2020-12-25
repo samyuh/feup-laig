@@ -1,16 +1,14 @@
 class MyBoard {
-	constructor(scene, boardList) {
+	constructor(scene, boardList, boardDisplacement) {
         this.scene = scene;
         
         this.boardList = boardList;
         this.boardLength = boardList.length;
+        this.boardDisplacement = boardDisplacement;
         this.tiles = [];
         this.pieceList = [];
-
-        this.xDisplacement = 0;
-        this.yDisplacement = 0;
-        this.zDisplacement = 0;
-
+        
+        // --- Textures change this ---//
         this.tileMaterial = new CGFappearance(scene);
         this.tilesTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
         this.tileMaterial.setTexture(this.tilesTexture);
@@ -18,8 +16,18 @@ class MyBoard {
         this.diff = new CGFappearance(scene);
         this.diffT = new CGFtexture(scene, "scenes/images/daenerys/cloth.jpg");
         this.diff.setTexture(this.diffT);
-
+        // --- Textures change this ---//
+        
         this.createTiles();
+    }
+
+    createTiles() {
+        this.tiles = [];
+        for (let i = 0; i < this.boardLength; i++) {
+            for (let j = 0; j < this.boardLength; j++) {
+                this.tiles.push(new MyTile(this.scene, j, i, this.tileMaterial, this.diff));
+            }
+        }
     }
 
     addPiece(piece) {
@@ -87,7 +95,7 @@ class MyBoard {
 
         console.log(orientation);
 
-        return [this.xDisplacement + row, this.yDisplacement, this.zDisplacement + column, rotate]
+        return [this.boardDisplacement[0] + row, this.boardDisplacement[1], this.boardDisplacement[2] + column, rotate]
     }
 
     getAdjacentTiles(id) {
@@ -115,15 +123,6 @@ class MyBoard {
         return adjacent;
     }
 
-    createTiles() {
-        this.tiles = [];
-        for (let i = 0; i < this.boardLength; i++) {
-            for (let j = 0; j < this.boardLength; j++) {
-                this.tiles.push(new MyTile(this.scene, j, i, this.tileMaterial, this.diff));
-            }
-        }
-    }
-
     getTile(row, column) {
         for (let i = 0; i < this.tiles.length; i++) {
             if (this.tiles[i].row == row && this.tiles[i].column == column)
@@ -139,6 +138,10 @@ class MyBoard {
             this.tiles[i].display();
         }
         this.scene.clearPickRegistration();
+
+        for(var i = 0; i < this.pieceList.length; i++) {
+            this.pieceList[i].display();
+        }
     }
 
     updateTexCoords(afs, aft) {

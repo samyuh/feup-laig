@@ -214,7 +214,7 @@ class XMLscene extends CGFscene {
         for (let k in this.graph[this.selectedTheme].spritesAnim)
             this.graph[this.selectedTheme].spritesAnim[k].update(elapsedTime / 1000);
 
-        this.gameOrchestrator.update(t);
+        this.gameOrchestrator.update(t, elapsedTime / 1000);
     }
 
     /**

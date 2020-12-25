@@ -89,7 +89,7 @@ class GameStateGame extends GameState {
 		}
     }
 
-    update(time) {
+    update(time, elapsedTime) {
         this.gameOrchestrator.lavaAnim.update(time);
     }
 

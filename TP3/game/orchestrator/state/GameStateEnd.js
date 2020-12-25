@@ -3,7 +3,7 @@ class GameStateEnd extends GameState {
         super(gameOrchestrator, board);
     }
 
-    update(time) {
+    update(time, elapsedTime) {
         this.gameOrchestrator.lavaAnim.update(time);
     }
 

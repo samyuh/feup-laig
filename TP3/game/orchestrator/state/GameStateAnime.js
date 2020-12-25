@@ -7,7 +7,10 @@ class GameStateAnime extends GameState {
         this.position = this.board.getCoordinates(finalPosition[0], finalPosition[1]);
 
         this.boardSet.pieceAnimated = true;
-        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, boardSet.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
+        this.pieceToPlayPosition = boardSet.auxBoardDisplacement;
+        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
+       
+    
     }
 
     putPiece() {
@@ -32,8 +35,8 @@ class GameStateAnime extends GameState {
         }
     }
 
-    update(time) {
-        this.animation.update(time);
+    update(time, elapsedTime) {
+        this.animation.update(time, elapsedTime);
         
         this.gameOrchestrator.lavaAnim.update(time);
     }

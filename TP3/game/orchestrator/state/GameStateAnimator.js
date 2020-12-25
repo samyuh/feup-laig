@@ -19,7 +19,7 @@ class GameStateAnimator {
 
     }
 
-    update(time) {
+    update(time, elapsedTime) {
         if (this.startTime == null) {
             this.startTime = time;
         } else {
