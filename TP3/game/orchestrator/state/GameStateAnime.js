@@ -3,19 +3,11 @@ class GameStateAnime extends GameState {
         super(gameOrchestrator, boardSet.board);
         this.piece = piece;
         this.boardSet = boardSet;
-        this.position = this.getCoordinates(finalPosition[0], finalPosition[1]);
+        this.board = boardSet.board;
+        this.position = this.board.getCoordinates(finalPosition[0], finalPosition[1]);
 
-        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, 0, finalPosition);
-    }
-
-    getCoordinates(prev, actual) {
-        let rowP = ((prev - 1) % 7) + 1;
-        let columnP = Math.floor((prev - 1) / 7) + 1;
-
-        let rowA = ((actual - 1) % 7) + 1;
-        let columnA = Math.floor((actual - 1) / 7) + 1;
-
-        return [rowP, columnP, rowA, columnA];
+        this.boardSet.pieceAnimated = true;
+        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, boardSet.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
     }
 
     putPiece() {
@@ -51,6 +43,7 @@ class GameStateAnime extends GameState {
             this.animation.apply();
         } else {
             this.putPiece();
+            this.boardSet.pieceAnimated = false;
             this.checkEndGame();
         }
 

@@ -2,7 +2,7 @@ class GameStateGame extends GameState {
     constructor(gameOrchestrator, board) {
         super(gameOrchestrator, board);
 
-        this.adjacent = null;
+        this.selectedTiles = null;
         this.previousTileId = null;
 
         this.whiteTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/white.jpg");
@@ -24,36 +24,11 @@ class GameStateGame extends GameState {
     }
     // --- Prolog -- //
 
-    getAdjacentTiles(id) {
-        let row = ((id - 1) % this.board.boardLength) + 1;
-        let column = Math.floor((id - 1) / this.board.boardLength) + 1;
-        
-        let prev_row = row - 1;
-        let prev_column = column - 1;
-        let next_row = row + 1;
-        let next_column = column + 1;
-
-        this.adjacent = [
-            this.board.getTile(row, prev_column), 
-            this.board.getTile(row, next_column), 
-            this.board.getTile(prev_row, column), 
-            this.board.getTile(next_row, column)
-        ];
-
-        for (var i = 0; i < this.adjacent.length; i++) {
-            if(this.adjacent[i] != null) {
-                this.adjacent[i].validMove(true);
-                console.log(this.adjacent[i]);
-            }
-        }
-
-    }
-
     cleanPicked() {
-        if(this.adjacent != null) {
-            for (var i = 0; i < this.adjacent.length; i++) {
-                if(this.adjacent[i] != null) {
-                    this.adjacent[i].validMove(false);
+        if(this.selectedTiles != null) {
+            for (var i = 0; i < this.selectedTiles.length; i++) {
+                if(this.selectedTiles[i] != null) {
+                    this.selectedTiles[i].validMove(false);
                 }
             }
         }
@@ -87,8 +62,8 @@ class GameStateGame extends GameState {
         }
         else {
             this.cleanPicked();
-            this.getAdjacentTiles(currentTileId);
-            
+
+            this.selectedTiles = this.board.getAdjacentTiles(currentTileId);
             this.previousTileId = currentTileId;
         }
     }
