@@ -49,6 +49,9 @@ class XMLscene extends CGFscene {
             'Default': 1,
         };
 
+        // -- REFACTOR -- //
+        this.lavaAnim = new MyWaveAnimation(this);
+
         this.numberLoadedThemes = 0;
         this.selectedTheme = 0;
         this.selectedView = 0;
@@ -214,7 +217,9 @@ class XMLscene extends CGFscene {
         for (let k in this.graph[this.selectedTheme].spritesAnim)
             this.graph[this.selectedTheme].spritesAnim[k].update(elapsedTime / 1000);
 
-        this.gameOrchestrator.update(t, elapsedTime / 1000);
+        this.gameOrchestrator.update(elapsedTime / 1000);
+
+        this.lavaAnim.update(t);
     }
 
     /**
@@ -254,6 +259,7 @@ class XMLscene extends CGFscene {
             
             // Displays the scene (MySceneGraph function).
             this.gameOrchestrator.display();
+            this.lavaAnim.apply();
         }
         else {
             // Show some "loading" visuals

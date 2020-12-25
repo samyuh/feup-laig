@@ -3,8 +3,8 @@ class GameStateEnd extends GameState {
         super(gameOrchestrator, board);
     }
 
-    update(time, elapsedTime) {
-        this.gameOrchestrator.lavaAnim.update(time);
+    update(elapsedTime) {
+        
     }
 
     display() {
@@ -13,9 +13,7 @@ class GameStateEnd extends GameState {
         this.gameOrchestrator.gameInfo.display();
         // -- Board -- //
 
-        // -- Lava -- //
-        this.gameOrchestrator.lavaAnim.apply();
-        // -- Lava -- //
+
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
 }

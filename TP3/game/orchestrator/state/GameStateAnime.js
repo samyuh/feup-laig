@@ -35,10 +35,8 @@ class GameStateAnime extends GameState {
         }
     }
 
-    update(time, elapsedTime) {
-        this.animation.update(time, elapsedTime);
-        
-        this.gameOrchestrator.lavaAnim.update(time);
+    update(elapsedTime) {
+        this.animation.update(elapsedTime);
     }
 
     display() {
@@ -55,10 +53,6 @@ class GameStateAnime extends GameState {
         this.gameOrchestrator.gameInfo.display();
         // -- Board -- //
         
-        // -- Lava -- //
-        this.gameOrchestrator.lavaAnim.apply();
-        // -- Lava -- //
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
-
     }
 }

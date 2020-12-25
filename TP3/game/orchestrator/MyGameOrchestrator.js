@@ -18,8 +18,6 @@ class MyGameOrchestrator {
 
         // PROLOG Connection
         this.server = new MyServer();
-        // -- REFACTOR -- //
-        this.lavaAnim = new MyWaveAnimation(this.scene);
         
         this.initBoard();
     }
@@ -106,8 +104,8 @@ class MyGameOrchestrator {
     }
 
     /* Update */
-    update(time, elapsedTime) {
-        this.concreteState.update(time, elapsedTime);
+    update(elapsedTime) {
+        this.concreteState.update(elapsedTime);
     }
 
     // --- General Display --- //

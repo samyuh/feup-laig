@@ -3,7 +3,7 @@ class MyPieceAnimation {
         this.scene = scene;
         this.totalTime = 1.75;
         this.currentTime = 0;
-        this.startTime = null;
+        this.startTime = 0;
         this.active = true;
 
         this.pieceToPlay = pieceToPlay;
@@ -24,16 +24,13 @@ class MyPieceAnimation {
         // --- TODO : MAKING OTHER PIECE APPEAR -- //
     }
 
-    update(time, elapsedTime) {
-        if(this.startTime == null) {
-            this.startTime = time;
-        } else {
-            this.currentTime = (time - this.startTime);
-        }
+    update(elapsedTime) {
+        this.currentTime += elapsedTime;
 
-        if(this.totalTime*1000 <= this.currentTime) {
+        if(this.totalTime <= this.currentTime) {
             this.active = false;
         }
+
         this.keyFrameAnim.update(elapsedTime);
     }
 

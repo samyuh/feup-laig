@@ -3,7 +3,7 @@ class GameStateLoading extends GameState {
         super(gameOrchestrator, board);
     }
 
-    update(time, elapsedTime) {
+    update(elapsedTime) {
         
     }
 
