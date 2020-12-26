@@ -39,7 +39,7 @@ class MyWaveAnimation {
     /** 
     * Apply the animation matrix to the scene
     */
-    apply() {
+    display() {
         this.scene.pushMatrix();
         this.appearance.apply();
 
@@ -58,4 +58,13 @@ class MyWaveAnimation {
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }
+
+     /**
+   * Updates the list of texture coordinates - Not used on MyCube
+   * @param {integer} afs - dx/afs
+   * @param {integer} aft - dy/aft
+   */
+  updateTexCoords(afs, aft) {
+    // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
+  }
 }

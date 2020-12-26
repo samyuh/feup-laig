@@ -18,6 +18,10 @@ class MyGameOrchestrator {
 
         // PROLOG Connection
         this.server = new MyServer();
+
+        // Scene
+        this.boardDisplacement = [-5, -19, -5];
+        this.auxBoardDisplacement = [10, -19, 0];
         
         this.initBoard();
     }
@@ -35,7 +39,7 @@ class MyGameOrchestrator {
 
         let board = this.server.getResult();
 
-        this.boardSet = new MyBoardSet(this.scene, board, [0, -19, 0], [10, -19, 4]);
+        this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement);
         this.gameInfo = new MyGameInfo(this.scene, "white");
 
         this.board = this.boardSet.board;

@@ -43,14 +43,10 @@ class XMLscene extends CGFscene {
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
 
-        
         this.textureIds = {
             'Fire': 0,
             'Default': 1,
         };
-
-        // -- REFACTOR -- //
-        this.lavaAnim = new MyWaveAnimation(this);
 
         this.numberLoadedThemes = 0;
         this.selectedTheme = 0;
@@ -65,9 +61,6 @@ class XMLscene extends CGFscene {
         this.graph = [];
         let theme1 = new MySceneGraph("game.xml", this);
         let theme2 = new MySceneGraph("game2.xml", this);
-
-        
-        //this.graph[0].onXMLReady();
     }
 
     /**
@@ -199,6 +192,7 @@ class XMLscene extends CGFscene {
      * @param {integer} t 
      */
     update(t) {
+        // -- Time Parser -- //
         let elapsedTime;
 
         if(this.time == null) 
@@ -207,19 +201,27 @@ class XMLscene extends CGFscene {
             elapsedTime = t - this.time;
 
         this.time = t;
+        // -- Time Parser -- //
 
+        // -- Camera Animation -- //
         if (this.animationCamera != null)
             this.animationCamera.update(elapsedTime / 1000);
+        // -- Camera Animation -- //
+
+        // -- Scene Graph Animations -- //
+        for (let k in this.graph[this.selectedTheme].shadersAnim)
+            this.graph[this.selectedTheme].shadersAnim[k].update(t);
 
         for (let k in this.graph[this.selectedTheme].keyframesAnimation)
             this.graph[this.selectedTheme].keyframesAnimation[k].update(elapsedTime / 1000);
 
         for (let k in this.graph[this.selectedTheme].spritesAnim)
             this.graph[this.selectedTheme].spritesAnim[k].update(elapsedTime / 1000);
+        // -- Scene Graph Animations -- //
 
+        // -- Game Orchestrator Animations -- //
         this.gameOrchestrator.update(elapsedTime / 1000);
-
-        this.lavaAnim.update(t);
+        // -- Game Orchestrator Animations -- //
     }
 
     /**
@@ -259,7 +261,7 @@ class XMLscene extends CGFscene {
             
             // Displays the scene (MySceneGraph function).
             this.gameOrchestrator.display();
-            this.lavaAnim.apply();
+            //this.lavaAnim.display();
         }
         else {
             // Show some "loading" visuals

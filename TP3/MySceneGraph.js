@@ -1025,6 +1025,7 @@ class MySceneGraph {
 
         this.nodes = [];
         this.spritesAnim = [];
+        this.shadersAnim = [];
 
         var grandChildren = [];
         var nodeNames = [];
@@ -1318,7 +1319,7 @@ class MySceneGraph {
                 }
             } else if (descendants[j].nodeName == "leaf") {
                 let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus',
-                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel']);
+                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim']);
 
                 if (type == null) {
                     this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
@@ -1337,6 +1338,8 @@ class MySceneGraph {
 
                         if (type =="spriteanim") {
                             this.spritesAnim.push(nPrimitive);
+                        } else if (type == "waveanim") {
+                            this.shadersAnim.push(nPrimitive);
                         }
                     }
                 }
@@ -1378,6 +1381,8 @@ class MySceneGraph {
                 return this.parsePatch(descendants, messageError);
             case "defbarrel":
                 return this.parseDefbarrel(descendants, messageError);
+            case "waveanim":
+                return new MyWaveAnimation(this.scene);
             default:
                 return "not a valid leaf on node " + messageError;
         }

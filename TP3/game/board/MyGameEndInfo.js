@@ -2,8 +2,8 @@ class MyGameEndInfo {
     constructor(scene, info) {
         this.scene = scene;
 
-         // -- Player Turn -- //
-         this.gameWinner = new MySpriteText(this.scene, "Winner: " +  info[0]);
+        // -- Player Turn -- //
+        this.gameWinner = new MySpriteText(this.scene, "Winner: " +  info[0]);
         this.gameScore = new MySpriteText(this.scene, "Score: " +  info[1]);
     }
 

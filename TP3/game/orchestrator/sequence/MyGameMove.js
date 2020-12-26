@@ -8,10 +8,12 @@
  * * @param {MyBoard} board - Gameboard state before the move
  */
 class MyGameMove {
-	constructor(prevBoard, piece, color) {
+	constructor(prevBoard, piece, color, startPosition, finalPosition) {
         this.prevBoard = prevBoard;
         this.piece = piece;
         this.color = color;
+        this.startPosition = startPosition;
+        this.finalPosition = finalPosition;
     }
 
     animate() {

@@ -1,7 +1,7 @@
 class GameStateGame extends GameState {
     constructor(gameOrchestrator, board) {
         super(gameOrchestrator, board);
-
+        this.board = board;
         this.selectedTiles = null;
         this.previousTileId = null;
 
@@ -48,11 +48,19 @@ class GameStateGame extends GameState {
             if (result == "valid") {
                 // --- Game move --- //
                 let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.whiteTexture, this.blackTexture); 
-
-                // push move to animator    
-                this.gameOrchestrator.gameSequence.addMove(new MyGameMove(this.gameOrchestrator.piecesList, piece, this.gameOrchestrator.turn));
-
                 this.lastMove = [this.previousTileId, currentTileId];
+                
+                // push move to animator    
+                this.gameOrchestrator.gameSequence.addMove(
+                    new MyGameMove(
+                        this.gameOrchestrator.piecesList, 
+                        piece,
+                        this.gameOrchestrator.turn, 
+                        this.gameOrchestrator.boardSet.auxBoardDisplacement, 
+                        this.board.getPieceFinalPosition(this.lastMove[0], this.lastMove[1]))
+                    );
+
+                
                 // --- Game move --- //
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, this.lastMove));
                 this.updateBoardProlog();

@@ -108,6 +108,7 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
+                <leaf type="waveanim" />
                 <noderef id="pit" />
                 <noderef id="columns" />
                 <noderef id="floating-base" />
