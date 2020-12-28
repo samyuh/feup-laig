@@ -22,6 +22,13 @@ class MyGameOrchestrator {
         // Scene
         this.boardDisplacement = [-5, -19, -5];
         this.auxBoardDisplacement = [10, -19, 0];
+
+        this.player = {
+            Player: '1', Random: '2', Intelligent: '3'
+        };
+
+        this.player1 = this.player.Player;
+        this.player2 = this.player.Player;
         
         this.initBoard();
     }
@@ -64,7 +71,7 @@ class MyGameOrchestrator {
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        this.concreteState = new GameStateGame(this, this.board);
+        this.concreteState = new GameStateBot(this, this.board);
     }
 
     /* Interface */
@@ -110,6 +117,19 @@ class MyGameOrchestrator {
     /* Update */
     update(elapsedTime) {
         this.concreteState.update(elapsedTime);
+        if (!(this.concreteState instanceof GameStateGame)) {
+            return;
+        }
+
+        /*switch(this.gameMode) {
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }*/
     }
 
     // --- General Display --- //

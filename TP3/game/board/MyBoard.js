@@ -42,7 +42,29 @@ class MyBoard {
         return [row, column];
     }
     // --- Refactor this functions idk what it does -- //
+    
+    getCoordinates2(row, column, orientation) {
+        let row2 = row, column2 = column;
 
+        switch(orientation) {
+            case "up":
+                row2 = row - 1;
+                break;
+            case "down":
+                row2 = row + 1;
+                break;
+            case "left":
+                column2 = column - 1;
+                break;
+            case "right":
+                column2 = column + 1;
+                break;
+        }
+
+        //return [row-1, column-1, row2-1, column2-1];
+        return [column-1, row-1, column2-1, row2-1];
+    }
+    
     getCoord(prev) {
         let rowP = ((prev - 1) % 7);
         let columnP = Math.floor((prev - 1) / 7);

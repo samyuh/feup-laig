@@ -117,6 +117,23 @@ parse_input(valid_move(_, _), Vjson) :- json_to_atom(invalid, Vjson, [compact(tr
 
 parse_input(movePlayer(GameState, L-C-O-Color), Mjson) :- move(GameState, L-C-O-Color, NewGameState), json_to_atom(NewGameState, Mjson, [compact(true)]).
 
+
+parse_input(chooseRandom(GameState, Color), Json) :-
+	choose_move(GameState, Color, random, L-C-O),
+	json_to_atom([L,C,O], Json, [compact(true)]).
+
+parse_input(moveRandom(GameState, L-C-O-Color), Mjson) :-
+	move(GameState, L-C-O-Color, NextBoard),
+	json_to_atom(NextBoard, Mjson, [compact(true)]).
+
+parse_input(chooseIntelligent(GameState, Color), Json) :-
+	choose_move(GameState, Color, intelligent, L-C-O),
+	json_to_atom([L,C,O], Json, [compact(true)]).
+
+parse_input(moveIntelligent(GameState, L-C-O-Color), Mjson) :-
+	move(GameState, L-C-O-Color, NextBoard),
+	json_to_atom(NextBoard, Mjson, [compact(true)]).
+
 parse_input(undo(GameState, L-C-BL-BC), Mjson) :- undo(GameState, L-C-BL-BC, NewGameState), json_to_atom(NewGameState, Mjson, [compact(true)]).
 
 parse_input(game_over(GameBoard), Json) :- game_over(GameBoard, Winner-Number), json_to_atom([Winner, Number], Json, [compact(true)]).
