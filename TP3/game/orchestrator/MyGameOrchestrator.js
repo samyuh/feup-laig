@@ -30,6 +30,8 @@ class MyGameOrchestrator {
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
         
+        this.difficulty = "random";
+        this.difficultyHard = "hard";
         this.initBoard();
     }
 
@@ -58,9 +60,21 @@ class MyGameOrchestrator {
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
+            this.updatePlayerState();
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
+            this.updatePlayerState();
+        }
+    }
+
+    updatePlayerState() {
+        if (this.player1 == 1) {
+            this.concreteState = new GameStateGame(this, this.board);
+        } else if (this.player1 == 2) {
+            this.concreteState = new GameStateBot(this, this.board, "random");
+        } else if (this.player1 == 3) {
+            this.concreteState = new GameStateBot(this, this.board, "hard");
         }
     }
 
@@ -70,8 +84,8 @@ class MyGameOrchestrator {
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
-
-        this.concreteState = new GameStateBot(this, this.board);
+        
+        this.updatePlayerState();
     }
 
     /* Interface */
