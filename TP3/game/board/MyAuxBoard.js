@@ -1,10 +1,9 @@
 class MyAuxBoard {
-	constructor(scene) {
+	constructor(scene, auxBoardTexture) {
         this.scene = scene;
 
         this.tileMaterial = new CGFappearance(scene);
-        this.tilesTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
-        this.tileMaterial.setTexture(this.tilesTexture);
+        this.tileMaterial.setTexture(auxBoardTexture);
 
         this.auxBoard = new MyCube(this.scene);
     }

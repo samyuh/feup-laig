@@ -1,5 +1,5 @@
 class MyBoard {
-	constructor(scene, boardList, boardDisplacement) {
+	constructor(scene, boardList, boardDisplacement, boardTexture) {
         this.scene = scene;
         
         this.boardList = boardList;
@@ -8,15 +8,15 @@ class MyBoard {
         this.tiles = [];
         this.pieceList = [];
         
-        // --- Textures change this ---//
+        // --- Textures --- //
         this.tileMaterial = new CGFappearance(scene);
-        this.tilesTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
-        this.tileMaterial.setTexture(this.tilesTexture);
+        this.tileMaterial.setTexture(boardTexture);
 
-        this.diff = new CGFappearance(scene);
-        this.diffT = new CGFtexture(scene, "scenes/images/daenerys/cloth.jpg");
-        this.diff.setTexture(this.diffT);
-        // --- Textures change this ---//
+        this.selectedTexture = new CGFappearance(scene);
+        this.selectedTexture.setAmbient(0.0, 0.0, 0.0, 1.0);
+        this.selectedTexture.setDiffuse(0.8, 0.4, 0.1, 1.0);
+        this.selectedTexture.setSpecular(0.8, 0.0, 0.0, 1.0);
+        this.selectedTexture.setShininess(5.0);
         
         this.createTiles();
     }
@@ -25,7 +25,7 @@ class MyBoard {
         this.tiles = [];
         for (let i = 0; i < this.boardLength; i++) {
             for (let j = 0; j < this.boardLength; j++) {
-                this.tiles.push(new MyTile(this.scene, j, i, this.tileMaterial, this.diff));
+                this.tiles.push(new MyTile(this.scene, j, i, this.tileMaterial, this.selectedTexture));
             }
         }
     }

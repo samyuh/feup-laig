@@ -15,9 +15,7 @@ class GameStateAnime extends GameState {
 
     putPiece() {
         this.piece.updatePosition(this.position[0], this.position[1], this.position[2], this.position[3]);
-        this.board.addPiece(this.piece);
-
-        this.boardSet.resetPiece();
+        this.board.addPiece(this.piece);     
     }
 
     checkEndGame() {
@@ -32,6 +30,7 @@ class GameStateAnime extends GameState {
         else {
             this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.board));
             this.gameOrchestrator.changeTurn();
+            this.boardSet.resetPiece(this.gameOrchestrator.turn);
         }
     }
 

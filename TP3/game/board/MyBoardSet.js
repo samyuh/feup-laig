@@ -1,26 +1,24 @@
 class MyBoardSet {
-    constructor(scene, boardList, boardDisplacement, auxBoardDisplacement) {
+    constructor(scene, boardList, boardDisplacement, auxBoardDisplacement, boardTexture, auxBoardTexture, whiteTileTexture, blackTileTexture) {
         this.scene = scene;
 
         this.boardDisplacement = boardDisplacement;
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
-        this.board = new MyBoard(scene, boardList, this.boardDisplacement);
-        this.auxBoard = new MyAuxBoard(scene);
+        this.whiteTileTexture = whiteTileTexture;
+        this.blackTileTexture = blackTileTexture;
+        this.boardTexture = boardTexture;
+        this.auxBoardTexture = auxBoardTexture;
+
+        this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
+        this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+        this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
 
         this.pieceAnimated = false;
-        this.pieceToPlay = new MyPiece(this.scene, 'white', null, null);
-
-        // --- Textures change this ---//
-        this.tileMaterial = new CGFappearance(this.scene);
-        this.tilesTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
-        this.tileMaterial.setTexture(this.tilesTexture);
-        // --- Textures change this ---//   
     }
 
-    resetPiece() {
-        //this.pieceToPlay = new MyPiece(this.scene, 'white', this.tilesTexture, this.tilesTexture);
-        //this.pieceToPlay.updatePosition(this.offset*4 + 1, 4, this.offset*4 + 1, 5);
+    resetPiece(color) {
+        this.pieceToPlay = new MyPiece(this.scene, color, this.blackTileTexture, this.whiteTileTexture);
     }
 
     display() {

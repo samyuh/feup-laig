@@ -15,8 +15,4 @@ class MyGameMove {
         this.startPosition = startPosition;
         this.finalPosition = finalPosition;
     }
-
-    animate() {
-        
-    }
 }

@@ -23,6 +23,12 @@ class MyGameOrchestrator {
         this.boardDisplacement = [-5, -19, -5];
         this.auxBoardDisplacement = [10, -19, 0];
         
+        // -- Textures -- //
+        this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
+        this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
+        this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
+        this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
+
         this.initBoard();
     }
 
@@ -39,7 +45,7 @@ class MyGameOrchestrator {
 
         let board = this.server.getResult();
 
-        this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement);
+        this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
         this.gameInfo = new MyGameInfo(this.scene, "white");
 
         this.board = this.boardSet.board;

@@ -4,9 +4,6 @@ class GameStateGame extends GameState {
         this.board = board;
         this.selectedTiles = null;
         this.previousTileId = null;
-
-        this.whiteTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/white.jpg");
-        this.blackTexture = new CGFtexture(this.gameOrchestrator.scene, "scenes/images/black.jpg");
     }
 
     // --- Prolog -- //
@@ -47,7 +44,7 @@ class GameStateGame extends GameState {
             // --- Prolog -- //
             if (result == "valid") {
                 // --- Game move --- //
-                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.whiteTexture, this.blackTexture); 
+                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
                 this.lastMove = [this.previousTileId, currentTileId];
                 
                 // push move to animator    

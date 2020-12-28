@@ -5,9 +5,9 @@ class MyPiece {
         this.y = 1;
 
         this.x = 0;
-        this.z = 0;
+        this.z = 1;
         this.xb = 0;
-        this.zb = 1;
+        this.zb = 0;
         
         this.color = color;
 
