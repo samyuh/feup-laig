@@ -10,7 +10,7 @@ class MyAuxBoard {
 
     display() {
         this.scene.pushMatrix();
-        this.scene.scale(3, 1, 14);
+        this.scene.scale(5, 1, 14);
         this.tileMaterial.apply();
         this.auxBoard.display();
         this.scene.popMatrix();

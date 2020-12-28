@@ -4,6 +4,7 @@ class GameStateGame extends GameState {
         this.board = board;
         this.selectedTiles = null;
         this.previousTileId = null;
+        this.turnTimer = 0;
     }
 
     // --- Prolog -- //
@@ -95,10 +96,16 @@ class GameStateGame extends GameState {
     }
 
     update(elapsedTime) {
-        
+        this.turnTimer += elapsedTime;
+        if(this.turnTimer >= 60) {
+            this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
+            this.gameOrchestrator.createGameStats(["Ninguem", "ganhou"]);
+        }
     }
 
     display() {
+        console.log(this.turnTimer);
+
         this.pickBoardTile();
         
         // -- Board -- //

@@ -1,8 +1,9 @@
 class MyGameInfo {
-    constructor(scene, turn) {
+    constructor(scene, turn, displacement) {
         this.scene = scene;
         this.turn = turn;
 
+        this.displacement = displacement;
          // -- Player Turn -- //
          this.whiteTurn = new MySpriteText(this.scene, "Turn: white");
          this.blackTurn = new MySpriteText(this.scene, "Turn: black");
@@ -10,7 +11,7 @@ class MyGameInfo {
 
     display() {
         this.scene.pushMatrix();
-        this.scene.translate(1, 6, 0);
+        this.scene.translate(this.displacement[0] + 3, 6 + this.displacement[1], this.displacement[2]);
         if (this.turn == "white")
             this.whiteTurn.display();
         else if (this.turn == "black")

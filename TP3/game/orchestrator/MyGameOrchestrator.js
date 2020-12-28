@@ -46,7 +46,7 @@ class MyGameOrchestrator {
         let board = this.server.getResult();
 
         this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-        this.gameInfo = new MyGameInfo(this.scene, "white");
+        this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement);
 
         this.board = this.boardSet.board;
         this.turn = "white";
@@ -110,7 +110,7 @@ class MyGameOrchestrator {
     }
 
     createGameStats(gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, gameOverData);
+        this.gameInfo = new MyGameEndInfo(this.scene, gameOverData, this.boardDisplacement);
     }
 
     /* Update */
