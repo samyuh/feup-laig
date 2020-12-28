@@ -96,6 +96,9 @@ class MyInterface extends CGFinterface {
         this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset');
         this.gameInterface.add(this.scene.gameOrchestrator, 'movie').name('Movie');
         this.gameInterface.add(this.scene.gameOrchestrator, 'undo').name('Undo');
+        
+        this.gameInterface.add(this.scene.gameOrchestrator, 'player1', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("Player 1");
+        this.gameInterface.add(this.scene.gameOrchestrator, 'player2', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("Player 2");
 
         this.gameInterface.open();
     }

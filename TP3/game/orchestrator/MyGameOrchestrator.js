@@ -22,6 +22,13 @@ class MyGameOrchestrator {
         // Scene
         this.boardDisplacement = [-5, -19, -5];
         this.auxBoardDisplacement = [10, -19, 0];
+
+        this.player = {
+            Player: '1', Random: '2', Intelligent: '3'
+        };
+
+        this.player1 = this.player.Player;
+        this.player2 = this.player.Player;
         
         // -- Textures -- //
         this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
@@ -29,6 +36,8 @@ class MyGameOrchestrator {
         this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
         this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
 
+        this.difficulty = "random";
+        this.difficultyHard = "hard";
         this.initBoard();
     }
 
@@ -57,9 +66,21 @@ class MyGameOrchestrator {
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
+            this.updatePlayerState();
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
+            this.updatePlayerState();
+        }
+    }
+
+    updatePlayerState() {
+        if (this.player1 == 1) {
+            this.concreteState = new GameStateGame(this, this.board);
+        } else if (this.player1 == 2) {
+            this.concreteState = new GameStateBot(this, this.board, "random");
+        } else if (this.player1 == 3) {
+            this.concreteState = new GameStateBot(this, this.board, "hard");
         }
     }
 
@@ -69,8 +90,8 @@ class MyGameOrchestrator {
 
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
-
-        this.concreteState = new GameStateGame(this, this.board);
+        
+        this.updatePlayerState();
     }
 
     /* Interface */
@@ -116,6 +137,19 @@ class MyGameOrchestrator {
     /* Update */
     update(elapsedTime) {
         this.concreteState.update(elapsedTime);
+        if (!(this.concreteState instanceof GameStateGame)) {
+            return;
+        }
+
+        /*switch(this.gameMode) {
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }*/
     }
 
     // --- General Display --- //

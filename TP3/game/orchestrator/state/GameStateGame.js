@@ -49,6 +49,7 @@ class GameStateGame extends GameState {
                 this.lastMove = [this.previousTileId, currentTileId];
                 
                 // push move to animator    
+                this.gameOrchestrator.gameMode 
                 this.gameOrchestrator.gameSequence.addMove(
                     new MyGameMove(
                         this.gameOrchestrator.piecesList, 
@@ -73,8 +74,6 @@ class GameStateGame extends GameState {
             this.previousTileId = currentTileId;
         }
     }
-
-   
 
     pickBoardTile() {
 		if (this.gameOrchestrator.scene.pickMode == false) {
