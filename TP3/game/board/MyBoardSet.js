@@ -43,6 +43,10 @@ class MyBoardSet {
 
         this.scene.pushMatrix();
         this.scene.translate(this.boardDisplacement[0], this.boardDisplacement[1], this.boardDisplacement[2]);
+        if (this.board.boardLength == 7)
+            this.scene.translate(2, 0, 2);
+        else if (this.board.boardLength == 9)
+            this.scene.translate(1, 0, 1);
         this.board.display();
         this.scene.popMatrix();
     }

@@ -50,6 +50,7 @@
         <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
         <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
         <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
+        <texture id="infoBackground" path="./scenes/images/info-background.jpg" />
     </textures>
 
     <spritesheets>
@@ -122,6 +123,7 @@
                 <noderef id="columns" />
                 <noderef id="floating-base" />
                 <noderef id="skybox" />
+                <noderef id="info-background" />
             </descendants>
         </node>
 
@@ -484,6 +486,23 @@
 
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="info-background">
+            <material id="null" />
+
+            <texture id="infoBackground">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="-5.0" z="-5.6" />
+                <scale sx="24" sy="15" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
 
