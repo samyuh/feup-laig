@@ -12,7 +12,7 @@ class MyServer {
             console.log("Request received. Reply: ", JSON.parse(data.target.response));
             request.result = JSON.parse(data.target.response);
         };
-        request.onerror = onError || function(){console.log("Error waiting for response");};
+        request.onerror = onError || function() {console.log("Error waiting for response");};
 
         if (async)
             request.timeout = 2000;
@@ -30,5 +30,28 @@ class MyServer {
 
     getResult() {
         return this.request.result;
+    }
+
+    // -- Prolog Requests ---- //
+
+    updateBoardProlog(gameOrchestrator, board, lastMove) {
+        let p = new Promise((resolve, reject) => {
+            let move = board.convertId(lastMove[0]);
+            let orientation = board.getOrientation(lastMove[0], lastMove[1]);
+
+            let stringBoard = JSON.stringify(board.boardList).replaceAll("\"", "");
+
+            let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + gameOrchestrator.turn + ')';
+            this.makePrologRequest(moveString, null, null, false);
+
+            let new_board = this.getResult();
+
+            resolve(new_board);
+        });
+
+        p.then((message) => {
+            console.log("THIS IS RECEIVED" + message);
+            board.boardList = message;
+        });
     }
 }

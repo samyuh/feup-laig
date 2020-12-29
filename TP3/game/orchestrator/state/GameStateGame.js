@@ -7,21 +7,6 @@ class GameStateGame extends GameState {
         this.turnTimer = 0;
     }
 
-    // --- Prolog -- //
-    updateBoardProlog() {
-        let move = this.board.convertId(this.lastMove[0]);  // [Row, Column]
-        let orientation = this.board.getOrientation(this.lastMove[0], this.lastMove[1]);
-        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-
-        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.turn + ')';
-        this.gameOrchestrator.server.makePrologRequest(moveString, null, null, false);
-
-        let new_board = this.gameOrchestrator.server.getResult();
-
-        this.board.boardList = new_board;
-    }
-    // --- Prolog -- //
-
     cleanPicked() {
         if(this.selectedTiles != null) {
             for (var i = 0; i < this.selectedTiles.length; i++) {
@@ -61,7 +46,7 @@ class GameStateGame extends GameState {
 
                 // --- Game move --- //
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, this.lastMove));
-                this.updateBoardProlog();
+                this.gameOrchestrator.server.updateBoardProlog(this.gameOrchestrator, this.board,this.lastMove);
             }
 
             this.cleanPicked();
