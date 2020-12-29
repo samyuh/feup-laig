@@ -11,6 +11,9 @@ class MyGameInfo {
          this.whiteTurn = new MySpriteText(this.scene, "Turn: white", this.spriteSheet);
          this.blackTurn = new MySpriteText(this.scene, "Turn: black", this.spriteSheet);
          this.timer = new MySpriteText(this.scene, "Turn Time: 0", this.spriteSheet);
+         // TO DO
+         this.whiteScore = new MySpriteText(this.scene, "White Score: ", this.spriteSheet);
+         this.blackScore = new MySpriteText(this.scene, "Black Score: ", this.spriteSheet);
     }
 
     update(time) {
