@@ -20,9 +20,6 @@ class MyGameOrchestrator {
         this.server = new MyServer();
 
         // Scene
-        this.boardDisplacement = [-5, -19, -5];
-        this.auxBoardDisplacement = [10, -19, 0];
-
         this.player = {
             Player: '1', Random: '2', Intelligent: '3'
         };
@@ -31,19 +28,6 @@ class MyGameOrchestrator {
         this.player2 = this.player.Player;
         this.boardSize = '7';
         this.timeout = 30;
-        
-        // -- Textures -- //
-        this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
-        this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
-        this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
-        this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
-
-        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
-
-        this.difficulty = "random";
-        this.difficultyHard = "hard";
-        
-        this.initBoard();
     }
 
     /* Init Function */
@@ -66,7 +50,7 @@ class MyGameOrchestrator {
         this.turn = "white";
         this.piecesList = this.board.pieceList; // Pieces on board
 
-        this.graphLoaded = false;
+        this.updatePlayerState1();
     }
 
     changeTurn() {
@@ -112,12 +96,22 @@ class MyGameOrchestrator {
         
         this.graphLoaded = true;
 
-        this.updatePlayerState1();
+        this.boardDisplacement = this.graph.boardDisplacement;
+        this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
+
+        this.boardTexture = this.graph.boardTexture;
+        this.auxBoardTexture = this.graph.auxBoardTexture;
+        this.whiteTexture = this.graph.whiteTexture;
+        this.blackTexture = this.graph.blackTexture;
+
+        this.spriteSheet = this.graph.spriteSheet;
+
+        this.initBoard();
     }
 
     initGame() {
         if(this.graphLoaded) {
-            this.updatePlayerState1();
+            this.initBoard();
         }
     }
 

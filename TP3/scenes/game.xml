@@ -46,6 +46,10 @@
         <texture id="skyboxFloor" path="./scenes/images/skybox/floor.png" />
         <texture id="volcanic" path="./scenes/images/volcanic.jpg" />
         <texture id="volcanicPit" path="./scenes/images/volcanic-pit.jpg" />
+        <texture id="mainBoardTexture" path="./scenes/images/wood.jpg" />
+        <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
+        <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
+        <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
     </textures>
 
     <spritesheets>
@@ -84,12 +88,17 @@
     </animations>t
 
     <boardgame>
-      <board>
-        <texture id="boardTexture" />
+      <board x="-5" y="-19" z="-5">
+        <texture id="mainBoardTexture" />
       </board>
       
-      <auxboard />
-      <piece />
+      <auxboard x="10" y="-19" z="0">
+        <texture id="auxBoardTexture" />
+      </auxboard>
+      <piece>
+        <texture id="whitePieceTexture" />
+        <texture id="blackPieceTexture" />
+      </piece>
     </boardgame>
 
     <nodes>

@@ -77,9 +77,17 @@
     </animations>t
 
     <boardgame>
-      <board />
-      <auxboard />
-      <piece />
+      <board x="-5" y="-19" z="-5">
+        <texture id="mainBoardTexture" />
+      </board>
+      
+      <auxboard x="10" y="-19" z="0">
+        <texture id="auxBoardTexture" />
+      </auxboard>
+      <piece>
+        <texture id="whitePieceTexture" />
+        <texture id="blackPieceTexture" />
+      </piece>
     </boardgame>
 
     <nodes>

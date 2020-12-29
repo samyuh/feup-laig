@@ -642,9 +642,12 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        // Spritesheet Text
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+
         //For each texture in textures block, check ID and file URL
         this.textures = {};
-
+        
         var children = texturesNode.children;
 
         for (var i = 0; i < children.length; i++) {
@@ -997,21 +1000,54 @@ class MySceneGraph {
         let piece = children[2]; 
         
         if(board.nodeName != "board") {
-            console.log("erro");
+            console.log("Missing <board> on boardgame.  Using Default Values");
+
+            this.boardDisplacement = [-5, -19, -5];
+            this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
+        }
+        else {
+            let boardX = this.reader.getFloat(board, 'x');
+            let boardY = this.reader.getFloat(board, 'y');
+            let boardZ = this.reader.getFloat(board, 'z');
+            
+            let boardTextureInfo = board.children[0];
+            let boardTexture = this.reader.getString(boardTextureInfo, 'id');
+
+            this.boardDisplacement = [boardX, boardY, boardZ];
+            this.boardTexture = this.textures[boardTexture];
         }
         if(auxBoard.nodeName != "auxboard") {
-            console.log("erro");
+            console.log("Missing <auxboard> on boardgame. Using Default Values");
+
+            this.auxBoardDisplacement = [10, -19, 0];
+            this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
+        }
+        else {
+            let auxBoardX = this.reader.getFloat(auxBoard, 'x');
+            let auxBoardY = this.reader.getFloat(auxBoard, 'y');
+            let auxBoardZ = this.reader.getFloat(auxBoard, 'z');
+
+            let auxBoardTextureInfo = auxBoard.children[0];
+            let auxBoardTexture = this.reader.getString(auxBoardTextureInfo, 'id');
+
+            this.auxBoardDisplacement = [auxBoardX, auxBoardY, auxBoardZ];
+            this.auxBoardTexture = this.textures[auxBoardTexture];
         }
         if(piece.nodeName != "piece") {
-            console.log("erro");
-        }
+            console.log("Missing <piece> on boardgame.  Using Default Values");
 
-        //this.board = new MyBoard(this.scene, 7, 7);
-        this.auxBoard = null;
-        this.piece = null;
-        this.auxBoardRight = null;
-        this.auxBoardLeft = null;
-        this.piece = null;
+            this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
+            this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
+        } else {
+            let textureWhiteInfo = piece.children[0];
+            let textureBlackInfo = piece.children[1];
+
+            let textureWhite = this.reader.getString(textureWhiteInfo, 'id');
+            let textureBlack = this.reader.getString(textureBlackInfo, 'id');
+     
+            this.whiteTexture = this.textures[textureWhite];
+            this.blackTexture = this.textures[textureBlack];
+        }
 
         return null;
     }
