@@ -110,6 +110,8 @@ class MyGameOrchestrator {
         this.graph = sceneGraph;
         
         this.graphLoaded = true;
+
+        this.updatePlayerState1();
     }
 
     initGame() {

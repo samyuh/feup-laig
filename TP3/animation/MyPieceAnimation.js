@@ -1,5 +1,5 @@
 class MyPieceAnimation {
-    constructor(scene, pieceToPlay, startPosition, finalPosition) {
+    constructor(scene, pieceToPlay, pieceStack, startPosition, finalPosition) {
         this.scene = scene;
         this.totalTime = 2.5;
         this.currentTime = 0;
@@ -7,6 +7,7 @@ class MyPieceAnimation {
         this.active = true;
 
         this.pieceToPlay = pieceToPlay;
+        this.pieceStack = pieceStack;
         this.startPosition = startPosition;
         this.finalPosition = finalPosition;
 
@@ -28,6 +29,17 @@ class MyPieceAnimation {
         this.keyFrameAnim.updateTimeValues();
 
         // --- TODO : MAKING OTHER PIECE APPEAR -- //
+
+        this.keyFrameAnimStack = new MyKeyframeAnimation(this.scene);
+        let newKeyFrame6 = new MyKeyframe(0, [this.startPosition[0], this.startPosition[1] - 1, this.startPosition[2]], [0, 0, 0], [1,1,1]);
+        this.keyFrameAnimStack.addKeyframe(newKeyFrame6);
+
+        let newKeyFrame7 = new MyKeyframe(1.5, [this.startPosition[0], this.startPosition[1] - 1, this.startPosition[2]], [0, 0, 0], [1,1,1]);
+        this.keyFrameAnimStack.addKeyframe(newKeyFrame7);
+
+        let newKeyFrame8 = new MyKeyframe(2.2, [this.startPosition[0], this.startPosition[1], this.startPosition[2]], [0, 0, 0], [1,1,1]);
+        this.keyFrameAnimStack.addKeyframe(newKeyFrame8);
+        this.keyFrameAnimStack.updateTimeValues();
     }
 
     update(elapsedTime) {
@@ -38,6 +50,7 @@ class MyPieceAnimation {
         }
 
         this.keyFrameAnim.update(elapsedTime);
+        this.keyFrameAnimStack.update(elapsedTime);
     }
 
     apply() {
@@ -49,7 +62,13 @@ class MyPieceAnimation {
         let display = this.keyFrameAnim.apply();
         if(display != 0) {
             this.pieceToPlay.display();
-            
+        } 
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        let up = this.keyFrameAnimStack.apply();
+        if(up != 0) {
+            this.pieceStack.display();
         } 
         this.scene.popMatrix();
     }

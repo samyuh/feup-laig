@@ -11,14 +11,21 @@ class MyBoardSet {
         this.auxBoardTexture = auxBoardTexture;
 
         this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
-        this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
         this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
-
+        this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+        this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+        
         this.pieceAnimated = false;
     }
 
     resetPiece(color) {
-        this.pieceToPlay = new MyPiece(this.scene, color, this.blackTileTexture, this.whiteTileTexture);
+        if(color == "white") {
+            this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+        } else {
+            this.pieceToPlay = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+        }
     }
 
     display() {
@@ -27,8 +34,11 @@ class MyBoardSet {
         this.auxBoard.display();
 
         if(!this.pieceAnimated) {
-            this.pieceToPlay.display();
+            this.pieceToPlay.display(); 
+            this.scene.translate(0, -1, 0);
+            this.pieceStack.display();
         }
+        
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
