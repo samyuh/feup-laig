@@ -29,6 +29,7 @@ class MyGameOrchestrator {
 
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
+        this.boardSize = '7';
         this.timeout = 30;
         
         // -- Textures -- //
@@ -47,7 +48,7 @@ class MyGameOrchestrator {
 
     /* Init Function */
     initBoard() {
-        let boardString = 'initial(' + 7 + ')';
+        let boardString = 'initial(' + this.boardSize + ')';
         
         try {
             this.server.makePrologRequest(boardString, null, null, false);

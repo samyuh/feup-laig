@@ -4,6 +4,7 @@ class MyBoard {
         
         this.boardList = boardList;
         this.boardLength = boardList.length;
+        console.log(this.boardLength);
         this.boardDisplacement = boardDisplacement;
         this.tiles = [];
         this.pieceList = [];
@@ -37,7 +38,7 @@ class MyBoard {
     // --- Refactor this functions idk what it does -- //
     convertId(id) {
         let row = Math.floor(id / this.boardLength) + (((id % this.boardLength) == 0) ? 0 : 1);
-        let column = (((id % this.boardLength) == 0) ? 7 : id % this.boardLength)
+        let column = (((id % this.boardLength) == 0) ? this.boardLength : id % this.boardLength)
 
         return [row, column];
     }
@@ -66,18 +67,18 @@ class MyBoard {
     }
     
     getCoord(prev) {
-        let rowP = ((prev - 1) % 7);
-        let columnP = Math.floor((prev - 1) / 7);
+        let rowP = ((prev - 1) % this.boardLength);
+        let columnP = Math.floor((prev - 1) / this.boardLength);
 
         return [rowP, columnP];
     }
 
     getCoordinates(prev, actual) {
-        let rowP = ((prev - 1) % 7);
-        let columnP = Math.floor((prev - 1) / 7);
+        let rowP = ((prev - 1) % this.boardLength);
+        let columnP = Math.floor((prev - 1) / this.boardLength);
 
-        let rowA = ((actual - 1) % 7);
-        let columnA = Math.floor((actual - 1) / 7);
+        let rowA = ((actual - 1) % this.boardLength);
+        let columnA = Math.floor((actual - 1) / this.boardLength);
 
         return [rowP, columnP, rowA, columnA];
     }
