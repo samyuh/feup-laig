@@ -139,6 +139,13 @@ parse_input(undo(GameState, L-C-BL-BC), Mjson) :- undo(GameState, L-C-BL-BC, New
 parse_input(game_over(GameBoard), Json) :- game_over(GameBoard, Winner-Number), json_to_atom([Winner, Number], Json, [compact(true)]).
 parse_input(game_over(_), Json) :- json_to_atom([], Json, [compact(true)]).
 
+parse_input(groups(GameBoard), Json) :-
+	calculateBiggestGroup(GameBoard, NumberWhite, NumberBlack), json_to_atom([NumberWhite, NumberBlack], Json, [compact(true)]).
+
+calculateBiggestGroup(Board, NumberWhite, NumberBlack) :-
+    value(Board, white, NumberWhite),
+    value(Board, black, NumberBlack).
+
 undo(GameState, L-C-BL-BC, NewGameState) :-
     nth1(L, GameState, RowFirstElem),
     replace(RowFirstElem, C, empty, RowRemovedFirstElem),

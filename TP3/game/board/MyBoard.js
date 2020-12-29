@@ -116,8 +116,6 @@ class MyBoard {
             rotate = -90;
         }
 
-        console.log(orientation);
-
         return [this.boardDisplacement[0] + row, this.boardDisplacement[1], this.boardDisplacement[2] + column, rotate]
     }
 

@@ -27,6 +27,13 @@ class GameStateAnime extends GameState {
         else {
             this.gameOrchestrator.changeTurn();
             this.boardSet.resetPiece(this.gameOrchestrator.turn);
+
+            let groupsString = 'groups(' + stringNewBoard + ')';
+            this.gameOrchestrator.server.makePrologRequest(groupsString, null, null, false);
+            let groupsData = this.gameOrchestrator.server.getResult();
+            groupsData[0] = groupsData[0] || 1;
+            groupsData[1] = groupsData[1] || 1;
+            this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
         }
     }
 

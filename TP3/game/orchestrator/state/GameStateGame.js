@@ -59,7 +59,6 @@ class GameStateGame extends GameState {
                         this.board.getPieceFinalPosition(this.lastMove[0], this.lastMove[1]))
                     );
 
-                
                 // --- Game move --- //
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, this.lastMove));
                 this.updateBoardProlog();
