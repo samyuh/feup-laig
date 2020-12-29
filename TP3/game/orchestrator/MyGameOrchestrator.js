@@ -29,6 +29,7 @@ class MyGameOrchestrator {
 
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
+        this.timeout = 30;
         
         // -- Textures -- //
         this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
@@ -36,8 +37,11 @@ class MyGameOrchestrator {
         this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
         this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
 
+        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+
         this.difficulty = "random";
         this.difficultyHard = "hard";
+        
         this.initBoard();
     }
 
@@ -55,31 +59,45 @@ class MyGameOrchestrator {
         let board = this.server.getResult();
 
         this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-        this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement);
+        this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.spriteSheet);
 
         this.board = this.boardSet.board;
         this.turn = "white";
         this.piecesList = this.board.pieceList; // Pieces on board
+
+        this.graphLoaded = false;
     }
 
     changeTurn() {
+        console.log(this.player1);
+        console.log(this.player2);
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
-            this.updatePlayerState();
+            this.updatePlayerState2();
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
-            this.updatePlayerState();
+            this.updatePlayerState1();
         }
     }
 
-    updatePlayerState() {
+    updatePlayerState1() {
         if (this.player1 == 1) {
             this.concreteState = new GameStateGame(this, this.board);
         } else if (this.player1 == 2) {
             this.concreteState = new GameStateBot(this, this.board, "random");
         } else if (this.player1 == 3) {
+            this.concreteState = new GameStateBot(this, this.board, "hard");
+        }
+    }
+
+    updatePlayerState2() {
+        if (this.player2 == 1) {
+            this.concreteState = new GameStateGame(this, this.board);
+        } else if (this.player2 == 2) {
+            this.concreteState = new GameStateBot(this, this.board, "random");
+        } else if (this.player2 == 3) {
             this.concreteState = new GameStateBot(this, this.board, "hard");
         }
     }
@@ -91,7 +109,13 @@ class MyGameOrchestrator {
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
         
-        this.updatePlayerState();
+        this.graphLoaded = true;
+    }
+
+    initGame() {
+        if(this.graphLoaded) {
+            this.updatePlayerState1();
+        }
     }
 
     /* Interface */
@@ -127,11 +151,12 @@ class MyGameOrchestrator {
         let new_board = this.server.getResult();
         this.boardSet.board.boardList = new_board;
 
+        this.gameSequence.pop();
         //this.gameInfo = new MyGameInfo(this.scene, turn);
     }
 
-    createGameStats(gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, gameOverData, this.boardDisplacement);
+    createGameStats(status, gameOverData) {
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.boardDisplacement, this.spriteSheet);
     }
 
     /* Update */
@@ -140,16 +165,6 @@ class MyGameOrchestrator {
         if (!(this.concreteState instanceof GameStateGame)) {
             return;
         }
-
-        /*switch(this.gameMode) {
-            case 1:
-
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }*/
     }
 
     // --- General Display --- //

@@ -96,15 +96,21 @@ class GameStateGame extends GameState {
 
     update(elapsedTime) {
         this.turnTimer += elapsedTime;
-        if(this.turnTimer >= 60) {
+
+        this.gameOrchestrator.gameInfo.update(this.turnTimer);
+        
+        if(this.turnTimer >= this.gameOrchestrator.timeout) {
             this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
-            this.gameOrchestrator.createGameStats(["Ninguem", "ganhou"]);
+            if(this.gameOrchestrator.turn == "white") {
+                this.gameOrchestrator.createGameStats("timeout", ["Black",""]);
+            }
+            else {
+                this.gameOrchestrator.createGameStats("timeout", ["White",""]);
+            }
         }
     }
 
     display() {
-        console.log(this.turnTimer);
-
         this.pickBoardTile();
         
         // -- Board -- //
