@@ -11,7 +11,6 @@ class MyGameOrchestrator {
         // TODO:
         // Movie -> Displays the Movie with game Sequence maybe? // 
         // Menu -> Menu to choose! (Or in html)
-        this.concreteState = new GameStateLoading(this, this.board);
 
         // -- Game Sequence -- //
         this.gameSequence = new MyGameSequence();
@@ -33,6 +32,8 @@ class MyGameOrchestrator {
         this.difficulty = "random";
         this.difficultyHard = "hard";
         this.initBoard();
+
+        this.concreteState = new GameStateLoading(this, this.boardSet.board);
     }
 
     /* Init Function */
@@ -51,9 +52,12 @@ class MyGameOrchestrator {
         this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement);
         this.gameInfo = new MyGameInfo(this.scene, "white");
 
-        this.board = this.boardSet.board;
+        //this.board = this.boardSet.board;
         this.turn = "white";
-        this.piecesList = this.board.pieceList; // Pieces on board
+        this.piecesList = this.boardSet.board.pieceList; // Pieces on board
+
+        this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
+        this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
     }
 
     changeTurn() {
@@ -70,11 +74,11 @@ class MyGameOrchestrator {
 
     updatePlayerState() {
         if (this.player1 == 1) {
-            this.concreteState = new GameStateGame(this, this.board);
+            this.concreteState = new GameStateGame(this, this.boardSet.board);
         } else if (this.player1 == 2) {
-            this.concreteState = new GameStateBot(this, this.board, "random");
+            this.concreteState = new GameStateBot(this, this.boardSet.board, "random");
         } else if (this.player1 == 3) {
-            this.concreteState = new GameStateBot(this, this.board, "hard");
+            this.concreteState = new GameStateBot(this, this.boardSet.board, "hard");
         }
     }
 
@@ -91,35 +95,40 @@ class MyGameOrchestrator {
     /* Interface */
     movie() {
         // if gamestate = end
-        this.board.pieceList = [];
+        this.boardSet.board.pieceList = [];
         this.changeState(new GameStateAnimator(this, this.gameSequence));
     }
 
     reset() {
         this.initBoard();
 
-        this.changeState(new GameStateGame(this, this.board));
+        this.changeState(new GameStateGame(this, this.boardSet.board));
     }
 
     undo() {
         if(!(this.concreteState instanceof GameStateGame)) {
-            this.changeState(new GameStateGame(this, this.board));
+            this.changeState(new GameStateGame(this, this.boardSet.board));
         }
 
-        if (this.board.pieceList.length == 0)
+        if (this.boardSet.board.pieceList.length == 0)
             return;
 
         let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
-        let piece = this.board.pieceList.pop();
+        let piece = this.boardSet.board.pieceList.pop();
 
-        let undoString = 'undo(' + stringBoard + ',' + piece.z + '-' + piece.x + '-' + piece.zb + '-' + piece.xb + ')';
-        console.log('PEDIDO: ');
-        console.log(undoString);
+        let piece_row = piece.z + 1;
+        let piece_column = piece.x + 1;
+        let piece_secondary_row = piece.zb + 1;
+        let piece_secondary_column = piece.xb + 1;
+
+        let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
         this.server.makePrologRequest(undoString, null, null, false);
 
         let new_board = this.server.getResult();
         this.boardSet.board.boardList = new_board;
+
+        this.changeTurn();
 
         //this.gameInfo = new MyGameInfo(this.scene, turn);
     }
@@ -149,6 +158,8 @@ class MyGameOrchestrator {
     // --- General Display --- //
     display() {
         this.concreteState.display();
+        let new_piece = new MyPiece(this.scene, "white", this.whiteTexture, this.blackTexture)
+        new_piece.display();
     }
 
     processNode(parentNode, parentMaterial, parentTexture) {

@@ -9,8 +9,6 @@ class GameStateAnime extends GameState {
         this.boardSet.pieceAnimated = true;
         this.pieceToPlayPosition = boardSet.auxBoardDisplacement;
         this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
-       
-    
     }
 
     putPiece() {
