@@ -55,9 +55,6 @@ class MyGameOrchestrator {
         //this.board = this.boardSet.board;
         this.turn = "white";
         this.piecesList = this.boardSet.board.pieceList; // Pieces on board
-
-        this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
-        this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
     }
 
     changeTurn() {
@@ -130,6 +127,18 @@ class MyGameOrchestrator {
 
         this.changeTurn();
 
+        if (this.boardSet.board.pieceList.length == 0)
+            this.gameInfo.updateGroups(0, 0);
+        else {
+            let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+            let groupsString = 'groups(' + stringNewBoard + ')';
+            this.server.makePrologRequest(groupsString, null, null, false);
+            let groupsData = this.server.getResult();
+            groupsData[0] = groupsData[0] || 1;
+            groupsData[1] = groupsData[1] || 1;
+            this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+        }
+
         //this.gameInfo = new MyGameInfo(this.scene, turn);
     }
 
@@ -158,8 +167,6 @@ class MyGameOrchestrator {
     // --- General Display --- //
     display() {
         this.concreteState.display();
-        let new_piece = new MyPiece(this.scene, "white", this.whiteTexture, this.blackTexture)
-        new_piece.display();
     }
 
     processNode(parentNode, parentMaterial, parentTexture) {
