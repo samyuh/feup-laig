@@ -2,9 +2,12 @@
  * MyWaveAnimation
  */
 class MyWaveAnimation {
-    constructor(scene) {
+    constructor(scene, x, y, z) {
         this.scene = scene;   
 
+        this.x = x;
+        this.y= y;
+        this.z = z;
         this.lavaPlane = new MyPlane(this.scene, 50, 50);
 
         this.appearance = new CGFappearance(this.scene);
@@ -14,7 +17,7 @@ class MyWaveAnimation {
 		this.appearance.setShininess(120);
 
 
-		this.waterTex = new CGFtexture(this.scene, "scenes/images/waterTex.jpg");
+		this.waterTex = new CGFtexture(this.scene, "scenes/images/scene2/water.jpg");
 		this.waterMap = new CGFtexture(this.scene, "scenes/images/waterMap.jpg");
 
         this.appearance.setTexture(this.waterTex);
@@ -50,8 +53,7 @@ class MyWaveAnimation {
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_WRAP_S, this.scene.gl.MIRRORED_REPEAT);
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_WRAP_T, this.scene.gl.MIRRORED_REPEAT);
         
-        this.scene.translate(0, -50, 0);
-        this.scene.scale(90, 50, 90);
+        this.scene.translate(this.x, this.y, this.z);
         
         this.scene.setActiveShader(this.waterShader);
         this.lavaPlane.display();

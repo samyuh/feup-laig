@@ -35,11 +35,17 @@
         <texture id="skyboxLeft" path="./scenes/images/skybox/left.jpg" />
         <texture id="skyboxBack" path="./scenes/images/skybox/back.jpg" />
         <texture id="skyboxTop" path="./scenes/images/skybox/top.jpg" />
-        <texture id="skyboxFloor" path="./scenes/images/skybox/floor.png" />
+        <texture id="skyboxFloor" path="./scenes/images/skybox/bottom.jpg" />
         <texture id="grass" path="./scenes/images/scene2/grass.jpg" />
+        <texture id="gravel" path="./scenes/images/scene2/gravel.jpg" />
         <texture id="sand" path="./scenes/images/scene2/sand.jpg" />
         <texture id="water" path="./scenes/images/scene2/water.jpg" />
         <texture id="wood" path="./scenes/images/decoration/darkwood.jpg" />
+        <texture id="mainBoardTexture" path="./scenes/images/wood.jpg" />
+        <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
+        <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
+        <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
+        <texture id="infoBackground" path="./scenes/images/info-background.jpg" />
     </textures>
 
     <spritesheets>
@@ -53,6 +59,14 @@
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular  r="1" g="1" b="1" a="1.0" />
             <emissive  r="1" g="1" b="1" a="1.0" />
+        </material>
+
+        <material id="redMaterial">
+            <shininess value="1.0" />
+            <ambient  r="1" g="0" b="0" a="1.0" />
+            <diffuse r="1" g="0" b="0" a="1.0" />
+            <specular  r="1" g="0" b="0" a="1.0" />
+            <emissive  r="1" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -77,11 +91,10 @@
     </animations>t
 
     <boardgame>
-      <board x="-5" y="-19" z="-5">
+      <board x="-5" y="-6" z="-5">
         <texture id="mainBoardTexture" />
       </board>
-      
-      <auxboard x="10" y="-19" z="0">
+      <auxboard x="10" y="-6" z="0">
         <texture id="auxBoardTexture" />
       </auxboard>
       <piece>
@@ -95,7 +108,7 @@
             <!-- next two lines are mandatory -->
             <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -116,7 +129,7 @@
         <node id="torii">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -132,13 +145,15 @@
         </node>
 
         <node id="top">
-            <material id="null" />
+            <material id="redMaterial" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="0" y="35" z="-45" />
+                <scale sx="40" sy="5" sz="5" />
             </transformations>
 
             <descendants>
@@ -147,13 +162,15 @@
         </node>
 
         <node id="middle">
-            <material id="null" />
+            <material id="redMaterial" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="0" y="25" z="-45" />
+                <scale sx="30" sy="5" sz="5" />
             </transformations>
 
             <descendants>
@@ -162,9 +179,9 @@
         </node>
 
         <node id="sideColumns">
-            <material id="null" />
+            <material id="redMaterial" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -178,13 +195,15 @@
         </node>
 
         <node id="column-right">
-            <material id="null" />
+            <material id="redMaterial" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="10" y="15" z="-45" />
+                <scale sx="5" sy="35" sz="5" />
             </transformations>
 
             <descendants>
@@ -193,13 +212,15 @@
         </node>
 
         <node id="column-left">
-            <material id="null" />
+            <material id="redMaterial" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="-10" y="15" z="-45" />
+                <scale sx="5" sy="35" sz="5" />
             </transformations>
 
             <descendants>
@@ -210,11 +231,12 @@
          <node id="sandbox">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="-5" y="0" z="0" />
             </transformations>
 
             <descendants>  
@@ -231,23 +253,24 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="-5" z="0" />
+                <translation x="0" y="-7" z="1" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-10" y1="-10" x2="10" y2="10" />
+                <leaf type="rectangle" x1="-10" y1="-10" x2="17" y2="13" />
             </descendants>
         </node>
 
         <node id="box">
             <material id="null" />
 
-            <texture id="wood">
+            <texture id="mainBoardTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="0" y="-5" z="0" />
             </transformations>
 
             <descendants>
@@ -266,12 +289,13 @@
             </texture>
 
             <transformations>
-                <translation x="-10" y="-5" z="12" />
+                <scale sx="1.35" sy="1" sz="1" />
+                <translation x="-9.5" y="-5" z="12" />
                 <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="25" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <noderef id="log-wall" />
             </descendants>
         </node>
 
@@ -283,11 +307,12 @@
             </texture>
 
             <transformations>
-                <translation x="-10" y="-5" z="-12" />
+                <scale sx="1" sy="1" sz="1.25" />
+                <translation x="-10" y="-5" z="-12.5" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="25" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <noderef id="log-wall" />
             </descendants>
         </node>
 
@@ -299,14 +324,16 @@
             </texture>
 
             <transformations>
-                <translation x="14" y="-5" z="-12" />
+                <scale sx="1" sy="1" sz="1.25" />
+                <translation x="18" y="-5" z="-12.5" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="25" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <noderef id="log-wall" />
             </descendants>
         </node>
 
+        
         <node id="bot-cylinder">
             <material id="null" />
 
@@ -315,14 +342,81 @@
             </texture>
 
             <transformations>
-                <translation x="-10" y="-5" z="-12" />
+                <scale sx="1.35" sy="1" sz="1" />
+                <translation x="-9.5" y="-5" z="-12" />
                 <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="25" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+                <noderef id="log-wall" />
             </descendants>
         </node>
+
+        <node id="log-wall">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="log-1" />
+                <noderef id="log-2" />
+                <noderef id="log-3" />
+            </descendants>
+        </node>
+
+        <node id="log-1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="25" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="log-2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="2" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="25" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="log-3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="4" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="25" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
 
         <node id="floor">
             <material id="null" />
@@ -336,9 +430,175 @@
             </transformations>
 
             <descendants>
+                <noderef id="bush" />
                 <noderef id="garden" />
-                <noderef id="water-right" />
-                <noderef id="water-left" />
+                <noderef id="gravel" />
+                <noderef id="water" />
+            </descendants>
+        </node>
+
+
+        <node id="bush">
+            <material id="null" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="1" sy="2" sz="1" />
+                <translation x="0" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bush-top-right" />
+                <noderef id="bush-top-left" />
+                <noderef id="bush-right" />
+                <noderef id="bush-left" />
+                <noderef id="bush-bot-right" />
+                <noderef id="bush-bot-left" />
+                <noderef id="bush-entry-right" />
+                <noderef id="bush-entry-left" />
+            </descendants>
+        </node>
+
+        <node id="bush-top-right">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="30" y="0" z="-35" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-top-left">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30" y="0" z="-35" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-right">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="35" y="0" z="-5" />
+                <rotation axis="y" angle="90" />
+                <scale sx="70" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-left">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-35" y="0" z="-5" />
+                <rotation axis="y" angle="90" />
+                <scale sx="70" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-bot-right">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="30" y="0" z="30" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-bot-left">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-30" y="0" z="30" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-entry-right">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="20" y="0" z="40" />
+                <rotation axis="y" angle="90" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bush-entry-left">
+            <material id="null" />
+
+            <texture id="grass">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-20" y="0" z="40" />
+                <rotation axis="y" angle="90" />
+                <scale sx="30" sy="10" sz="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
 
@@ -346,49 +606,50 @@
             <material id="null" />
 
             <texture id="grass">
-                <amplification afs="30.0" aft="30.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90" />
+                <translation x="0" y="-5" z="80" />
+                <scale sx="100" sy="10" sz="50" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-20" y1="-30" x2="20" y2="30" />
+                <noderef id="cube" />
             </descendants>
         </node>
 
-        <node id="water-right">
+        <node id="gravel">
             <material id="null" />
 
-            <texture id="water">
-                <amplification afs="30.0" aft="30.0" />
+            <texture id="gravel">
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="30" y="-4" z="0" />
-                <rotation axis="x" angle="-90" />
+                <translation x="0" y="-5" z="0" />
+                <scale sx="120" sy="10" sz="110" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                <noderef id="cube" />
             </descendants>
         </node>
 
-         <node id="water-left">
+         <node id="water">
             <material id="null" />
 
             <texture id="water">
-                <amplification afs="30.0" aft="30.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-30" y="-4" z="0" />
-                <rotation axis="x" angle="-90" />
+                <translation x="0" y="-5" z="0" />
+                <scale sx="200" sy="40" sz="200" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                <leaf type="waveanim" x="0" y="0" z="0" />
             </descendants>
         </node>
 
@@ -400,8 +661,8 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="20.0" z="0" />
-                <scale sx="100" sy="100" sz="100" />
+                <translation x="0" y="50.0" z="0" />
+                <scale sx="200" sy="200" sz="200" />
             </transformations>
 
             <descendants>

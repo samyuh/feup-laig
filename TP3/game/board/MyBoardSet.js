@@ -2,19 +2,29 @@ class MyBoardSet {
     constructor(scene, boardList, boardDisplacement, auxBoardDisplacement, boardTexture, auxBoardTexture, whiteTileTexture, blackTileTexture) {
         this.scene = scene;
 
-        this.boardDisplacement = boardDisplacement;
-        this.auxBoardDisplacement =  auxBoardDisplacement;
-
         this.whiteTileTexture = whiteTileTexture;
         this.blackTileTexture = blackTileTexture;
         this.boardTexture = boardTexture;
         this.auxBoardTexture = auxBoardTexture;
+        this.size = boardList.length;
+
+        if (this.size == 7) {
+            this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
+        }
+        else if (this.size == 9) {
+            this.boardDisplacement = [boardDisplacement[0] + 1, boardDisplacement[1], boardDisplacement[2] + 1];
+        }
+        else {
+            this.boardDisplacement = boardDisplacement;
+        }
 
         this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
         this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
         this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
         this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
         
+        this.auxBoardDisplacement =  auxBoardDisplacement;
+
         this.pieceAnimated = false;
     }
 
@@ -43,10 +53,6 @@ class MyBoardSet {
 
         this.scene.pushMatrix();
         this.scene.translate(this.boardDisplacement[0], this.boardDisplacement[1], this.boardDisplacement[2]);
-        if (this.board.boardLength == 7)
-            this.scene.translate(2, 0, 2);
-        else if (this.board.boardLength == 9)
-            this.scene.translate(1, 0, 1);
         this.board.display();
         this.scene.popMatrix();
     }

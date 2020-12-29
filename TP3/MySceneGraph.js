@@ -1418,12 +1418,30 @@ class MySceneGraph {
             case "defbarrel":
                 return this.parseDefbarrel(descendants, messageError);
             case "waveanim":
-                return new MyWaveAnimation(this.scene);
+                return this.parseWaveAnim(descendants, messageError);
             default:
                 return "not a valid leaf on node " + messageError;
         }
     }
 
+    parseWaveAnim(descendants, messageError) {
+        let x = this.reader.getFloat(descendants, 'x');
+        if (!(x != null && !isNaN(x))) {
+            return "unable to parse inner value of the Half Torus on node " + messageError;
+        }
+
+        let y = this.reader.getFloat(descendants, 'y');
+        if (!(y != null && !isNaN(y))) {
+            return "unable to parse outer value of the Half Torus on node " + messageError;
+        }
+
+        let z = this.reader.getFloat(descendants, 'z');
+        if (!(z != null && !isNaN(z))) {
+            return "unable to parse slices value of the Half Torus on node " + messageError;
+        }
+
+        return new MyWaveAnimation(this.scene, x, y, z);
+    }
     /**
      * Parse Torus from XML
      * @param {node leaf} descendants node that contains primitive information
