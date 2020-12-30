@@ -19,12 +19,19 @@
     </illumination>
 
     <lights>
-        <light id="demoLight">          
+        <light id="light-1">          
             <enable value="1" />
             <position x="20" y="0" z="40" w="1.0" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" /> 
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="1" g="0.9" b="0.9" a="1.0" /> 
+            <specular r="1" g="0.0" b="0.0" a="1.0" />
+        </light>
+        <light id="light-2">          
+            <enable value="1" />
+            <position x="20" y="0" z="40" w="1.0" />
+            <ambient r="0.1" g="1" b="0.1" a="1.0" />
+            <diffuse r="0.9" g="1" b="0.9" a="1.0" /> 
+            <specular r="0.0" g="1" b="0.0" a="1.0" />
         </light>
     </lights>
 

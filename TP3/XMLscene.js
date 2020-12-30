@@ -4,12 +4,12 @@
 class XMLscene extends CGFscene {
     /**
      * @constructor
-     * @param {MyInterface} myinterface 
+     * @param {MyInterface} myInterface 
      */
-    constructor(myinterface) {
+    constructor(myInterface) {
         super();
 
-        this.interface = myinterface;
+        this.interface = myInterface;
     }
 
     /**
@@ -33,27 +33,31 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
 
+        this.defaultAppearance = new CGFappearance(this);
+
+        // -- Loading -- //
         this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress = 0;
+
+        // -- Music -- //
         this.musicActive = false;
         this.audioIntroGOT = new Audio('scenes/music/music.mp3');
         this.audioIntroGOT.volume = 0.3;
 
-        this.defaultAppearance = new CGFappearance(this);
-
-        this.gameOrchestrator = new MyGameOrchestrator(this);
-
+        // -- Theme -- //
         this.textureIds = {
             'Fire': 0,
             'Default': 1,
         };
-
         this.numberLoadedThemes = 0;
         this.selectedTheme = 0;
-        this.selectedView = 0;
 
+        // -- Camera -- //
+        this.selectedView = 0;
         this.animationCamera = null;
 
+        // -- Game Orchestrator -- //
+        this.gameOrchestrator = new MyGameOrchestrator(this);
         this.setPickEnabled(true);
     }
 
@@ -79,23 +83,24 @@ class XMLscene extends CGFscene {
     /**
      * Method for updating themes on a change made by the user
      */
-    updateSkyBoxTextures() {
-        console.log(this.selectedTheme);
-        
+    updateSkyBoxTextures() {    
+        this.turnOffLights();
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
         this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
         this.gl.clearColor(...this.graph[this.selectedTheme].background);
         this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
-        this.initXMLLights();
         this.initXMLCameras();
         this.setUpdatePeriod(100);
         this.sceneInited = true;
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
         this.interface.updateCameras();
-
-        console.log(this.graph[this.selectedTheme].viewIDs)
+        
+        
+        this.deleteLights();
+        this.initXMLLights();
+        this.interface.updateLights();
     }
 
     updateInterfaceCameras() {
@@ -129,7 +134,7 @@ class XMLscene extends CGFscene {
     initXMLLights() {
         // Lights index.
         let i = 0;
-        
+        console.log(this.graph[this.selectedTheme].lights);
         // Reads the lights from the scene graph.
         for (let key in this.graph[this.selectedTheme].lights) {
             if (i >= 8)
@@ -145,15 +150,31 @@ class XMLscene extends CGFscene {
                 this.lights[i].light_id = key;
 
                 this.lights[i].setVisible(true);
+                
                 if (graphLight[0])
                     this.lights[i].enable();
                 else
                     this.lights[i].disable();
-
+                
                 this.lights[i].update();
 
                 i++;
             }
+        }
+    }
+
+    deleteLights() {
+        for (var i = 0; i < this.lights.length; i++) {
+            this.lights[i].light_id = undefined;
+            this.lights[i].disable();
+        }
+    }
+
+    turnOffLights() {
+        for (var i = 0; i < this.lights.length; i++) {
+            this.lights[i].update();
+            if (this.lights[i].light_id != undefined)
+                this.lights[i].setVisible(false);
         }
     }
 
@@ -247,6 +268,7 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
+        //console.log(this.lights);
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].update();
             if (this.lights[i].light_id != undefined)

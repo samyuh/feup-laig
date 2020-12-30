@@ -60,14 +60,34 @@ class MyInterface extends CGFinterface {
      */
     initInterfaceLights() {
         this.lights = this.gui.addFolder('Lights');
+        this.lightsItems = [];
 
         for (const light of this.scene.lights) {
             if (light.light_id != undefined) {
-                this.lights.add(light, 'enabled').name(light.light_id).onChange(
+                this.lightsItems.push(this.lights.add(light, 'enabled').name(light.light_id).onChange(
                     () => {
                         light.update();
                     }
-                );
+                ));
+            }
+        }
+    }
+
+    updateLights() {
+        for (const light of this.lightsItems) {
+            this.lights.remove(light);
+        }
+
+        this.lightsItems = [];
+        console.log(this.lightsItems);
+        console.log(this.scene.lights);
+        for (const light of this.scene.lights) {
+            if (light.light_id != undefined) {
+                this.lightsItems.push(this.lights.add(light, 'enabled').name(light.light_id).onChange(
+                    () => {
+                        light.update();
+                    }
+                ));
             }
         }
     }

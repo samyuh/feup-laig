@@ -23,20 +23,6 @@ class GameStateAnimator {
     }
 
     /**
-     * Resets the movie
-     */
-    reset() {
-
-    }
-
-    /**
-     * Starts the movie
-     */
-    start() {
-
-    }
-
-    /**
      * Update function, called periodically, which calls the update function of the piece animation, and changes the current move being presented
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
