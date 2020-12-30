@@ -133,7 +133,7 @@ class MyGameOrchestrator {
      */
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
-        
+
         this.graphLoaded = true;
 
         this.boardDisplacement = this.graph.boardDisplacement;
@@ -146,7 +146,15 @@ class MyGameOrchestrator {
 
         this.spriteSheet = this.graph.spriteSheet;
 
-        this.initBoard();
+        if (!(this.concreteState instanceof GameStateLoading)) {
+            this.boardSet.updateBoardDisplacement(this.boardDisplacement);
+            this.boardSet.auxBoardDisplacement = this.auxBoardDisplacement;
+
+            this.boardSet.whiteTileTexture =  this.whiteTexture;
+            this.boardSet.blackTileTexture = this.blackTexture
+            this.boardSet.boardTexture = this.boardTexture;
+            this.boardSet.auxBoardTexture = this.auxBoardTexture;
+        }
     }
 
     /**

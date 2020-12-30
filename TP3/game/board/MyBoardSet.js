@@ -41,6 +41,20 @@ class MyBoardSet {
 
         this.turn = "white";
     }
+
+    updateBoardDisplacement(boardDisplacement) {
+        if (this.size == 7) {
+            this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
+        }
+        else if (this.size == 9) {
+            this.boardDisplacement = [boardDisplacement[0] + 1, boardDisplacement[1], boardDisplacement[2] + 1];
+        }
+        else {
+            this.boardDisplacement = boardDisplacement;
+        }
+
+        this.board.boardDisplacement = this.boardDisplacement
+    }
     
     /**
      * Updates the piece to play and the piece on the stack, depending on the current turn of the game

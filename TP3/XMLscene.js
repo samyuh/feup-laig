@@ -84,7 +84,6 @@ class XMLscene extends CGFscene {
      * Method for updating themes on a change made by the user
      */
     updateSkyBoxTextures() {    
-        this.turnOffLights();
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
         this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
@@ -97,7 +96,7 @@ class XMLscene extends CGFscene {
 
         this.interface.updateCameras();
         
-        
+        this.turnOffLights();
         this.deleteLights();
         this.initXMLLights();
         this.interface.updateLights();
@@ -115,7 +114,6 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -124,7 +122,6 @@ class XMLscene extends CGFscene {
      */
     initXMLCameras() {
         this.camera = this.graph[this.selectedTheme].cameras[this.graph[this.selectedTheme].selectedView];
-
         this.interface.setActiveCamera(this.camera);
     }
 
@@ -200,9 +197,6 @@ class XMLscene extends CGFscene {
             this.interface.initInterfaceThemes();
             this.interface.initGameInterface();
             // ---- CHANGE THIS ---- //
-
-            console.log(this.textureIds);
-            console.log(this.graph[this.selectedTheme].viewIDs)
         }
         else {
             this.numberLoadedThemes++;
