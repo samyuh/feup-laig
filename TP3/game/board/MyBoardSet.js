@@ -32,8 +32,8 @@ class MyBoardSet {
 
         this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
         this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
-        this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
-        this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+        this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+        this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
         
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
@@ -50,13 +50,12 @@ class MyBoardSet {
         if (this.turn == "white") {
             this.pieceToPlay = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
             this.pieceStack = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
-            
+
             this.turn = "black";
         } else {
             this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
             this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
             
-
             this.turn = "white";
         }
     }

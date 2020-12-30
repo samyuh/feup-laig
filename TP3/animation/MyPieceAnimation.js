@@ -15,8 +15,7 @@ class MyPieceAnimation {
         this.startTime = 0;
         this.active = true;
         this.boardSet = boardSet;
-
-        console.log(finalPosition);
+        this.end = true;
 
         this.pieceToPlay = pieceToPlay;
         this.pieceStack = pieceStack;
@@ -59,9 +58,10 @@ class MyPieceAnimation {
     update(elapsedTime) {
         this.currentTime += elapsedTime;
 
-        if(this.totalTime <= this.currentTime) {
+        if((this.totalTime <= this.currentTime) && (this.end)) {
             this.boardSet.resetPiece();
             this.active = false;
+            this.end = false;
             this.boardSet.pieceAnimated = false;
         }
 
