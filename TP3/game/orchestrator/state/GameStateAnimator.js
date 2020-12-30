@@ -58,7 +58,5 @@ class GameStateAnimator {
         this.gameOrchestrator.gameInfo.display();
         this.gameOrchestrator.scene.popMatrix();
         // -- Board -- //
-
-        this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
 }

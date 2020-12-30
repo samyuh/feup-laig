@@ -26,15 +26,15 @@ class GameStateAnime extends GameState {
         } else {
             this.putPiece();
             this.boardSet.pieceAnimated = false;
-            let a = this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
-            console.log(a);
+            //let a = this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
+            //console.log(a);
+            this.gameOrchestrator.changeTurn();
+            //this.boardSet.resetPiece(this.gameOrchestrator.turn);
         }
 
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
         // -- Board -- //
-        
-        this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
 }

@@ -1,10 +1,17 @@
 class MyServer {
 	constructor() {
         this.port = 8081;
+        this.resquestType = {
+            'MoveBot' : 1,
+            'PlayBot' : 2,
+            'AnimationRequest' : 3
+        }
+
         this.request = null;
+        this.type = null;
     }
 
-    makePrologRequest(requestString, onSuccess, onError, async = true) {  // Parameter async (true or false)?
+    makePrologRequest(requestString, onSuccess, onError, async = true, type = 1) {  // Parameter async (true or false)?
         var request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:' + this.port + '/' + requestString, async);
 
@@ -12,7 +19,10 @@ class MyServer {
             console.log("Request received. Reply: ", JSON.parse(data.target.response));
             request.result = JSON.parse(data.target.response);
         };
-        request.onerror = onError || function() {console.log("Error waiting for response");};
+
+        request.onerror = onError || function() {
+            console.log("Error waiting for response");
+        };
 
         if (async)
             request.timeout = 2000;
@@ -25,7 +35,9 @@ class MyServer {
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         request.send();
 
+        
         this.request = request;
+        this.type = type;
     }
 
     getResult() {
@@ -43,7 +55,7 @@ class MyServer {
             let stringBoard = JSON.stringify(board.boardList).replaceAll("\"", "");
 
             let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + gameOrchestrator.turn + ')';
-            this.makePrologRequest(moveString, null, null, false);
+            this.makePrologRequest(moveString, null, null, true);
 
             let new_board = this.getResult();
 
@@ -99,6 +111,7 @@ class MyServer {
 
         return a;
     }
+    /*
     // Random Bot Play
     randomBotPlay() {
         let p = new Promise((resolve, reject) => {
@@ -157,4 +170,5 @@ class MyServer {
 
         });
     }
+    */
 }

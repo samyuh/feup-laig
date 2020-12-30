@@ -178,6 +178,8 @@ class MyGameOrchestrator {
     // --- General Display --- //
     display() {
         this.concreteState.display();
+
+        this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
 
     processNode(parentNode, parentMaterial, parentTexture) {
