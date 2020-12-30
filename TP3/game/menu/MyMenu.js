@@ -3,9 +3,8 @@ class MyMenu {
         this.scene = scene;
         this.gameOrchestrator = gameOrchestrator;
 
-        this.resetButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.reset, "Reset", spriteSheet);
+        this.resetButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.reset, "New Game", spriteSheet);
         this.movieButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.movie, "Movie", spriteSheet);
-        this.initButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.initBoard, "Init", spriteSheet);
         this.undoButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.undo, "Undo", spriteSheet);
 
         this.board = new MyCube(scene);
@@ -51,21 +50,12 @@ class MyMenu {
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
 
-        //-- Init
-        this.scene.pushMatrix();
-        this.scene.translate(0, -8, 1);
-        this.scene.scale(3, 3, 1);
-        this.material2.apply();
-        this.scene.registerForPick(1002, this.initButton);
-        this.initButton.display();
-        this.scene.popMatrix();
-
         //-- Undo
         this.scene.pushMatrix();
         this.scene.translate(4, -8, 1);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
-        this.scene.registerForPick(1003, this.undoButton);
+        this.scene.registerForPick(1002, this.undoButton);
         this.undoButton.display();
         this.scene.popMatrix();
         this.scene.popMatrix();

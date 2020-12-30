@@ -50,8 +50,9 @@ class XMLscene extends CGFscene {
             'Default': 1,
         };
         this.numberLoadedThemes = 0;
+        this.numberThemes = 2;
         this.selectedTheme = 0;
-
+        
         // -- Camera -- //
         this.selectedView = 0;
         this.animationCamera = null;
@@ -91,7 +92,6 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
         this.initXMLCameras();
         this.setUpdatePeriod(100);
-        this.sceneInited = true;
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
         this.interface.updateCameras();
@@ -179,17 +179,15 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-
-        if(this.numberLoadedThemes == 1) {
+        if(this.numberLoadedThemes == (this.numberThemes - 1)) {
             this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
             this.gl.clearColor(...this.graph[this.selectedTheme].background);
             this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
             this.initXMLLights();
             this.initXMLCameras();
             this.setUpdatePeriod(100);
-            this.sceneInited = true;
             this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
-
+            
             // ---- CHANGE THIS ---- //
             this.interface.initInterfaceCameras();
             this.interface.initInterfaceLights();
@@ -197,8 +195,9 @@ class XMLscene extends CGFscene {
             this.interface.initInterfaceThemes();
             this.interface.initGameInterface();
             // ---- CHANGE THIS ---- //
-        }
-        else {
+
+            this.sceneInited = true;
+        } else {
             this.numberLoadedThemes++;
         }
     }
@@ -262,22 +261,20 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
-        //console.log(this.lights);
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].update();
             if (this.lights[i].light_id != undefined)
                 this.lights[i].setVisible(true);
         }
 
-        if (this.sceneInited) {
+        if (this.sceneInited && this.gameOrchestrator.gameOrchestratorLoaded) {
             // Draw axis
             this.axis.display();
  
             this.defaultAppearance.apply();
             
-            // Displays the scene (MySceneGraph function).
+            // Displays the scene
             this.gameOrchestrator.display();
-            //this.lavaAnim.display();
         }
         else {
             // Show some "loading" visuals

@@ -6,16 +6,14 @@
 class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
-        this.graph = null;
+        this.graph = null; // -- SceneGraph
+        this.gameOrchestratorLoaded = false;
 
-        // Concrete State 
-        // Loading -> Loading Graph
-        // Game -> Game
-        // Anime -> Piece Animation
-        // End - > End Game
-        // TODO:
-        // Movie -> Displays the Movie with game Sequence maybe? // 
-        // Menu -> Menu to choose! (Or in html)
+        // Passar para o XML
+        this.infoDisplacement = [0, -10, -5];
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+
+        // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
 
         // -- Game Sequence -- //
@@ -24,99 +22,18 @@ class MyGameOrchestrator {
         // PROLOG Connection
         this.server = new MyServer();
 
-        // Player type
-        this.player = {
-            Player: '1', Random: '2', Intelligent: '3'
-        };
-
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
-        this.menu = new MyMenu(scene, this, this.spriteSheet);
-
-        this.player1 = this.player.Player;
-        this.player2 = this.player.Player;
-
+        // -- Board Settings, Player, more -- //
         this.boardSize = '7';
         this.timeout = 30;
 
-        // Passar para o XML
-        this.infoDisplacement = [0, -10, -5];
-    }
+        this.player = {
+            Player: '1', 
+            Random: '2', 
+            Intelligent: '3'
+        };
 
-    
-    pickMenu() {
-		if (this.scene.pickMode == false) {
-			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-				for (let i = 0; i < this.scene.pickResults.length; i++) {
-					let obj = this.scene.pickResults[i][0];
-					if (obj) {
-                        let objId = this.scene.pickResults[i][1];
-
-                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateGame)) {
-                            this.concreteState.handlePicking(obj, objId);
-                        }
-                        if(obj instanceof MyButton) {
-                            obj.apply();
-                        }
-                        console.log(obj, objId);
-                    }
-                }
-                
-                this.scene.pickResults.splice(0, this.scene.pickResults.length);
-            }
-		}
-    }
-
-    /**
-     * Initializes the game board, the turn (White Player starts playing), and updates the current game state depending on the user preferences
-     */
-    initBoard() {
-        let boardString = 'initial(' + this.boardSize + ')';
-        
-        let p = this.server.promiseRequest(boardString, null, null);
-        p.then((request) => {
-            let board = request;
-
-            this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
-            //this.board = this.boardSet.board;
-            this.turn = "white";
-            this.piecesList = this.boardSet.board.pieceList; // Pieces on board
-
-            this.updatePlayerState(this.player1);
-        });
-    }
-
-    /**
-     * Changes the turn of the game, updating the game states if user changed any player configuration
-     */
-    changeTurn() {
-        let player = null;
-        if(this.turn == "white") {
-            this.turn = "black";
-            this.gameInfo.turn = "black";
-            this.gameInfo.blackPlayer = this.player2;
-            player = this.player2;
-        } else {
-            this.turn = "white";
-            this.gameInfo.turn = "white";
-            this.gameInfo.whitePlayer = this.player1;
-            player = this.player1;
-        }
-        this.updatePlayerState(player);
-    }
-
-    /**
-     * Updates the state of the game, depending on the type of the player of the current turn
-     * @param {integer} player - the player of the current turn
-     */
-    updatePlayerState(player) {
-        if (player == 1) {
-            this.changeState(new GameStateGame(this, this.boardSet.board));
-        } else if (player == 2) {
-            this.changeState(new GameStateBot(this, this.boardSet.board, "random"));
-        } else if (player == 3) {
-            this.changeState(new GameStateBot(this, this.boardSet.board, "hard"));
-        }
+        this.player1 = this.player.Player;
+        this.player2 = this.player.Player;
     }
 
     /**
@@ -134,8 +51,6 @@ class MyGameOrchestrator {
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        this.graphLoaded = true;
-
         this.boardDisplacement = this.graph.boardDisplacement;
         this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
 
@@ -145,6 +60,7 @@ class MyGameOrchestrator {
         this.blackTexture = this.graph.blackTexture;
 
         this.spriteSheet = this.graph.spriteSheet;
+        this.menu = new MyMenu(this.scene, this, this.spriteSheet);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -154,15 +70,70 @@ class MyGameOrchestrator {
             this.boardSet.blackTileTexture = this.blackTexture
             this.boardSet.boardTexture = this.boardTexture;
             this.boardSet.auxBoardTexture = this.auxBoardTexture;
+        } 
+        else {
+            this.initBoard(false);
         }
     }
 
     /**
-     * Initializes the game, after the scene if fully loaded
+     * Initializes the game board, the turn (White Player starts playing), and updates the current game state depending on the user preferences
      */
-    initGame() {
-        if(this.graphLoaded) {
-            this.initBoard();
+    initBoard(startGame) {
+        let boardString = 'initial(' + this.boardSize + ')';
+        
+        let p = this.server.promiseRequest(boardString, null, null);
+        p.then((request) => {
+            let board = request;
+
+            // -- GameBoard -- //
+            this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
+            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
+            
+            this.turn = "white";
+            this.piecesList = this.boardSet.board.pieceList;
+
+            if(startGame) {
+                this.updatePlayerState(this.player1);
+            }
+            else {
+                this.concreteState.board = this.boardSet.board;
+            }
+
+            this.gameOrchestratorLoaded = true;
+        });
+    }
+
+    /**
+     * Changes the turn of the game, updating the game states if user changed any player configuration
+     */
+    changeTurn() {
+        let currentPlayer = null;
+        if(this.turn == "white") {
+            this.turn = "black";
+            this.gameInfo.turn = "black";
+            this.gameInfo.blackPlayer = this.player2;
+            currentPlayer = this.player2;
+        } else {
+            this.turn = "white";
+            this.gameInfo.turn = "white";
+            this.gameInfo.whitePlayer = this.player1;
+            currentPlayer = this.player1;
+        }
+        this.updatePlayerState(currentPlayer);
+    }
+
+    /**
+     * Updates the state of the game, depending on the type of the player of the current turn
+     * @param {integer} player - the player of the current turn
+     */
+    updatePlayerState(player) {
+        if (player == 1) {
+            this.changeState(new GameStateGame(this, this.boardSet.board));
+        } else if (player == 2) {
+            this.changeState(new GameStateBot(this, this.boardSet.board, "random"));
+        } else if (player == 3) {
+            this.changeState(new GameStateBot(this, this.boardSet.board, "hard"));
         }
     }
 
@@ -170,21 +141,15 @@ class MyGameOrchestrator {
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
-        // if gamestate = end
         this.boardSet.board.pieceList = [];
         this.changeState(new GameStateAnimator(this, this.gameSequence));
     }
 
     /**
-     * Resets the board, if the user presses the "Reset" button on the interface, returning to Player VS Player mode
+     * Resets/Init a new game with the
      */
     reset() {
-        this.initBoard();
-
-        this.gameInfo.whitePlayer = '1';
-        this.gameInfo.blackPlayer = '1';
-
-        this.changeState(new GameStateGame(this, this.boardSet.board));
+        this.initBoard(true);
     }
 
     /**
@@ -248,6 +213,29 @@ class MyGameOrchestrator {
      */
     createGameStats(status, gameOverData) {
         this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.spriteSheet);
+    }
+
+    pickMenu() {
+		if (this.scene.pickMode == false) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+				for (let i = 0; i < this.scene.pickResults.length; i++) {
+					let obj = this.scene.pickResults[i][0];
+					if (obj) {
+                        let objId = this.scene.pickResults[i][1];
+
+                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateGame)) {
+                            this.concreteState.handlePicking(obj, objId);
+                        }
+                        if(obj instanceof MyButton) {
+                            obj.apply();
+                        }
+                        console.log(obj, objId);
+                    }
+                }
+                
+                this.scene.pickResults.splice(0, this.scene.pickResults.length);
+            }
+		}
     }
 
     /**
