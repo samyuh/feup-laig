@@ -36,7 +36,7 @@ class GameStateBot extends GameState {
                 this.gameOrchestrator.server.makePrologRequest(chooseRandomString, null, null, false);
                 
                 let piece_played = this.gameOrchestrator.server.getResult();
-/
+
                 let moveRandomString = 'moveRandom(' + stringBoard + ',' + piece_played[0] + '-' + piece_played[1] + '-' + piece_played[2] + '-' + this.gameOrchestrator.turn + ')';
                 this.gameOrchestrator.server.makePrologRequest(moveRandomString, null, null, false);
 

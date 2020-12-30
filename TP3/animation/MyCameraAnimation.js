@@ -1,3 +1,10 @@
+/**
+ * MyCameraAnimation
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {CGFcamera} initialCamera - the initial camera of the animation
+ * @param {CGFcamera} finalCamera - the final camera of the animation
+ */
 class MyCameraAnimation {
     constructor(scene, initialCamera, finalCamera) {
         this.scene = scene;
@@ -24,6 +31,10 @@ class MyCameraAnimation {
         this.currentCamera = this.initialCamera;
     }
 
+    /**
+     * Update function, called periodically, which calculates the values of the camera at a given moment
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.currentTime += elapsedTime;
 
@@ -53,6 +64,9 @@ class MyCameraAnimation {
         }
     }
 
+    /**
+     * Applies the current camera to the scene, if the animation if active
+     */
     apply() {
         if (!this.active) {
             return 0;
@@ -61,6 +75,9 @@ class MyCameraAnimation {
         this.applyCamera();
     }
 
+    /**
+     * Applies the current camera to the scene
+     */
     applyCamera() {
         this.scene.camera = this.currentCamera;
         this.scene.interface.setActiveCamera(this.scene.camera);

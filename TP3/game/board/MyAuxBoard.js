@@ -1,3 +1,9 @@
+/**
+ * MyAuxBoard
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {CGFtexture} auxBoardTexture - the texture of the auxiliary board
+ */
 class MyAuxBoard {
 	constructor(scene, auxBoardTexture) {
         this.scene = scene;
@@ -11,6 +17,9 @@ class MyAuxBoard {
         this.auxBoardBot = new MyCube(this.scene);
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of the cubes composing the auxiliary board
+     */
     display() {
         this.scene.pushMatrix();
         this.scene.translate(0, 0, -3);
@@ -42,6 +51,11 @@ class MyAuxBoard {
         this.scene.popMatrix();
     }
 
+    /**
+     * Updates the list of texture coordinates - Not used on MyAuxBoard
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
+     */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
     }

@@ -1,3 +1,12 @@
+/**
+ * MyPieceAnimation
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {Piece Object} pieceToPlay - Reference to the piece to be played
+ * @param {Piece Object} pieceStack - Reference to the piece of the stack to be shown in the scene, on the auxiliary board
+ * @param {Array} startPosition - initial position of the piece, in the format [x, y, z]
+ * @param {Array} finalPosition - final position of the piece, in the format [x, y, z]
+ */
 class MyPieceAnimation {
     constructor(scene, pieceToPlay, pieceStack, startPosition, finalPosition) {
         this.scene = scene;
@@ -28,8 +37,6 @@ class MyPieceAnimation {
         this.keyFrameAnim.addKeyframe(newKeyFrame5);
         this.keyFrameAnim.updateTimeValues();
 
-        // --- TODO : MAKING OTHER PIECE APPEAR -- //
-
         this.keyFrameAnimStack = new MyKeyframeAnimation(this.scene);
         let newKeyFrame6 = new MyKeyframe(0, [this.startPosition[0], this.startPosition[1] - 1, this.startPosition[2]], [0, 0, 0], [1,1,1]);
         this.keyFrameAnimStack.addKeyframe(newKeyFrame6);
@@ -42,6 +49,10 @@ class MyPieceAnimation {
         this.keyFrameAnimStack.updateTimeValues();
     }
 
+    /**
+     * Update function, called periodically, which calls the update of the MyKeyframeAnimations objects of the piece being played and the piece in the stack
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.currentTime += elapsedTime;
 
@@ -53,6 +64,10 @@ class MyPieceAnimation {
         this.keyFrameAnimStack.update(elapsedTime);
     }
 
+    /**
+     * Applies the keyframe animations refering to the piece being played and the piece in the stack
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     apply() {
         if(!this.active) {
             return 0;

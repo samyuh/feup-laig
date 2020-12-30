@@ -3,6 +3,7 @@
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} text - Text to be written to the sprite text
+ * @param {String} spriteSheet - Spritesheet to be used to display the text
  */
 class MySpriteText extends CGFobject{
     constructor(scene, text, spriteSheet) { 

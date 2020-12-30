@@ -1,3 +1,11 @@
+/**
+ * MyPiece
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {String} color - color of the main part of the piece
+ * @param {CGFtexture} whiteTexture - the texture of the white part of the piece
+ * @param {CGFtexture} blackTexture - the texture of the black part of the piece
+ */
 class MyPiece {
 	constructor(scene, color, whiteTexture, blackTexture) {
         this.scene = scene;
@@ -19,6 +27,13 @@ class MyPiece {
         this.pieces.push(new MyCube(this.scene));
     }
 
+    /**
+     * Updates the position of the piece
+     * @param {integer} x - the coordinate x of the main part of the piece
+     * @param {integer} z - the coordinate z of the main part of the piece
+     * @param {integer} xb - the coordinate x of the secondary part of the piece
+     * @param {integer} zb - the coordinate z of the secondary part of the piece
+     */
     updatePosition(x, z, xb, zb) {
         this.x = x;
         this.z = z;
@@ -27,6 +42,9 @@ class MyPiece {
         this.zb = zb;
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of both parts of the piece
+     */
     display() {
         this.scene.pushMatrix();
 
@@ -64,6 +82,11 @@ class MyPiece {
         this.scene.popMatrix();
     }
 
+    /**
+     * Updates the list of texture coordinates - Not used on MyPiece
+     * @param {integer} afs - dx/afs
+     * @param {integer} aft - dy/aft
+     */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.
     }

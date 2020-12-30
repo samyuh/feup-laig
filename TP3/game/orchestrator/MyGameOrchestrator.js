@@ -1,3 +1,8 @@
+/**
+ * MyGameOrchestrator
+ * @constructor
+ * @param {CGFscene} scene - Reference to MyScene object
+ */
 class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
@@ -19,18 +24,21 @@ class MyGameOrchestrator {
         // PROLOG Connection
         this.server = new MyServer();
 
-        // Scene
+        // Player type
         this.player = {
             Player: '1', Random: '2', Intelligent: '3'
         };
 
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
+
         this.boardSize = '7';
         this.timeout = 30;
     }
 
-    /* Init Function */
+    /**
+     * Initializes the game board, the turn (White Player starts playing), and updates the current game state depending on the user preferences
+     */
     initBoard() {
         let boardString = 'initial(' + this.boardSize + ')';
         
@@ -44,51 +52,57 @@ class MyGameOrchestrator {
         let board = this.server.getResult();
 
         this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-        this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.timeout, this.spriteSheet);
+        this.gameInfo = new MyGameInfo(this.scene, "white", this.timeout, this.spriteSheet);
 
-        //this.board = this.boardSet.board;
         this.turn = "white";
         this.piecesList = this.boardSet.board.pieceList; // Pieces on board
 
-        this.updatePlayerState1();
+        this.updatePlayerState(this.player1);
     }
 
+    /**
+     * Changes the turn of the game, updating the game states if user changed any player configuration
+     */
     changeTurn() {
+        let player = null;
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
-            this.updatePlayerState2();
+            player = this.player2;
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
-            this.updatePlayerState1();
+            player = this.player1;
+        }
+        this.updatePlayerState(player);
+    }
+
+    /**
+     * Updates the state of the game, depending on the type of the player of the current turn
+     * @param {integer} player - the player of the current turn
+     */
+    updatePlayerState(player) {
+        if (player == 1) {
+            this.changeState(new GameStateGame(this, this.boardSet.board));
+        } else if (player == 2) {
+            this.changeState(new GameStateBot(this, this.boardSet.board, "random"));
+        } else if (player == 3) {
+            this.changeState(new GameStateBot(this, this.boardSet.board, "hard"));
         }
     }
 
-    updatePlayerState1() {
-        if (this.player1 == 1) {
-            this.concreteState = new GameStateGame(this, this.boardSet.board);
-        } else if (this.player1 == 2) {
-            this.concreteState = new GameStateBot(this, this.boardSet.board, "random");
-        } else if (this.player1 == 3) {
-            this.concreteState = new GameStateBot(this, this.boardSet.board, "hard");
-        }
-    }
-
-    updatePlayerState2() {
-        if (this.player2 == 1) {
-            this.concreteState = new GameStateGame(this, this.boardSet.board);
-        } else if (this.player2 == 2) {
-            this.concreteState = new GameStateBot(this, this.boardSet.board, "random");
-        } else if (this.player2 == 3) {
-            this.concreteState = new GameStateBot(this, this.boardSet.board, "hard");
-        }
-    }
-
+    /**
+     * Updates the state of the game
+     * @param {GameState Object} state - the new state of the game
+     */
     changeState(state) {
         this.concreteState = state;
     }
 
+    /**
+     * Initializes the graph of the scene, storing its textures
+     * @param {SceneGraph Object} sceneGraph - the graph of the scene
+     */
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
         
@@ -107,32 +121,44 @@ class MyGameOrchestrator {
         this.initBoard();
     }
 
+    /**
+     * Initializes the game, after the scene if fully loaded
+     */
     initGame() {
         if(this.graphLoaded) {
             this.initBoard();
         }
     }
 
-    /* Interface */
+    /**
+     * Initializes the movie of the game, if the user presses the "Movie" button on the interface
+     */
     movie() {
         // if gamestate = end
         this.boardSet.board.pieceList = [];
         this.changeState(new GameStateAnimator(this, this.gameSequence));
     }
 
+    /**
+     * Resets the board, if the user presses the "Reset" button on the interface, returning to Player VS Player mode
+     */
     reset() {
         this.initBoard();
 
         this.changeState(new GameStateGame(this, this.boardSet.board));
     }
 
+    /**
+     * Undoes the last move, if the user presses the "Undo" button on the interface
+     */
     undo() {
         if(!(this.concreteState instanceof GameStateGame)) {
             this.changeState(new GameStateGame(this, this.boardSet.board));
         }
 
-        if (this.boardSet.board.pieceList.length == 0)
+        if (this.boardSet.board.pieceList.length == 0) {
             return;
+        }
 
         let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
@@ -166,20 +192,36 @@ class MyGameOrchestrator {
         //this.gameInfo = new MyGameInfo(this.scene, turn);
     }
 
+    /**
+     * Presents the game info to the screen, after the end of the game
+     * @param {String} status - cause of the end of the game (Board full or Timeout)
+     * @param {Array} gameOverData - game info, with the winner and its score
+     */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.boardDisplacement, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.spriteSheet);
     }
 
-    /* Update */
+    /**
+     * Update function, called periodically, which calls the update function of the current state
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.concreteState.update(elapsedTime);
     }
 
-    // --- General Display --- //
+    /**
+     * Display function, called periodically, which calls the display function of the current state
+     */
     display() {
         this.concreteState.display();
     }
 
+    /**
+     * Processes a node 
+     * @param {Node} parentNode - the parent node of the node being processed
+     * @param {Node} parentMaterial - the material of the parent node of the node being processed
+     * @param {Node} parentTexture - the texture of the parent node of the node being processed
+     */
     processNode(parentNode, parentMaterial, parentTexture) {
         let currentNode = this.graph.nodes[parentNode];
 
