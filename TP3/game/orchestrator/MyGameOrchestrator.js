@@ -34,23 +34,19 @@ class MyGameOrchestrator {
     initBoard() {
         let boardString = 'initial(' + this.boardSize + ')';
         
-        try {
-            this.server.makePrologRequest(boardString, null, null, false, 1);
-        }
-        catch(err) {
-            console.log('Prolog server not initialized!');
-        }
+        let p = this.server.promiseRequest(boardString, null, null);
+        p.then((request) => {
+            let board = request;
 
-        let board = this.server.getResult();
+            this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
+            this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.timeout, this.spriteSheet);
 
-        this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-        this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.timeout, this.spriteSheet);
+            //this.board = this.boardSet.board;
+            this.turn = "white";
+            this.piecesList = this.boardSet.board.pieceList; // Pieces on board
 
-        //this.board = this.boardSet.board;
-        this.turn = "white";
-        this.piecesList = this.boardSet.board.pieceList; // Pieces on board
-
-        this.updatePlayerState1();
+            this.updatePlayerState1();
+        });
     }
 
     changeTurn() {
@@ -144,24 +140,34 @@ class MyGameOrchestrator {
         let piece_secondary_column = piece.xb + 1;
 
         let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
-        this.server.makePrologRequest(undoString, null, null, false);
+        let p = this.server.promiseRequest(undoString, null, null);
 
-        let new_board = this.server.getResult();
-        this.boardSet.board.boardList = new_board;
+        p.then((request) => {
+            let new_board = request;
 
-        this.changeTurn();
+            this.boardSet.board.boardList = new_board;
 
-        if (this.boardSet.board.pieceList.length == 0)
-            this.gameInfo.updateGroups(0, 0);
-        else {
-            let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
-            let groupsString = 'groups(' + stringNewBoard + ')';
-            this.server.makePrologRequest(groupsString, null, null, false);
-            let groupsData = this.server.getResult();
+            this.changeTurn();
+
+            if (this.boardSet.board.pieceList.length == 0) {
+                this.gameInfo.updateGroups(0, 0);
+            }
+            else {
+                let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                let groupsString = 'groups(' + stringNewBoard + ')';
+                
+                return this.server.promiseRequest(groupsString, null, null, false);
+            }
+        }).then((request) => {
+            let groupsData = request;
             groupsData[0] = groupsData[0] || 1;
             groupsData[1] = groupsData[1] || 1;
             this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-        }
+        }).catch((error) =>  {
+            console.log(error);    
+        });
+        
+        
         //this.gameSequence.pop();
         //this.gameInfo = new MyGameInfo(this.scene, turn);
     }

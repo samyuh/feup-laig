@@ -26,15 +26,22 @@ class MyBoardSet {
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
         this.pieceAnimated = false;
+
+        this.turn = "white";
     }
 
-    resetPiece(color) {
-        if(color == "white") {
-            this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
-            this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+    resetPiece() {
+        if (this.turn == "white") {
+            this.pieceToPlay = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+            
+            this.turn = "black";
         } else {
-            this.pieceToPlay = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
-            this.pieceStack = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+            this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+            
+
+            this.turn = "white";
         }
     }
 
