@@ -52,7 +52,6 @@ class GameStateGame extends GameState {
                 }
             });
             
-
             this.cleanPicked();
         }
         else {
@@ -61,25 +60,6 @@ class GameStateGame extends GameState {
             this.selectedTiles = this.board.getAdjacentTiles(currentTileId);
             this.previousTileId = currentTileId;
         }
-    }
-
-    pickBoardTile() {
-		if (this.gameOrchestrator.scene.pickMode == false) {
-			if (this.gameOrchestrator.scene.pickResults != null && this.gameOrchestrator.scene.pickResults.length > 0) {
-				for (let i = 0; i < this.gameOrchestrator.scene.pickResults.length; i++) {
-					let tile = this.gameOrchestrator.scene.pickResults[i][0];
-					if (tile) {
-                        let currentTileId = this.gameOrchestrator.scene.pickResults[i][1];
-                        this.handlePicking(tile, currentTileId);
-                    }
-                    else {
-                        this.cleanPicked();
-                    }
-                }
-                
-                this.gameOrchestrator.scene.pickResults.splice(0, this.gameOrchestrator.scene.pickResults.length);
-            }
-		}
     }
 
     update(elapsedTime) {
@@ -98,9 +78,7 @@ class GameStateGame extends GameState {
         }
     }
 
-    display() {
-        this.pickBoardTile();
-        
+    display() {       
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();

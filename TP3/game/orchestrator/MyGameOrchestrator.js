@@ -18,16 +18,42 @@ class MyGameOrchestrator {
 
         // PROLOG Connection
         this.server = new MyServer();
-
+        
         // Scene
         this.player = {
             Player: '1', Random: '2', Intelligent: '3'
         };
 
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        this.menu = new MyMenu(scene, this, this.spriteSheet);
+
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
         this.boardSize = '7';
         this.timeout = 30;
+    }
+
+    pickMenu() {
+		if (this.scene.pickMode == false) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+				for (let i = 0; i < this.scene.pickResults.length; i++) {
+					let obj = this.scene.pickResults[i][0];
+					if (obj) {
+                        let objId = this.scene.pickResults[i][1];
+
+                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateGame)) {
+                            this.concreteState.handlePicking(obj, objId);
+                        }
+                        if(obj instanceof MyButton) {
+                            obj.apply();
+                        }
+                        console.log(obj, objId);
+                    }
+                }
+                
+                this.scene.pickResults.splice(0, this.scene.pickResults.length);
+            }
+		}
     }
 
     /* Init Function */
@@ -40,7 +66,6 @@ class MyGameOrchestrator {
 
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.timeout, this.spriteSheet);
-
             //this.board = this.boardSet.board;
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList; // Pieces on board
@@ -103,13 +128,14 @@ class MyGameOrchestrator {
         this.initBoard();
     }
 
+    /* Interface */
     initGame() {
         if(this.graphLoaded) {
             this.initBoard();
         }
     }
 
-    /* Interface */
+    
     movie() {
         // if gamestate = end
         this.boardSet.board.pieceList = [];
@@ -183,8 +209,11 @@ class MyGameOrchestrator {
 
     // --- General Display --- //
     display() {
+        this.pickMenu();
+
         this.concreteState.display();
 
+        this.menu.display();
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
 
