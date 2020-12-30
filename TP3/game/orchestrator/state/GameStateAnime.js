@@ -15,7 +15,9 @@ class GameStateAnime extends GameState {
         this.position = this.board.getCoordinates(finalPosition[0], finalPosition[1]);
         
         this.pieceToPlayPosition = boardSet.auxBoardDisplacement;
-        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, boardSet.pieceStack, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
+        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet, boardSet.pieceToPlay, boardSet.pieceStack, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
+    
+        this.waitingResponse = false;
     }
 
     /**
@@ -39,20 +41,17 @@ class GameStateAnime extends GameState {
      */
     display() {
         if(this.animation.active) {
-            this.boardSet.pieceAnimated = true;
             this.animation.apply();
-        } else {
+            
+        } else if (!this.waitingResponse) {
             this.putPiece();
-            this.boardSet.pieceAnimated = false;
-            let a = this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
-            console.log(a);
+            this.waitingResponse = true;
+            this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
         }
 
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
         // -- Board -- //
-        
-        this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }
 }

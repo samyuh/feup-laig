@@ -643,7 +643,7 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
         // Spritesheet Text
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        
 
         //For each texture in textures block, check ID and file URL
         this.textures = {};
@@ -689,7 +689,8 @@ class MySceneGraph {
         var children = spriteSheetsNode.children;
 
         this.spritesheets = [];
-
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "spritesheet") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">. Ignoring tag...");

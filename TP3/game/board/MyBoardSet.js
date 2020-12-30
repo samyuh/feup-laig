@@ -38,19 +38,26 @@ class MyBoardSet {
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
         this.pieceAnimated = false;
-    }
 
+        this.turn = "white";
+    }
+    
     /**
      * Updates the piece to play and the piece on the stack, depending on the current turn of the game
      * @param {String} color - the color of the player to play in the current turn
      */
-    resetPiece(color) {
-        if(color == "white") {
-            this.pieceToPlay = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
-            this.pieceStack = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
+    resetPiece() {
+        if (this.turn == "white") {
+            this.pieceToPlay = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+            
+            this.turn = "black";
         } else {
-            this.pieceToPlay = new MyPiece(this.scene, 'black', this.blackTileTexture, this.whiteTileTexture);
-            this.pieceStack = new MyPiece(this.scene, 'white', this.blackTileTexture, this.whiteTileTexture);
+            this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+            this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+            
+
+            this.turn = "white";
         }
     }
 

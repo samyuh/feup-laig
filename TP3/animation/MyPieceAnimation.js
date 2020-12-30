@@ -8,12 +8,13 @@
  * @param {Array} finalPosition - final position of the piece, in the format [x, y, z]
  */
 class MyPieceAnimation {
-    constructor(scene, pieceToPlay, pieceStack, startPosition, finalPosition) {
+    constructor(scene, boardSet, pieceToPlay,  pieceStack, startPosition, finalPosition) {
         this.scene = scene;
         this.totalTime = 2.5;
         this.currentTime = 0;
         this.startTime = 0;
         this.active = true;
+        this.boardSet = boardSet;
 
         this.pieceToPlay = pieceToPlay;
         this.pieceStack = pieceStack;
@@ -57,7 +58,9 @@ class MyPieceAnimation {
         this.currentTime += elapsedTime;
 
         if(this.totalTime <= this.currentTime) {
+            this.boardSet.resetPiece();
             this.active = false;
+            this.boardSet.pieceAnimated = false;
         }
 
         this.keyFrameAnim.update(elapsedTime);
@@ -76,6 +79,7 @@ class MyPieceAnimation {
         this.scene.pushMatrix();
         let display = this.keyFrameAnim.apply();
         if(display != 0) {
+            this.boardSet.pieceAnimated = true;
             this.pieceToPlay.display();
         } 
         this.scene.popMatrix();
@@ -83,6 +87,7 @@ class MyPieceAnimation {
         this.scene.pushMatrix();
         let up = this.keyFrameAnimStack.apply();
         if(up != 0) {
+            this.boardSet.pieceAnimated = true;
             this.pieceStack.display();
         } 
         this.scene.popMatrix();
