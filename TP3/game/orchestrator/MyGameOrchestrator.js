@@ -52,7 +52,7 @@ class MyGameOrchestrator {
         let board = this.server.getResult();
 
         this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-        this.gameInfo = new MyGameInfo(this.scene, "white", this.timeout, this.spriteSheet);
+        this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.timeout, this.spriteSheet);
 
         this.turn = "white";
         this.piecesList = this.boardSet.board.pieceList; // Pieces on board
@@ -68,10 +68,12 @@ class MyGameOrchestrator {
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
+            this.gameInfo.blackPlayer = this.player2;
             player = this.player2;
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
+            this.gameInfo.whitePlayer = this.player1;
             player = this.player1;
         }
         this.updatePlayerState(player);
@@ -144,6 +146,9 @@ class MyGameOrchestrator {
      */
     reset() {
         this.initBoard();
+
+        this.gameInfo.whitePlayer = '1';
+        this.gameInfo.blackPlayer = '1';
 
         this.changeState(new GameStateGame(this, this.boardSet.board));
     }
