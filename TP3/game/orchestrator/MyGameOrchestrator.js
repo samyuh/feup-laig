@@ -35,7 +35,7 @@ class MyGameOrchestrator {
         let boardString = 'initial(' + this.boardSize + ')';
         
         try {
-            this.server.makePrologRequest(boardString, null, null, false);
+            this.server.makePrologRequest(boardString, null, null, false, 1);
         }
         catch(err) {
             console.log('Prolog server not initialized!');
