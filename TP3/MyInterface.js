@@ -33,7 +33,6 @@ class MyInterface extends CGFinterface {
         this.activeKeys={};
     }
 
-    
     /**
      * Init Interface Cameras
      */
@@ -45,6 +44,9 @@ class MyInterface extends CGFinterface {
         );
     }
 
+    /**
+     * Update Interface Cameras
+     */
     updateCameras() {
         this.cameras.remove(this.camItem);
 
