@@ -37,6 +37,9 @@ class MyGameOrchestrator {
 
         this.boardSize = '7';
         this.timeout = 30;
+
+        // Passar para o XML
+        this.infoDisplacement = [0, -10, -5];
     }
 
     
@@ -74,12 +77,12 @@ class MyGameOrchestrator {
             let board = request;
 
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.boardDisplacement, this.timeout, this.spriteSheet);
+            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
             //this.board = this.boardSet.board;
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList; // Pieces on board
 
-            this.updatePlayerState1();
+            this.updatePlayerState(this.player1);
         });
     }
 

@@ -35,7 +35,6 @@ class GameStateBot extends GameState {
                 let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
                 let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
                 
-                console.log(this.gameOrchestrator.turn);
                 let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
 
@@ -43,6 +42,15 @@ class GameStateBot extends GameState {
                 return this.gameOrchestrator.server.promiseRequest(moveRandomString, null, null);
             }).then((request) => {
                 this.board.boardList = request;
+
+                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+                let groupsString = 'groups(' + stringNewBoard + ')';
+                return this.gameOrchestrator.server.promiseRequest(groupsString, null, null);
+            }).then((request) => {
+                let groupsData = request;
+                groupsData[0] = groupsData[0] || 1;
+                groupsData[1] = groupsData[1] || 1;
+                this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
             });
 
         } else {
@@ -61,7 +69,16 @@ class GameStateBot extends GameState {
                 return this.gameOrchestrator.server.promiseRequest(moveIntelligentString, null, null);
             }).then((request) => {
                 this.board.boardList = request;
-            });   
+
+                let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+                let groupsString = 'groups(' + stringNewBoard + ')';
+                return this.gameOrchestrator.server.promiseRequest(groupsString, null, null);
+            }).then((request) => {
+                let groupsData = request;
+                groupsData[0] = groupsData[0] || 1;
+                groupsData[1] = groupsData[1] || 1;
+                this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+            });  
         }
     }
 

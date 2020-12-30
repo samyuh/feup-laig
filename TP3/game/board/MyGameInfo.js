@@ -7,15 +7,17 @@
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
  */
 class MyGameInfo {
-    constructor(scene, turn, whitePlayer, blackPlayer, timeout, spriteSheet) {
+    constructor(scene, turn, whitePlayer, blackPlayer, infoDisplacement, timeout, spriteSheet) {
         this.scene = scene;
         this.turn = turn;
         this.turnTime = 0;
         this.timeout = timeout;
+        this.infoDisplacement = infoDisplacement;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.spriteSheet = spriteSheet;
 
+        console.log(spriteSheet);
         // -- Player Turn -- //
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white", this.spriteSheet);
         this.blackTurn = new MySpriteText(this.scene, "Turn: black", this.spriteSheet);
@@ -73,7 +75,7 @@ class MyGameInfo {
     display() {
         this.scene.pushMatrix();
 
-        this.scene.translate(0, -10, -5);
+        this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
 
         this.scene.translate(0, 2, 0);
         this.blackGroup.display();
@@ -82,7 +84,6 @@ class MyGameInfo {
         this.whiteGroup.display();
 
         this.scene.translate(0, 2, 0);
-
         if ((this.turn == "white" && this.whitePlayer == '1') || (this.turn == "black" && this.blackPlayer == '1')) {
             this.timer.display();
         }
