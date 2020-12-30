@@ -15,28 +15,6 @@ class GameStateAnime extends GameState {
         this.board.addPiece(this.piece);     
     }
 
-    checkEndGame() {
-        let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-        let gameOverString = 'game_over(' + stringNewBoard + ')';
-        this.gameOrchestrator.server.makePrologRequest(gameOverString, null, null, false);
-        let gameOverData = this.gameOrchestrator.server.getResult();
-        if (gameOverData.length != 0) {
-            this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
-            this.gameOrchestrator.createGameStats("end", gameOverData);
-        }
-        else {
-            this.gameOrchestrator.changeTurn();
-            this.boardSet.resetPiece(this.gameOrchestrator.turn);
-
-            let groupsString = 'groups(' + stringNewBoard + ')';
-            this.gameOrchestrator.server.makePrologRequest(groupsString, null, null, false);
-            let groupsData = this.gameOrchestrator.server.getResult();
-            groupsData[0] = groupsData[0] || 1;
-            groupsData[1] = groupsData[1] || 1;
-            this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-        }
-    }
-
     update(elapsedTime) {
         this.animation.update(elapsedTime);
     }
@@ -48,7 +26,8 @@ class GameStateAnime extends GameState {
         } else {
             this.putPiece();
             this.boardSet.pieceAnimated = false;
-            this.checkEndGame();
+            let a = this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
+            console.log(a);
         }
 
         // -- Board -- //

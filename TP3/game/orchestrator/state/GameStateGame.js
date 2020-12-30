@@ -46,7 +46,7 @@ class GameStateGame extends GameState {
 
                 // --- Game move --- //
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, this.lastMove));
-                this.gameOrchestrator.server.updateBoardProlog(this.gameOrchestrator, this.board,this.lastMove);
+                this.gameOrchestrator.server.updateBoardProlog(this.gameOrchestrator, this.gameOrchestrator.boardSet, this.board, this.lastMove);
             }
 
             this.cleanPicked();

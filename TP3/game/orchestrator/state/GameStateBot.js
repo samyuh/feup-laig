@@ -30,15 +30,32 @@ class GameStateBot extends GameState {
         let piece_played = null;
 
         if (this.difficulty == "random") { 
-            console.log("random");
-            let chooseRandomString = 'chooseRandom(' + stringBoard + ',' + this.gameOrchestrator.turn + ')';
-            this.gameOrchestrator.server.makePrologRequest(chooseRandomString, null, null, false);
-            piece_played = this.gameOrchestrator.server.getResult();
+            let p = new Promise((resolve, reject) => {                
+                let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+                let chooseRandomString = 'chooseRandom(' + stringBoard + ',' + this.gameOrchestrator.turn + ')';
+                this.gameOrchestrator.server.makePrologRequest(chooseRandomString, null, null, false);
+                
+                let piece_played = this.gameOrchestrator.server.getResult();
+/
+                let moveRandomString = 'moveRandom(' + stringBoard + ',' + piece_played[0] + '-' + piece_played[1] + '-' + piece_played[2] + '-' + this.gameOrchestrator.turn + ')';
+                this.gameOrchestrator.server.makePrologRequest(moveRandomString, null, null, false);
 
-            let moveRandomString = 'moveRandom(' + stringBoard + ',' + piece_played[0] + '-' + piece_played[1] + '-' + piece_played[2] + '-' + this.gameOrchestrator.turn + ')';
-            this.gameOrchestrator.server.makePrologRequest(moveRandomString, null, null, false);
-            let new_board = this.gameOrchestrator.server.getResult();
-            this.board.boardList = new_board;
+                let new_board = this.gameOrchestrator.server.getResult();
+                this.board.boardList = new_board;
+                
+                resolve(piece_played);
+            });
+
+            p.then((message) => {
+                let piece_played = message;
+
+                let position = this.board.getCoordinates2(piece_played[0], piece_played[1], piece_played[2]);
+                let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
+                let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
+
+                let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
+                this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
+            });
         } else {
             console.log("intelligent");
             let chooseIntelligentString = 'chooseIntelligent(' + stringBoard + ',' + this.gameOrchestrator.turn + ')';
@@ -49,21 +66,14 @@ class GameStateBot extends GameState {
             this.gameOrchestrator.server.makePrologRequest(moveIntelligentString, null, null, false);
             let new_board = this.gameOrchestrator.server.getResult();
             this.board.boardList = new_board;
+
+            let position = this.board.getCoordinates2(piece_played[0], piece_played[1], piece_played[2]);
+            let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
+            let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
+
+            let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
+            this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
         }
-    
-        let position = this.board.getCoordinates2(piece_played[0], piece_played[1], piece_played[2]);
-        let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
-        let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
-
-        let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
-        this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
-
-        //let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.whiteTexture, this.blackTexture);
-        //piece.updatePosition(position[0], position[1], position[2], position[3]);
-        //this.board.addPiece(piece);
-
-        //this.gameOrchestrator.changeTurn();
-        //this.checkEndGame();
     }
 
     update(elapsedTime) {
