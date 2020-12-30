@@ -27,7 +27,7 @@ class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        scene.graph = this;
+        scene.graph.push(this);
 
         this.nodes = [];
 
@@ -47,7 +47,7 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
 
-        this.filename = 
+        this.filename = filename;
 
         this.reader.open('scenes/' + filename, this);
     }
@@ -71,11 +71,6 @@ class MySceneGraph {
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
-
-        this.scene.interface.initInterfaceCameras();
-        this.scene.interface.initInterfaceLights();
-        this.scene.interface.initMiscellaneous();
-        this.scene.interface.initInterfaceThemes();
     }
 
     /*
@@ -297,7 +292,7 @@ class MySceneGraph {
     parseViews(viewsNode) {
         this.cameras = [];
 
-        this.scene.viewIDs = [];
+        this.viewIDs = [];
 
         let default_cam_error = true;
 
@@ -308,7 +303,7 @@ class MySceneGraph {
         if (default_view == null)
             return "No default View defined for scene - atribute 'default' missing from tag <views>";
 
-        this.scene.selectedView = default_view;
+        this.selectedView = default_view;
 
         if (children.length === 0)
             return "No views declared in <views>";
@@ -331,7 +326,7 @@ class MySceneGraph {
             if (id == default_view) 
                 default_cam_error = false;
             
-            this.scene.viewIDs.push(id);
+            this.viewIDs.push(id);
 
             // Process common atributes between perspective and ortho cameras (near and far)
             var near = this.reader.getFloat(children[i], 'near');
@@ -647,9 +642,12 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        // Spritesheet Text
+        
+
         //For each texture in textures block, check ID and file URL
         this.textures = {};
-
+        
         var children = texturesNode.children;
 
         for (var i = 0; i < children.length; i++) {
@@ -691,7 +689,8 @@ class MySceneGraph {
         var children = spriteSheetsNode.children;
 
         this.spritesheets = [];
-
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "spritesheet") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">. Ignoring tag...");
@@ -1002,21 +1001,54 @@ class MySceneGraph {
         let piece = children[2]; 
         
         if(board.nodeName != "board") {
-            console.log("erro");
+            console.log("Missing <board> on boardgame.  Using Default Values");
+
+            this.boardDisplacement = [-5, -19, -5];
+            this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
+        }
+        else {
+            let boardX = this.reader.getFloat(board, 'x');
+            let boardY = this.reader.getFloat(board, 'y');
+            let boardZ = this.reader.getFloat(board, 'z');
+            
+            let boardTextureInfo = board.children[0];
+            let boardTexture = this.reader.getString(boardTextureInfo, 'id');
+
+            this.boardDisplacement = [boardX, boardY, boardZ];
+            this.boardTexture = this.textures[boardTexture];
         }
         if(auxBoard.nodeName != "auxboard") {
-            console.log("erro");
+            console.log("Missing <auxboard> on boardgame. Using Default Values");
+
+            this.auxBoardDisplacement = [10, -19, 0];
+            this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
+        }
+        else {
+            let auxBoardX = this.reader.getFloat(auxBoard, 'x');
+            let auxBoardY = this.reader.getFloat(auxBoard, 'y');
+            let auxBoardZ = this.reader.getFloat(auxBoard, 'z');
+
+            let auxBoardTextureInfo = auxBoard.children[0];
+            let auxBoardTexture = this.reader.getString(auxBoardTextureInfo, 'id');
+
+            this.auxBoardDisplacement = [auxBoardX, auxBoardY, auxBoardZ];
+            this.auxBoardTexture = this.textures[auxBoardTexture];
         }
         if(piece.nodeName != "piece") {
-            console.log("erro");
-        }
+            console.log("Missing <piece> on boardgame.  Using Default Values");
 
-        //this.board = new MyBoard(this.scene, 7, 7);
-        this.auxBoard = null;
-        this.piece = null;
-        this.auxBoardRight = new MyAuxBoard(this.scene, 1);
-        this.auxBoardLeft = new MyAuxBoard(this.scene, -1);
-        this.piece = new MyPiece(this.scene);
+            this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
+            this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
+        } else {
+            let textureWhiteInfo = piece.children[0];
+            let textureBlackInfo = piece.children[1];
+
+            let textureWhite = this.reader.getString(textureWhiteInfo, 'id');
+            let textureBlack = this.reader.getString(textureBlackInfo, 'id');
+     
+            this.whiteTexture = this.textures[textureWhite];
+            this.blackTexture = this.textures[textureBlack];
+        }
 
         return null;
     }
@@ -1030,6 +1062,7 @@ class MySceneGraph {
 
         this.nodes = [];
         this.spritesAnim = [];
+        this.shadersAnim = [];
 
         var grandChildren = [];
         var nodeNames = [];
@@ -1323,7 +1356,7 @@ class MySceneGraph {
                 }
             } else if (descendants[j].nodeName == "leaf") {
                 let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus',
-                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel']);
+                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim']);
 
                 if (type == null) {
                     this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
@@ -1342,6 +1375,8 @@ class MySceneGraph {
 
                         if (type =="spriteanim") {
                             this.spritesAnim.push(nPrimitive);
+                        } else if (type == "waveanim") {
+                            this.shadersAnim.push(nPrimitive);
                         }
                     }
                 }
@@ -1383,11 +1418,31 @@ class MySceneGraph {
                 return this.parsePatch(descendants, messageError);
             case "defbarrel":
                 return this.parseDefbarrel(descendants, messageError);
+            case "waveanim":
+                return this.parseWaveAnim(descendants, messageError);
             default:
                 return "not a valid leaf on node " + messageError;
         }
     }
 
+    parseWaveAnim(descendants, messageError) {
+        let x = this.reader.getFloat(descendants, 'x');
+        if (!(x != null && !isNaN(x))) {
+            return "unable to parse inner value of the Half Torus on node " + messageError;
+        }
+
+        let y = this.reader.getFloat(descendants, 'y');
+        if (!(y != null && !isNaN(y))) {
+            return "unable to parse outer value of the Half Torus on node " + messageError;
+        }
+
+        let z = this.reader.getFloat(descendants, 'z');
+        if (!(z != null && !isNaN(z))) {
+            return "unable to parse slices value of the Half Torus on node " + messageError;
+        }
+
+        return new MyWaveAnimation(this.scene, x, y, z);
+    }
     /**
      * Parse Torus from XML
      * @param {node leaf} descendants node that contains primitive information

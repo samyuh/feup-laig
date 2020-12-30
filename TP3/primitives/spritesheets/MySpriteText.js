@@ -3,15 +3,16 @@
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} text - Text to be written to the sprite text
+ * @param {String} spriteSheet - Spritesheet to be used to display the text
  */
 class MySpriteText extends CGFobject{
-    constructor(scene, text) { 
+    constructor(scene, text, spriteSheet) { 
         super(scene);
         this.scene = scene; 
 
         this.text = text;
         this.background = new MyRectangle(scene, -0.5, -0.5, 0.5, 0.5);
-        this.spriteSheet = new MySpriteSheet(scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        this.spriteSheet = spriteSheet;
     }
 
     /**

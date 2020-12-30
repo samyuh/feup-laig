@@ -33,19 +33,25 @@ class MyInterface extends CGFinterface {
         this.activeKeys={};
     }
 
-    
     /**
      * Init Interface Cameras
      */
     initInterfaceCameras() {
         this.cameras = this.gui.addFolder('Cameras');
 
-        this.cameras.add(this.scene, 'selectedView', this.scene.viewIDs).name('Camera View').onChange(
-            () => {
-                this.scene.camera = this.scene.graph.cameras[this.scene.selectedView];
+        this.camItem = this.cameras.add(this.scene, 'selectedView', this.scene.graph[this.scene.selectedTheme].viewIDs).name('Camera View').onChange(
+            this.scene.updateInterfaceCameras.bind(this.scene)
+        );
+    }
 
-                this.setActiveCamera(this.scene.camera);
-            }
+    /**
+     * Update Interface Cameras
+     */
+    updateCameras() {
+        this.cameras.remove(this.camItem);
+
+        this.camItem = this.cameras.add(this.scene, 'selectedView', this.scene.graph[this.scene.selectedTheme].viewIDs).name('Camera View').onChange(
+            this.scene.updateInterfaceCameras.bind(this.scene)
         );
     }
      
@@ -80,12 +86,24 @@ class MyInterface extends CGFinterface {
     initInterfaceThemes() {
         this.themes = this.gui.addFolder('Themes');
 
-        this.themes.add(this.scene, 'selectedTheme', this.scene.themes).name('Scene Theme').onChange(
-            () => {
-                this.scene.theme = this.scene.themes[this.scene.selectedTheme];
-                this.scene.updateTheme();
-            }
-        );
+        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateSkyBoxTextures.bind(this.scene));
+    }
+
+    /**
+     * Init Game Interface
+     */
+    initGameInterface() {
+        this.gameInterface = this.gui.addFolder('Game');
+
+        this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'movie').name('Movie');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'undo').name('Undo');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'boardSize', {'Small': '7', 'Medium': '9', 'Large': '11'}).name('Board Size');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'player1', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("White Player");
+        this.gameInterface.add(this.scene.gameOrchestrator, 'player2', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("Black Player");
+        this.gameInterface.add(this.scene.gameOrchestrator, 'initGame').name('Init Game');
+
+        this.gameInterface.open();
     }
 
     processKeyDown(event) {

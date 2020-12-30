@@ -18,19 +18,35 @@ serialInclude(['../lib/CGF.js',
                 'MyInterface.js', 
                 'MyLeaf.js', 
                 'MyNode.js',
-                './game/MyGameSequence.js',
-                './game/MyPrologInterface.js',
-                './game/MyServer.js',
-                './game/MyBoard.js',
-                './game/MyGameOrchestrator.js',
-                './game/MyAuxBoard.js',
                 './animation/MyAnimation.js',
                 './animation/MyKeyframe.js',
                 './animation/MyKeyframeAnimation.js',
-                './spritesheets/MySpriteAnim.js',
-                './spritesheets/MySpriteSheet.js',
-                './spritesheets/MySpriteText.js',
-                './primitives/MyPiece.js',
+                './animation/MyPieceAnimation.js',
+                './animation/MyCameraAnimation.js',
+                './game/MyServer.js',
+                './game/board/MyBoard.js',
+                './game/board/MyBoardSet.js',
+                './game/board/MyAuxBoard.js',
+                './game/board/MyGameInfo.js',
+                './game/board/MyGameEndInfo.js',
+                './game/board/MyTile.js',
+                './game/board/MyPiece.js',
+                './game/menu/MyMenu.js',
+                './game/menu/MyButton.js',
+                './game/orchestrator/MyGameOrchestrator.js',
+                './game/orchestrator/state/GameState.js',
+                './game/orchestrator/state/GameStateAnimator.js',
+                './game/orchestrator/state/GameStateAnime.js',
+                './game/orchestrator/state/GameStateEnd.js',
+                './game/orchestrator/state/GameStateGame.js',
+                './game/orchestrator/state/GameStateBot.js',
+                './game/orchestrator/state/GameStateLoading.js',
+                './game/orchestrator/sequence/MyGameMove.js',
+                './game/orchestrator/sequence/MyGameSequence.js',
+                './primitives/spritesheets/MySpriteAnim.js',
+                './primitives/spritesheets/MySpriteSheet.js',
+                './primitives/spritesheets/MySpriteText.js',
+                './primitives/MyWaveAnimation.js',
                 './primitives/MyRectangle.js', 
                 './primitives/MyCylinder.js', 
                 './primitives/MyTriangle.js', 
@@ -41,7 +57,6 @@ serialInclude(['../lib/CGF.js',
                 './primitives/MyPatch.js',
                 './primitives/MyDefBarrel.js',
                 './primitives/MyCube.js',
-                './primitives/MyTile.js',
 
 main=function()
 {
@@ -60,12 +75,12 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-    var filename=getUrlVars()['file'] || "demo.xml";
+    //var filename=getUrlVars()['file'] || "demo.xml";
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
-    
+	//var myGraph = new MySceneGraph(filename, myScene);
+    myScene.initScene();
 	// start
     app.run();
 }

@@ -24,7 +24,7 @@ class MyPatch extends CGFobject {
 		this.primitive.display();
 	}
 
-	 /**
+	/**
      * Updates the list of texture coordinates - Not used on MyPatch
      * @param {integer} afs - dx/afs
      * @param {integer} aft - dy/aft
