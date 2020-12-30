@@ -16,6 +16,8 @@ class MyPieceAnimation {
         this.active = true;
         this.boardSet = boardSet;
 
+        console.log(finalPosition);
+
         this.pieceToPlay = pieceToPlay;
         this.pieceStack = pieceStack;
         this.startPosition = startPosition;

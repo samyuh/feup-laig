@@ -15,7 +15,9 @@ class GameStateAnimator {
 
         this.animation = new MyPieceAnimation(
             this.gameOrchestrator.scene, 
+            this.gameOrchestrator.boardSet,
             this.gameOrchestrator.boardSet.pieceToPlay, 
+            this.gameOrchestrator.boardSet.pieceStack,
             this.currentMove.startPosition, 
             this.currentMove.finalPosition);
     }
@@ -43,18 +45,20 @@ class GameStateAnimator {
 
         if(!this.animation.active) {
             if (this.currentSequenceIndex == (this.gameSequence.moves.length - 1)) { // last
-                this.gameOrchestrator.board.addPiece(this.currentMove.piece);
-                this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.gameOrchestrator.board));
+                this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
+                this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
             }
             else {
-                this.gameOrchestrator.board.addPiece(this.currentMove.piece);
+                this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
 
                 this.currentSequenceIndex = this.currentSequenceIndex + 1;
                 this.currentMove = this.gameSequence.moves[this.currentSequenceIndex];
     
                 this.animation = new MyPieceAnimation(
                     this.gameOrchestrator.scene, 
+                    this.gameOrchestrator.boardSet,
                     this.gameOrchestrator.boardSet.pieceToPlay, 
+                    this.gameOrchestrator.boardSet.pieceStack,
                     this.currentMove.startPosition, 
                     this.currentMove.finalPosition);
             }
