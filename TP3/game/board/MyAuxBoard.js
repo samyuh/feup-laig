@@ -53,8 +53,8 @@ class MyAuxBoard {
 
     /**
      * Updates the list of texture coordinates - Not used on MyAuxBoard
-     * @param {integer} afs - dx/afs
-     * @param {integer} aft - dy/aft
+     * @param {Integer} afs - dx/afs
+     * @param {Integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.

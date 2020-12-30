@@ -1,3 +1,9 @@
+/**
+ * GameStateAnimator
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {Sequence Object} gameSequence - sequence of game moves, to build the movie of the game
+ */
 class GameStateAnimator {
     constructor(gameOrchestrator, gameSequence) {
         this.gameOrchestrator = gameOrchestrator;
@@ -14,14 +20,24 @@ class GameStateAnimator {
             this.currentMove.finalPosition);
     }
 
+    /**
+     * Resets the movie
+     */
     reset() {
 
     }
 
+    /**
+     * Starts the movie
+     */
     start() {
 
     }
 
+    /**
+     * Update function, called periodically, which calls the update function of the piece animation, and changes the current move being presented
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.currentTime += elapsedTime;
 
@@ -47,6 +63,9 @@ class GameStateAnimator {
         this.animation.update(elapsedTime);
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of the board set and the game info, and the apply function of the piece animation
+     */
     display() {
         // -- Board -- //
         this.gameOrchestrator.scene.pushMatrix();

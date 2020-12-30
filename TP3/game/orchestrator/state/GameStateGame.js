@@ -1,3 +1,9 @@
+/**
+ * GameStateGame
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {Board Object} board - current board of the game
+ */
 class GameStateGame extends GameState {
     constructor(gameOrchestrator, board) {
         super(gameOrchestrator, board);
@@ -7,6 +13,9 @@ class GameStateGame extends GameState {
         this.turnTimer = 0;
     }
 
+    /**
+     * Removes the highlighted playable cells
+     */
     cleanPicked() {
         if(this.selectedTiles != null) {
             for (var i = 0; i < this.selectedTiles.length; i++) {
@@ -17,6 +26,11 @@ class GameStateGame extends GameState {
         }
     }
 
+    /**
+     * Processes the picking of the user, moving a piece if the cells chosen were valid
+     * @param {Tile Object} tile - the tile picked by the user
+     * @param {Integer} currentTileId - the id of the tile picked by the user
+     */
     handlePicking(tile, currentTileId) {
         if (tile.isDiff) {
             // --- Prolog -- //
@@ -34,7 +48,7 @@ class GameStateGame extends GameState {
                 this.lastMove = [this.previousTileId, currentTileId];
                 
                 // push move to animator    
-                this.gameOrchestrator.gameMode 
+                //this.gameOrchestrator.gameMode
                 this.gameOrchestrator.gameSequence.addMove(
                     new MyGameMove(
                         this.gameOrchestrator.piecesList, 
@@ -59,6 +73,9 @@ class GameStateGame extends GameState {
         }
     }
 
+    /**
+     * Processes the picking of the user
+     */
     pickBoardTile() {
 		if (this.gameOrchestrator.scene.pickMode == false) {
 			if (this.gameOrchestrator.scene.pickResults != null && this.gameOrchestrator.scene.pickResults.length > 0) {
@@ -78,6 +95,10 @@ class GameStateGame extends GameState {
 		}
     }
 
+    /**
+     * Update function, called periodically, which calls the update function of the game info, and checks if the time reached the timeout of the turn
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.turnTimer += elapsedTime;
 
@@ -94,13 +115,15 @@ class GameStateGame extends GameState {
         }
     }
 
+    /**
+     * Display function, called periodically, which checks the picking and calls the display function of the board set and the game info, and the processNode from orchestrator, to build the scene
+     */
     display() {
         this.pickBoardTile();
         
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
-        // -- Board -- //
 
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }

@@ -1,3 +1,11 @@
+/**
+ * GameStateAnime
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {Piece Object} piece - piece whose animation will be displayed
+ * @param {BoardSet Object} boardSet - board set during the piece animation
+ * @param {Array} finalPosition - the final position of the piece, in the format [x, y, z]
+ */
 class GameStateAnime extends GameState {
     constructor(gameOrchestrator, piece, boardSet, finalPosition) {
         super(gameOrchestrator, boardSet.board);
@@ -10,15 +18,25 @@ class GameStateAnime extends GameState {
         this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet.pieceToPlay, boardSet.pieceStack, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
     }
 
+    /**
+     * Sets the final position of the piece, and adds the piece to the board
+     */
     putPiece() {
         this.piece.updatePosition(this.position[0], this.position[1], this.position[2], this.position[3]);
         this.board.addPiece(this.piece);     
     }
 
+    /**
+     * Update function, called periodically, which calls the update function of the piece animation
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.animation.update(elapsedTime);
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of the board set and the game info, and the apply function of the piece animation
+     */
     display() {
         if(this.animation.active) {
             this.boardSet.pieceAnimated = true;

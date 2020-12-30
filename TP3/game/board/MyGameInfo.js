@@ -3,7 +3,7 @@
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} turn - color of the player to play in the current turn (black/white)
- * @param {integer} timeout - time left for the player to play in the current turn
+ * @param {Integer} timeout - time left for the player to play in the current turn
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
  */
 class MyGameInfo {
@@ -29,7 +29,7 @@ class MyGameInfo {
 
     /**
      * Update function, called periodically, which updates the SpriteText of the time left to play in the current turn
-     * @param {integer} time - the time elapsed since the last call
+     * @param {Integer} time - the time elapsed since the last call
      */
     update(time) {
         if(Math.abs(time - this.turnTime) >= 1) {
@@ -40,8 +40,8 @@ class MyGameInfo {
 
     /**
      * Updates the score of each player
-     * @param {integer} whiteValue - the size of the biggest group of the color white
-     * @param {integer} blackValue - the size of the biggest group of the color black
+     * @param {Integer} whiteValue - the size of the biggest group of the color white
+     * @param {Integer} blackValue - the size of the biggest group of the color black
      */
     updateGroups(whiteValue, blackValue) {
         this.whiteValue = whiteValue;

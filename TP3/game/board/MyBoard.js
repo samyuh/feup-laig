@@ -51,7 +51,7 @@ class MyBoard {
 
     /**
      * Converts the id of a given cell of the board in its row and column. Returns in the format [Row, Column]
-     * @param {integer} id - the id of the cell to be converted
+     * @param {Integer} id - the id of the cell to be converted
      */
     convertId(id) {
         let row = Math.floor(id / this.boardLength) + (((id % this.boardLength) == 0) ? 0 : 1);
@@ -62,8 +62,8 @@ class MyBoard {
     
     /**
      * Returns the coordinates of both parts of a given cell, in the format [MainPartRow, MainPartColumn, SecondaryPartRow, SecondaryPartColumn] (MainPart can be white/black, depending on the current turn)
-     * @param {integer} row - the row of the cell, whose coordinates of both parts will be returned
-     * @param {integer} column - the column of the cell, whose coordinates of both parts will be returned
+     * @param {Integer} row - the row of the cell, whose coordinates of both parts will be returned
+     * @param {Integer} column - the column of the cell, whose coordinates of both parts will be returned
      * @param {String} orientation - the orientation of the cell (up, down, left, right), which will be used to deduce the coordinates of both parts of the cell
      */
     getCoordinates2(row, column, orientation) {
@@ -89,7 +89,7 @@ class MyBoard {
     
     /**
      * Returns the coordinates of the previous cell of the cell with id "prev", in the format [row, column]
-     * @param {integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
+     * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
      */
     getCoord(prev) {
         let rowP = ((prev - 1) % this.boardLength);
@@ -100,8 +100,8 @@ class MyBoard {
 
     /**
      * Returns the coordinates of the previous cell of the cell with id "prev", in the format [row, column]
-     * @param {integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
-     * @param {integer} actual - the id of the cell, whose coordinates of the previous cell will be returned
+     * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
+     * @param {Integer} actual - the id of the cell, whose coordinates of the previous cell will be returned
      */
     // USADA ??????--------------------------------------------
     getCoordinates(prev, actual) {
@@ -116,8 +116,8 @@ class MyBoard {
 
     /**
      * Returns the orientation of a given piece, with the main part on the cell with id "idA" and secondary part on the cell with the id "idB"
-     * @param {integer} idA - the id of the main part of the piece
-     * @param {integer} idB - the id of the secondary part of the piece
+     * @param {Integer} idA - the id of the main part of the piece
+     * @param {Integer} idB - the id of the secondary part of the piece
      */
     getOrientation(idA, idB) {
         let init = this.convertId(idA);
@@ -139,8 +139,8 @@ class MyBoard {
 
     /**
      * Returns the info needed to the animation of the piece, in the format [x, y, z, angle]
-     * @param {integer} idCenter - the id of the main part of the piece
-     * @param {integer} idExtreme - the id of the secondary part of the piece
+     * @param {Integer} idCenter - the id of the main part of the piece
+     * @param {Integer} idExtreme - the id of the secondary part of the piece
      */
     getPieceFinalPosition(idCenter, idExtreme) {
         let c = this.getCoord(idCenter);
@@ -162,7 +162,7 @@ class MyBoard {
 
     /**
      * Returns the adjacent cells of the cell with id "id", in a list
-     * @param {integer} id - the id of the cell whose adjacent cells will be returned
+     * @param {Integer} id - the id of the cell whose adjacent cells will be returned
      */
     getAdjacentTiles(id) {
         let row = ((id - 1) % this.boardLength);
@@ -191,8 +191,8 @@ class MyBoard {
 
     /**
      * Returns the MyTile object corresponding to the cell with row "row" and column "column"
-     * @param {integer} row - the row of the cell whose corresponding tile will be returned
-     * @param {integer} column - the column of the cell whose corresponding tile will be returned
+     * @param {Integer} row - the row of the cell whose corresponding tile will be returned
+     * @param {Integer} column - the column of the cell whose corresponding tile will be returned
      */
     getTile(row, column) {
         for (let i = 0; i < this.tiles.length; i++) {
@@ -219,8 +219,8 @@ class MyBoard {
 
     /**
      * Updates the list of texture coordinates - Not used on MyBoard
-     * @param {integer} afs - dx/afs
-     * @param {integer} aft - dy/aft
+     * @param {Integer} afs - dx/afs
+     * @param {Integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.

@@ -29,10 +29,10 @@ class MyPiece {
 
     /**
      * Updates the position of the piece
-     * @param {integer} x - the coordinate x of the main part of the piece
-     * @param {integer} z - the coordinate z of the main part of the piece
-     * @param {integer} xb - the coordinate x of the secondary part of the piece
-     * @param {integer} zb - the coordinate z of the secondary part of the piece
+     * @param {Integer} x - the coordinate x of the main part of the piece
+     * @param {Integer} z - the coordinate z of the main part of the piece
+     * @param {Integer} xb - the coordinate x of the secondary part of the piece
+     * @param {Integer} zb - the coordinate z of the secondary part of the piece
      */
     updatePosition(x, z, xb, zb) {
         this.x = x;
@@ -84,8 +84,8 @@ class MyPiece {
 
     /**
      * Updates the list of texture coordinates - Not used on MyPiece
-     * @param {integer} afs - dx/afs
-     * @param {integer} aft - dy/aft
+     * @param {Integer} afs - dx/afs
+     * @param {Integer} aft - dy/aft
      */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.

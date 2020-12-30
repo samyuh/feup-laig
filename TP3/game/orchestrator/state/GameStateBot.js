@@ -1,3 +1,10 @@
+/**
+ * GameStateBot
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {Board Object} board - current board of the game
+ * @param {String} difficulty - difficulty of the game (random/intelligent)
+ */
 class GameStateBot extends GameState {
     constructor(gameOrchestrator, board, difficulty) {
         super(gameOrchestrator, board);
@@ -14,6 +21,9 @@ class GameStateBot extends GameState {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Checks if the game has ended (board full)
+     */
     checkEndGame() {
         let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
         let gameOverString = 'game_over(' + stringNewBoard + ')';
@@ -25,6 +35,9 @@ class GameStateBot extends GameState {
         }
     }
 
+    /**
+     * Does a move, by a Bot
+     */
     moveBot() {
         let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
         let piece_played = null;
@@ -57,7 +70,6 @@ class GameStateBot extends GameState {
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
             });
         } else {
-            console.log("intelligent");
             let chooseIntelligentString = 'chooseIntelligent(' + stringBoard + ',' + this.gameOrchestrator.turn + ')';
             this.gameOrchestrator.server.makePrologRequest(chooseIntelligentString, null, null, false);
             piece_played = this.gameOrchestrator.server.getResult();
@@ -76,6 +88,10 @@ class GameStateBot extends GameState {
         }
     }
 
+    /**
+     * Update function, called periodically, which makes a move by a Bot for each second
+     * @param {Integer} elapsedTime - the time elapsed since the last call
+     */
     update(elapsedTime) {
         this.time += elapsedTime;
 
@@ -85,11 +101,13 @@ class GameStateBot extends GameState {
         }
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of the board set and the game info, and the processNode from orchestrator, to build the scene
+     */
     display() {
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
-        // -- Board -- //
 
         this.gameOrchestrator.processNode(this.gameOrchestrator.graph.idRoot, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].material, this.gameOrchestrator.graph.nodes[this.gameOrchestrator.graph.idRoot].texture);
     }

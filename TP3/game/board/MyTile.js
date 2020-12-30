@@ -2,8 +2,8 @@
  * MyTile
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
- * @param {integer} row - the row of the cell corresponding to this tile
- * @param {integer} column - the column of the cell corresponding to this tile
+ * @param {Integer} row - the row of the cell corresponding to this tile
+ * @param {Integer} column - the column of the cell corresponding to this tile
  * @param {CGFAppearance} tileMaterial - the material of the tile
  * @param {CGFAppearance} diffMaterial - the material of the tile when it's playable by the user
  */
@@ -20,7 +20,7 @@ class MyTile {
 
     /**
      * If the tile is playable by the user (valid move), then we change its material
-     * @param {integer} value - boolean value that tells if the tile is playable
+     * @param {Integer} value - boolean value that tells if the tile is playable
      */
     validMove(value) {
         this.isDiff = value; 
@@ -44,8 +44,8 @@ class MyTile {
 
     /**
    * Updates the list of texture coordinates - Not used on MyTile
-   * @param {integer} afs - dx/afs
-   * @param {integer} aft - dy/aft
+   * @param {Integer} afs - dx/afs
+   * @param {Integer} aft - dy/aft
    */
     updateTexCoords(afs, aft) {
         // Not asked to do afs and aft. Only needed on Rectangle and Triangle.

@@ -1,11 +1,11 @@
 /**
  * MyGameMove
  * @constructor
- * @param {MyPiece} piece - Reference to MyPiece object
- * * @param {String} color - Color of the player that made the move
- * * @param {MyTile} tile1 - Reference to MyTile object, where the part of the piece with color Color will be placed
- * * @param {MyTile} tile2 - Reference to MyTile object, where the part of the piece with the opposite color will be placed
- * * @param {MyBoard} board - Gameboard state before the move
+ * @param {Board Object} prevBoard - board before moving the piece "piece"
+ * @param {Piece Object} piece - the piece placed during this game move
+ * @param {String} color - the color of the player of the turn that this game move was made
+ * @param {Array} startPosition - the initial position of the piece, in the format [x, y, z]
+ * @param {Array} finalPosition - the final position of the piece, in the format [x, y, z]
  */
 class MyGameMove {
 	constructor(prevBoard, piece, color, startPosition, finalPosition) {

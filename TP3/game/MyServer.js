@@ -1,9 +1,20 @@
+/**
+ * MyServer
+ * @constructor
+ */
 class MyServer {
 	constructor() {
         this.port = 8081;
         this.request = null;
     }
 
+    /**
+     * Makes a request to the Prolog server
+     * @param {String} requestString - the string of the request to Prolog server
+     * @param {Function} onSuccess - alternative onSuccess function
+     * @param {Function} onError - alternative onError function
+     * @param {Function} async - boolean value: true if request is synchronous, false otherwise
+     */
     makePrologRequest(requestString, onSuccess, onError, async = true) {  // Parameter async (true or false)?
         var request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:' + this.port + '/' + requestString, async);
@@ -28,11 +39,12 @@ class MyServer {
         this.request = request;
     }
 
+    /**
+     * Returns the reply of the last request done to the Prolog server
+     */
     getResult() {
         return this.request.result;
     }
-
-    // -- Prolog Requests ---- //
 
     // Board Prolog
     updateBoardProlog(gameOrchestrator, boardSet, board, lastMove) {
@@ -99,6 +111,7 @@ class MyServer {
 
         return a;
     }
+    
     // Random Bot Play
     randomBotPlay() {
         let p = new Promise((resolve, reject) => {
