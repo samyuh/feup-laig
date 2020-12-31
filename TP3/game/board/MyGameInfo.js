@@ -74,6 +74,8 @@ class MyGameInfo {
      */
     display() {
         this.scene.pushMatrix();
+        this.scene.rotate(Math.PI/4, 0, 1, 0);
+        this.scene.rotate(-Math.PI/4, 1, 0, 0);
 
         this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
 

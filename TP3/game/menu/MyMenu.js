@@ -20,7 +20,7 @@ class MyMenu {
         this.undoButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.undo, "Undo", spriteSheet);
 
         this.board = new MyCube(scene);
-        this.boardTexture = new CGFtexture(scene, "scenes/images/info-background.jpg");
+        this.boardTexture = new CGFtexture(scene, "scenes/images/volcanic.jpg");
         this.material = new CGFappearance(scene);
         this.material.setTexture(this.boardTexture);
 
@@ -32,13 +32,21 @@ class MyMenu {
     }
 
     display() {
+
+
         this.scene.pushMatrix();
         this.material.apply();
-        this.scene.rotate(Math.PI/4, 0, 1, 0);
+        this.scene.rotate(Math.PI/2 + Math.PI/6, 0, 1, 0);
+        this.scene.translate(-2, -10, -25);
+        this.scene.rotate(-Math.PI/5, 1, 0, 0);
+        /*
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.scene.rotate(Math.PI/3, 0, 1, 0);
         this.scene.rotate(-Math.PI/4, 1, 0, 0);
-        this.scene.translate(0, -30, 40);
+        this.scene.translate(-30, -9, -15.6);
+        */
         this.scene.pushMatrix();
-        this.scene.scale(20, 20, 1);
+        this.scene.scale(24, 24, 1);
         this.board.display();
         this.scene.popMatrix();
 

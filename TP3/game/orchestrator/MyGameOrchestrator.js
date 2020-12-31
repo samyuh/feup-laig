@@ -11,9 +11,10 @@ class MyGameOrchestrator {
         this.allLoaded = false;
 
         // Passar para o XML
-        this.infoDisplacement = [0, -10, -5];
+        this.infoDisplacement = [10, 2, -15];
         this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
-        this.gameCamera = "whitePlayer";
+        this.whiteCamera = "whitePlayer";
+        this.blackCamera = "blackPlayer";
 
         // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
@@ -89,13 +90,13 @@ class MyGameOrchestrator {
 
             if(startGame) {
                 this.gameSequence = new MyGameSequence();
-                this.scene.updateCamera(this.gameCamera);
                 this.updatePlayerState(this.player1);
             }
             else {
                 this.concreteState.board = this.boardSet.board;
             }
 
+            this.scene.updateCamera(this.whiteCamera);
             this.allLoaded = true;
         });
     }
@@ -110,11 +111,15 @@ class MyGameOrchestrator {
             this.gameInfo.turn = "black";
             this.gameInfo.blackPlayer = this.player2;
             currentPlayer = this.player2;
+            if(currentPlayer == 1)
+                this.scene.updateCamera(this.blackCamera);
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
             this.gameInfo.whitePlayer = this.player1;
             currentPlayer = this.player1;
+            if(currentPlayer == 1)
+                this.scene.updateCamera(this.whiteCamera);
         }
         this.updatePlayerState(currentPlayer);
     }

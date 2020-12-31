@@ -23,7 +23,7 @@ class MyCameraAnimation {
         this.positionFinalCamera = finalCamera.position;
         this.targetFinalCamera = finalCamera.target;
 
-        this.totalTime = 3;
+        this.totalTime = 1.5;
         this.currentTime = 0;
         this.startTime = null;
         this.active = true;
