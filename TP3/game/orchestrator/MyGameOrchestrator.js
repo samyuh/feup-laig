@@ -255,7 +255,8 @@ class MyGameOrchestrator {
             let new_board = request;
 
             this.boardSet.board.boardList = new_board;
-
+            
+            this.boardSet.resetPiece();
             this.changeTurn();
 
             if (this.boardSet.board.pieceList.length == 0) {
@@ -272,8 +273,6 @@ class MyGameOrchestrator {
             groupsData[0] = groupsData[0] || 1;
             groupsData[1] = groupsData[1] || 1;
             this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-
-            
         }).catch((error) =>  {
             console.log(error);    
         });
@@ -289,7 +288,7 @@ class MyGameOrchestrator {
      * @param {Array} gameOverData - game info, with the winner and its score
      */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.fullInfoDisplacement, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoBoardDisplacement, this.spriteSheet);
     }
 
     pickMenu() {
