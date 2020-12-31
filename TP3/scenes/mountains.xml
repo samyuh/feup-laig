@@ -10,6 +10,10 @@
             <from x="70" y="40" z="70" />
             <to x="0" y="-15" z="0" />
         </perspective>
+        <perspective id="menuCamera" near="0.1" far="500" angle="45">
+            <from x="93" y="12" z="-2" />
+            <to x="8" y="-38" z="7" />
+        </perspective>
         <perspective id="whitePlayer" near="0.1" far="500" angle="45">
             <from x="30" y="30" z="15" />
             <to x="0" y="-20" z="0" />

@@ -11,8 +11,9 @@ class MyGameOrchestrator {
         this.allLoaded = false;
 
         // Passar para o XML
-        this.infoDisplacement = [10, 2, -15];
+        this.fullInfoDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
         this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        this.menuCamera = "menuCamera";
         this.whiteCamera = "whitePlayer";
         this.blackCamera = "blackPlayer";
 
@@ -53,7 +54,7 @@ class MyGameOrchestrator {
 
         this.spriteSheet = this.graph.spriteSheet;
         this.menu = new MyMenu(this.scene, this, this.spriteSheet);
-        
+        this.gameMenu = new MyGameMenu(this.scene, this.fullInfoDisplacement, this, this.spriteSheet);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -66,6 +67,7 @@ class MyGameOrchestrator {
         } 
         else {
             this.initBoard(false);
+            this.scene.updateCamera(this.menuCamera);
         }
 
         this.gameOrchestratorLoaded = true;
@@ -83,7 +85,7 @@ class MyGameOrchestrator {
 
             // -- GameBoard -- //
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
+            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.fullInfoDisplacement, this.timeout, this.spriteSheet);
 
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
@@ -91,12 +93,18 @@ class MyGameOrchestrator {
             if(startGame) {
                 this.gameSequence = new MyGameSequence();
                 this.updatePlayerState(this.player1);
+                if(this.player1 == 1) {
+                    this.scene.updateCamera(this.whiteCamera);
+                }
+                else if(this.player2 == 1) {
+                    this.scene.updateCamera(this.blackCamera);
+                } else {
+                    this.scene.updateCamera(this.whiteCamera);
+                }
             }
             else {
                 this.concreteState.board = this.boardSet.board;
             }
-
-            this.scene.updateCamera(this.whiteCamera);
             this.allLoaded = true;
         });
     }
@@ -144,6 +152,13 @@ class MyGameOrchestrator {
      */
     changeState(state) {
         this.concreteState = state;
+    }
+
+    /**
+     * 
+     */
+    changeMenu() {
+        this.scene.updateCamera(this.menuCamera);
     }
 
     /**
@@ -263,7 +278,7 @@ class MyGameOrchestrator {
      * @param {Array} gameOverData - game info, with the winner and its score
      */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoDisplacement, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.fullInfoDisplacement, this.spriteSheet);
     }
 
     pickMenu() {
@@ -278,6 +293,7 @@ class MyGameOrchestrator {
                             this.concreteState.handlePicking(obj, objId);
                         }
                         if(obj instanceof MyButton) {
+                            this.menu.unselectButton(obj.radioType);
                             obj.apply();
                         }
                         console.log(obj, objId);
@@ -306,6 +322,7 @@ class MyGameOrchestrator {
         this.concreteState.display();
 
         this.menu.display();
+        this.gameMenu.display();
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
 

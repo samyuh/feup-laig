@@ -11,6 +11,9 @@ class MyGameEndInfo {
         this.scene = scene;
         this.infoDisplacement = infoDisplacement;
         
+        this.rotation = displacement[0];
+        this.displacement = displacement[1];
+
         // -- Player Turn -- //
         if(state == "end") {
             this.firstText = new MySpriteText(this.scene, "Winner: " +  info[0], spriteSheet);
@@ -28,15 +31,13 @@ class MyGameEndInfo {
      */
     display() {
         this.scene.pushMatrix();
-
-        this.scene.rotate(Math.PI/4, 0, 1, 0);
-        this.scene.rotate(-Math.PI/4, 1, 0, 0);
-
-        this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
+        this.scene.rotate(this.rotation[1], 0, 1, 0);
+        this.scene.rotate(this.rotation[0], 1, 0, 0);
+        
+        this.scene.translate(this.displacement[0], this.displacement[1], this.displacement[2]);
         
         this.scene.translate(0, 2, 0);
         this.firstText.display();
-
         this.scene.translate(0, 2, 0);
         this.secondText.display();
 
