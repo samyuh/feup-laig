@@ -1,5 +1,5 @@
 class MyMenu {
-    constructor(scene, gameOrchestrator, spriteSheet, textures) {
+    constructor(scene, gameOrchestrator, spriteSheet, textures, boardDisplacement) {
         this.scene = scene;
         this.gameOrchestrator = gameOrchestrator;
         
@@ -19,16 +19,18 @@ class MyMenu {
         this.resetButton = new MyButton(gameOrchestrator, scene, textures[6], MyGameOrchestrator.prototype.reset, false, null);
 
         // -- Board -- //
-        this.board = new MyCube(scene);
         
+        this.boardRotate = boardDisplacement[0];
+        this.boardTranslate = boardDisplacement[1];
+
+        this.board = new MyCube(scene);
         this.material = new CGFappearance(scene);
         this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.material.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.material.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material.setShininess(5.0);
         this.material.setTextureWrap('REPEAT', 'REPEAT');
-        this.boardTexture = new CGFtexture(scene, "scenes/images/volcanic.jpg");
-        this.material.setTexture(this.boardTexture);
+        this.material.setTexture(textures[7]);
 
         // -- Button -- //
         this.material2 = new CGFappearance(scene);
@@ -37,8 +39,7 @@ class MyMenu {
         this.material2.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material2.setShininess(5.0);
         this.material2.setTextureWrap('REPEAT', 'REPEAT');
-        this.buttonTexture = new CGFtexture(scene, "scenes/images/white.jpg");
-        this.material2.setTexture(this.buttonTexture);
+        this.material2.setTexture(textures[8]);
 
         // -- Text -- //
         this.settingsText = new MySpriteText(this.scene, "Settings", spriteSheet);
@@ -68,9 +69,10 @@ class MyMenu {
         this.scene.pushMatrix();
         this.material.apply();
 
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.scene.rotate(-Math.PI/4, 1, 0, 0);
-        this.scene.translate(0, -50, 30);
+        this.scene.rotate(this.boardRotate[2], 0, 0, 1);
+        this.scene.rotate(this.boardRotate[1], 0, 1, 0);
+        this.scene.rotate(this.boardRotate[0], 1, 0, 0);
+        this.scene.translate(this.boardTranslate[0], this.boardTranslate[1], this.boardTranslate[2]);
         this.scene.pushMatrix();
         this.scene.scale(24, 24, 1);
         this.board.display();

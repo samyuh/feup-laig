@@ -39,42 +39,6 @@ class MyServer {
             request.send();
         });
     }
-
-    /*
-    makePrologRequest(requestString, onSuccess, onError, async = true, type = 1) {  // Parameter async (true or false)?
-
-        var request = new XMLHttpRequest();
-        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, async);
-
-        request.onload = onSuccess || function(data) {
-            console.log("Request received. Reply: ", JSON.parse(data.target.response));
-            request.result = JSON.parse(data.target.response);
-        };
-
-        request.onerror = onError || function() {
-            console.log("Error waiting for response");
-        };
-
-        if (async)
-            request.timeout = 2000;
-
-        request.ontimeout = function() {
-            console.log("Request timeout! Resending...");
-            request.send();
-        }
-
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send();
-
-        
-        this.request = request;
-        this.type = type;
-    }
-
-    getResult() {
-        return this.request.result;
-    }
-    */
     
     // -- Prolog Requests ---- //
 

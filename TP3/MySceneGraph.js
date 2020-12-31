@@ -1049,6 +1049,38 @@ class MySceneGraph {
             this.blackTexture = this.textures[textureBlack];
         }
 
+        //-- READ FROM XML --//
+        this.mainMenuDisplacement = [[-Math.PI/4, Math.PI/2, 0] , [0, -50, 30]];
+
+        this.infoBoardDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
+        
+        this.menuCamera = "menuCamera";
+        this.whiteCamera = "whitePlayer";
+        this.blackCamera = "blackPlayer";
+
+        this.mainMenuTextures = [
+            new CGFtexture(this.scene, "scenes/images/icon/player.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/random.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/smart.png"),
+
+            new CGFtexture(this.scene, "scenes/images/icon/small.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/medium.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/large.png"),
+
+            new CGFtexture(this.scene, "scenes/images/icon/play.png"),
+            new CGFtexture(this.scene, "scenes/images/volcanic.jpg"),
+            new CGFtexture(this.scene, "scenes/images/volcanic.jpg"),
+            new CGFtexture(this.scene, "scenes/images/white.jpg")
+        ];
+
+        this.infoBoardTextures = [
+            new CGFtexture(this.scene, "scenes/images/icon/menu.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/restart.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/movie.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/undo.png"),
+        ];
+        //-- READ FROM XML --//
+
         return null;
     }
 

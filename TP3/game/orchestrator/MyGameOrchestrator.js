@@ -10,33 +10,6 @@ class MyGameOrchestrator {
         this.gameOrchestratorLoaded = false;
         this.allLoaded = false;
 
-        //-- READ FROM XML --//
-        this.fullInfoDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
-        this.menuCamera = "menuCamera";
-        this.whiteCamera = "whitePlayer";
-        this.blackCamera = "blackPlayer";
-
-        this.textures = [
-            new CGFtexture(this.scene, "scenes/images/icon/player.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/random.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/smart.png"),
-
-            new CGFtexture(this.scene, "scenes/images/icon/small.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/medium.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/large.png"),
-
-            new CGFtexture(this.scene, "scenes/images/icon/play.png")
-        ];
-
-        this.texturesMenu = [
-            new CGFtexture(this.scene, "scenes/images/icon/menu.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/restart.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/movie.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/undo.png"),
-        ];
-        //-- READ FROM XML --//
-
         // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
 
@@ -64,21 +37,35 @@ class MyGameOrchestrator {
     initGraph(sceneGraph) {
         this.graph = sceneGraph;
 
-        this.boardDisplacement = this.graph.boardDisplacement;
-        this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
+        this.spriteSheet = this.graph.spriteSheet;
 
+        // -- Board -- //
+        this.boardDisplacement = this.graph.boardDisplacement;
         this.boardTexture = this.graph.boardTexture;
+
+        // -- Aux Board -- //
+        this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
         this.auxBoardTexture = this.graph.auxBoardTexture;
+
+        // -- Piece -- //
         this.whiteTexture = this.graph.whiteTexture;
         this.blackTexture = this.graph.blackTexture;
 
-        this.spriteSheet = this.graph.spriteSheet;
+        // -- Main Menu -- //
+        this.mainMenuDisplacement = this.graph.mainMenuDisplacement;
+        this.mainMenuTextures = this.graph.mainMenuTextures;
 
-        this.menu = new MyMenu(this.scene, this, this.spriteSheet, this.textures);
+        // -- In Game Menu -- //
+        this.infoBoardDisplacement = this.graph.infoBoardDisplacement;
+        this.infoBoardTextures = this.graph.infoBoardTextures;
 
-        
+        // -- Game Cameras -- //
+        this.menuCamera = this.graph.menuCamera;
+        this.whiteCamera = this.graph.whiteCamera;
+        this.blackCamera = this.graph.blackCamera;
 
-        this.gameMenu = new MyGameMenu(this.scene, this.fullInfoDisplacement, this, this.texturesMenu);
+        this.menu = new MyMenu(this.scene, this, this.spriteSheet, this.mainMenuTextures, this.mainMenuDisplacement);
+        this.gameMenu = new MyGameMenu(this.scene, this.infoBoardDisplacement, this, this.infoBoardTextures);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -109,7 +96,7 @@ class MyGameOrchestrator {
 
             // -- GameBoard -- //
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.fullInfoDisplacement, this.timeout, this.spriteSheet);
+            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
 
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
