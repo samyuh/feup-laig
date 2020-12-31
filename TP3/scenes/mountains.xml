@@ -349,7 +349,6 @@
 
             <descendants>
                 <noderef id="column-info" />
-                <noderef id="column-menu" />
             </descendants>
         </node>
 
@@ -367,23 +366,6 @@
 
             <descendants>
                 <leaf type="cylinder" height="51.5" topRadius="0.8" bottomRadius="2.5" stacks="8" slices="30" />
-            </descendants>
-        </node>
-
-        <node id="column-menu">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="20.0" y="-20.0" z="-13.5" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="cylinder" height="48" topRadius="0.8" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
