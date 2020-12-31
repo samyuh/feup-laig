@@ -20,7 +20,7 @@ class MyGameEndInfo {
         }
         else {
             this.firstText = new MySpriteText(this.scene, "Winner by Timeout", spriteSheet);
-            this.secondText = new MySpriteText(this.scene, info[0], spriteSheet);
+            this.secondText = new MySpriteText(this.scene, info, spriteSheet);
         }
     }
 

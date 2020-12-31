@@ -98,6 +98,11 @@ class MyGameOrchestrator {
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
 
+            console.log(this.boardSet.board.convertId(1));
+            console.log(this.boardSet.board.getCoord(1));
+
+            console.log(this.boardSet.board.getCoordinates(1, 1));
+
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
 
@@ -149,7 +154,7 @@ class MyGameOrchestrator {
      */
     updatePlayerState(player) {
         if (player == 1) {
-            this.changeState(new GameStateGame(this, this.boardSet.board));
+            this.changeState(new GameStateTurn(this, this.boardSet.board));
         } else if (player == 2) {
             this.changeState(new GameStateBot(this, this.boardSet.board, "random"));
         } else if (player == 3) {
@@ -208,7 +213,7 @@ class MyGameOrchestrator {
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
-        if(!(this.concreteState instanceof GameStateGame)) {
+        if(!(this.concreteState instanceof GameStateTurn)) {
             return;
         }
 
@@ -217,7 +222,7 @@ class MyGameOrchestrator {
         }
 
         this.boardSet.board.pieceList = [];
-        this.changeState(new GameStateAnimator(this, this.gameSequence));
+        this.changeState(new GameStateMovie(this, this.gameSequence));
     }
 
     /**
@@ -231,7 +236,7 @@ class MyGameOrchestrator {
      * Undoes the last move, if the user presses the "Undo" button on the interface
      */
     undo() {
-        if(!(this.concreteState instanceof GameStateGame)) {
+        if(!(this.concreteState instanceof GameStateTurn)) {
             return;
         }
         if (this.boardSet.board.pieceList.length == 0) {
@@ -276,10 +281,6 @@ class MyGameOrchestrator {
         }).catch((error) =>  {
             console.log(error);    
         });
-        
-        
-        //this.gameSequence.pop();
-        //this.gameInfo = new MyGameInfo(this.scene, turn);
     }
 
     /**
@@ -299,7 +300,7 @@ class MyGameOrchestrator {
 					if (obj) {
                         let objId = this.scene.pickResults[i][1];
 
-                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateGame)) {
+                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateTurn)) {
                             this.concreteState.handlePicking(obj, objId);
                         }
                         if(obj instanceof MyButton) {

@@ -4,7 +4,7 @@
  * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
  * @param {Board Object} board - current board of the game
  */
-class GameStateGame extends GameState {
+class GameStateTurn extends GameState {
     constructor(gameOrchestrator, board) {
         super(gameOrchestrator, board);
         this.board = board;
@@ -88,10 +88,10 @@ class GameStateGame extends GameState {
         if(this.turnTimer >= this.gameOrchestrator.timeout) {
             this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
             if(this.gameOrchestrator.turn == "white") {
-                this.gameOrchestrator.createGameStats("timeout", ["Black",""]);
+                this.gameOrchestrator.createGameStats("timeout", "Black");
             }
             else {
-                this.gameOrchestrator.createGameStats("timeout", ["White",""]);
+                this.gameOrchestrator.createGameStats("timeout", "White");
             }
         }
     }

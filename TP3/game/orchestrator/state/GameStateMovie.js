@@ -4,7 +4,7 @@
  * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
  * @param {Sequence Object} gameSequence - sequence of game moves, to build the movie of the game
  */
-class GameStateAnimator {
+class GameStateMovie {
     constructor(gameOrchestrator, gameSequence) {
         this.gameOrchestrator = gameOrchestrator;
         this.gameSequence = gameSequence;

@@ -103,7 +103,7 @@ class MyBoard {
      * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
      * @param {Integer} actual - the id of the cell, whose coordinates of the previous cell will be returned
      */
-    // USADA ??????--------------------------------------------
+    // --------------------------------------------
     getCoordinates(prev, actual) {
         let rowP = ((prev - 1) % this.boardLength);
         let columnP = Math.floor((prev - 1) / this.boardLength);
