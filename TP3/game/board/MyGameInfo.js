@@ -12,7 +12,9 @@ class MyGameInfo {
         this.turn = turn;
         this.turnTime = 0;
         this.timeout = timeout;
-        this.infoDisplacement = infoDisplacement;
+
+        this.rotation = infoDisplacement[0];
+        this.infoDisplacement = infoDisplacement[1];
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.spriteSheet = spriteSheet;
@@ -74,8 +76,9 @@ class MyGameInfo {
      */
     display() {
         this.scene.pushMatrix();
-        this.scene.rotate(Math.PI/4, 0, 1, 0);
-        this.scene.rotate(-Math.PI/4, 1, 0, 0);
+        this.scene.rotate(this.rotation[2], 0, 0, 1);
+        this.scene.rotate(this.rotation[1], 0, 1, 0);
+        this.scene.rotate(this.rotation[0], 1, 0, 0);
 
         this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
 
