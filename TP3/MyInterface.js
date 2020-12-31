@@ -97,7 +97,7 @@ class MyInterface extends CGFinterface {
      */
     initMiscellaneous() {
         this.misc = this.gui.addFolder('Miscellaneous');
-        this.misc.add(this.scene, 'musicActive').name('Music').onChange(this.scene.updateMusic.bind(this.scene));
+        this.misc.add(this.scene, 'musicActive').name('Sound').onChange(this.scene.updateMusic.bind(this.scene));
     }
 
     /**
