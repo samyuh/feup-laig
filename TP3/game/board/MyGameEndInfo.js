@@ -7,8 +7,9 @@
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
  */
 class MyGameEndInfo {
-    constructor(scene, state, info, displacement, spriteSheet) {
+    constructor(scene, state, info, infoDisplacement, spriteSheet) {
         this.scene = scene;
+        this.infoDisplacement = infoDisplacement;
         
         this.rotation = displacement[0];
         this.displacement = displacement[1];

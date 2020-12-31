@@ -46,8 +46,8 @@ class XMLscene extends CGFscene {
 
         // -- Theme -- //
         this.textureIds = {
-            'Fire': 0,
-            'Default': 1,
+            'Mountains': 0,
+            'Japan': 1,
         };
         this.numberLoadedThemes = 0;
         this.numberThemes = 2;
@@ -64,8 +64,8 @@ class XMLscene extends CGFscene {
 
     initScene() {
         this.graph = [];
-        let theme1 = new MySceneGraph("game.xml", this);
-        let theme2 = new MySceneGraph("game2.xml", this);
+        let theme1 = new MySceneGraph("mountains.xml", this);
+        let theme2 = new MySceneGraph("japan.xml", this);
     }
 
     /**

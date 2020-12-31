@@ -40,8 +40,6 @@
     </lights>
 
     <textures>
-        <texture id="demoTexture" path="./scenes/images/demo/demoTexture.png" />
-        <texture id="boardTexture" path="./scenes/images/demo/demoTexture.png" />
         <texture id="skyboxFront" path="./scenes/images/skybox/vulcan/front.jpg" />
         <texture id="skyboxRight" path="./scenes/images/skybox/vulcan/right.jpg" />
         <texture id="skyboxLeft" path="./scenes/images/skybox/vulcan/left.jpg" />
@@ -60,8 +58,6 @@
     </textures>
 
     <spritesheets>
-            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
-            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
     </spritesheets>
 
     <materials>
@@ -113,7 +109,7 @@
             <!-- next two lines are mandatory -->
             <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -138,7 +134,7 @@
             <!-- next two lines are mandatory -->
             <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
