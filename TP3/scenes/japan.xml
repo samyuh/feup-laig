@@ -36,7 +36,6 @@
     </lights>
 
     <textures>
-        <texture id="demoTexture" path="./scenes/images/demo/demoTexture.png" />
         <texture id="skyboxFront" path="./scenes/images/skybox/front.jpg" />
         <texture id="skyboxRight" path="./scenes/images/skybox/right.jpg" />
         <texture id="skyboxLeft" path="./scenes/images/skybox/left.jpg" />
@@ -47,7 +46,6 @@
         <texture id="gravel" path="./scenes/images/scene2/gravel.jpg" />
         <texture id="sand" path="./scenes/images/scene2/sand.jpg" />
         <texture id="water" path="./scenes/images/scene2/water.jpg" />
-        <texture id="wood" path="./scenes/images/decoration/darkwood.jpg" />
         <texture id="mainBoardTexture" path="./scenes/images/wood.jpg" />
         <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
         <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
@@ -56,7 +54,7 @@
     </textures>
 
     <spritesheets>
-            <spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />
+        <!--<spritesheet id="demoSpriteSheet" path="./scenes/images/demo/spritesheet-anim.png" sizeM="4" sizeN="4" />-->
     </spritesheets>
 
     <materials>
@@ -428,7 +426,7 @@
         <node id="floor">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -448,7 +446,7 @@
         <node id="bush">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -663,7 +661,7 @@
         <node id="skybox">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

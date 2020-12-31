@@ -7,8 +7,9 @@
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
  */
 class MyGameEndInfo {
-    constructor(scene, state, info, spriteSheet) {
+    constructor(scene, state, info, infoDisplacement, spriteSheet) {
         this.scene = scene;
+        this.infoDisplacement = infoDisplacement;
         
         // -- Player Turn -- //
         if(state == "end") {
@@ -27,11 +28,16 @@ class MyGameEndInfo {
      */
     display() {
         this.scene.pushMatrix();
+
+        this.scene.rotate(Math.PI/4, 0, 1, 0);
+        this.scene.rotate(-Math.PI/4, 1, 0, 0);
+
+        this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
         
-        this.scene.translate(0, -3, -5);
+        this.scene.translate(0, 2, 0);
         this.firstText.display();
 
-        this.scene.translate(0, -4, 0);
+        this.scene.translate(0, 2, 0);
         this.secondText.display();
 
         this.scene.popMatrix();

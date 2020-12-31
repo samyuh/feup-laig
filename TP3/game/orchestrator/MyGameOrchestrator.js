@@ -263,7 +263,7 @@ class MyGameOrchestrator {
      * @param {Array} gameOverData - game info, with the winner and its score
      */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoDisplacement, this.spriteSheet);
     }
 
     pickMenu() {
