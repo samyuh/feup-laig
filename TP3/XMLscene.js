@@ -81,6 +81,13 @@ class XMLscene extends CGFscene {
         }
     }
 
+    updateCamera(cameraId) {
+        this.animationCamera = new MyCameraAnimation(this, this.camera, this.graph[this.selectedTheme].cameras[cameraId]);
+
+        this.camera = this.graph[this.selectedTheme].cameras[cameraId];
+        this.interface.setActiveCamera(this.camera);
+    }
+
     /**
      * Method for updating themes on a change made by the user
      */
@@ -270,9 +277,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited && this.gameOrchestrator.gameOrchestratorLoaded) {
             // Draw axis
             this.axis.display();
- 
             this.defaultAppearance.apply();
-            
             // Displays the scene
             this.gameOrchestrator.display();
         }

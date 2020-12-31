@@ -24,7 +24,7 @@ class GameStateLoading extends GameState {
      * Display function, called periodically, which shows a message to the console telling that the scene is loading
      */
     display() {
-        if(this.gameOrchestrator.gameOrchestratorLoaded) {
+        if(this.gameOrchestrator.allLoaded) {
             this.gameOrchestrator.boardSet.display();
             this.gameOrchestrator.gameInfo.display();
         }

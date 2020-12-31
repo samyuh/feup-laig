@@ -8,16 +8,15 @@ class MyGameOrchestrator {
         this.scene = scene;
         this.graph = null; // -- SceneGraph
         this.gameOrchestratorLoaded = false;
+        this.allLoaded = false;
 
         // Passar para o XML
         this.infoDisplacement = [0, -10, -5];
         this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        this.gameCamera = "whitePlayer";
 
         // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
-
-        // -- Game Sequence -- //
-        this.gameSequence = new MyGameSequence();
 
         // PROLOG Connection
         this.server = new MyServer();
@@ -37,14 +36,6 @@ class MyGameOrchestrator {
     }
 
     /**
-     * Updates the state of the game
-     * @param {GameState Object} state - the new state of the game
-     */
-    changeState(state) {
-        this.concreteState = state;
-    }
-
-    /**
      * Initializes the graph of the scene, storing its textures
      * @param {SceneGraph Object} sceneGraph - the graph of the scene
      */
@@ -61,6 +52,7 @@ class MyGameOrchestrator {
 
         this.spriteSheet = this.graph.spriteSheet;
         this.menu = new MyMenu(this.scene, this, this.spriteSheet);
+        
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -74,6 +66,8 @@ class MyGameOrchestrator {
         else {
             this.initBoard(false);
         }
+
+        this.gameOrchestratorLoaded = true;
     }
 
     /**
@@ -89,18 +83,20 @@ class MyGameOrchestrator {
             // -- GameBoard -- //
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
-            
+
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
 
             if(startGame) {
+                this.gameSequence = new MyGameSequence();
+                this.scene.updateCamera(this.gameCamera);
                 this.updatePlayerState(this.player1);
             }
             else {
                 this.concreteState.board = this.boardSet.board;
             }
 
-            this.gameOrchestratorLoaded = true;
+            this.allLoaded = true;
         });
     }
 
@@ -138,9 +134,57 @@ class MyGameOrchestrator {
     }
 
     /**
+     * Updates the state of the game
+     * @param {GameState Object} state - the new state of the game
+     */
+    changeState(state) {
+        this.concreteState = state;
+    }
+
+    /**
+     * 
+     */
+    changeBoardSize(size) {
+        this.boardSize = size;
+
+        this.initBoard(false);
+    }
+
+    /**
+     * 
+     */
+    changePlayer(player, type) {
+        if(player == "one") {
+            if (type == 1) {
+                this.player1 = this.player.Player;
+            } else if (type == 2) {
+                this.player1 = this.player.Random;
+            } else if (type == 3) {
+                this.player1 = this.player.Intelligent;
+            }
+        } else if (player == "two") {
+            if (type == 1) {
+                this.player2 = this.player.Player;
+            } else if (type == 2) {
+                this.player2 = this.player.Random;
+            } else if (type == 3) {
+                this.player2 = this.player.Intelligent;
+            }
+        }
+    }
+
+    /**
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
+        if(!(this.concreteState instanceof GameStateGame)) {
+            return;
+        }
+
+        if (this.boardSet.board.pieceList.length == 0) {
+            return;
+        }
+
         this.boardSet.board.pieceList = [];
         this.changeState(new GameStateAnimator(this, this.gameSequence));
     }
@@ -157,13 +201,13 @@ class MyGameOrchestrator {
      */
     undo() {
         if(!(this.concreteState instanceof GameStateGame)) {
-            this.changeState(new GameStateGame(this, this.boardSet.board));
+            return;
         }
-
         if (this.boardSet.board.pieceList.length == 0) {
             return;
         }
 
+        this.gameSequence.undo();
         let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
 
         let piece = this.boardSet.board.pieceList.pop();
@@ -197,6 +241,8 @@ class MyGameOrchestrator {
             groupsData[0] = groupsData[0] || 1;
             groupsData[1] = groupsData[1] || 1;
             this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+
+            
         }).catch((error) =>  {
             console.log(error);    
         });
