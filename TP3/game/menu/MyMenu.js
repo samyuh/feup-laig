@@ -1,5 +1,5 @@
 class MyMenu {
-    constructor(scene, gameOrchestrator, spriteSheet, textures, boardDisplacement) {
+    constructor(gameOrchestrator, scene, spriteSheet, boardDisplacement, textures) {
         this.scene = scene;
         this.gameOrchestrator = gameOrchestrator;
         

@@ -1,5 +1,5 @@
 class MyGameMenu {
-    constructor(scene, displacement, gameOrchestrator, textures) {
+    constructor(gameOrchestrator, scene, displacement, textures) {
         this.scene = scene;
         this.gameOrchestrator = gameOrchestrator;
         this.rotation = displacement[0];

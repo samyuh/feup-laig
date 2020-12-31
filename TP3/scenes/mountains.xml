@@ -2,7 +2,6 @@
     <initials>
         <reference length="2" />
         <root id="demoRoot" />
-
     </initials>
     
     <views default="defaultCamera">
@@ -55,6 +54,19 @@
         <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
         <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
         <texture id="infoBackground" path="./scenes/images/info-background.jpg" />
+        <texture id="playerIcon" path="scenes/images/icon/player.png" />
+        <texture id="randomIcon" path="scenes/images/icon/random.png" />
+        <texture id="smartIcon" path="scenes/images/icon/smart.png" />
+        <texture id="smallIcon" path="scenes/images/icon/small.png" />
+        <texture id="mediumIcon" path="scenes/images/icon/medium.png" />
+        <texture id="largeIcon" path="scenes/images/icon/large.png" />
+        <texture id="playIcon" path="scenes/images/icon/play.png" />
+        <texture id="textureMainMenu" path="scenes/images/volcanic.jpg" />
+        <texture id="buttonIcon" path="scenes/images/white.jpg" />
+        <texture id="menuIcon" path="scenes/images/icon/menu.png" />
+        <texture id="restartIcon" path="scenes/images/icon/restart.png" />
+        <texture id="movieIcon" path="scenes/images/icon/movie.png" />
+        <texture id="undoIcon" path="scenes/images/icon/undo.png" />
     </textures>
 
     <spritesheets>
@@ -88,22 +100,61 @@
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
         </animation>
-    </animations>t
+    </animations>
 
     <boardgame>
-      <board x="-5" y="-19" z="-5">
+      <cameras>
+        <camera id="menu" cameraId="menuCamera" />
+        <camera id="white" cameraId="whitePlayer" />
+        <camera id="black" cameraId="blackPlayer" />
+      </cameras>
+
+      <game x="-5" y="-19" z="-5">
         <texture id="mainBoardTexture" />
-      </board>
+      </game>
       
       <auxboard x="10" y="-19" z="0">
         <texture id="auxBoardTexture" />
       </auxboard>
-      <piece>
+    
+     <piece>
         <texture id="whitePieceTexture" />
         <texture id="blackPieceTexture" />
       </piece>
-    </boardgame>
 
+      <menu>
+        <board id="main">
+            <rotation axis="z" angle="0" />
+            <rotation axis="y" angle="90" />
+            <rotation axis="x" angle="-45" />
+            <translation x="0" y="-50" z="30" />
+
+            <icon id="player" texture="playerIcon" />
+            <icon id="random" texture="randomIcon" />
+            <icon id="smart" texture="smartIcon" />
+            <icon id="small" texture="smallIcon" />
+            <icon id="medium" texture="mediumIcon" />
+            <icon id="large" texture="largeIcon" />
+            <icon id="play" texture="playIcon" />
+
+            <texture id="textureMainMenu" />
+            <buttonTexture id="buttonIcon" />
+        </board>
+
+        <board id="game">
+            <rotation axis="z" angle="0" />
+            <rotation axis="y" angle="90" />
+            <rotation axis="x" angle="-45" />
+            <translation x="0" y="-50" z="30" />
+
+            <icon id="menu" texture="menuIcon" />
+            <icon id="restart" texture="restartIcon" />
+            <icon id="movie" texture="movieIcon" />
+            <icon id="undo" texture="undoIcon" />
+        </board>
+      </menu>
+    </boardgame>
+    
     <nodes>
         <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
@@ -561,7 +612,7 @@
             </descendants>
         </node>
 
-        <node id="info-background">
+        <!--<node id="info-background">
             <material id="null" />
 
             <texture id="volcanic">
@@ -578,7 +629,7 @@
             <descendants>
                 <noderef id="cube" />
             </descendants>
-        </node>
+        </node>-->
 
         <node id="cube">
             <material id="null" />

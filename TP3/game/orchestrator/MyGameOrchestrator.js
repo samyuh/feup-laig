@@ -64,8 +64,8 @@ class MyGameOrchestrator {
         this.whiteCamera = this.graph.whiteCamera;
         this.blackCamera = this.graph.blackCamera;
 
-        this.menu = new MyMenu(this.scene, this, this.spriteSheet, this.mainMenuTextures, this.mainMenuDisplacement);
-        this.gameMenu = new MyGameMenu(this.scene, this.infoBoardDisplacement, this, this.infoBoardTextures);
+        this.menu = new MyMenu(this, this.scene, this.spriteSheet, this.mainMenuDisplacement, this.mainMenuTextures);
+        this.gameMenu = new MyGameMenu(this, this.scene, this.infoBoardDisplacement, this.infoBoardTextures);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);

@@ -995,22 +995,43 @@ class MySceneGraph {
     parseBoardGame(boardGameNode) {
         var children = boardGameNode.children;
 
-        let board = children[0]; 
-        let auxBoard = children[1]; 
-        let piece = children[2]; 
-        
-        if(board.nodeName != "board") {
-            console.log("Missing <board> on boardgame.  Using Default Values");
+        let cameras = children[0];
+        let game = children[1]; 
+        let auxBoard = children[2]; 
+        let piece = children[3]; 
+        let menu = children[4]; 
+        console.log(children);
+
+        if(cameras.nodeName != "cameras") {
+            console.log("Missing <cameras> on boardgame. Using Default Values");
+
+            
+        } else {
+
+            let cameraMenu = cameras.children[0];
+            let cameraWhite = cameras.children[1];
+            let cameraBlack = cameras.children[2];
+            
+            let cameraMenuId = this.reader.getString(cameraMenu, 'cameraId');
+            let cameraWhiteId = this.reader.getString(cameraWhite, 'cameraId');
+            let cameraBlackId = this.reader.getString(cameraBlack, 'cameraId');
+            
+            this.menuCamera = cameraMenuId;
+            this.whiteCamera = cameraWhiteId;
+            this.blackCamera = cameraBlackId;
+        }
+        if(game.nodeName != "game") {
+            console.log("Missing <board> on boardgame. Using Default Values");
 
             this.boardDisplacement = [-5, -19, -5];
-            this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
+            this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
         }
         else {
-            let boardX = this.reader.getFloat(board, 'x');
-            let boardY = this.reader.getFloat(board, 'y');
-            let boardZ = this.reader.getFloat(board, 'z');
+            let boardX = this.reader.getFloat(game, 'x');
+            let boardY = this.reader.getFloat(game, 'y');
+            let boardZ = this.reader.getFloat(game, 'z');
             
-            let boardTextureInfo = board.children[0];
+            let boardTextureInfo = game.children[0];
             let boardTexture = this.reader.getString(boardTextureInfo, 'id');
 
             this.boardDisplacement = [boardX, boardY, boardZ];
@@ -1020,7 +1041,7 @@ class MySceneGraph {
             console.log("Missing <auxboard> on boardgame. Using Default Values");
 
             this.auxBoardDisplacement = [10, -19, 0];
-            this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
+            this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
         }
         else {
             let auxBoardX = this.reader.getFloat(auxBoard, 'x');
@@ -1038,7 +1059,7 @@ class MySceneGraph {
 
             this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
             this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
-        } else {
+       } else {
             let textureWhiteInfo = piece.children[0];
             let textureBlackInfo = piece.children[1];
 
@@ -1048,39 +1069,94 @@ class MySceneGraph {
             this.whiteTexture = this.textures[textureWhite];
             this.blackTexture = this.textures[textureBlack];
         }
+        if(menu.nodeName != "menu") {
+            console.log("Missing <menu> on boardgame. Using Default Values");
+        } else {
+            let boardMain = menu.children[0];
+            let boardGame = menu.children[1];
+            // -- Main Board -- //
+            let rotationZ = boardMain.children[0];
+            let rotationY = boardMain.children[1];
+            let rotationX = boardMain.children[2];
+            let translation = boardMain.children[3];
 
-        //-- READ FROM XML --//
-        this.mainMenuDisplacement = [[-Math.PI/4, Math.PI/2, 0] , [0, -50, 30]];
+            let angleX = this.reader.getFloat(rotationX, 'angle')* Math.PI / 180;
+            let angleY = this.reader.getFloat(rotationY, 'angle')* Math.PI / 180;
+            let angleZ = this.reader.getFloat(rotationZ, 'angle')* Math.PI / 180;
 
+            let translationX = this.reader.getFloat(translation, 'x');
+            let translationY = this.reader.getFloat(translation, 'y');
+            let translationZ = this.reader.getFloat(translation, 'z');
+
+            this.mainMenuDisplacement = [[angleX, angleY, angleZ], [translationX, translationY, translationZ]];
+
+            let iconPlayer = boardMain.children[4];
+            let iconRandom = boardMain.children[5];
+            let iconSmart = boardMain.children[6];
+            let iconSmall = boardMain.children[7];
+            let iconMedium = boardMain.children[8];
+            let iconLarge = boardMain.children[9];
+            let iconPlay = boardMain.children[10];
+
+            let texture = boardMain.children[11];
+            let buttonTexture = boardMain.children[12];
+
+            let iconPlayerId = this.reader.getString(iconPlayer, 'texture');
+            let iconRandomId = this.reader.getString(iconRandom, 'texture');
+            let iconSmartId = this.reader.getString(iconSmart, 'texture');
+            let iconSmallId = this.reader.getString(iconSmall, 'texture');
+            let iconMediumId = this.reader.getString(iconMedium, 'texture');
+            let iconLargeId = this.reader.getString(iconLarge, 'texture');
+            let iconPlayId = this.reader.getString(iconPlay, 'texture');
+            let textureId = this.reader.getString(texture, 'id');
+            let buttonTextureId = this.reader.getString(buttonTexture, 'id');
+
+            this.mainMenuTextures = [
+                this.textures[iconPlayerId],
+                this.textures[iconRandomId],
+                this.textures[iconSmartId],
+                this.textures[iconSmallId],
+                this.textures[iconMediumId],
+                this.textures[iconLargeId],
+                this.textures[iconPlayId],
+                this.textures[textureId],
+                this.textures[buttonTextureId]
+            ];
+
+            // -- Game Board -- //
+            let rotationGameZ = boardGame.children[0];
+            let rotationGameY = boardGame.children[1];
+            let rotationGameX = boardGame.children[2];
+            let translationGame = boardGame.children[3];
+
+            let angleGameX = this.reader.getFloat(rotationGameX, 'angle')* Math.PI / 180;
+            let angleGameY = this.reader.getFloat(rotationGameY, 'angle')* Math.PI / 180;
+            let angleGameZ = this.reader.getFloat(rotationGameZ, 'angle')* Math.PI / 180;
+
+            let translationGameX = this.reader.getFloat(translationGame, 'x');
+            let translationGameY = this.reader.getFloat(translationGame, 'y');
+            let translationGameZ = this.reader.getFloat(translationGame, 'z');
+
+            this.infoBoardDisplacement = [[angleGameX, angleGameY, angleGameZ], [translationGameX, translationGameY, translationGameZ]];
+
+            let iconMenu = boardGame.children[4];
+            let iconRestart = boardGame.children[5];
+            let iconMovie = boardGame.children[6];
+            let iconUndo = boardGame.children[7];
+
+            let iconMenuId = this.reader.getString(iconMenu, 'texture');
+            let iconRestartId = this.reader.getString(iconRestart, 'texture');
+            let iconMovieId = this.reader.getString(iconMovie, 'texture');
+            let iconUndoId = this.reader.getString(iconUndo, 'texture');
+
+            this.infoBoardTextures = [
+                this.textures[iconMenuId],
+                this.textures[iconRestartId],
+                this.textures[iconMovieId],
+                this.textures[iconUndoId]
+            ];
+        }
         this.infoBoardDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
-        
-        this.menuCamera = "menuCamera";
-        this.whiteCamera = "whitePlayer";
-        this.blackCamera = "blackPlayer";
-
-        this.mainMenuTextures = [
-            new CGFtexture(this.scene, "scenes/images/icon/player.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/random.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/smart.png"),
-
-            new CGFtexture(this.scene, "scenes/images/icon/small.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/medium.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/large.png"),
-
-            new CGFtexture(this.scene, "scenes/images/icon/play.png"),
-            new CGFtexture(this.scene, "scenes/images/volcanic.jpg"),
-            new CGFtexture(this.scene, "scenes/images/volcanic.jpg"),
-            new CGFtexture(this.scene, "scenes/images/white.jpg")
-        ];
-
-        this.infoBoardTextures = [
-            new CGFtexture(this.scene, "scenes/images/icon/menu.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/restart.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/movie.png"),
-            new CGFtexture(this.scene, "scenes/images/icon/undo.png"),
-        ];
-        //-- READ FROM XML --//
-
         return null;
     }
 
