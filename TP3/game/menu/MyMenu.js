@@ -1,24 +1,25 @@
 class MyMenu {
-    constructor(scene, gameOrchestrator, spriteSheet) {
+    constructor(scene, gameOrchestrator, spriteSheet, textures) {
         this.scene = scene;
         this.gameOrchestrator = gameOrchestrator;
+        
+        // -- Buttons -- //
+        this.boardSizeButtonSmall = new MyButton(gameOrchestrator, scene, textures[3], MyGameOrchestrator.prototype.changeBoardSize, true, "size",  '7');
+        this.boardSizeButtonMedium = new MyButton(gameOrchestrator, scene, textures[4], MyGameOrchestrator.prototype.changeBoardSize, false, "size", '9');
+        this.boardSizeButtonBig = new MyButton(gameOrchestrator, scene, textures[5], MyGameOrchestrator.prototype.changeBoardSize, false, "size",  '11');
 
-        this.boardSizeButtonSmall = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changeBoardSize, "size", "Small", spriteSheet, '7');
-        this.boardSizeButtonMedium = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changeBoardSize, "size", "Medium", spriteSheet, '9');
-        this.boardSizeButtonBig = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changeBoardSize, "size", "Big", spriteSheet, '11');
+        this.playerOnePlayerButton = new MyButton(gameOrchestrator, scene, textures[0], MyGameOrchestrator.prototype.changePlayer, true, "playerOne", "one", 1);
+        this.playerOneRandomButton = new MyButton(gameOrchestrator, scene,  textures[1], MyGameOrchestrator.prototype.changePlayer, false, "playerOne", "one", 2);
+        this.playerOneSmartButton = new MyButton(gameOrchestrator, scene, textures[2], MyGameOrchestrator.prototype.changePlayer, false, "playerOne", "one", 3);
 
-        this.playerOnePlayerButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerOne", "PlayerOne - Player", spriteSheet, "one", 1);
-        this.playerOneRandomButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerOne", "PlayerOne - Random", spriteSheet, "one", 2);
-        this.playerOneSmartButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerOne", "PlayerOne - Smart", spriteSheet, "one", 3);
+        this.playerTwoPlayerButton = new MyButton(gameOrchestrator, scene, textures[0], MyGameOrchestrator.prototype.changePlayer, true, "playerTwo", "two", 1);
+        this.playerTwoRandomButton = new MyButton(gameOrchestrator, scene, textures[1], MyGameOrchestrator.prototype.changePlayer, false, "playerTwo", "two", 2);
+        this.playerTwoSmartButton = new MyButton(gameOrchestrator, scene, textures[2], MyGameOrchestrator.prototype.changePlayer, false, "playerTwo", "tw0", 3);
 
-        this.playerTwoPlayerButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerTwo", "PlayerTwo - Player", spriteSheet, "two", 1);
-        this.playerTwoRandomButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerTwo", "PlayerTwo - Random", spriteSheet, "two", 2);
-        this.playerTwoSmartButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.changePlayer, "playerTwo", "PlayerTwo - Smart", spriteSheet, "tw0", 3);
+        this.resetButton = new MyButton(gameOrchestrator, scene, textures[6], MyGameOrchestrator.prototype.reset, false, null);
 
-        this.resetButton = new MyButton(scene, gameOrchestrator, MyGameOrchestrator.prototype.reset, null, "New Game", spriteSheet);
-
+        // -- Board -- //
         this.board = new MyCube(scene);
-        this.boardTexture = new CGFtexture(scene, "scenes/images/volcanic.jpg");
         
         this.material = new CGFappearance(scene);
         this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
@@ -26,25 +27,25 @@ class MyMenu {
         this.material.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material.setShininess(5.0);
         this.material.setTextureWrap('REPEAT', 'REPEAT');
-
+        this.boardTexture = new CGFtexture(scene, "scenes/images/volcanic.jpg");
         this.material.setTexture(this.boardTexture);
 
-        this.buttonTexture = new CGFtexture(scene, "scenes/images/white.jpg");
+        // -- Button -- //
         this.material2 = new CGFappearance(scene);
         this.material2.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.material2.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.material2.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material2.setShininess(5.0);
         this.material2.setTextureWrap('REPEAT', 'REPEAT');
+        this.buttonTexture = new CGFtexture(scene, "scenes/images/white.jpg");
         this.material2.setTexture(this.buttonTexture);
 
+        // -- Text -- //
         this.settingsText = new MySpriteText(this.scene, "Settings", spriteSheet);
         this.playerOneText = new MySpriteText(this.scene, "Player One", spriteSheet);
         this.playerTwoText = new MySpriteText(this.scene, "Player Two", spriteSheet);
-
         this.sizeText = new MySpriteText(this.scene, "Board Size", spriteSheet);
         this.startText = new MySpriteText(this.scene, "Start Game", spriteSheet);
-        //console.log(gameOrchestrator.prototype.display);
     }
 
     unselectButton(radioType) {
@@ -103,7 +104,7 @@ class MyMenu {
  
         // -- Player -- //
         this.scene.pushMatrix();
-        this.scene.translate(-8, 6, 1);
+        this.scene.translate(-6, 6, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1006, this.playerOnePlayerButton);
@@ -112,7 +113,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-6, 3, 1);
+        this.scene.translate(-8, 3, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1007, this.playerOneRandomButton);
@@ -121,7 +122,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-4, 6, 1);
+        this.scene.translate(-4, 3, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1008, this.playerOneSmartButton);
@@ -130,7 +131,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(8, 6, 1);
+        this.scene.translate(6, 6, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1009, this.playerTwoPlayerButton);
@@ -139,7 +140,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(6, 3, 1);
+        this.scene.translate(4, 3, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1010, this.playerTwoRandomButton);
@@ -148,7 +149,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(4, 6, 1);
+        this.scene.translate(8, 3, 1);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1011, this.playerTwoSmartButton);

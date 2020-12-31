@@ -10,12 +10,32 @@ class MyGameOrchestrator {
         this.gameOrchestratorLoaded = false;
         this.allLoaded = false;
 
-        // Passar para o XML
+        //-- READ FROM XML --//
         this.fullInfoDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
         this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
         this.menuCamera = "menuCamera";
         this.whiteCamera = "whitePlayer";
         this.blackCamera = "blackPlayer";
+
+        this.textures = [
+            new CGFtexture(this.scene, "scenes/images/icon/player.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/random.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/smart.png"),
+
+            new CGFtexture(this.scene, "scenes/images/icon/small.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/medium.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/large.png"),
+
+            new CGFtexture(this.scene, "scenes/images/icon/play.png")
+        ];
+
+        this.texturesMenu = [
+            new CGFtexture(this.scene, "scenes/images/icon/menu.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/restart.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/movie.png"),
+            new CGFtexture(this.scene, "scenes/images/icon/undo.png"),
+        ];
+        //-- READ FROM XML --//
 
         // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
@@ -53,8 +73,12 @@ class MyGameOrchestrator {
         this.blackTexture = this.graph.blackTexture;
 
         this.spriteSheet = this.graph.spriteSheet;
-        this.menu = new MyMenu(this.scene, this, this.spriteSheet);
-        this.gameMenu = new MyGameMenu(this.scene, this.fullInfoDisplacement, this, this.spriteSheet);
+
+        this.menu = new MyMenu(this.scene, this, this.spriteSheet, this.textures);
+
+        
+
+        this.gameMenu = new MyGameMenu(this.scene, this.fullInfoDisplacement, this, this.texturesMenu);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);

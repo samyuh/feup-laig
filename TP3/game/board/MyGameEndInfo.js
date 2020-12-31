@@ -9,10 +9,9 @@
 class MyGameEndInfo {
     constructor(scene, state, info, infoDisplacement, spriteSheet) {
         this.scene = scene;
-        this.infoDisplacement = infoDisplacement;
         
-        this.rotation = displacement[0];
-        this.displacement = displacement[1];
+        this.rotation = infoDisplacement[0];
+        this.displacement = infoDisplacement[1];
 
         // -- Player Turn -- //
         if(state == "end") {
@@ -23,7 +22,6 @@ class MyGameEndInfo {
             this.firstText = new MySpriteText(this.scene, "Winner by Timeout", spriteSheet);
             this.secondText = new MySpriteText(this.scene, info[0], spriteSheet);
         }
-        
     }
 
     /**
