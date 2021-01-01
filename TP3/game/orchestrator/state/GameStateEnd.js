@@ -24,6 +24,5 @@ class GameStateEnd extends GameState {
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
-        // -- Board -- //
     }
 }

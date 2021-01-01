@@ -15,6 +15,30 @@ class GameStateTurn extends GameState {
         this.piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
     }
 
+    updateBoardProlog(lastMove) {
+        let move = this.board.convertProlog(lastMove[0]);
+        let orientation = this.board.getOrientation(lastMove[0], lastMove[1]);
+
+        let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+
+        let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.turn + ')';
+        let p = this.promiseRequest(moveString, null, null);
+
+        p.then((request) => {
+            this.board.boardList = request;
+
+            let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+            let groupsString = 'groups(' + stringNewBoard + ')';
+        
+            return this.promiseRequest(groupsString, null, null);
+        }).then((request) => {
+            let groupsData = request;
+            groupsData[0] = groupsData[0] || 1;
+            groupsData[1] = groupsData[1] || 1;
+            this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+        });
+    }
+
     /**
      * Removes the highlighted playable cells
      */
@@ -61,7 +85,7 @@ class GameStateTurn extends GameState {
 
                     // --- Game move --- //
                     this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, this.piece, this.gameOrchestrator.boardSet, this.lastMove));
-                    this.gameOrchestrator.server.updateBoardProlog(this.gameOrchestrator, this.board, this.lastMove);
+                    this.updateBoardProlog(this.lastMove);
                 }
             });
             
@@ -99,6 +123,5 @@ class GameStateTurn extends GameState {
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
-        // -- Board -- //
     }
 }

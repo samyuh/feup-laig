@@ -72,6 +72,5 @@ class GameStateMovie {
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
         this.gameOrchestrator.scene.popMatrix();
-        // -- Board -- //
     }
 }

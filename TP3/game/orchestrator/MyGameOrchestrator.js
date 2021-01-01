@@ -7,7 +7,6 @@ class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
         this.graph = null; // -- SceneGraph
-        this.gameOrchestratorLoaded = false;
         this.allLoaded = false;
 
         // -- Menu -- //
@@ -85,8 +84,6 @@ class MyGameOrchestrator {
             this.initBoard(false);
             this.concreteState.setMenuCamera(this.menuCamera);
         }
-
-        this.gameOrchestratorLoaded = true;
     }
 
     /**
