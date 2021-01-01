@@ -13,14 +13,20 @@ class MyGameEndInfo {
         this.rotation = infoDisplacement[0];
         this.displacement = infoDisplacement[1];
 
+        this.background = new MyRectangle(this.scene, -9, 0, 9, 10);
+        this.backgroundTexture = new CGFappearance(scene);
+        let textureYinYang = new CGFtexture(this.scene, "./scenes/images/text-background.png");
+        this.backgroundTexture.setTexture(textureYinYang);
+
+
         // -- Type of endGame -- //
         if (state == "end") {
             this.firstText = new MySpriteText(this.scene, "Winner: " +  info[0], spriteSheet);
             this.secondText = new MySpriteText(this.scene, "Score: " +  info[1], spriteSheet);
         }
         else {
-            this.firstText = new MySpriteText(this.scene, "Winner by Timeout", spriteSheet);
-            this.secondText = new MySpriteText(this.scene, info, spriteSheet);
+            this.firstText = new MySpriteText(this.scene, "Timeout", spriteSheet);
+            this.secondText = new MySpriteText(this.scene, "Winner " + info, spriteSheet);
         }
     }
 
@@ -36,10 +42,13 @@ class MyGameEndInfo {
         this.scene.translate(this.displacement[0], this.displacement[1], this.displacement[2]);
         
         this.scene.translate(0, 0, 1);
+        this.backgroundTexture.apply();
+        this.background.display();
+        this.scene.translate(0, 0, 0.2);
+        this.scene.translate(0, 4, 0);
+        this.secondText.display();
         this.scene.translate(0, 2, 0);
         this.firstText.display();
-        this.scene.translate(0, 2, 0);
-        this.secondText.display();
 
         this.scene.popMatrix();
     }

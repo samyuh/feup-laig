@@ -22,7 +22,7 @@ class GameStateTurn extends GameState {
         let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
         let moveString = 'movePlayer(' + stringBoard + ',' + move[0] + '-' + move[1] + '-' + orientation + '-' + this.gameOrchestrator.turn + ')';
-        let p = this.promiseRequest(moveString, null, null);
+        let p = this.gameOrchestrator.server.promiseRequest(moveString, null, null);
 
         p.then((request) => {
             this.board.boardList = request;
@@ -30,7 +30,7 @@ class GameStateTurn extends GameState {
             let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
             let groupsString = 'groups(' + stringNewBoard + ')';
         
-            return this.promiseRequest(groupsString, null, null);
+            return this.gameOrchestrator.server.promiseRequest(groupsString, null, null);
         }).then((request) => {
             let groupsData = request;
             groupsData[0] = groupsData[0] || 1;

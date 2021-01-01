@@ -29,7 +29,7 @@ class GameStateAnime extends GameState {
     checkEndGame(board) {
         let stringNewBoard = JSON.stringify(board.boardList).replaceAll("\"", "");
         let gameOverString = 'game_over(' + stringNewBoard + ')';
-        let p = this.promiseRequest(gameOverString, null, null, false);
+        let p = this.gameOrchestrator.server.promiseRequest(gameOverString, null, null, false);
 
         p.then((request) => {
             let gameOverData = request;

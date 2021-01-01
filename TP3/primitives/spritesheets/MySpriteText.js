@@ -20,21 +20,26 @@ class MySpriteText extends CGFobject{
      * @param {String} character - The character which we want to know its line and column in the sprite sheet
      */
     getPosition(character) {
-        if (character == " ") return [3, 5];
+        if (character == " ") return [0, 0];
 
         // Get position of the character in the sprite sheet
         let charCode = character.charCodeAt();
+        /* Older Spritesheet
         if(charCode >= 97 && charCode <= 122) { // Lowercase
-            charCode -= 97; 
+            charCode -= 32; 
         }
         else if (charCode >= 65 && charCode <= 90) { // Upercase
-            charCode -= 65;
+            charCode -= 32;
         }
         else if (charCode >= 48 && charCode <= 57) { // Number
-            charCode -= 22;
+            charCode -= 32;
         }
-        else return [6, 4]; // Show character "?" (invalid char)
-
+        else return [2, 16]; // Show character "?" (invalid char)
+        */
+        if(charCode >= 32 && charCode <= 122) { // Lowercase
+            charCode -= 32; 
+        }
+        else return [0, 0]; // Show character "?" (invalid char)
         // Calculate the line and column of the character to be presented
         let M = charCode % this.spriteSheet.sizeM;
         let N = Math.floor(charCode / this.spriteSheet.sizeM);
