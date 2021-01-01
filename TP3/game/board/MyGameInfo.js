@@ -19,17 +19,16 @@ class MyGameInfo {
         this.blackPlayer = blackPlayer;
         this.spriteSheet = spriteSheet;
 
-        console.log(spriteSheet);
         // -- Player Turn -- //
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white", this.spriteSheet);
         this.blackTurn = new MySpriteText(this.scene, "Turn: black", this.spriteSheet);
         this.timer = new MySpriteText(this.scene, "Turn Time: " + this.timeout, this.spriteSheet);
 
-        this.whiteGroup = new MySpriteText(this.scene, "Biggest White Group: 0", this.spriteSheet);
-        this.blackGroup = new MySpriteText(this.scene, "Biggest Black Group: 0", this.spriteSheet);
-
         this.randomBot = new MySpriteText(this.scene, "Random Bot", this.spriteSheet);
         this.intelligentBot = new MySpriteText(this.scene, "Intelligent Bot", this.spriteSheet);
+
+        this.whiteGroup = new MySpriteText(this.scene, "White Score: 0", this.spriteSheet);
+        this.blackGroup = new MySpriteText(this.scene, "Black Score: 0", this.spriteSheet);
 
         this.whiteValue = 0;
         this.blackValue = 0;
@@ -54,8 +53,8 @@ class MyGameInfo {
     updateGroups(whiteValue, blackValue) {
         this.whiteValue = whiteValue;
         this.blackValue = blackValue;
-        this.whiteGroup.text = "Biggest White Group: " + this.whiteValue;
-        this.blackGroup.text = "Biggest Black Group: " + this.blackValue;
+        this.whiteGroup.text = "White Score: " + this.whiteValue;
+        this.blackGroup.text = "Black Score: " + this.blackValue;
     }
 
     getBotType() {
@@ -82,6 +81,7 @@ class MyGameInfo {
 
         this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
 
+        this.scene.translate(0, 0, 1);
         this.scene.translate(0, 2, 0);
         this.blackGroup.display();
 

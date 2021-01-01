@@ -10,13 +10,21 @@ class MyGameMenu {
         this.movieButton = new MyButton(gameOrchestrator, scene, textures[2], MyGameOrchestrator.prototype.movie, false, null);
         this.undoButton = new MyButton(gameOrchestrator, scene, textures[3], MyGameOrchestrator.prototype.undo, false, null);
 
+        this.board = new MyCube(scene);
+        this.boardMaterial = new CGFappearance(scene);
+        this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.boardMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.boardMaterial.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.boardMaterial.setShininess(5.0);
+        this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        this.boardMaterial.setTexture(textures[4]);
+
         this.material = new CGFappearance(scene);
-        this.material.setAmbient(0.6, 0.6, 0.0, 1.0);
+        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.material.setDiffuse(0.6, 0.6, 0.6, 1.0);
         this.material.setSpecular(0.4, 0.4, 0.4, 1.0);
         this.material.setShininess(5.0);
-        this.buttonTexture = new CGFtexture(scene, "scenes/images/white.jpg");
-        this.material.setTexture(this.buttonTexture);
+        this.material.setTexture(textures[5]);
     }
 
     unselectButton(radioType) {
@@ -28,12 +36,17 @@ class MyGameMenu {
 
         this.scene.rotate(this.rotation[1], 0, 1, 0);
         this.scene.rotate(this.rotation[0], 1, 0, 0);
-
         this.scene.translate(this.displacement[0], this.displacement[1], this.displacement[2]);
+        this.scene.pushMatrix();
+        this.boardMaterial.apply();
+        this.scene.translate(0, 3, 0);
+        this.scene.scale(20, 17, 1.5);
+        this.board.display();
+        this.scene.popMatrix();
 
         //-- Menu -- //
         this.scene.pushMatrix();
-        this.scene.translate(-10, -2, 1);
+        this.scene.translate(-7.5, -2, 1);
         this.scene.scale(3, 3, 1);
         this.material.apply();
         this.scene.registerForPick(2001, this.menuButton);
@@ -44,7 +57,7 @@ class MyGameMenu {
         
         //-- Reset -- //
         this.scene.pushMatrix();
-        this.scene.translate(-4, -2, 1);
+        this.scene.translate(-2.5, -2, 1);
         this.scene.scale(3, 3, 1);
         this.material.apply();
         this.scene.registerForPick(2002, this.resetButton);
@@ -54,7 +67,7 @@ class MyGameMenu {
 
         //-- Undo -- //
         this.scene.pushMatrix();
-        this.scene.translate(4, -2, 1);
+        this.scene.translate(2.5, -2, 1);
         this.scene.scale(3, 3, 1);
         this.material.apply();
         this.scene.registerForPick(2003, this.undoButton);
@@ -64,7 +77,7 @@ class MyGameMenu {
 
         // -- Movie -- //
         this.scene.pushMatrix();
-        this.scene.translate(10, -2, 1);
+        this.scene.translate(7.5, -2, 1);
         this.scene.scale(3, 3, 1);
         this.material.apply();
         this.scene.registerForPick(2004, this.movieButton);

@@ -105,17 +105,11 @@ class MyMenu {
         this.scene.popMatrix();
  
         // -- Player -- //
-        this.scene.gl.enable(this.scene.gl.BLEND);
-        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
-        this.scene.gl.depthMask(false);
-
-        // Activate the shader of the sprite animation
-        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.pushMatrix();
         this.scene.translate(-6, 6, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1006, this.playerOnePlayerButton);
+        this.scene.registerForPick(1001, this.playerOnePlayerButton);
         this.playerOnePlayerButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -124,7 +118,7 @@ class MyMenu {
         this.scene.translate(-8, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1007, this.playerOneRandomButton);
+        this.scene.registerForPick(1002, this.playerOneRandomButton);
         this.playerOneRandomButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -133,7 +127,7 @@ class MyMenu {
         this.scene.translate(-4, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1008, this.playerOneSmartButton);
+        this.scene.registerForPick(1003, this.playerOneSmartButton);
         this.playerOneSmartButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -142,7 +136,7 @@ class MyMenu {
         this.scene.translate(6, 6, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1009, this.playerTwoPlayerButton);
+        this.scene.registerForPick(1004, this.playerTwoPlayerButton);
         this.playerTwoPlayerButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -151,7 +145,7 @@ class MyMenu {
         this.scene.translate(4, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1010, this.playerTwoRandomButton);
+        this.scene.registerForPick(1005, this.playerTwoRandomButton);
         this.playerTwoRandomButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -160,7 +154,7 @@ class MyMenu {
         this.scene.translate(8, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
-        this.scene.registerForPick(1011, this.playerTwoSmartButton);
+        this.scene.registerForPick(1006, this.playerTwoSmartButton);
         this.playerTwoSmartButton.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -171,7 +165,7 @@ class MyMenu {
         this.scene.translate(-8, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
-        this.scene.registerForPick(1003, this.boardSizeButtonSmall);
+        this.scene.registerForPick(1007, this.boardSizeButtonSmall);
         this.boardSizeButtonSmall.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -180,7 +174,7 @@ class MyMenu {
         this.scene.translate(0, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
-        this.scene.registerForPick(1004, this.boardSizeButtonMedium);
+        this.scene.registerForPick(1008, this.boardSizeButtonMedium);
         this.boardSizeButtonMedium.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -189,7 +183,7 @@ class MyMenu {
         this.scene.translate(8, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
-        this.scene.registerForPick(1005, this.boardSizeButtonBig);
+        this.scene.registerForPick(1009, this.boardSizeButtonBig);
         this.boardSizeButtonBig.display();
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
@@ -207,9 +201,7 @@ class MyMenu {
         this.scene.popMatrix();
         // -- //
 
-        // Remove transparency properties
-        this.scene.gl.depthMask(true);
-        this.scene.gl.disable(this.scene.gl.BLEND);
+        
 
         this.scene.popMatrix();
     }

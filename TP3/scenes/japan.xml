@@ -6,23 +6,22 @@
     </initials>
     
     <views default="mainCamera">
-        
         <perspective id="mainCamera" near="0.1" far="500" angle="45">
             <from x="0" y="90" z="250" />
             <to x="0" y="0" z="00" />
         </perspective>
 
         <perspective id="menuCamera" near="0.1" far="500" angle="45">
-            <from x="0" y="90" z="250" />
-            <to x="0" y="0" z="00" />
+            <from x="10" y="22" z="104" />
+            <to x="46" y="15" z="19" />
         </perspective>
         <perspective id="whitePlayer" near="0.1" far="500" angle="45">
-            <from x="30" y="30" z="15" />
-            <to x="0" y="-20" z="0" />
+            <from x="-35" y="45" z="13" />
+            <to x="0" y="8" z="4" />
         </perspective>
         <perspective id="blackPlayer" near="0.1" far="500" angle="45">
-            <from x="30" y="30" z="-15" />
-            <to x="0" y="-20" z="0" />
+            <from x="-35" y="45" z="-13" />
+            <to x="0" y="8" z="4" />
         </perspective>
     </views>
 
@@ -137,11 +136,11 @@
         <camera id="black" cameraId="blackPlayer" />
       </cameras>
 
-      <game x="-5" y="5" z="-5">
+      <game x="-12.5" y="5" z="-5">
         <texture id="mainBoardTexture" />
       </game>
       
-      <auxboard x="10" y="5" z="0">
+      <auxboard x="-17" y="5" z="0">
         <texture id="auxBoardTexture" />
       </auxboard>
     
@@ -171,9 +170,9 @@
 
         <board id="game">
             <rotation axis="z" angle="0" />
-            <rotation axis="y" angle="0" />
-            <rotation axis="x" angle="0" />
-            <translation x="0" y="10" z="-20" />
+            <rotation axis="y" angle="-90" />
+            <rotation axis="x" angle="-30" />
+            <translation x="0" y="10" z="0" />
 
             <icon id="menu" texture="menuIcon" />
             <icon id="restart" texture="restartIcon" />

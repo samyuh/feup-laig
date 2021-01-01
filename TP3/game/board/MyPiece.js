@@ -47,7 +47,7 @@ class MyPiece {
      */
     display() {
         this.scene.pushMatrix();
-
+        this.scene.scale(1, 0.6, 1);
         if(this.color == 'white') {
             this.scene.pushMatrix();
             this.scene.translate(this.x, this.y, this.z);

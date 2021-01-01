@@ -32,6 +32,7 @@ class MyTile {
     display() {
         this.scene.pushMatrix();
         this.scene.translate(this.row, 0, this.column);
+        this.scene.scale(1, 0.6, 1);
         if(this.isDiff) {
             this.diffMaterial.apply();
         }

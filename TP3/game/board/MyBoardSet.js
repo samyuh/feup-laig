@@ -84,12 +84,11 @@ class MyBoardSet {
 
         if(!this.pieceAnimated) {
             this.pieceToPlay.display(); 
-            this.scene.translate(0, -1, 0);
+            this.scene.translate(0, -0.7, 0);
             this.pieceStack.display();
         }
         
         this.scene.popMatrix();
-
         this.scene.pushMatrix();
         this.scene.translate(this.boardDisplacement[0], this.boardDisplacement[1], this.boardDisplacement[2]);
         this.board.display();

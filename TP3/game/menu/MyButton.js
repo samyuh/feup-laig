@@ -34,12 +34,20 @@ class MyButton {
         this.scene.pushMatrix();
         
         if(this.selected)
-            this.scene.translate(0, 0, -0.9);
+            this.scene.translate(0, 0, -0.6);
         
         this.button.display();
+        this.scene.gl.enable(this.scene.gl.BLEND);
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
+        this.scene.gl.depthMask(false);
+
         this.material.apply();
         this.scene.translate(0, 0, 0.6);
         this.rectangle.display();
+
+        // Remove transparency properties
+        this.scene.gl.depthMask(true);
+        this.scene.gl.disable(this.scene.gl.BLEND);
         this.scene.popMatrix();
     }
 }

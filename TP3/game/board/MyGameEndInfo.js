@@ -35,6 +35,7 @@ class MyGameEndInfo {
         
         this.scene.translate(this.displacement[0], this.displacement[1], this.displacement[2]);
         
+        this.scene.translate(0, 0, 1);
         this.scene.translate(0, 2, 0);
         this.firstText.display();
         this.scene.translate(0, 2, 0);

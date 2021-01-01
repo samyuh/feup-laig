@@ -40,10 +40,10 @@ class MyPieceAnimation {
         this.keyFrameAnim.updateTimeValues();
 
         this.keyFrameAnimStack = new MyKeyframeAnimation(this.scene);
-        let newKeyFrame6 = new MyKeyframe(0, [this.startPosition[0], this.startPosition[1] - 1, this.startPosition[2]], [0, 0, 0], [1,1,1]);
+        let newKeyFrame6 = new MyKeyframe(0, [this.startPosition[0], this.startPosition[1] - 0.7, this.startPosition[2]], [0, 0, 0], [1,1,1]);
         this.keyFrameAnimStack.addKeyframe(newKeyFrame6);
 
-        let newKeyFrame7 = new MyKeyframe(1.5, [this.startPosition[0], this.startPosition[1] - 1, this.startPosition[2]], [0, 0, 0], [1,1,1]);
+        let newKeyFrame7 = new MyKeyframe(1.5, [this.startPosition[0], this.startPosition[1] - 0.7, this.startPosition[2]], [0, 0, 0], [1,1,1]);
         this.keyFrameAnimStack.addKeyframe(newKeyFrame7);
 
         let newKeyFrame8 = new MyKeyframe(2.2, [this.startPosition[0], this.startPosition[1], this.startPosition[2]], [0, 0, 0], [1,1,1]);
