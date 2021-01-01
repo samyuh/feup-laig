@@ -11,7 +11,7 @@ class MyGameMenu {
         this.undoButton = new MyButton(gameOrchestrator, scene, textures[3], MyGameOrchestrator.prototype.undo, false, null);
 
         this.material = new CGFappearance(scene);
-        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.material.setAmbient(0.6, 0.6, 0.0, 1.0);
         this.material.setDiffuse(0.6, 0.6, 0.6, 1.0);
         this.material.setSpecular(0.4, 0.4, 0.4, 1.0);
         this.material.setShininess(5.0);

@@ -29,6 +29,7 @@ class MyGameEndInfo {
      */
     display() {
         this.scene.pushMatrix();
+        this.scene.rotate(this.rotation[2], 0, 0, 1);
         this.scene.rotate(this.rotation[1], 0, 1, 0);
         this.scene.rotate(this.rotation[0], 1, 0, 0);
         

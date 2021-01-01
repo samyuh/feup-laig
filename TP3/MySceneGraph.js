@@ -1156,7 +1156,7 @@ class MySceneGraph {
                 this.textures[iconUndoId]
             ];
         }
-        this.infoBoardDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
+        //this.infoBoardDisplacement = [[-Math.PI/4, Math.PI/4, 0], [10, 2, -15]];
         return null;
     }
 

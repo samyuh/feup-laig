@@ -25,7 +25,7 @@ class MyMenu {
 
         this.board = new MyCube(scene);
         this.material = new CGFappearance(scene);
-        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.material.setAmbient(0.5, 0.5, 0.5, 1.0);
         this.material.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.material.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material.setShininess(5.0);
@@ -35,8 +35,8 @@ class MyMenu {
         // -- Button -- //
         this.material2 = new CGFappearance(scene);
         this.material2.setAmbient(1.0, 1.0, 1.0, 1.0);
-        this.material2.setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.material2.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.material2.setDiffuse(0.6, 0.6, 0.6, 1.0);
+        this.material2.setSpecular(0.4, 0.4, 0.4, 1.0);
         this.material2.setShininess(5.0);
         this.material2.setTextureWrap('REPEAT', 'REPEAT');
         this.material2.setTexture(textures[8]);
@@ -74,39 +74,45 @@ class MyMenu {
         this.scene.rotate(this.boardRotate[0], 1, 0, 0);
         this.scene.translate(this.boardTranslate[0], this.boardTranslate[1], this.boardTranslate[2]);
         this.scene.pushMatrix();
-        this.scene.scale(24, 24, 1);
+        this.scene.scale(24, 24, 3);
         this.board.display();
         this.scene.popMatrix();
 
         // -- Text -- //
         this.scene.pushMatrix();
-        this.scene.translate(0, 10, 1);
+        this.scene.translate(0, 10, 2);
         this.settingsText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-6, 8, 1);
+        this.scene.translate(-6, 8, 2);
         this.playerOneText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(6, 8, 1);
+        this.scene.translate(6, 8, 2);
         this.playerTwoText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, 0, 1);
+        this.scene.translate(0, 0, 2);
         this.sizeText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, -6, 1);
+        this.scene.translate(0, -6, 2);
         this.startText.display();
         this.scene.popMatrix();
  
         // -- Player -- //
+        this.scene.gl.enable(this.scene.gl.BLEND);
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
+        this.scene.gl.depthMask(false);
+
+        // Activate the shader of the sprite animation
+        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.pushMatrix();
-        this.scene.translate(-6, 6, 1);
+        this.scene.translate(-6, 6, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1006, this.playerOnePlayerButton);
@@ -115,7 +121,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-8, 3, 1);
+        this.scene.translate(-8, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1007, this.playerOneRandomButton);
@@ -124,7 +130,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-4, 3, 1);
+        this.scene.translate(-4, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1008, this.playerOneSmartButton);
@@ -133,7 +139,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(6, 6, 1);
+        this.scene.translate(6, 6, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1009, this.playerTwoPlayerButton);
@@ -142,7 +148,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(4, 3, 1);
+        this.scene.translate(4, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1010, this.playerTwoRandomButton);
@@ -151,7 +157,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(8, 3, 1);
+        this.scene.translate(8, 3, 2);
         this.scene.scale(2, 2, 1);
         this.material2.apply();
         this.scene.registerForPick(1011, this.playerTwoSmartButton);
@@ -162,7 +168,7 @@ class MyMenu {
 
         //-- Board Size
         this.scene.pushMatrix();
-        this.scene.translate(-8, -3, 1);
+        this.scene.translate(-8, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
         this.scene.registerForPick(1003, this.boardSizeButtonSmall);
@@ -171,7 +177,7 @@ class MyMenu {
         this.scene.popMatrix();
         
         this.scene.pushMatrix();
-        this.scene.translate(0, -3, 1);
+        this.scene.translate(0, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
         this.scene.registerForPick(1004, this.boardSizeButtonMedium);
@@ -180,7 +186,7 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(8, -3, 1);
+        this.scene.translate(8, -3, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
         this.scene.registerForPick(1005, this.boardSizeButtonBig);
@@ -192,7 +198,7 @@ class MyMenu {
 
         //-- Reset
         this.scene.pushMatrix();
-        this.scene.translate(0, -9, 1);
+        this.scene.translate(0, -9, 2);
         this.scene.scale(3, 3, 1);
         this.material2.apply();
         this.scene.registerForPick(1000, this.resetButton);
@@ -200,6 +206,10 @@ class MyMenu {
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
         // -- //
+
+        // Remove transparency properties
+        this.scene.gl.depthMask(true);
+        this.scene.gl.disable(this.scene.gl.BLEND);
 
         this.scene.popMatrix();
     }

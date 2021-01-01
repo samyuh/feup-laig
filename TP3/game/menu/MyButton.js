@@ -34,7 +34,7 @@ class MyButton {
         this.scene.pushMatrix();
         
         if(this.selected)
-            this.scene.translate(0, 0, -0.5);
+            this.scene.translate(0, 0, -0.9);
         
         this.button.display();
         this.material.apply();
