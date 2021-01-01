@@ -31,25 +31,25 @@
     </illumination>
 
     <lights>
-        <light id="moonlight">          
+        <light id="moonlight">
             <enable value="1" />
             <position x="10" y="60" z="0" w="1.0" />
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
             <diffuse r="1" g="1" b="1" a="1.0" /> 
             <specular r="0" g="0.0" b="0.0" a="1.0" />
         </light>
-        <light id="light-torch-1">          
+        <light id="light-lamp-1">
             <enable value="1" />
-            <position x="-15.0" y="5.0" z="65.0" w="1.0" />
+            <position x="-40.0" y="30.0" z="-33.0" w="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" /> 
+            <diffuse r="1" g="1" b="0.93" a="1.0" /> 
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </light>
-        <light id="light-torch-2">          
+        <light id="light-lamp-2">
             <enable value="1" />
-            <position x="15.0" y="5.0" z="65.0" w="1.0" />
+            <position x="40.0" y="30.0" z="-33.0" w="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" /> 
+            <diffuse r="1" g="1" b="0.93" a="1.0" /> 
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </light>
     </lights>
@@ -87,6 +87,9 @@
         <texture id="buttonIcon" path="./scenes/images/sandbox.jpg" />
         <texture id="pillowTexture" path="./scenes/images/scene2/pillow.jpg" />
         <texture id="toriiTexture" path="./scenes/images/scene2/torii.jpg" />
+        <texture id="stoneTexture" path="./scenes/images/scene2/stone.jpg" />
+        <texture id="lightTexture" path="./scenes/images/scene2/light.jpg" />
+        <texture id="roofTexture" path="./scenes/images/scene2/roof.jpg" />
     </textures>
 
     <spritesheets>
@@ -200,13 +203,13 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <noderef id="torchs" />
                 <noderef id="columns-support" />
                 <noderef id="table" />
                 <noderef id="bench" />
                 <noderef id="sandbox" />
                 <noderef id="floor" />
                 <noderef id="torii" />
+                <noderef id="lamps" />
                 <!--<noderef id="skybox" />-->
             </descendants>
         </node>
@@ -794,108 +797,6 @@
             </descendants>
         </node>
 
-        <node id="torchs">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="torch-entry-left" />
-                <noderef id="torch-entry-right" />
-            </descendants>
-        </node>
-
-        <node id="torch-entry-left">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="15.0" y="-40.0" z="115.0" />
-                <scale sx="2" sy="2" sz="2" />
-            </transformations>
-
-            <descendants>
-                <noderef id="torch" />
-            </descendants>
-        </node>
-
-        <node id="torch-entry-right">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="-15.0" y="-40.0" z="115.0" />
-                <scale sx="2" sy="2" sz="2" />
-            </transformations>
-
-            <descendants>
-                <noderef id="torch" />
-            </descendants>
-        </node>
-        
-        <node id="torch">
-            <material id="null" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0.0" y="22.0" z="-24.0" />
-                <rotation axis="x" angle="30" />
-                <scale sx="0.7" sy="0.7" sz="0.7" />
-            </transformations>
-
-            <descendants>
-                <noderef id="torch-support" />
-                <noderef id="torch-body" />
-            </descendants>
-        </node>
-
-        <node id="torch-support">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <rotation axis="x" angle="90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="cylinder" height="4" topRadius="0.01" bottomRadius="0.7" stacks="20" slices="15" />
-            </descendants>
-        </node>
-
-        <node id="torch-body">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            <translation x="0.0" y="0.5" z="-0.4" />
-                <rotation axis="x" angle="60" />
-            </transformations>
-
-            <descendants>
-                <leaf type="defbarrel" base="0.5" middle="0.7" height="1.5" slices="20" stacks="20" />
-            </descendants>
-        </node>
-
         <node id="columns-support">
             <material id="null" />
 
@@ -1052,6 +953,412 @@
                 <noderef id="top" />
                 <noderef id="middle" />
                 <noderef id="sideColumns" />
+            </descendants>
+        </node>
+
+        <node id="lamps">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-left" />
+                <noderef id="lamp-right" />
+            </descendants>
+        </node>
+
+        <node id="lamp-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="40" y="-5" z="-33" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp" />
+            </descendants>
+        </node>
+
+        <node id="lamp-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-40" y="-5" z="-33" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp" />
+            </descendants>
+        </node>
+
+        <node id="lamp">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-base" />
+                <noderef id="lamp-body" />
+                <noderef id="lamp-head" />
+            </descendants>
+        </node>
+
+        <node id="lamp-base">
+            <material id="null" />
+
+            <texture id="stoneTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-base-cube" />
+                <noderef id="lamp-base-cylinder" />
+            </descendants>
+        </node>
+
+        <node id="lamp-base-cube">
+            <material id="null" />
+
+            <texture id="stoneTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="3" sy="10" sz="3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-base-cylinder">
+            <material id="null" />
+
+            <texture id="stoneTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="6.5" z="0" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1.5" topRadius="2.1" bottomRadius="1.3" stacks="8" slices="4" />
+            </descendants>
+        </node>
+
+        <node id="lamp-body">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="30" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-body-cylinder" />
+                <noderef id="lamp-body-small-cube" />
+                <noderef id="lamp-body-big-cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-body-cylinder">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+                <scale sx="1" sy="1" sz="8" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="3" topRadius="0.8" bottomRadius="0.8" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="lamp-body-small-cube">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="4" sy="1" sz="4" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-body-big-cube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1" z="0" />
+                <scale sx="8" sy="1" sz="8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-head">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="34" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="light-cube" />
+                <noderef id="lamp-front-borders" />
+                <noderef id="lamp-back-borders" />
+                <noderef id="lamp-left-borders" />
+                <noderef id="lamp-right-borders" />
+                <noderef id="lamp-roof-left" />
+                <noderef id="lamp-roof-right" />
+            </descendants>
+        </node>
+
+        <node id="light-cube">
+            <material id="null" />
+
+            <texture id="lightTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="4" sy="6" sz="4" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-front-borders">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-border-top" />
+                <noderef id="lamp-border-bottom" />
+                <noderef id="lamp-border-left" />
+                <noderef id="lamp-border-right" />
+            </descendants>
+        </node>
+
+        <node id="lamp-back-borders">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-border-top" />
+                <noderef id="lamp-border-bottom" />
+                <noderef id="lamp-border-left" />
+                <noderef id="lamp-border-right" />
+            </descendants>
+        </node>
+
+        <node id="lamp-left-borders">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-border-top" />
+                <noderef id="lamp-border-bottom" />
+                <noderef id="lamp-border-left" />
+                <noderef id="lamp-border-right" />
+            </descendants>
+        </node>
+
+        <node id="lamp-right-borders">
+            <material id="null" />
+
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.25" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="lamp-border-top" />
+                <noderef id="lamp-border-bottom" />
+                <noderef id="lamp-border-left" />
+                <noderef id="lamp-border-right" />
+            </descendants>
+        </node>
+
+        <node id="lamp-border-top">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="2" />
+                <rotation axis="z" angle="90" />
+                <scale sx="0.5" sy="4.5" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-border-bottom">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-2.5" z="2" />
+                <rotation axis="z" angle="90" />
+                <scale sx="0.5" sy="4.5" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-border-left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2" y="0" z="2" />
+                <scale sx="0.5" sy="5.5" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-border-right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2" y="0" z="2" />
+                <scale sx="0.5" sy="5.5" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-roof-left">
+            <material id="null" />
+
+            <texture id="roofTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2.2" y="3.5" z="0" />
+                <rotation axis="z" angle="35" />
+                <scale sx="6" sy="1" sz="8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="lamp-roof-right">
+            <material id="null" />
+
+            <texture id="roofTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2.2" y="3.5" z="0" />
+                <rotation axis="z" angle="-35" />
+                <scale sx="6" sy="1" sz="8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
 
