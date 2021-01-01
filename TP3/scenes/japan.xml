@@ -85,13 +85,13 @@
         <texture id="grass-floor" path="./scenes/images/scene2/grass-floor.jpg" />
         <texture id="textureMainMenu" path="scenes/images/japanBoard.jpg" />
         <texture id="buttonIcon" path="./scenes/images/sandbox.jpg" />
-        <texture id="pillowTexture" path="./scenes/images/scene2/pillow.jpg" />
         <texture id="blackPillowTexture" path="./scenes/images/scene2/black-pillow.jpg" />
         <texture id="whitePillowTexture" path="./scenes/images/scene2/white-pillow.jpg" />
         <texture id="toriiTexture" path="./scenes/images/scene2/torii.jpg" />
         <texture id="stoneTexture" path="./scenes/images/scene2/stone.jpg" />
         <texture id="lightTexture" path="./scenes/images/scene2/light.jpg" />
         <texture id="roofTexture" path="./scenes/images/scene2/roof.jpg" />
+        <texture id="yinyangTexture" path="./scenes/images/scene2/yinyang.png" />
     </textures>
 
     <spritesheets>
@@ -213,7 +213,25 @@
                 <noderef id="floor" />
                 <noderef id="torii" />
                 <noderef id="lamps" />
+                <noderef id="info-support" />
                 <!--<noderef id="skybox" />-->
+            </descendants>
+        </node>
+
+        <node id="info-support">
+            <material id="null" />
+            <texture id="toriiTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="16" y="15" z="0" />
+                <rotation axis="z" angle="20" />
+                <scale sx="0.5" sy="0.5" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="legs-model" />
             </descendants>
         </node>
 
@@ -224,8 +242,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <transformations>
-                
+            <transformations>  
             </transformations>
 
             <descendants>
@@ -842,7 +859,7 @@
             </texture>
 
             <transformations>
-                <translation x="-15" y="-6" z="3" />
+                <translation x="-16" y="-6" z="3" />
                 <rotation axis="x" angle="-45" />
                 <scale sx="1" sy="25" sz="3" />
             </transformations>
@@ -1517,6 +1534,7 @@
             <descendants>  
                 <noderef id="sand" />
                 <noderef id="box" />
+                <noderef id="yin-yangs" />
             </descendants>
         </node>
 
@@ -1556,7 +1574,119 @@
             </descendants>
         </node>
 
-         <node id="top-cylinder">
+        <node id="yin-yangs">
+            <material id="null" />
+
+            <texture id="yinyangTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="yin-yang-1" />
+                <noderef id="yin-yang-2" />
+                <noderef id="yin-yang-3" />
+                <noderef id="yin-yang-4" />
+                <noderef id="yin-yang-5" />
+            </descendants>
+        </node>
+
+        <node id="yin-yang-1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-8" y="-6" z="5" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="-45" />
+                <scale sx="1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="2.0" bottomRadius="2.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="yin-yang-2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-7" y="-6" z="-9" />
+                <rotation axis="y" angle="45" />
+                <rotation axis="x" angle="-45" />
+                <scale sx="1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="2.0" bottomRadius="2.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="yin-yang-3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-6" z="2" />
+                <rotation axis="x" angle="90" />
+                <scale sx="1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="2.0" bottomRadius="2.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="yin-yang-4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="16" y="-6" z="3" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="45" />
+                <scale sx="1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="2.0" bottomRadius="2.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="yin-yang-5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="7" y="-6" z="-6" />
+                <rotation axis="x" angle="90" />
+                <scale sx="1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="2.0" bottomRadius="2.0" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="top-cylinder">
             <material id="null" />
 
             <texture id="null">
