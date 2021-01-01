@@ -85,6 +85,8 @@
         <texture id="grass-floor" path="./scenes/images/scene2/grass-floor.jpg" />
         <texture id="textureMainMenu" path="scenes/images/japanBoard.jpg" />
         <texture id="buttonIcon" path="./scenes/images/sandbox.jpg" />
+        <texture id="pillowTexture" path="./scenes/images/scene2/pillow.jpg" />
+        <texture id="toriiTexture" path="./scenes/images/scene2/torii.jpg" />
     </textures>
 
     <spritesheets>
@@ -201,6 +203,7 @@
                 <noderef id="torchs" />
                 <noderef id="columns-support" />
                 <noderef id="table" />
+                <noderef id="bench" />
                 <noderef id="sandbox" />
                 <noderef id="floor" />
                 <noderef id="torii" />
@@ -390,6 +393,368 @@
             <descendants>
                 <noderef id="cross-1" />
                 <noderef id="cross-2" />
+            </descendants>
+        </node>
+
+        <node id="bench">
+            <material id="null" />
+
+            <texture id="textureMainMenu">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-25" y="-8" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench-base" />
+                <noderef id="bench-back" />
+                <noderef id="bench-legs" />
+            </descendants>
+        </node>
+
+        <node id="bench-base">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-2" y="4" z="0" />
+                <scale sx="12" sy="1" sz="12" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pillow" />
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="pillow">
+            <material id="null" />
+
+            <texture id="pillowTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1" z="0" />
+                <scale sx="0.75" sy="1" sz="0.75" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="8" z="0" />
+                <rotation axis="z" angle="-70" />
+                <scale sx="1" sy="1" sz="0.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench-back-right-large" />
+                <noderef id="bench-back-left-large" />
+                <noderef id="bench-back-top-large" />
+                <noderef id="bench-back-small" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-right-large">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5" y="-8" z="6" />
+                <scale sx="12" sy="1" sz="2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-left-large">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5" y="-8" z="-6" />
+                <scale sx="12" sy="1" sz="2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-top-large">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-10" y="-8" z="0" />
+                <rotation axis="y" angle="90" />
+                <scale sx="15" sy="1" sz="2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-5" y="0" z="0" />
+                <scale sx="12" sy="1" sz="0.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench-back-small-1" />
+                <noderef id="bench-back-small-2" />
+                <noderef id="bench-back-small-3" />
+                <noderef id="bench-back-small-4" />
+                <noderef id="bench-back-small-5" />
+                <noderef id="bench-back-small-6" />
+                <noderef id="bench-back-small-7" />
+                <noderef id="bench-back-small-8" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="7" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="-1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="-3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-7">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="-5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-back-small-8">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-8" z="-7" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-legs">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1" z="0" />
+                <scale sx="2" sy="5" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench-leg-1" />
+                <noderef id="bench-leg-2" />
+                <noderef id="bench-leg-3" />
+                <noderef id="bench-leg-4" />
+            </descendants>
+        </node>
+
+        <node id="bench-leg-1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-3" y="0" z="-5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-leg-2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-3" y="0" z="5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-leg-3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="0" z="-5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="bench-leg-4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="0" z="5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
 
@@ -675,7 +1040,7 @@
         <node id="torii">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="toriiTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

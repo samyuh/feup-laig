@@ -14,7 +14,7 @@ class MyMenu {
 
         this.playerTwoPlayerButton = new MyButton(gameOrchestrator, scene, textures[0], MyGameOrchestrator.prototype.changePlayer, true, "playerTwo", "two", 1);
         this.playerTwoRandomButton = new MyButton(gameOrchestrator, scene, textures[1], MyGameOrchestrator.prototype.changePlayer, false, "playerTwo", "two", 2);
-        this.playerTwoSmartButton = new MyButton(gameOrchestrator, scene, textures[2], MyGameOrchestrator.prototype.changePlayer, false, "playerTwo", "tw0", 3);
+        this.playerTwoSmartButton = new MyButton(gameOrchestrator, scene, textures[2], MyGameOrchestrator.prototype.changePlayer, false, "playerTwo", "two", 3);
 
         this.resetButton = new MyButton(gameOrchestrator, scene, textures[6], MyGameOrchestrator.prototype.reset, false, null);
 
