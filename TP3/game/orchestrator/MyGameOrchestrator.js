@@ -213,7 +213,7 @@ class MyGameOrchestrator {
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
-        if(!(this.concreteState instanceof GameStateTurn)) {
+        if((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateLoading)) {
             return;
         }
 
@@ -329,7 +329,7 @@ class MyGameOrchestrator {
      */
     display() {
         this.pickMenu();
-
+        console.log(this.gameSequence);
         this.concreteState.display();
 
         this.menu.display();

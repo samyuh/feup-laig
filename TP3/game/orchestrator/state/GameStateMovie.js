@@ -32,7 +32,7 @@ class GameStateMovie {
         if(!this.animation.active) {
             if (this.currentSequenceIndex == (this.gameSequence.moves.length - 1)) { // last
                 this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
-                this.gameOrchestrator.changeState(new GameStateGame(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
+                this.gameOrchestrator.changeState(new GameStateTurn(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
             }
             else {
                 this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);

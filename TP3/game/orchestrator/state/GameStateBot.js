@@ -10,12 +10,14 @@ class GameStateBot extends GameState {
         super(gameOrchestrator, board);
         this.board = board;
 
+        this.botPlayed = false;
+        this.botWaitTime = 2;
+        this.elapsedTime = 0;
+
         this.selectedTiles = null;
         this.previousTileId = null;
 
         this.difficulty = difficulty;
-
-        this.moveBot();
     }
 
     /**
@@ -26,7 +28,6 @@ class GameStateBot extends GameState {
         let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
         if (this.difficulty == "random") {  
-            console.log("random");  
             let chooseRandomString = 'chooseRandom(' + stringBoard + ',' + this.gameOrchestrator.turn + ')';
             let p = this.gameOrchestrator.server.promiseRequest(chooseRandomString, null, null);
             p.then((request) => { 
@@ -36,6 +37,16 @@ class GameStateBot extends GameState {
                 let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
                 
                 let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
+
+                this.gameOrchestrator.gameSequence.addMove(
+                    new MyGameMove(
+                        this.gameOrchestrator.piecesList, 
+                        piece,
+                        this.gameOrchestrator.turn, 
+                        this.gameOrchestrator.boardSet.auxBoardDisplacement, 
+                        this.board.getPieceFinalPosition(firstId, secondId))
+                    );
+                
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
 
                 let moveRandomString = 'moveRandom(' + stringBoard + ',' + piece_played[0] + '-' + piece_played[1] + '-' + piece_played[2] + '-' + this.gameOrchestrator.turn + ')';
@@ -63,6 +74,16 @@ class GameStateBot extends GameState {
                 let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
     
                 let piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
+
+                this.gameOrchestrator.gameSequence.addMove(
+                    new MyGameMove(
+                        this.gameOrchestrator.piecesList, 
+                        piece,
+                        this.gameOrchestrator.turn, 
+                        this.gameOrchestrator.boardSet.auxBoardDisplacement, 
+                        this.board.getPieceFinalPosition(firstId, secondId))
+                    );
+
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
 
                 let moveIntelligentString = 'moveIntelligent(' + stringBoard + ',' + piece_played[0] + '-' + piece_played[1] + '-' + piece_played[2] + '-' + this.gameOrchestrator.turn + ')';
@@ -87,7 +108,12 @@ class GameStateBot extends GameState {
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
     update(elapsedTime) {
-        
+        this.elapsedTime += elapsedTime;
+
+        if(!this.botPlayed && this.elapsedTime > this.botWaitTime) {
+            this.botPlayed = true;
+            this.moveBot();
+        }
     }
 
     /**
