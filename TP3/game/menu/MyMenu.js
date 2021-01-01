@@ -62,6 +62,8 @@ class MyMenu {
             this.playerTwoPlayerButton.unselect();
             this.playerTwoRandomButton.unselect();
             this.playerTwoSmartButton.unselect();
+        } else if (radioType == null) {
+            this.resetButton.unselect();
         }
     }
 

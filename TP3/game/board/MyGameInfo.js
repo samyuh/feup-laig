@@ -59,14 +59,18 @@ class MyGameInfo {
 
     getBotType() {
         if (this.turn == "white") {
-            if (this.whitePlayer == 2)
+            if (this.whitePlayer == 2) {
                 return this.randomBot;
-            return this.intelligentBot;
+            } else {
+                return this.intelligentBot;
+            }
         }
         else {
-            if (this.blackPlayer == 2)
+            if (this.blackPlayer == 2) {
                 return this.randomBot;
-            return this.intelligentBot;
+            } else {
+                return this.intelligentBot;
+            }
         }
     }
 
@@ -98,10 +102,11 @@ class MyGameInfo {
         }
 
         this.scene.translate(0, 2, 0);
-        if (this.turn == "white")
+        if (this.turn == "white") {
             this.whiteTurn.display();
-        else if (this.turn == "black")
+        } else if (this.turn == "black") {
             this.blackTurn.display();
+        }
 
         this.scene.popMatrix();
     }

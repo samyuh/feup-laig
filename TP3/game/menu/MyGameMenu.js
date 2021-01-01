@@ -28,7 +28,12 @@ class MyGameMenu {
     }
 
     unselectButton(radioType) {
-
+        if (radioType == null) {
+            this.menuButton.unselect();
+            this.resetButton.unselect();
+            this.movieButton.unselect();
+            this.undoButton.unselect();
+        }
     }
 
     display() {

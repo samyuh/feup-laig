@@ -32,7 +32,7 @@ class GameStateBot extends GameState {
             let p = this.gameOrchestrator.server.promiseRequest(chooseRandomString, null, null);
             p.then((request) => { 
                 let piece_played = request;
-                let position = this.board.getCoordinates2(piece_played[0], piece_played[1], piece_played[2]);
+                let position = this.board.getCoordinatesFromProlog(piece_played[0], piece_played[1], piece_played[2]);
                 let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
                 let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
                 
@@ -69,7 +69,7 @@ class GameStateBot extends GameState {
             let p = this.gameOrchestrator.server.promiseRequest(chooseIntelligentString, null, null);
             p.then((request) => {
                 piece_played = request;
-                let position = this.board.getCoordinates2(piece_played[0], piece_played[1], piece_played[2]);
+                let position = this.board.getCoordinatesFromProlog(piece_played[0], piece_played[1], piece_played[2]);
                 let firstId = position[0] + position[1] * this.gameOrchestrator.boardSize + 1;
                 let secondId = position[2] + position[3] * this.gameOrchestrator.boardSize + 1;
     

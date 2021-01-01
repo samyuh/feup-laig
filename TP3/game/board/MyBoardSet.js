@@ -14,12 +14,19 @@ class MyBoardSet {
     constructor(scene, boardList, boardDisplacement, auxBoardDisplacement, boardTexture, auxBoardTexture, whiteTileTexture, blackTileTexture) {
         this.scene = scene;
 
+        // -- Tiles -- //
         this.whiteTileTexture = whiteTileTexture;
         this.blackTileTexture = blackTileTexture;
+
+        this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+        this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+
+        // -- Board Textures -- //
         this.boardTexture = boardTexture;
         this.auxBoardTexture = auxBoardTexture;
-        this.size = boardList.length;
 
+        // -- Board Size and Displacement
+        this.size = boardList.length;
         if (this.size == 7) {
             this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
         }
@@ -30,15 +37,12 @@ class MyBoardSet {
             this.boardDisplacement = boardDisplacement;
         }
 
-        this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
-        this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
-        this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
-        this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
-        
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
-        this.pieceAnimated = false;
+        this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
+        this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
 
+        this.pieceAnimated = false;
         this.turn = "white";
     }
 

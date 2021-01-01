@@ -44,7 +44,7 @@ class MyServer {
 
     // Board Prolog
     updateBoardProlog(gameOrchestrator, board, lastMove) {
-            let move = board.convertId(lastMove[0]);
+            let move = board.convertProlog(lastMove[0]);
             let orientation = board.getOrientation(lastMove[0], lastMove[1]);
 
             let stringBoard = JSON.stringify(board.boardList).replaceAll("\"", "");

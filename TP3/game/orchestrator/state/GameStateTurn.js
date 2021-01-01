@@ -35,18 +35,17 @@ class GameStateTurn extends GameState {
      */
     handlePicking(tile, currentTileId) {
         if (tile.isDiff) {
-            let move = this.board.convertId(this.previousTileId);  // [Row, Column]
+            let move = this.board.convertProlog(this.previousTileId);  // [Row, Column]
             let orientation = this.board.getOrientation(this.previousTileId, currentTileId);
             let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
-            
+            console.log(validString);
             let p = this.gameOrchestrator.server.promiseRequest(validString, null, null, false);
 
             p.then((request) => {
                 if (request == "valid") {
                     // --- Game move --- //
-                    
                     this.lastMove = [this.previousTileId, currentTileId];
                     
                     // push move to animator    
