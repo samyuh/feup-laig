@@ -15,11 +15,11 @@
             <from x="10" y="22" z="104" />
             <to x="46" y="15" z="19" />
         </perspective>
-        <perspective id="whitePlayer" near="0.1" far="500" angle="45">
+        <perspective id="blackPlayer" near="0.1" far="500" angle="45">
             <from x="-35" y="45" z="13" />
             <to x="0" y="8" z="4" />
         </perspective>
-        <perspective id="blackPlayer" near="0.1" far="500" angle="45">
+        <perspective id="whitePlayer" near="0.1" far="500" angle="45">
             <from x="-35" y="45" z="-13" />
             <to x="0" y="8" z="4" />
         </perspective>
@@ -86,6 +86,8 @@
         <texture id="textureMainMenu" path="scenes/images/japanBoard.jpg" />
         <texture id="buttonIcon" path="./scenes/images/sandbox.jpg" />
         <texture id="pillowTexture" path="./scenes/images/scene2/pillow.jpg" />
+        <texture id="blackPillowTexture" path="./scenes/images/scene2/black-pillow.jpg" />
+        <texture id="whitePillowTexture" path="./scenes/images/scene2/white-pillow.jpg" />
         <texture id="toriiTexture" path="./scenes/images/scene2/torii.jpg" />
         <texture id="stoneTexture" path="./scenes/images/scene2/stone.jpg" />
         <texture id="lightTexture" path="./scenes/images/scene2/light.jpg" />
@@ -205,7 +207,8 @@
             <descendants>
                 <noderef id="columns-support" />
                 <noderef id="table" />
-                <noderef id="bench" />
+                <noderef id="white-bench" />
+                <noderef id="black-bench" />
                 <noderef id="sandbox" />
                 <noderef id="floor" />
                 <noderef id="torii" />
@@ -399,6 +402,42 @@
             </descendants>
         </node>
 
+        <node id="black-bench">
+            <material id="null" />
+
+            <texture id="textureMainMenu">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0" />
+                <rotation axis="y" angle="20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench" />
+                <noderef id="blackPillow" />
+            </descendants>
+        </node>
+
+        <node id="white-bench">
+            <material id="null" />
+
+            <texture id="textureMainMenu">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0" />
+                <rotation axis="y" angle="-20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="bench" />
+                <noderef id="whitePillow" />
+            </descendants>
+        </node>
+
         <node id="bench">
             <material id="null" />
 
@@ -430,21 +469,37 @@
             </transformations>
 
             <descendants>
-                <noderef id="pillow" />
                 <noderef id="cube" />
             </descendants>
         </node>
 
-        <node id="pillow">
+        <node id="blackPillow">
             <material id="null" />
 
-            <texture id="pillowTexture">
+            <texture id="blackPillowTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0" y="1" z="0" />
-                <scale sx="0.75" sy="1" sz="0.75" />
+                <translation x="-26.5" y="-3" z="0" />
+                <scale sx="9" sy="1" sz="9" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="whitePillow">
+            <material id="null" />
+
+            <texture id="whitePillowTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-26.5" y="-3" z="0" />
+                <scale sx="9" sy="1" sz="9" />
             </transformations>
 
             <descendants>
