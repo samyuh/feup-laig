@@ -28,8 +28,15 @@ class MyKeyframeAnimation extends MyAnimation {
     * @param {MyKeyframe} keyframe - keyframe to add
     */
     addKeyframe(keyframe) {
-        this.keyframes.push(keyframe);
+        let instant = keyframe.instant;
 
+        for(let i = 0; i < this.keyframes.length; i++) {
+            if(this.keyframes[i].instant == instant) {
+                return;
+            }
+        }
+
+        this.keyframes.push(keyframe);
         this.keyframes.sort(function(a, b) { return a.instant > b.instant });
     }
 

@@ -16,7 +16,7 @@ class MyBoard {
         this.tiles = [];
         this.pieceList = [];
         
-        // --- Textures --- //
+        // --- Textures and Materials --- //
         this.tileMaterial = new CGFappearance(scene);
         this.tileMaterial.setTexture(boardTexture);
 
@@ -24,7 +24,7 @@ class MyBoard {
         this.selectedTexture.setAmbient(0.0, 0.0, 0.0, 1.0);
         this.selectedTexture.setDiffuse(0.1, 0.5, 0.1, 1.0);
         this.selectedTexture.setSpecular(0.0, 0.0, 0.0, 1.0);
-        this.selectedTexture.setShininess(5.0);
+        this.selectedTexture.setTexture(boardTexture);
         
         this.createTiles();
     }
@@ -53,20 +53,68 @@ class MyBoard {
      * Converts the id of a given cell of the board in its row and column. Returns in the format [Row, Column]
      * @param {Integer} id - the id of the cell to be converted
      */
-    convertId(id) {
+    convertProlog(id) {
         let row = Math.floor(id / this.boardLength) + (((id % this.boardLength) == 0) ? 0 : 1);
         let column = (((id % this.boardLength) == 0) ? this.boardLength : id % this.boardLength)
 
         return [row, column];
     }
+
+    /**
+     * Returns the orientation of a given piece, with the main part on the cell with id "idA" and secondary part on the cell with the id "idB"
+     * @param {Integer} idA - the id of the main part of the piece
+     * @param {Integer} idB - the id of the secondary part of the piece
+     */
+    getOrientation(idA, idB) {
+        let init = this.convertProlog(idA);
+        let end = this.convertProlog(idB);
+
+        if(init[0] == end[0]) {
+            if(init[1] < end[1]) {
+                return "right";
+            }
+            else return "left";
+        }
+        else {
+            if(init[0] > end[0]) {
+                return "up";
+            }
+            else return "down";
+        }
+    }
+
+    /**
+     * Returns the coordinates of the cell of the cell with id in the format [row, column]
+     * Used to simplify calculations
+     * @param {Integer} id - the id of the cell
+     */
+    getCoordinate(id) {
+        let rowP = ((id - 1) % this.boardLength);
+        let columnP = Math.floor((id - 1) / this.boardLength);
+
+        return [rowP, columnP];
+    }
     
+    /**
+     * Returns the coordinates of the previous cell of the cell with id "prev", in the format [row, column]
+     * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
+     * @param {Integer} actual - the id of the cell, whose coordinates of the previous cell will be returned
+     */
+    // --------------------------------------------
+    getCoordinates(prev, actual) {
+        let previousCoordinate = this.getCoordinate(prev);
+        let actualCoordinate = this.getCoordinate(actual);
+
+        return [previousCoordinate[0], previousCoordinate[1], actualCoordinate[0], actualCoordinate[1]];
+    }
+
     /**
      * Returns the coordinates of both parts of a given cell, in the format [MainPartRow, MainPartColumn, SecondaryPartRow, SecondaryPartColumn] (MainPart can be white/black, depending on the current turn)
      * @param {Integer} row - the row of the cell, whose coordinates of both parts will be returned
      * @param {Integer} column - the column of the cell, whose coordinates of both parts will be returned
      * @param {String} orientation - the orientation of the cell (up, down, left, right), which will be used to deduce the coordinates of both parts of the cell
      */
-    getCoordinates2(row, column, orientation) {
+    getCoordinatesFromProlog(row, column, orientation) {
         let row2 = row, column2 = column;
 
         switch(orientation) {
@@ -86,56 +134,6 @@ class MyBoard {
 
         return [column-1, row-1, column2-1, row2-1];
     }
-    
-    /**
-     * Returns the coordinates of the previous cell of the cell with id "prev", in the format [row, column]
-     * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
-     */
-    getCoord(prev) {
-        let rowP = ((prev - 1) % this.boardLength);
-        let columnP = Math.floor((prev - 1) / this.boardLength);
-
-        return [rowP, columnP];
-    }
-
-    /**
-     * Returns the coordinates of the previous cell of the cell with id "prev", in the format [row, column]
-     * @param {Integer} prev - the id of the cell, whose coordinates of the previous cell will be returned
-     * @param {Integer} actual - the id of the cell, whose coordinates of the previous cell will be returned
-     */
-    // --------------------------------------------
-    getCoordinates(prev, actual) {
-        let rowP = ((prev - 1) % this.boardLength);
-        let columnP = Math.floor((prev - 1) / this.boardLength);
-
-        let rowA = ((actual - 1) % this.boardLength);
-        let columnA = Math.floor((actual - 1) / this.boardLength);
-
-        return [rowP, columnP, rowA, columnA];
-    }
-
-    /**
-     * Returns the orientation of a given piece, with the main part on the cell with id "idA" and secondary part on the cell with the id "idB"
-     * @param {Integer} idA - the id of the main part of the piece
-     * @param {Integer} idB - the id of the secondary part of the piece
-     */
-    getOrientation(idA, idB) {
-        let init = this.convertId(idA);
-        let end = this.convertId(idB);
-
-        if(init[0] == end[0]) {
-            if(init[1] < end[1]) {
-                return "right";
-            }
-            else return "left";
-        }
-        else {
-            if(init[0] > end[0]) {
-                return "up";
-            }
-            else return "down";
-        }
-    }
 
     /**
      * Returns the info needed to the animation of the piece, in the format [x, y, z, angle]
@@ -143,9 +141,9 @@ class MyBoard {
      * @param {Integer} idExtreme - the id of the secondary part of the piece
      */
     getPieceFinalPosition(idCenter, idExtreme) {
-        let c = this.getCoord(idCenter);
-        let row = c[0];
-        let column = c[1];
+        let c = this.getCoordinate(idCenter); 
+        let row = c[0]; 
+        let column = c[1]; 
 
         let orientation = this.getOrientation(idCenter, idExtreme);
         let rotate = 0;
@@ -157,7 +155,7 @@ class MyBoard {
             rotate = -90;
         }
 
-        return [this.boardDisplacement[0] + row, this.boardDisplacement[1], this.boardDisplacement[2] + column, rotate]
+        return [this.boardDisplacement[0] + row, this.boardDisplacement[1], this.boardDisplacement[2] + column, rotate];
     }
 
     /**

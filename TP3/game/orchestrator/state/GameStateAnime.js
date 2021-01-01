@@ -15,10 +15,34 @@ class GameStateAnime extends GameState {
         this.position = this.board.getCoordinates(finalPosition[0], finalPosition[1]);
         
         this.pieceToPlayPosition = boardSet.auxBoardDisplacement;
-        this.animation = new MyPieceAnimation(this.gameOrchestrator.scene, boardSet, boardSet.pieceToPlay, boardSet.pieceStack, this.pieceToPlayPosition, this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
+        this.animation = new MyPieceAnimation(
+            this.gameOrchestrator.scene, 
+            boardSet, 
+            boardSet.pieceToPlay, 
+            boardSet.pieceStack, 
+            this.pieceToPlayPosition, 
+            this.board.getPieceFinalPosition(finalPosition[0], finalPosition[1]));
     
         this.waitingResponse = false;
     }
+
+    checkEndGame(board) {
+        let stringNewBoard = JSON.stringify(board.boardList).replaceAll("\"", "");
+        let gameOverString = 'game_over(' + stringNewBoard + ')';
+        let p = this.promiseRequest(gameOverString, null, null, false);
+
+        p.then((request) => {
+            let gameOverData = request;
+
+            if (gameOverData.length != 0) {
+                this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, board));
+                this.gameOrchestrator.createGameStats("end", gameOverData);
+            }
+            else {
+                this.gameOrchestrator.changeTurn();
+            }
+        });
+    }  
 
     /**
      * Sets the final position of the piece, and adds the piece to the board
@@ -42,11 +66,10 @@ class GameStateAnime extends GameState {
     display() {
         if(this.animation.active) {
             this.animation.apply();
-            
         } else if (!this.waitingResponse) {
             this.putPiece();
             this.waitingResponse = true;
-            this.gameOrchestrator.server.checkEndGame(this.gameOrchestrator, this.boardSet, this.board);
+            this.checkEndGame(this.board);
         }
 
         // -- Board -- //

@@ -7,8 +7,12 @@ class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
         this.graph = null; // -- SceneGraph
-        this.gameOrchestratorLoaded = false;
         this.allLoaded = false;
+
+        // -- Menu -- //
+        this.unselectMenu = false;
+        this.unselectGameMenu = false;
+        this.timeUntilUnselect = 0;
 
         // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
@@ -78,10 +82,8 @@ class MyGameOrchestrator {
         } 
         else {
             this.initBoard(false);
-            this.scene.updateCamera(this.menuCamera);
+            this.concreteState.setMenuCamera(this.menuCamera);
         }
-
-        this.gameOrchestratorLoaded = true;
     }
 
     /**
@@ -97,11 +99,6 @@ class MyGameOrchestrator {
             // -- GameBoard -- //
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
-
-            console.log(this.boardSet.board.convertId(1));
-            console.log(this.boardSet.board.getCoord(1));
-
-            console.log(this.boardSet.board.getCoordinates(1, 1));
 
             this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
@@ -170,10 +167,15 @@ class MyGameOrchestrator {
         this.concreteState = state;
     }
 
+    // --- Menus Functions --- //
+
     /**
      * 
      */
     changeMenu() {
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+
         this.scene.updateCamera(this.menuCamera);
     }
 
@@ -213,7 +215,10 @@ class MyGameOrchestrator {
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
-        if(!(this.concreteState instanceof GameStateTurn)) {
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+
+        if((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateLoading)) {
             return;
         }
 
@@ -229,6 +234,10 @@ class MyGameOrchestrator {
      * Resets/Init a new game with the
      */
     reset() {
+        this.unselectMenu = true;
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+
         this.initBoard(true);
     }
 
@@ -236,6 +245,9 @@ class MyGameOrchestrator {
      * Undoes the last move, if the user presses the "Undo" button on the interface
      */
     undo() {
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+
         if(!(this.concreteState instanceof GameStateTurn)) {
             return;
         }
@@ -283,6 +295,8 @@ class MyGameOrchestrator {
         });
     }
 
+    // --- End of Menus Function --- //
+
     /**
      * Presents the game info to the screen, after the end of the game
      * @param {String} status - cause of the end of the game (Board full or Timeout)
@@ -307,10 +321,8 @@ class MyGameOrchestrator {
                             this.menu.unselectButton(obj.radioType);
                             obj.apply();
                         }
-                        console.log(obj, objId);
                     }
                 }
-                
                 this.scene.pickResults.splice(0, this.scene.pickResults.length);
             }
 		}
@@ -322,6 +334,17 @@ class MyGameOrchestrator {
      */
     update(elapsedTime) {
         this.concreteState.update(elapsedTime);
+
+        // -- Menus Update -- //
+        this.timeUntilUnselect += elapsedTime;
+        if(this.unselectMenu && this.timeUntilUnselect > 0.8) {
+            this.menu.unselectButton(null);
+            this.unselectMenu = false;
+        }
+        if(this.unselectGameMenu && this.timeUntilUnselect > 0.8) {
+            this.gameMenu.unselectButton(null);
+            this.unselectGameMenu = false;
+        }
     }
 
     /**
@@ -329,9 +352,9 @@ class MyGameOrchestrator {
      */
     display() {
         this.pickMenu();
-
         this.concreteState.display();
 
+        // -- Menus and Scene Display -- //
         this.menu.display();
         this.gameMenu.display();
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);

@@ -10,6 +10,14 @@ class GameStateLoading extends GameState {
 
         this.gameOrchestrator = gameOrchestrator;
         this.board = board;
+
+        this.elapsedTime = 0;
+        this.movedCamera = false;
+        this.menuCamera = null;
+    }
+
+    setMenuCamera(camera) {
+        this.menuCamera = camera;
     }
 
     /**
@@ -17,7 +25,12 @@ class GameStateLoading extends GameState {
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
     update(elapsedTime) {
-        // Override
+        this.elapsedTime += elapsedTime;
+
+        if((this.elapsedTime >= 4) && !this.movedCamera && (this.menuCamera != null)) {
+            this.movedCamera = true;
+            this.gameOrchestrator.scene.updateCamera(this.menuCamera);
+        }
     }
 
     /**

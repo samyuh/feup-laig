@@ -13,8 +13,8 @@ class MyGameEndInfo {
         this.rotation = infoDisplacement[0];
         this.displacement = infoDisplacement[1];
 
-        // -- Player Turn -- //
-        if(state == "end") {
+        // -- Type of endGame -- //
+        if (state == "end") {
             this.firstText = new MySpriteText(this.scene, "Winner: " +  info[0], spriteSheet);
             this.secondText = new MySpriteText(this.scene, "Score: " +  info[1], spriteSheet);
         }

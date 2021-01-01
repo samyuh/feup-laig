@@ -9,9 +9,14 @@ class GameStateMovie {
         this.gameOrchestrator = gameOrchestrator;
         this.gameSequence = gameSequence;
 
+        this.addedPiece = false;
         this.currentTime = 0;
         this.currentSequenceIndex = 0;
         this.currentMove = this.gameSequence.moves[0];
+
+        if(this.gameOrchestrator.turn = "black") {
+            this.gameOrchestrator.boardSet.resetPiece();
+        }
 
         this.animation = new MyPieceAnimation(
             this.gameOrchestrator.scene, 
@@ -29,14 +34,11 @@ class GameStateMovie {
     update(elapsedTime) {
         this.currentTime += elapsedTime;
 
-        if(!this.animation.active) {
+        if(!this.animation.active && this.addedPiece) {
             if (this.currentSequenceIndex == (this.gameSequence.moves.length - 1)) { // last
-                this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
                 this.gameOrchestrator.changeState(new GameStateTurn(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
             }
             else {
-                this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
-
                 this.currentSequenceIndex = this.currentSequenceIndex + 1;
                 this.currentMove = this.gameSequence.moves[this.currentSequenceIndex];
     
@@ -48,6 +50,7 @@ class GameStateMovie {
                     this.currentMove.startPosition, 
                     this.currentMove.finalPosition);
             }
+            this.addedPiece = false;
         }
         
         this.animation.update(elapsedTime);
@@ -62,10 +65,12 @@ class GameStateMovie {
 
         if(this.animation.active) {
             this.animation.apply();
+        } else if(!this.addedPiece) {
+            this.gameOrchestrator.boardSet.board.addPiece(this.currentMove.piece);
+            this.addedPiece = true;
         }
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
         this.gameOrchestrator.scene.popMatrix();
-        // -- Board -- //
     }
 }

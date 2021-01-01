@@ -31,8 +31,8 @@ class MyPiece {
      * Updates the position of the piece
      * @param {Integer} x - the coordinate x of the main part of the piece
      * @param {Integer} z - the coordinate z of the main part of the piece
-     * @param {Integer} xb - the coordinate x of the secondary part of the piece
-     * @param {Integer} zb - the coordinate z of the secondary part of the piece
+     * @param {Integer} xb - the coordinate x of the other part of the piece
+     * @param {Integer} zb - the coordinate z of the other part of the piece
      */
     updatePosition(x, z, xb, zb) {
         this.x = x;

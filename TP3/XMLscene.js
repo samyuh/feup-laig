@@ -274,7 +274,7 @@ class XMLscene extends CGFscene {
                 this.lights[i].setVisible(true);
         }
 
-        if (this.sceneInited && this.gameOrchestrator.gameOrchestratorLoaded) {
+        if (this.sceneInited && this.gameOrchestrator.allLoaded) {
             // Draw axis
             this.axis.display();
             this.defaultAppearance.apply();

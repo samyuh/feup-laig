@@ -62,6 +62,8 @@ class MyMenu {
             this.playerTwoPlayerButton.unselect();
             this.playerTwoRandomButton.unselect();
             this.playerTwoSmartButton.unselect();
+        } else if (radioType == null) {
+            this.resetButton.unselect();
         }
     }
 
@@ -189,8 +191,7 @@ class MyMenu {
         this.scene.popMatrix();
         // -- //
         
-
-        //-- Reset
+        //-- Reset/New Game
         this.scene.pushMatrix();
         this.scene.translate(0, -9, 2);
         this.scene.scale(3, 3, 1);
@@ -200,8 +201,6 @@ class MyMenu {
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
         // -- //
-
-        
 
         this.scene.popMatrix();
     }
