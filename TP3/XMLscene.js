@@ -44,6 +44,15 @@ class XMLscene extends CGFscene {
         this.audioIntroGOT = new Audio('scenes/music/music.mp3');
         this.audioIntroGOT.volume = 0.3;
 
+        // -- CFG OBJECT --- //
+        this.boardMaterial = new CGFappearance(this);
+        this.boardMaterial.setAmbient(0.1, 0.06, 0.01, 1.0);
+        this.boardMaterial.setDiffuse(1, 0.72, 0.77, 1.0);
+        this.boardMaterial.setSpecular(1, 0.72, 0.77, 1.0);
+        this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        let newText = new CGFtexture(this, "./scenes/images/spritesheet-alphabet.jpg");
+        this.boardMaterial.setTexture(newText);
+        this.male = new CGFOBJModel(this, './scenes/models/male.obj');
         // -- Theme -- //
         this.textureIds = {
             'Mountains': 0,
@@ -280,6 +289,15 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             // Displays the scene
             this.gameOrchestrator.display();
+
+            this.pushMatrix();
+            this.boardMaterial.apply();
+            this.translate(-50, 0, 50);
+            //this.rotate()
+            this.scale(15, 15, 15);
+            this.male.display();
+
+            this.popMatrix();
         }
         else {
             // Show some "loading" visuals
