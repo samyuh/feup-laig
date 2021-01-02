@@ -275,7 +275,8 @@ class MyGameOrchestrator {
         this.unselectMenu = true;
         this.unselectGameMenu = true;
         this.timeUntilUnselect = 0;
-
+        this.gameInfo.updateGroups(0, 0);
+        
         this.initBoard(true);
     }
 
@@ -335,15 +336,18 @@ class MyGameOrchestrator {
                     
                     return this.server.promiseRequest(groupsString, null, null, false);
                 }
+                else {
+                    return null;
+                }
             }).then((request) => {
-                let groupsData = request;
-                groupsData[0] = groupsData[0] || 1;
-                groupsData[1] = groupsData[1] || 1;
-                this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-            }).catch((error) =>  {
-                console.log("No groups left!");    
-    
-                this.gameInfo.updateGroups(0, 0);
+                if (request == null) {
+                    this.gameInfo.updateGroups(0, 0);
+                } else {
+                    let groupsData = request;
+                    groupsData[0] = groupsData[0] || 1;
+                    groupsData[1] = groupsData[1] || 1;
+                    this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+                }
             });
         } else {
             this.gameSequence.undo();
@@ -370,15 +374,18 @@ class MyGameOrchestrator {
                     
                     return this.server.promiseRequest(groupsString, null, null, false);
                 }
+                else {
+                    return null;
+                }
             }).then((request) => {
-                let groupsData = request;
-                groupsData[0] = groupsData[0] || 1;
-                groupsData[1] = groupsData[1] || 1;
-                this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-            }).catch((error) =>  {
-                console.log("No groups left!");    
-    
-                this.gameInfo.updateGroups(0, 0);
+                if (request == null) {
+                    this.gameInfo.updateGroups(0, 0);
+                } else {
+                    let groupsData = request;
+                    groupsData[0] = groupsData[0] || 1;
+                    groupsData[1] = groupsData[1] || 1;
+                    this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+                }
             });
         }
     }

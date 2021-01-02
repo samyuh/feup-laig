@@ -27,11 +27,20 @@ class GameStateAnime extends GameState {
     }
 
     checkEndGame(board) {
-        let stringNewBoard = JSON.stringify(board.boardList).replaceAll("\"", "");
-        let gameOverString = 'game_over(' + stringNewBoard + ')';
-        let p = this.gameOrchestrator.server.promiseRequest(gameOverString, null, null, false);
-
+        let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
+        let groupsString = 'groups(' + stringNewBoard + ')';
+        
+        let p = this.gameOrchestrator.server.promiseRequest(groupsString, null, null);
         p.then((request) => {
+            let groupsData = request;
+            groupsData[0] = groupsData[0] || 1;
+            groupsData[1] = groupsData[1] || 1;
+            this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+
+            let gameOverString = 'game_over(' + stringNewBoard + ')';
+            return this.gameOrchestrator.server.promiseRequest(gameOverString, null, null, false);
+
+        }).then((request) => {
             let gameOverData = request;
 
             if (gameOverData.length != 0) {

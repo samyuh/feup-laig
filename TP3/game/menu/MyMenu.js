@@ -87,12 +87,12 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-6, 8, 2);
+        this.scene.translate(-5.5, 8, 2);
         this.playerOneText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(6, 8, 2);
+        this.scene.translate(5.5, 8, 2);
         this.playerTwoText.display();
         this.scene.popMatrix();
 
