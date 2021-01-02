@@ -106,6 +106,7 @@ class GameStateTurn extends GameState {
     update(elapsedTime) {
         this.turnTimer += elapsedTime;
 
+        this.gameOrchestrator.gameInfo.timeout = Math.floor(this.gameOrchestrator.timeout); // Because of interface changes;
         this.gameOrchestrator.gameInfo.update(this.turnTimer);
         
         if(this.turnTimer >= this.gameOrchestrator.timeout) {

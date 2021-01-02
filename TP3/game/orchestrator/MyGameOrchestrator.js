@@ -97,6 +97,8 @@ class MyGameOrchestrator {
             let board = request;
 
             // -- GameBoard -- //
+            this.timeout = Math.floor(this.timeout); // Because of interface input
+
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
 

@@ -24,7 +24,7 @@ class MyBoardSet {
         // -- Board Textures -- //
         this.boardTexture = boardTexture;
         this.auxBoardTexture = auxBoardTexture;
-
+        
         // -- Board Size and Displacement
         this.size = boardList.length;
         if (this.size == 7) {

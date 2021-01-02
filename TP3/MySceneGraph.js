@@ -1053,6 +1053,7 @@ class MySceneGraph {
 
             this.auxBoardDisplacement = [auxBoardX, auxBoardY, auxBoardZ];
             this.auxBoardTexture = this.textures[auxBoardTexture];
+            
         }
         if(piece.nodeName != "piece") {
             console.log("Missing <piece> on boardgame.  Using Default Values");
@@ -1143,22 +1144,29 @@ class MySceneGraph {
             let iconRestart = boardGame.children[5];
             let iconMovie = boardGame.children[6];
             let iconUndo = boardGame.children[7];
+            let textureGame = boardGame.children[8];
+            let buttonGame = boardGame.children[9];
 
             let iconMenuId = this.reader.getString(iconMenu, 'texture');
             let iconRestartId = this.reader.getString(iconRestart, 'texture');
             let iconMovieId = this.reader.getString(iconMovie, 'texture');
             let iconUndoId = this.reader.getString(iconUndo, 'texture');
 
+            let textureGameId = this.reader.getString(textureGame, 'id');
+            let buttonTextureGameId = this.reader.getString(buttonGame, 'id');
+
             this.infoBoardTextures = [
                 this.textures[iconMenuId],
                 this.textures[iconRestartId],
                 this.textures[iconMovieId],
                 this.textures[iconUndoId],
-                this.textures[textureId],
-                this.textures[buttonTextureId]
+                this.textures[textureGameId],
+                this.textures[buttonTextureGameId]
             ];
         }
 
+        console.log(this.auxBoardTexture);
+        
         return null;
     }
 
@@ -1465,7 +1473,8 @@ class MySceneGraph {
                 }
             } else if (descendants[j].nodeName == "leaf") {
                 let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus',
-                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim']);
+                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim',
+                                                                        'obj']);
 
                 if (type == null) {
                     this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
@@ -1529,9 +1538,20 @@ class MySceneGraph {
                 return this.parseDefbarrel(descendants, messageError);
             case "waveanim":
                 return this.parseWaveAnim(descendants, messageError);
+            case "obj":
+                return this.obj(descendants, messageError);
             default:
                 return "not a valid leaf on node " + messageError;
         }
+    }
+
+    obj(descendants, messageError) {
+        let path = this.reader.getString(descendants, 'path');
+        if (path == null) {
+            return "unable to parse the path of OBJ File on node " + messageError;
+        }
+
+        return new MyOBJ(this.scene, path);
     }
 
     parseWaveAnim(descendants, messageError) {
@@ -1552,6 +1572,7 @@ class MySceneGraph {
 
         return new MyWaveAnimation(this.scene, x, y, z);
     }
+
     /**
      * Parse Torus from XML
      * @param {node leaf} descendants node that contains primitive information

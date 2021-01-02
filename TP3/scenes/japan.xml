@@ -115,12 +115,12 @@
             <emissive  r="0" g="0" b="0" a="1.0" />
         </material>
 
-        <material id="redMaterial">
+        <material id="sakuraMaterial">
             <shininess value="1.0" />
-            <ambient  r="0" g="0" b="0" a="1.0" />
-            <diffuse r="1" g="0" b="0" a="1.0" />
-            <specular  r="1" g="0" b="0" a="1.0" />
-            <emissive  r="1" g="0" b="0" a="1.0" />
+            <ambient r="0.1" g="0.06" b="0.01" a="1.0" />
+            <diffuse r="1" g="0.72" b="0.77" a="1.0" />
+            <specular  r="1" g="0.72" b="0.77" a="1.0" />
+            <emissive  r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -156,7 +156,7 @@
       </game>
       
       <auxboard x="-17" y="5" z="0">
-        <texture id="auxBoardTexture" />
+        <texture id="infoBackground" />
       </auxboard>
     
      <piece>
@@ -180,7 +180,7 @@
             <icon id="play" texture="playIcon" />
 
             <texture id="textureMainMenu" />
-            <buttonTexture id="buttonIcon" />
+            <buttonTexture id="infoBackground" />
         </board>
 
         <board id="game">
@@ -193,6 +193,9 @@
             <icon id="restart" texture="restartIcon" />
             <icon id="movie" texture="movieIcon" />
             <icon id="undo" texture="undoIcon" />
+
+            <texture id="textureMainMenu" />
+            <buttonTexture id="infoBackground" />
         </board>
       </menu>
     </boardgame>
@@ -223,12 +226,30 @@
                 <noderef id="lamps" />
                 <noderef id="skybox" />
                 <noderef id="info-support" />
+                <noderef id="tree" />
+            </descendants>
+        </node>
+
+        <node id="tree">
+            <material id="sakuraMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-50" y="0" z="50" />
+                <scale sx="15" sy="15" sz="15" />
+            </transformations>
+
+            <descendants>
+                <leaf type="obj" path="./scenes/models/sakura.obj" />
             </descendants>
         </node>
 
         <node id="info-support">
             <material id="null" />
-            <texture id="toriiTexture">
+            <texture id="infoBackground">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

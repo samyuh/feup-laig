@@ -151,6 +151,9 @@
             <icon id="restart" texture="restartIcon" />
             <icon id="movie" texture="movieIcon" />
             <icon id="undo" texture="undoIcon" />
+
+            <texture id="textureMainMenu" />
+            <buttonTexture id="buttonIcon" />
         </board>
       </menu>
     </boardgame>

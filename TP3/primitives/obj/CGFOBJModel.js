@@ -10,10 +10,8 @@
 * and optimized to reduce vertex duplication
 */
 
-class CGFOBJModel extends CGFobject{
-
-	constructor(scene, url, wireframe) 
-	{
+class CGFOBJModel extends CGFobject {
+	constructor(scene, url, wireframe) {
 		super(scene);
 		
 		this.url = url;
@@ -35,13 +33,11 @@ class CGFOBJModel extends CGFobject{
 		this.rr.open(url, this);
 		
 	};
-	onResourceError(string) 
-	{
+	onResourceError(string) {
 		console.log("Error loading resource " + this.url + ": "+string);
 	}
 
-	onResourceReady(string) 
-	{
+	onResourceReady(string) {
 	  var lines = string.split("\n");
 	  var positions = [];
 	  var normals = [];
@@ -58,7 +54,8 @@ class CGFOBJModel extends CGFobject{
 		var parts = lines[i].trimRight().split(/\s+/);
 		if ( parts.length > 0 ) {
 		  switch(parts[0]) {
-			case 'v':  positions.push(
+			case 'v':  
+			positions.push(
 				[
 					parseFloat(parts[1]),
 					parseFloat(parts[2]),
@@ -84,14 +81,12 @@ class CGFOBJModel extends CGFobject{
 			  );
 			  break;
 			case 'f': {
-				function procVert(model, str)
-				{
+				function procVert(model, str) {
 					str=str.trim();
 					if (lut[str]) //already stored
 						// just add the index
 						model.indices[icount]=lut[str];
-					else // not stored
-					{
+					else { // not stored 
 						// add coords/tex/norms to corresponding buffers and add the index
 						
 						var f = str.split('/');
@@ -120,27 +115,23 @@ class CGFOBJModel extends CGFobject{
 					icount++;
 				}
 			
-				if (!this.wireframe)
-				{
+				if (!this.wireframe) {
 					procVert(this,parts[1]);
 					procVert(this,parts[2]);
 					procVert(this,parts[3]);
-					if (parts.length>4)
-					{
+					if (parts.length>4) {
 						procVert(this,parts[1]);
 						procVert(this,parts[3]);
 						procVert(this,parts[4]);
 					}
 				}
-				else
-				{
+				else {
 					procVert(this,parts[1]);
 					procVert(this,parts[2]);
 					procVert(this,parts[2]);
 					procVert(this,parts[3]);
 					procVert(this,parts[3]);
-					if (parts.length>4)
-					{
+					if (parts.length > 4) {
 						procVert(this,parts[4]);
 						procVert(this,parts[4]);
 					}

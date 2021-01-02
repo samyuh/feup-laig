@@ -10,7 +10,6 @@ class MyAuxBoard {
 
         this.tileMaterial = new CGFappearance(scene);
         this.tileMaterial.setTexture(auxBoardTexture);
-
         this.auxBoardFront = new MyCube(this.scene);
         this.auxBoardLeft = new MyCube(this.scene);
         this.auxBoardRight = new MyCube(this.scene);
