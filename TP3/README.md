@@ -20,18 +20,23 @@ The game ends when there is no free space to place *Taijitus*. The player with t
 
 There are many options for the game configuration, including different board sizes (7x7, 9x9 and 11x11), and different game modes (Player VS Player, Player VS Computer and Computer VS Computer). There are also two different types of the "bots" - the random bot, which places a *Taijitu* randomly, and the intelligent bot, who tries to find the best move in order to increase their largest group.
 
+For more information about our project visit the repository of our project [here](https://github.com/Samuuuh/plog-taiji).
+
 > Official Game Rules: https://nestorgames.com/rulebooks/TAIJI_EN4.pdf
 
 ### Strong points of our project
-- We followed the week plan strictly
 - Code Documentation
 - We made an effort to make modular code. We tried to divide the code in separate functions to make it more readable
 - We also organized the files into many folders, according to their functionality
 - Well-composed scenes, for each of the two scene themes (Mountains and Japan)
 - Creative animations, while moving a piece to the board, and during the appearance of a new piece in the auxiliary board.
 - Creative camera animations, after initializing the scene, and between each player turns.
-- Interactive Menu, where the user can select the game configuration, and do many other things, like the "undo" of a move, reseting the board, starting the game movie, etc. This can be also done in the WebGL interface, in alternative.
-- It's possible to listen to the environment sound. On interface, select Miscellaneous and then Sound
+- Interactive Menu, where the user can select the game configuration, and do many other things, like the "undo" of a move, reseting the board, starting the game movie, etc. This can be also done in the WebGL interface, as an alternative.
+- It's possible to listen to the environment sound. On interface, select Miscellaneous and then Sound.
+- Water using shaders that were thaught in CGRA
+- OBJ modeling. Models used: [Sakura Tree](https://sketchfab.com/3d-models/sakura-a995ce485d4d4329a19f6d4604b18c71) from RosticOstafi.
+- Use of patches to create circular superficies (like the volcano)
+- Good and creative use of textures, materials and lights to create more appealing scenes.
 
 ### Scene
 

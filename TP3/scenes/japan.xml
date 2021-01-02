@@ -125,18 +125,66 @@
     </materials>
 
     <animations>
-        <animation id="demoAni" >
+        <animation id="boatAnimation" >
             <keyframe instant="2.5">
                 <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
+                <rotation axis="x" angle="5" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
 
             <keyframe instant="5">
-                <translation x="0" y="0" z="0" />
+                <translation x="0" y="2" z="0.2" />
                 <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="7.5">
+                <translation x="0" y="3" z="0" />
+                <rotation axis="x" angle="-5" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="10">
+                <translation x="0" y="3.5" z="-0.7" />
+                <rotation axis="x" angle="5" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="12.5">
+                <translation x="0" y="3" z="0" />
+                <rotation axis="x" angle="5" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="15">
+                <translation x="0" y="2" z="-0.5" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="17.5">
+                <translation x="0" y="2.5" z="0.5" />
+                <rotation axis="x" angle="-5" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
+            <keyframe instant="20">
+                <translation x="0" y="1.5" z="0" />
+                <rotation axis="x" angle="5" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
@@ -227,6 +275,112 @@
                 <noderef id="skybox" />
                 <noderef id="info-support" />
                 <noderef id="tree" />
+                <noderef id="boat" />
+            </descendants>
+        </node>
+
+        <node id="boat">
+           <material id="null" />
+
+            <texture id="infoBackground">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <animationref id="boatAnimation" />
+
+            <transformations>
+                <translation x="0.0" y="-15.0" z="130.0" />
+                <scale sx="5.0" sy="5.0" sz="5.0" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="boat-top" />
+                <noderef id="boat-bot" />
+            </descendants>
+        </node>
+
+        <node id="boat-top">
+            <material id="null" />
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="3" npointsV="3" npartsU="20" npartsV="20" >
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+                </leaf>
+
+                <leaf type="patch" npointsU="3" npointsV="3" npartsU="20" npartsV="20" >
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="boat-bot">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-3" z="0" />
+                <rotation axis="z" angle="180" />
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="3" npointsV="3" npartsU="20" npartsV="20" >
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+                </leaf>
+
+                <leaf type="patch" npointsU="3" npointsV="3" npartsU="20" npartsV="20" >
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="0" y="-1.5" z="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0.0" />
+                    <controlpoint x="0" y="1.5" z="0.0" />
+                </leaf>
             </descendants>
         </node>
 

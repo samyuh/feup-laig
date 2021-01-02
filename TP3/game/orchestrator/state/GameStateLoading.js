@@ -27,7 +27,7 @@ class GameStateLoading extends GameState {
     update(elapsedTime) {
         this.elapsedTime += elapsedTime;
 
-        if((this.elapsedTime >= 4) && !this.movedCamera && (this.menuCamera != null)) {
+        if((this.elapsedTime >= 8) && !this.movedCamera && (this.menuCamera != null)) {
             this.movedCamera = true;
             this.gameOrchestrator.scene.updateCamera(this.menuCamera);
         }
