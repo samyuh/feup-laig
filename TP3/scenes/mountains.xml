@@ -92,79 +92,6 @@
     </materials>
 
     <animations>
-        <animation id="laprasAnimation" >
-            <keyframe instant="0">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="2.5">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="5">
-                <translation x="0" y="2" z="0.2" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="7.5">
-                <translation x="0" y="3" z="0" />
-                <rotation axis="x" angle="-5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="10">
-                <translation x="0" y="3.5" z="-0.7" />
-                <rotation axis="x" angle="5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="12.5">
-                <translation x="0" y="3" z="0" />
-                <rotation axis="x" angle="5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="15">
-                <translation x="0" y="2" z="-0.5" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="17.5">
-                <translation x="0" y="2.5" z="0.5" />
-                <rotation axis="x" angle="-5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-
-            <keyframe instant="20">
-                <translation x="0" y="1.5" z="0" />
-                <rotation axis="x" angle="5" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-        </animation>
     </animations>
 
     <boardgame>
@@ -250,6 +177,7 @@
                 <noderef id="columns" />
                 <noderef id="floating-base" />
                 <noderef id="skybox" />
+                <noderef id="menu-support" />
             </descendants>
         </node>
 
@@ -264,9 +192,9 @@
             </transformations>
 
             <descendants>
-                <noderef id="charizard" />
-                <noderef id="mewtwo" />
-                <noderef id="mew" />
+                <noderef id="charizard-statue" />
+                <noderef id="mewtwo-statue" />
+                <noderef id="mew-statue" />
                 <noderef id="lapras" />
             </descendants>
         </node>
@@ -279,13 +207,30 @@
             </texture>
 
             <transformations>
-            <translation x="-15" y="-54" z="20" />
+                <translation x="0" y="-52" z="-30" />
+                <rotation axis="y" angle="90" />
                 <scale sx="2.5" sy="2.5" sz="2.5" />
-                
             </transformations>
 
             <descendants>
                 <leaf type="obj" path="./scenes/models/lapras.obj" />
+            </descendants>
+        </node>
+
+        <node id="mew-statue">
+            <material id="statue" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10" y="-20" z="20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="mew" />
+                <noderef id="mew-pillar" />
             </descendants>
         </node>
 
@@ -297,11 +242,46 @@
             </texture>
 
             <transformations>
-                <translation x="20" y="0" z="0" />
+                <translation x="0" y="8" z="0" />
+                <rotation axis="y" angle="180" />
+                <scale sx="0.7" sy="0.7" sz="0.7" />
             </transformations>
 
             <descendants>
                 <leaf type="obj" path="./scenes/models/mew.obj" />
+            </descendants>
+        </node>
+
+        <node id="mew-pillar">
+            <material id="statue" />
+
+            <texture id="column">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="charizard-statue">
+            <material id="statue" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-20" y="-20" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="charizard" />
+                <noderef id="charizard-pillar" />
             </descendants>
         </node>
 
@@ -313,11 +293,45 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="0" />
+                <translation x="0" y="0" z="-1.5" />
+                <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
                 <leaf type="obj" path="./scenes/models/charizard.obj" />
+            </descendants>
+        </node>
+
+        <node id="charizard-pillar">
+            <material id="statue" />
+
+            <texture id="column">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="30" topRadius="5.5" bottomRadius="5.5" stacks="8" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="mewtwo-statue">
+            <material id="statue" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-10" y="-20" z="20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="mewtwo" />
+                <noderef id="mewtwo-pillar" />
             </descendants>
         </node>
 
@@ -329,11 +343,27 @@
             </texture>
 
             <transformations>
-                <translation x="15" y="0" z="0" />
+                <rotation axis="y" angle="120" />
             </transformations>
 
             <descendants>
                 <leaf type="obj" path="./scenes/models/mewtwo.obj" />
+            </descendants>
+        </node>
+
+        <node id="mewtwo-pillar">
+            <material id="statue" />
+
+            <texture id="column">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="30" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="30" />
             </descendants>
         </node>
 
@@ -747,6 +777,24 @@
 
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="menu-support">
+            <material id="null" />
+
+            <texture id="column">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="53" y="-19" z="0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="-30" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="1.0" bottomRadius="1.0" stacks="8" slices="30" />
             </descendants>
         </node>
 
