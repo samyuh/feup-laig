@@ -149,6 +149,17 @@ class MyGameOrchestrator {
         this.updatePlayerState(currentPlayer);
     }
 
+    returnGame() {
+        let currentPlayer = null;
+        console.log(this.turn);
+        if(this.turn == "white") {
+            currentPlayer = this.player1;
+        } else if(this.turn == "black") {
+            currentPlayer = this.player2;
+        }
+        this.updatePlayerState(currentPlayer);
+    }
+
     /**
      * Updates the state of the game, depending on the type of the player of the current turn
      * @param {integer} player - the player of the current turn
@@ -223,7 +234,7 @@ class MyGameOrchestrator {
         this.unselectGameMenu = true;
         this.timeUntilUnselect = 0;
 
-        if((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateLoading)) {
+        if((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateLoading) || (this.concreteState instanceof GameStateMovie)) {
             return;
         }
 
@@ -232,7 +243,12 @@ class MyGameOrchestrator {
         }
 
         this.boardSet.board.pieceList = [];
-        this.changeState(new GameStateMovie(this, this.gameSequence));
+        if(this.concreteState instanceof GameStateEnd) {
+            this.changeState(new GameStateMovie(this, this.gameSequence, "end"));
+        }
+        else {
+            this.changeState(new GameStateMovie(this, this.gameSequence, "turn"));
+        }
     }
 
     /**

@@ -30,6 +30,10 @@ class MyGameEndInfo {
         }
     }
 
+    update(time) {
+        
+    }
+
     /**
      * Display function, called periodically, which calls the display function of the SpriteTexts composing the game end info
      */

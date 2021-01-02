@@ -5,7 +5,7 @@
  * @param {Sequence Object} gameSequence - sequence of game moves, to build the movie of the game
  */
 class GameStateMovie {
-    constructor(gameOrchestrator, gameSequence) {
+    constructor(gameOrchestrator, gameSequence, prevState) {
         this.gameOrchestrator = gameOrchestrator;
         this.gameSequence = gameSequence;
 
@@ -13,8 +13,9 @@ class GameStateMovie {
         this.currentTime = 0;
         this.currentSequenceIndex = 0;
         this.currentMove = this.gameSequence.moves[0];
+        this.prevState = prevState;
 
-        if(this.gameOrchestrator.turn = "black") {
+        if(this.gameOrchestrator.turn == "black") {
             this.gameOrchestrator.boardSet.resetPiece();
         }
 
@@ -36,7 +37,12 @@ class GameStateMovie {
 
         if(!this.animation.active && this.addedPiece) {
             if (this.currentSequenceIndex == (this.gameSequence.moves.length - 1)) { // last
-                this.gameOrchestrator.changeState(new GameStateTurn(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
+                if(this.prevState == "turn") {
+                    this.gameOrchestrator.returnGame();
+                }
+                else {
+                    this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.gameOrchestrator.boardSet.board));
+                }
             }
             else {
                 this.currentSequenceIndex = this.currentSequenceIndex + 1;
