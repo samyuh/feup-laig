@@ -12,7 +12,7 @@ class MyGameMenu {
 
         this.board = new MyCube(scene);
         this.boardMaterial = new CGFappearance(scene);
-        this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.boardMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.boardMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.boardMaterial.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.boardMaterial.setShininess(5.0);

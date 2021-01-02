@@ -107,7 +107,7 @@ class MyInterface extends CGFinterface {
     initInterfaceThemes() {
         this.themes = this.gui.addFolder('Themes');
 
-        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateSkyBoxTextures.bind(this.scene));
+        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateThemes.bind(this.scene));
     }
 
     /**

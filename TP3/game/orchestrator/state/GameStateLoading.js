@@ -16,6 +16,11 @@ class GameStateLoading extends GameState {
         this.menuCamera = null;
     }
 
+    reset() {
+        this.movedCamera = false;
+        this.elapsedTime = 0;
+    }
+
     setMenuCamera(camera) {
         this.menuCamera = camera;
     }

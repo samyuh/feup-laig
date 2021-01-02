@@ -17,6 +17,12 @@ class MyButton {
         this.material.setShininess(5.0);
         this.material.setTexture(texture);
 
+        this.selectedMaterial = new CGFappearance(scene);
+        this.selectedMaterial.setAmbient(0.2, 0.8, 0.2, 1.0);
+        this.selectedMaterial.setDiffuse(0.2, 0.8, 0.2, 1.0);
+        this.selectedMaterial.setSpecular(0.2, 0.8, 0.2, 1.0);
+        this.selectedMaterial.setShininess(5.0);
+
         this.args = [];
         this.args.push(...args);
     }
@@ -36,12 +42,16 @@ class MyButton {
         if(this.selected)
             this.scene.translate(0, 0, -0.6);
         
+        if(this.selected) {
+            this.selectedMaterial.apply();
+        }
         this.button.display();
         this.scene.gl.enable(this.scene.gl.BLEND);
         this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
         this.scene.gl.depthMask(false);
 
         this.material.apply();
+        
         this.scene.translate(0, 0, 0.6);
         this.rectangle.display();
 

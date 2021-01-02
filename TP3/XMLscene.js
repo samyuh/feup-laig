@@ -41,8 +41,8 @@ class XMLscene extends CGFscene {
 
         // -- Music -- //
         this.musicActive = false;
-        this.audioIntroGOT = new Audio('scenes/music/music.mp3');
-        this.audioIntroGOT.volume = 0.3;
+        this.audio = new Audio('scenes/music/music.mp3');
+        this.audio.volume = 0.3;
 
         // -- Theme -- //
         this.textureIds = {
@@ -73,11 +73,11 @@ class XMLscene extends CGFscene {
      */
     updateMusic() {
         if (this.musicActive) {
-            this.audioIntroGOT.loop = true;
-            this.audioIntroGOT.play();
+            this.audio.loop = true;
+            this.audio.play();
         } else {
-            this.audioIntroGOT.pause();
-            this.audioIntroGOT.currentTime = 0;
+            this.audio.pause();
+            this.audio.currentTime = 0;
         }
     }
 
@@ -91,7 +91,7 @@ class XMLscene extends CGFscene {
     /**
      * Method for updating themes on a change made by the user
      */
-    updateSkyBoxTextures() {    
+    updateThemes() {    
         this.gameOrchestrator.initGraph(this.graph[this.selectedTheme]);
 
         this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
@@ -107,6 +107,10 @@ class XMLscene extends CGFscene {
         this.deleteLights();
         this.initXMLLights();
         this.interface.updateLights();
+
+        if(this.gameOrchestrator.lastCamera != null) {
+            this.updateCamera(this.gameOrchestrator.lastCamera);
+        }
     }
 
     updateInterfaceCameras() {

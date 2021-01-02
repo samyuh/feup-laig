@@ -21,6 +21,7 @@ class MyGameOrchestrator {
         this.server = new MyServer();
 
         // -- Board Settings, Player, more -- //
+        this.lastCamera = null;
         this.turn = "white"; // White always start
         this.boardSize = '7';
         this.timeout = 30;
@@ -33,6 +34,8 @@ class MyGameOrchestrator {
 
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
+
+        this.backgroundText = new CGFtexture(this.scene, "./scenes/images/text-background.png");
     }
 
     /**
@@ -68,10 +71,10 @@ class MyGameOrchestrator {
         this.menuCamera = this.graph.menuCamera;
         this.whiteCamera = this.graph.whiteCamera;
         this.blackCamera = this.graph.blackCamera;
-
+        
         this.menu = new MyMenu(this, this.scene, this.spriteSheet, this.mainMenuDisplacement, this.mainMenuTextures);
         this.gameMenu = new MyGameMenu(this, this.scene, this.infoBoardDisplacement, this.infoBoardTextures);
-        this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
+        this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet, this.backgroundText);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -84,7 +87,10 @@ class MyGameOrchestrator {
         } 
         else {
             this.initBoard(false);
+
+            this.concreteState.reset();
             this.concreteState.setMenuCamera(this.menuCamera);
+            this.lastCamera = this.menuCamera;
         }
     }
 
@@ -111,11 +117,14 @@ class MyGameOrchestrator {
                 this.updatePlayerState(this.player1);
                 if(this.player1 == 1) {
                     this.scene.updateCamera(this.whiteCamera);
+                    this.lastCamera = this.whiteCamera;
                 }
                 else if(this.player2 == 1) {
                     this.scene.updateCamera(this.blackCamera);
+                    this.lastCamera = this.blackCamera;
                 } else {
                     this.scene.updateCamera(this.whiteCamera);
+                    this.lastCamera = this.whiteCamera;
                 }
             }
             else {
@@ -136,22 +145,29 @@ class MyGameOrchestrator {
             this.gameInfo.turn = "black";
             this.gameInfo.blackPlayer = this.player2;
             currentPlayer = this.player2;
-            if(currentPlayer == 1)
+            if(currentPlayer == 1) {
                 this.scene.updateCamera(this.blackCamera);
+                this.lastCamera = this.blackCamera;
+            }
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
             this.gameInfo.whitePlayer = this.player1;
             currentPlayer = this.player1;
-            if(currentPlayer == 1)
+            if(currentPlayer == 1) {
                 this.scene.updateCamera(this.whiteCamera);
+                this.lastCamera = this.whiteCamera;
+            }
         }
         this.updatePlayerState(currentPlayer);
     }
 
+    /*
+     *
+     */
     returnGame() {
         let currentPlayer = null;
-        console.log(this.turn);
+
         if(this.turn == "white") {
             currentPlayer = this.player1;
         } else if(this.turn == "black") {
@@ -192,6 +208,7 @@ class MyGameOrchestrator {
         this.timeUntilUnselect = 0;
 
         this.scene.updateCamera(this.menuCamera);
+        this.lastCamera = this.menuCamera;
         this.changeState(new GameStateLoading(this, this.boardSet.board));
     }
 
@@ -422,6 +439,7 @@ class MyGameOrchestrator {
      * Display function, called periodically, which calls the display function of the current state
      */
     display() {
+        console.log(this.lastCamera);
         this.pickMenu();
         this.concreteState.display();
 
