@@ -7,7 +7,7 @@
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
  */
 class MyGameInfo {
-    constructor(scene, turn, whitePlayer, blackPlayer, infoDisplacement, timeout, spriteSheet) {
+    constructor(scene, turn, whitePlayer, blackPlayer, infoDisplacement, timeout, spriteSheet, backgroundTexture) {
         this.scene = scene;
         this.turn = turn;
         this.turnTime = 0;
@@ -22,8 +22,7 @@ class MyGameInfo {
         // -- Player Turn -- //
         this.background = new MyRectangle(this.scene, -9, 0, 9, 10);
         this.backgroundTexture = new CGFappearance(scene);
-        let textureYinYang = new CGFtexture(this.scene, "./scenes/images/text-background.png");
-        this.backgroundTexture.setTexture(textureYinYang);
+        this.backgroundTexture.setTexture(backgroundTexture);
 
         this.whiteTurn = new MySpriteText(this.scene, "Turn: white", this.spriteSheet);
         this.blackTurn = new MySpriteText(this.scene, "Turn: black", this.spriteSheet);

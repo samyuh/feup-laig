@@ -26,16 +26,6 @@ class GameStateTurn extends GameState {
 
         p.then((request) => {
             this.board.boardList = request;
-
-            let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
-            let groupsString = 'groups(' + stringNewBoard + ')';
-        
-            return this.gameOrchestrator.server.promiseRequest(groupsString, null, null);
-        }).then((request) => {
-            let groupsData = request;
-            groupsData[0] = groupsData[0] || 1;
-            groupsData[1] = groupsData[1] || 1;
-            this.gameOrchestrator.gameInfo.updateGroups(groupsData[0], groupsData[1]);
         });
     }
 

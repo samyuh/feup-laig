@@ -23,7 +23,7 @@ class MyWaveAnimation {
         this.appearance.setTexture(this.waterTex);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.waterShader = new CGFshader(this.scene.gl, "shaders/lava.vert", "shaders/lava.frag");
+        this.waterShader = new CGFshader(this.scene.gl, "shaders/water.vert", "shaders/water.frag");
 
         this.waterShader.setUniformsValues({ timeFactor : 0 });
 		this.waterShader.setUniformsValues({ waterTex: 2 });

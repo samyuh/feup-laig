@@ -126,6 +126,14 @@
 
     <animations>
         <animation id="boatAnimation" >
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+
             <keyframe instant="2.5">
                 <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="5" />
@@ -521,7 +529,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="cube" />
+                <noderef id="tablecube" />
             </descendants>
         </node>
 
@@ -2220,7 +2228,7 @@
 
             <transformations>
                 <translation x="0" y="-5" z="0" />
-                <scale sx="120" sy="10" sz="110" />
+                <scale sx="119" sy="10" sz="109" />
             </transformations>
 
             <descendants>
@@ -2478,6 +2486,129 @@
 
             <texture id="null">
                 <amplification afs="0.5" aft="0.3" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+
+        <node id="tablecube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tablecubeface1" />
+                <noderef id="tablecubeface2" />
+                <noderef id="tablecubeface3" />
+                <noderef id="tablecubeface4" />
+                <noderef id="tablecubeface5" />
+                <noderef id="tablecubeface6" />
+            </descendants>
+        </node>
+
+        <!-- Cube Faces -->
+        <node id="tablecubeface1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="tablecubeface2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="tablecubeface3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="tablecubeface4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="tablecubeface5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+                <translation x="-0.5" y="-0.5" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="tablecubeface6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.2" />
             </texture>
 
             <transformations>

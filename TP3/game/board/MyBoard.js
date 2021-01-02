@@ -21,9 +21,9 @@ class MyBoard {
         this.tileMaterial.setTexture(boardTexture);
 
         this.selectedTexture = new CGFappearance(scene);
-        this.selectedTexture.setAmbient(0.0, 0.0, 0.0, 1.0);
+        this.selectedTexture.setAmbient(0.1, 0.5, 0.1, 1.0);
         this.selectedTexture.setDiffuse(0.1, 0.5, 0.1, 1.0);
-        this.selectedTexture.setSpecular(0.0, 0.0, 0.0, 1.0);
+        this.selectedTexture.setSpecular(0.1, 0.5, 0.1, 1.0);
         this.selectedTexture.setTexture(boardTexture);
         
         this.createTiles();

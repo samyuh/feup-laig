@@ -12,8 +12,7 @@
 
 class CGFOBJModel extends CGFobject{
 
-	constructor(scene, url, wireframe) 
-	{
+	constructor(scene, url, wireframe) {
 		super(scene);
 		
 		this.url = url;
@@ -35,15 +34,13 @@ class CGFOBJModel extends CGFobject{
 		this.rr.open(url, this);
 		
 	}
-	onResourceError(string) 
-	{
+
+	onResourceError(string) {
 		console.log("Error loading resource " + this.url + ": "+string);
 	}
 
-	onResourceReady(string) 
-	{
-		function procVert(model, str)
-		{
+	onResourceReady(string) {
+		function procVert(model, str) {
 			str=str.trim();
 			if (lut[str]) //already stored
 				// just add the index

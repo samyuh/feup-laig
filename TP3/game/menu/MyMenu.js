@@ -25,7 +25,7 @@ class MyMenu {
 
         this.board = new MyCube(scene);
         this.material = new CGFappearance(scene);
-        this.material.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.material.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.material.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.material.setShininess(5.0);
@@ -87,12 +87,12 @@ class MyMenu {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-6, 8, 2);
+        this.scene.translate(-5.5, 8, 2);
         this.playerOneText.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(6, 8, 2);
+        this.scene.translate(5.5, 8, 2);
         this.playerTwoText.display();
         this.scene.popMatrix();
 
