@@ -21,6 +21,7 @@ class MyGameOrchestrator {
         this.server = new MyServer();
 
         // -- Board Settings, Player, more -- //
+        this.turn = "white"; // White always start
         this.boardSize = '7';
         this.timeout = 30;
 
@@ -70,6 +71,7 @@ class MyGameOrchestrator {
 
         this.menu = new MyMenu(this, this.scene, this.spriteSheet, this.mainMenuDisplacement, this.mainMenuTextures);
         this.gameMenu = new MyGameMenu(this, this.scene, this.infoBoardDisplacement, this.infoBoardTextures);
+        this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
             this.boardSet.updateBoardDisplacement(this.boardDisplacement);
@@ -100,10 +102,9 @@ class MyGameOrchestrator {
             this.timeout = Math.floor(this.timeout); // Because of interface input
 
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet);
-
-            this.turn = "white";
             this.piecesList = this.boardSet.board.pieceList;
+            this.gameInfo.turn = "white";
+            this.turn = "white";
 
             if(startGame) {
                 this.gameSequence = new MyGameSequence();
@@ -120,6 +121,7 @@ class MyGameOrchestrator {
             else {
                 this.concreteState.board = this.boardSet.board;
             }
+
             this.allLoaded = true;
         });
     }

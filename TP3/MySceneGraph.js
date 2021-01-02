@@ -1000,14 +1000,11 @@ class MySceneGraph {
         let auxBoard = children[2]; 
         let piece = children[3]; 
         let menu = children[4]; 
-        console.log(children);
 
-        if(cameras.nodeName != "cameras") {
-            console.log("Missing <cameras> on boardgame. Using Default Values");
-
-            
+        if (cameras.nodeName != "cameras") {
+            this.error("Missing <cameras> on boardgame. Returning");
+            return -1;
         } else {
-
             let cameraMenu = cameras.children[0];
             let cameraWhite = cameras.children[1];
             let cameraBlack = cameras.children[2];
@@ -1020,58 +1017,112 @@ class MySceneGraph {
             this.whiteCamera = cameraWhiteId;
             this.blackCamera = cameraBlackId;
         }
-        if(game.nodeName != "game") {
+        if (game.nodeName != "game") {
             console.log("Missing <board> on boardgame. Using Default Values");
 
-            this.boardDisplacement = [-5, -19, -5];
+            this.boardDisplacement = [0, 0, 0];
             this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
         }
         else {
-            let boardX = this.reader.getFloat(game, 'x');
-            let boardY = this.reader.getFloat(game, 'y');
-            let boardZ = this.reader.getFloat(game, 'z');
+            let x = this.reader.getFloat(game, 'x');
+            let y = this.reader.getFloat(game, 'y');
+            let z = this.reader.getFloat(game, 'z');
+
+            if (x == null || isNaN(x)) {
+                this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag. Using x = 0.0");
+                x = 0.0;
+            }
+            if (y == null || isNaN(y)) {
+                this.onXMLMinorError("Missing/Invalid value of y in <boardgame> tag, from <game> tag. Using y = 0.0");
+                y = 0.0;
+            }
+            if (z == null || isNaN(z)) {
+                this.onXMLMinorError("Missing/Invalid value of y in<boardgame> tag, from <game> tag. Using z = 0.0");
+                z = 0.0;
+            }
+
+            this.boardDisplacement = [x, y, z];
             
             let boardTextureInfo = game.children[0];
             let boardTexture = this.reader.getString(boardTextureInfo, 'id');
+            if ((this.textures[boardTexture] == null) || (boardTextureInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <game> tag. Using default wood texture");
 
-            this.boardDisplacement = [boardX, boardY, boardZ];
-            this.boardTexture = this.textures[boardTexture];
+                this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.boardTexture = this.textures[boardTexture];
+            }  
         }
-        if(auxBoard.nodeName != "auxboard") {
+        if (auxBoard.nodeName != "auxboard") {
             console.log("Missing <auxboard> on boardgame. Using Default Values");
 
-            this.auxBoardDisplacement = [10, -19, 0];
+            this.auxBoardDisplacement = [0, 0, 0];
             this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
         }
         else {
-            let auxBoardX = this.reader.getFloat(auxBoard, 'x');
-            let auxBoardY = this.reader.getFloat(auxBoard, 'y');
-            let auxBoardZ = this.reader.getFloat(auxBoard, 'z');
+            let x = this.reader.getFloat(auxBoard, 'x');
+            let y = this.reader.getFloat(auxBoard, 'y');
+            let z = this.reader.getFloat(auxBoard, 'z');
+
+            if (x == null || isNaN(x)) {
+                this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag. Using x = 0.0");
+                x = 0.0;
+            }
+            if (y == null || isNaN(y)) {
+                this.onXMLMinorError("Missing/Invalid value of y in <boardgame> tag, from <game> tag. Using y = 0.0");
+                y = 0.0;
+            }
+            if (z == null || isNaN(z)) {
+                this.onXMLMinorError("Missing/Invalid value of y in<boardgame> tag, from <game> tag. Using z = 0.0");
+                z = 0.0;
+            }
+
+            this.auxBoardDisplacement = [x, y, z];
 
             let auxBoardTextureInfo = auxBoard.children[0];
             let auxBoardTexture = this.reader.getString(auxBoardTextureInfo, 'id');
+            if ((this.textures[auxBoardTexture] == null) || (auxBoardTextureInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <game> tag. Using default wood texture");
 
-            this.auxBoardDisplacement = [auxBoardX, auxBoardY, auxBoardZ];
-            this.auxBoardTexture = this.textures[auxBoardTexture];
+                this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.auxBoardTexture = this.textures[auxBoardTexture];
+            }
             
         }
-        if(piece.nodeName != "piece") {
+        if (piece.nodeName != "piece") {
             console.log("Missing <piece> on boardgame.  Using Default Values");
 
             this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
             this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
        } else {
             let textureWhiteInfo = piece.children[0];
-            let textureBlackInfo = piece.children[1];
-
             let textureWhite = this.reader.getString(textureWhiteInfo, 'id');
+            if ((this.textures[textureWhite] == null) || (textureWhiteInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <piece> tag. Using default wood texture");
+
+                this.whiteTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.whiteTexture = this.textures[textureWhite];
+            }
+
+            let textureBlackInfo = piece.children[1];
             let textureBlack = this.reader.getString(textureBlackInfo, 'id');
-     
-            this.whiteTexture = this.textures[textureWhite];
-            this.blackTexture = this.textures[textureBlack];
+            if ((this.textures[textureBlack] == null) || (textureBlackInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <piece> tag. Using default wood texture");
+
+                this.blackTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.blackTexture = this.textures[textureBlack];
+            }
         }
         if(menu.nodeName != "menu") {
-            console.log("Missing <menu> on boardgame. Using Default Values");
+            this.onXMLError("Missing <menu> on boardgame. Returning...");
+            return -1;
         } else {
             let boardMain = menu.children[0];
             let boardGame = menu.children[1];
@@ -1090,6 +1141,14 @@ class MySceneGraph {
             let translationZ = this.reader.getFloat(translation, 'z');
 
             this.mainMenuDisplacement = [[angleX, angleY, angleZ], [translationX, translationY, translationZ]];
+
+            /*
+            if ((iconPlayer == null) || (iconPlayer.nodeName != "icon")) {
+                console.log("No icon found for Player");
+            } else {
+                
+            }
+            */
 
             let iconPlayer = boardMain.children[4];
             let iconRandom = boardMain.children[5];
@@ -1165,7 +1224,7 @@ class MySceneGraph {
             ];
         }
 
-        console.log(this.auxBoardTexture);
+        this.log("Parsed Board");
         
         return null;
     }

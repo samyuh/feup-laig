@@ -14,7 +14,7 @@ class GameStateEnd extends GameState {
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
     update(elapsedTime) {
-        // Override
+
     }
 
     /**
