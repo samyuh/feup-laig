@@ -1018,7 +1018,7 @@ class MySceneGraph {
             this.blackCamera = cameraBlackId;
         }
         if (game.nodeName != "game") {
-            console.log("Missing <board> on boardgame. Using Default Values");
+            this.onXMLMinorError("Missing <board> on boardgame. Using Default Values");
 
             this.boardDisplacement = [0, 0, 0];
             this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
@@ -1055,7 +1055,7 @@ class MySceneGraph {
             }  
         }
         if (auxBoard.nodeName != "auxboard") {
-            console.log("Missing <auxboard> on boardgame. Using Default Values");
+            this.onXMLMinorError("Missing <auxboard> on boardgame. Using Default Values");
 
             this.auxBoardDisplacement = [0, 0, 0];
             this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
@@ -1093,7 +1093,7 @@ class MySceneGraph {
             
         }
         if (piece.nodeName != "piece") {
-            console.log("Missing <piece> on boardgame.  Using Default Values");
+            this.onXMLMinorError("Missing <piece> on boardgame.  Using Default Values");
 
             this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
             this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
@@ -1208,7 +1208,6 @@ class MySceneGraph {
             this.mainMenuDisplacement = [[angleX, angleY, angleZ], [translationX, translationY, translationZ]];
 
             let iconsTag = boardMain.children[i]; i++;
-            console.log(iconsTag)
             let iconPlayerTex, iconRandomTex, iconSmartTex, iconSmallTex, iconMediumTex, iconLargeTex, iconPlayTex;
 
             if (iconsTag.nodeName != "icons") {
@@ -1350,7 +1349,7 @@ class MySceneGraph {
 
             this.infoBoardDisplacement = [[angleGameX, angleGameY, angleGameZ], [translationGameX, translationGameY, translationGameZ]];
 
-            let iconsTagGame = boardMain.children[k]; k++;
+            let iconsTagGame = boardGame.children[k]; k++;
             let iconMenuTex, iconRestartTex, iconMovieTex, iconUndoTex;
 
             if (iconsTagGame.nodeName != "icons") {

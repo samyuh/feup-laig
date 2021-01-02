@@ -446,7 +446,6 @@ class MyGameOrchestrator {
      * Display function, called periodically, which calls the display function of the current state
      */
     display() {
-        console.log(this.lastCamera);
         this.pickMenu();
         this.concreteState.display();
 
