@@ -179,6 +179,7 @@ class MyGameOrchestrator {
         this.timeUntilUnselect = 0;
 
         this.scene.updateCamera(this.menuCamera);
+        this.changeState(new GameStateLoading(this, this.boardSet.board));
     }
 
     /**
@@ -257,44 +258,94 @@ class MyGameOrchestrator {
             return;
         }
 
-        this.gameSequence.undo();
-        let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+        if(this.player1 != 1 || this.player2 != 1) { // Se for vs bots
+            if (this.boardSet.board.pieceList.length == 1) { // First time black plays
+                return;
+            }
 
-        let piece = this.boardSet.board.pieceList.pop();
+            this.gameSequence.undo();
+            let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+            let piece = this.boardSet.board.pieceList.pop();
 
-        let piece_row = piece.z + 1;
-        let piece_column = piece.x + 1;
-        let piece_secondary_row = piece.zb + 1;
-        let piece_secondary_column = piece.xb + 1;
+            let piece_row = piece.z + 1;
+            let piece_column = piece.x + 1;
+            let piece_secondary_row = piece.zb + 1;
+            let piece_secondary_column = piece.xb + 1;
 
-        let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
-        let p = this.server.promiseRequest(undoString, null, null);
+            let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
+            let p = this.server.promiseRequest(undoString, null, null);
 
-        p.then((request) => {
-            let new_board = request;
+            p.then((request) => {
+                this.boardSet.board.boardList = request;
 
-            this.boardSet.board.boardList = new_board;
+                this.gameSequence.undo();
+                let stringBoard2 = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                let piece2 = this.boardSet.board.pieceList.pop();
+
+                let piece_row2 = piece2.z + 1;
+                let piece_column2 = piece2.x + 1;
+                let piece_secondary_row2 = piece2.zb + 1;
+                let piece_secondary_column2 = piece2.xb + 1;
+
+                let undoString2 = 'undo(' + stringBoard2 + ',' + piece_row2 + '-' + piece_column2 + '-' + piece_secondary_row2 + '-' + piece_secondary_column2 + ')';
+                return this.server.promiseRequest(undoString2, null, null); 
             
-            this.boardSet.resetPiece();
-            this.changeTurn();
+            
+            }).then((request) => {
+                this.boardSet.board.boardList = request;
 
-            if (this.boardSet.board.pieceList.length == 0) {
+                if (this.boardSet.board.pieceList.length != 0) {
+                    let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                    let groupsString = 'groups(' + stringNewBoard + ')';
+                    
+                    return this.server.promiseRequest(groupsString, null, null, false);
+                }
+            }).then((request) => {
+                let groupsData = request;
+                groupsData[0] = groupsData[0] || 1;
+                groupsData[1] = groupsData[1] || 1;
+                this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+            }).catch((error) =>  {
+                console.log("No groups left!");    
+    
                 this.gameInfo.updateGroups(0, 0);
-            }
-            else {
-                let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
-                let groupsString = 'groups(' + stringNewBoard + ')';
+            });
+        } else {
+            this.gameSequence.undo();
+            let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+            let piece = this.boardSet.board.pieceList.pop();
+
+            let piece_row = piece.z + 1;
+            let piece_column = piece.x + 1;
+            let piece_secondary_row = piece.zb + 1;
+            let piece_secondary_column = piece.xb + 1;
+
+            let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
+            let p = this.server.promiseRequest(undoString, null, null);
+
+            p.then((request) => {
+                this.boardSet.board.boardList = request;
                 
-                return this.server.promiseRequest(groupsString, null, null, false);
-            }
-        }).then((request) => {
-            let groupsData = request;
-            groupsData[0] = groupsData[0] || 1;
-            groupsData[1] = groupsData[1] || 1;
-            this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-        }).catch((error) =>  {
-            console.log(error);    
-        });
+                this.boardSet.resetPiece();
+                this.changeTurn();
+    
+                if (this.boardSet.board.pieceList.length != 0) {
+                    let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                    let groupsString = 'groups(' + stringNewBoard + ')';
+                    
+                    return this.server.promiseRequest(groupsString, null, null, false);
+                }
+            }).then((request) => {
+                let groupsData = request;
+                groupsData[0] = groupsData[0] || 1;
+                groupsData[1] = groupsData[1] || 1;
+                this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+            }).catch((error) =>  {
+                console.log("No groups left!");    
+    
+                this.gameInfo.updateGroups(0, 0);
+            });
+        }
     }
 
     // --- End of Menus Function --- //
