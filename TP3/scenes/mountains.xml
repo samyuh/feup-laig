@@ -53,7 +53,6 @@
         <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
         <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
         <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
-        <texture id="infoBackground" path="./scenes/images/info-background.jpg" />
         <texture id="playerIcon" path="scenes/images/icon/player.png" />
         <texture id="randomIcon" path="scenes/images/icon/random.png" />
         <texture id="smartIcon" path="scenes/images/icon/smart.png" />
@@ -195,13 +194,15 @@
             <rotation axis="x" angle="-45" />
             <translation x="0" y="-50" z="30" />
 
-            <icon id="player" texture="playerIcon" />
-            <icon id="random" texture="randomIcon" />
-            <icon id="smart" texture="smartIcon" />
-            <icon id="small" texture="smallIcon" />
-            <icon id="medium" texture="mediumIcon" />
-            <icon id="large" texture="largeIcon" />
-            <icon id="play" texture="playIcon" />
+            <icons>
+                <icon id="player" texture="playerIcon" />
+                <icon id="random" texture="randomIcon" />
+                <icon id="smart" texture="smartIcon" />
+                <icon id="small" texture="smallIcon" />
+                <icon id="medium" texture="mediumIcon" />
+                <icon id="large" texture="largeIcon" />
+                <icon id="play" texture="playIcon" />
+            </icons>
 
             <texture id="textureMainMenu" />
             <buttonTexture id="buttonIcon" />
@@ -213,10 +214,12 @@
             <rotation axis="x" angle="-45" />
             <translation x="10.0" y="5.0" z="-15.6" />
 
-            <icon id="menu" texture="menuIcon" />
-            <icon id="restart" texture="restartIcon" />
-            <icon id="movie" texture="movieIcon" />
-            <icon id="undo" texture="undoIcon" />
+            <icons>
+                <icon id="menu" texture="menuIcon" />
+                <icon id="restart" texture="restartIcon" />
+                <icon id="movie" texture="movieIcon" />
+                <icon id="undo" texture="undoIcon" />
+            </icons>
 
             <texture id="textureMainMenu" />
             <buttonTexture id="buttonIcon" />
@@ -247,7 +250,6 @@
                 <noderef id="columns" />
                 <noderef id="floating-base" />
                 <noderef id="skybox" />
-                <noderef id="info-background" />
             </descendants>
         </node>
 

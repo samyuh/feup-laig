@@ -219,13 +219,15 @@
             <rotation axis="x" angle="0" />
             <translation x="50" y="20" z="50" />
 
-            <icon id="player" texture="playerIcon" />
-            <icon id="random" texture="randomIcon" />
-            <icon id="smart" texture="smartIcon" />
-            <icon id="small" texture="smallIcon" />
-            <icon id="medium" texture="mediumIcon" />
-            <icon id="large" texture="largeIcon" />
-            <icon id="play" texture="playIcon" />
+            <icons>
+                <icon id="player" texture="playerIcon" />
+                <icon id="random" texture="randomIcon" />
+                <icon id="smart" texture="smartIcon" />
+                <icon id="small" texture="smallIcon" />
+                <icon id="medium" texture="mediumIcon" />
+                <icon id="large" texture="largeIcon" />
+                <icon id="play" texture="playIcon" />
+            </icons>
 
             <texture id="textureMainMenu" />
             <buttonTexture id="infoBackground" />
@@ -237,10 +239,12 @@
             <rotation axis="x" angle="-30" />
             <translation x="0" y="10" z="0" />
 
-            <icon id="menu" texture="menuIcon" />
-            <icon id="restart" texture="restartIcon" />
-            <icon id="movie" texture="movieIcon" />
-            <icon id="undo" texture="undoIcon" />
+            <icons>
+                <icon id="menu" texture="menuIcon" />
+                <icon id="restart" texture="restartIcon" />
+                <icon id="movie" texture="movieIcon" />
+                <icon id="undo" texture="undoIcon" />
+            </icons>
 
             <texture id="textureMainMenu" />
             <buttonTexture id="infoBackground" />
