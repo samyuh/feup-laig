@@ -46,7 +46,36 @@ class MyBoardSet {
         this.turn = "white";
     }
 
-    updateBoardDisplacement(boardDisplacement) {
+    /**
+     * Update the texture of boards
+     * @param {Texture} whiteTexture - texture of the white part of the piece
+     * @param {Texture} blackTexture - texture of the black part of the piece
+     * @param {Texture} boardTexture - texture of the main board
+     * @param {Texture} auxBoardTexture - texture of the auxiliary board
+     */
+    updateTexture(whiteTexture, blackTexture, boardTexture, auxBoardTexture) {
+        this.whiteTileTexture = whiteTexture;
+        this.blackTileTexture = blackTexture;
+
+        this.pieceToPlay.whiteTexture = whiteTexture;
+        this.pieceToPlay.blackTexture = blackTexture;
+        this.pieceToPlay.whiteTexture = whiteTexture;
+        this.pieceToPlay.blackTexture = blackTexture;
+
+        this.boardTexture = boardTexture;
+        this.auxBoardTexture = auxBoardTexture;
+
+        this.board.updateTexture(boardTexture, whiteTexture, blackTexture);
+
+        this.auxBoard.updateTexture(this.auxBoardTexture);
+    }
+
+    /**
+     * Update the displacement of boards
+     * @param {Array} boardDisplacement - displacement of the board
+     * @param {Array} auxBoardDisplacement - displacement of the  auxiliary board
+     */
+    updateBoardDisplacement(boardDisplacement, auxBoardDisplacement) {
         if (this.size == 7) {
             this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
         }
@@ -58,6 +87,7 @@ class MyBoardSet {
         }
 
         this.board.boardDisplacement = this.boardDisplacement
+        this.auxBoardDisplacement = auxBoardDisplacement;
     }
     
     /**

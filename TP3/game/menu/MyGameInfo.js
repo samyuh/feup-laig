@@ -3,8 +3,12 @@
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} turn - color of the player to play in the current turn (black/white)
+ * @param {String} whitePlayer - whitePlayer type
+ * @param {String} blackPlayer - blackPlayer type
+ * @param {Array} infoDisplacement - displacement of the info board
  * @param {Integer} timeout - time left for the player to play in the current turn
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
+ * @param {Texture} backgroundTexture - backgroundTexture initialized on game orchestrator
  */
 class MyGameInfo {
     constructor(scene, turn, whitePlayer, blackPlayer, infoDisplacement, timeout, spriteSheet, backgroundTexture) {
@@ -14,7 +18,7 @@ class MyGameInfo {
         this.timeout = timeout;
 
         this.rotation = infoDisplacement[0];
-        this.infoDisplacement = infoDisplacement[1];
+        this.displacement = infoDisplacement[1];
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.spriteSheet = spriteSheet;
@@ -36,6 +40,15 @@ class MyGameInfo {
 
         this.whiteValue = 0;
         this.blackValue = 0;
+    }
+
+    /**
+     * Update the displacement of boards
+     * @param {Array} displacement - displacement of the info board
+     */
+    updatePosition(displacement) {
+        this.rotation = displacement[0];
+        this.displacement = displacement[1];
     }
 
     /**
@@ -61,6 +74,9 @@ class MyGameInfo {
         this.blackGroup.text = "Black Score: " + this.blackValue;
     }
 
+    /**
+     * Get bot type
+     */
     getBotType() {
         if (this.turn == "white") {
             if (this.whitePlayer == 2) {
@@ -87,7 +103,7 @@ class MyGameInfo {
         this.scene.rotate(this.rotation[1], 0, 1, 0);
         this.scene.rotate(this.rotation[0], 1, 0, 0);
 
-        this.scene.translate(this.infoDisplacement[0], this.infoDisplacement[1], this.infoDisplacement[2]);
+        this.scene.translate(this.displacement[0], this.displacement[1], this.displacement[2]);
 
         
         this.scene.translate(0, 0, 1);

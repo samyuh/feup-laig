@@ -35,6 +35,7 @@ class MyGameOrchestrator {
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
 
+        // -- Common background text textures -- //
         this.backgroundText = new CGFtexture(this.scene, "./scenes/images/menus/text-background.png");
     }
 
@@ -74,16 +75,29 @@ class MyGameOrchestrator {
         
         this.menu = new MyMenu(this, this.scene, this.spriteSheet, this.mainMenuDisplacement, this.mainMenuTextures);
         this.gameMenu = new MyGameMenu(this, this.scene, this.infoBoardDisplacement, this.infoBoardTextures);
-        this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet, this.backgroundText);
 
         if (!(this.concreteState instanceof GameStateLoading)) {
-            this.boardSet.updateBoardDisplacement(this.boardDisplacement);
-            this.boardSet.auxBoardDisplacement = this.auxBoardDisplacement;
+           this.gameInfo.updatePosition(this.infoBoardDisplacement);
 
-            this.boardSet.whiteTileTexture =  this.whiteTexture;
-            this.boardSet.blackTileTexture = this.blackTexture
-            this.boardSet.boardTexture = this.boardTexture;
-            this.boardSet.auxBoardTexture = this.auxBoardTexture;
+            // -- Update Board Displacement -- //
+           this.boardSet.updateBoardDisplacement(this.boardDisplacement, this.auxBoardDisplacement);
+
+           // -- Update Values of Texture on boardSet
+           this.boardSet.updateTexture(this.whiteTexture, this.blackTexture, this.boardTexture, this.auxBoardTexture);
+
+           // -- Update Game Sequence Values -- //
+           for(let i = 0; i < this.gameSequence.moves.length; i++) {
+                this.gameSequence.moves[i].startPosition = this.auxBoardDisplacement;
+                this.gameSequence.moves[i].finalPosition = 
+                    this.boardSet.board.getPieceFinalPosition(
+                        this.gameSequence.moves[i].coordinates[0], 
+                        this.gameSequence.moves[i].coordinates[1]
+                    );
+            }
+
+           if ((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateMovie)) {
+               this.concreteState.updatePosition(this.auxBoardDisplacement, this.whiteTexture, this.blackTexture);
+           }
         } 
         else {
             this.initBoard(false);
@@ -107,6 +121,7 @@ class MyGameOrchestrator {
             // -- GameBoard -- //
             this.timeout = Math.floor(this.timeout); // Because of interface input
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
+            this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet, this.backgroundText);
             this.piecesList = this.boardSet.board.pieceList;
             this.gameInfo.turn = "white";
             this.turn = "white";
@@ -258,12 +273,15 @@ class MyGameOrchestrator {
             return;
         }
 
+        if (this.concreteState instanceof GameStateTurn)
+            this.concreteState.cleanPicked();
+
         this.boardSet.board.pieceList = [];
         if(this.concreteState instanceof GameStateEnd) {
-            this.changeState(new GameStateMovie(this, this.gameSequence, "end"));
+            this.changeState(new GameStateMovie(this, this.boardSet.board, this.gameSequence, "end"));
         }
         else {
-            this.changeState(new GameStateMovie(this, this.gameSequence, "turn"));
+            this.changeState(new GameStateMovie(this, this.boardSet.board, this.gameSequence, "turn"));
         }
     }
 

@@ -4,7 +4,9 @@
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {String} state - cause of the end of the game (Board full or Timeout)
  * @param {Array} info - game info, with the winner and its score
+ * @param {Array} infoDisplacement - displacement of the info board
  * @param {MySpritesheet Object} spriteSheet - spritesheet to be used in the SpriteTexts
+ * @param {Texture} backgroundTexture - backgroundTexture initialized on game orchestrator
  */
 class MyGameEndInfo {
     constructor(scene, state, info, infoDisplacement, spriteSheet, backgroundTexture) {
@@ -29,6 +31,19 @@ class MyGameEndInfo {
         }
     }
 
+    /**
+     * Update the displacement of boards
+     * @param {Array} displacement - displacement of the info board
+     */
+    updatePosition(displacement) {
+        this.rotation = displacement[0];
+        this.displacement = displacement[1];
+    }
+
+     /**
+     * Update function, called periodically
+     * @param {Integer} time - the time elapsed since the last call
+     */
     update(time) {
         
     }
