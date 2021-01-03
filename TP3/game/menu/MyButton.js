@@ -39,10 +39,8 @@ class MyButton {
     display() {
         this.scene.pushMatrix();
         
-        if(this.selected)
-            this.scene.translate(0, 0, -0.6);
-        
         if(this.selected) {
+            this.scene.translate(0, 0, -0.6);
             this.selectedMaterial.apply();
         }
         this.button.display();

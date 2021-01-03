@@ -106,7 +106,6 @@ class MyGameOrchestrator {
 
             // -- GameBoard -- //
             this.timeout = Math.floor(this.timeout); // Because of interface input
-
             this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
             this.piecesList = this.boardSet.board.pieceList;
             this.gameInfo.turn = "white";
@@ -415,6 +414,10 @@ class MyGameOrchestrator {
                             this.menu.unselectButton(obj.radioType);
                             obj.apply();
                         }
+                    }
+                    else {
+                        if (this.concreteState instanceof GameStateTurn)
+                            this.concreteState.cleanPicked();
                     }
                 }
                 this.scene.pickResults.splice(0, this.scene.pickResults.length);
