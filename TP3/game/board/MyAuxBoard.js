@@ -8,13 +8,15 @@ class MyAuxBoard {
 	constructor(scene, auxBoardTexture) {
         this.scene = scene;
 
-        this.tileMaterial = new CGFappearance(scene);
-        this.tileMaterial.setTexture(auxBoardTexture);
-
+        // -- Board -- //
         this.auxBoardFront = new MyCube(this.scene);
         this.auxBoardLeft = new MyCube(this.scene);
         this.auxBoardRight = new MyCube(this.scene);
         this.auxBoardBot = new MyCube(this.scene);
+
+        // -- Material -- //
+        this.tileMaterial = new CGFappearance(scene);
+        this.tileMaterial.setTexture(auxBoardTexture);
     }
 
     /**

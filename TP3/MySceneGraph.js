@@ -68,7 +68,6 @@ class MySceneGraph {
         }
 
         this.loadedOk = true;
-
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
     }
@@ -689,7 +688,7 @@ class MySceneGraph {
         var children = spriteSheetsNode.children;
 
         this.spritesheets = [];
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/menus/spritesheet-alphabet.jpg", 16, 6);
         
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "spritesheet") {
@@ -996,60 +995,428 @@ class MySceneGraph {
     parseBoardGame(boardGameNode) {
         var children = boardGameNode.children;
 
-        let board = children[0]; 
-        let auxBoard = children[1]; 
-        let piece = children[2]; 
-        
-        if(board.nodeName != "board") {
-            console.log("Missing <board> on boardgame.  Using Default Values");
+        let cameras = children[0];
+        let game = children[1]; 
+        let auxBoard = children[2]; 
+        let piece = children[3]; 
+        let menu = children[4]; 
 
-            this.boardDisplacement = [-5, -19, -5];
-            this.boardTexture = new CGFtexture(scene, "scenes/images/wood.jpg");
-        }
-        else {
-            let boardX = this.reader.getFloat(board, 'x');
-            let boardY = this.reader.getFloat(board, 'y');
-            let boardZ = this.reader.getFloat(board, 'z');
+        if (cameras.nodeName != "cameras") {
+            this.error("Missing <cameras> on boardgame. Returning");
+            return -1;
+        } else {
+            let cameraMenu = cameras.children[0];
+            let cameraWhite = cameras.children[1];
+            let cameraBlack = cameras.children[2];
             
-            let boardTextureInfo = board.children[0];
-            let boardTexture = this.reader.getString(boardTextureInfo, 'id');
-
-            this.boardDisplacement = [boardX, boardY, boardZ];
-            this.boardTexture = this.textures[boardTexture];
+            let cameraMenuId = this.reader.getString(cameraMenu, 'cameraId');
+            let cameraWhiteId = this.reader.getString(cameraWhite, 'cameraId');
+            let cameraBlackId = this.reader.getString(cameraBlack, 'cameraId');
+            
+            this.menuCamera = cameraMenuId;
+            this.whiteCamera = cameraWhiteId;
+            this.blackCamera = cameraBlackId;
         }
-        if(auxBoard.nodeName != "auxboard") {
-            console.log("Missing <auxboard> on boardgame. Using Default Values");
+        if (game.nodeName != "game") {
+            this.onXMLMinorError("Missing <board> on boardgame. Using Default Values");
 
-            this.auxBoardDisplacement = [10, -19, 0];
-            this.auxBoardTexture = new CGFtexture(scene, "scenes/images/decoration/flag.png");
+            this.boardDisplacement = [0, 0, 0];
+            this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
         }
         else {
-            let auxBoardX = this.reader.getFloat(auxBoard, 'x');
-            let auxBoardY = this.reader.getFloat(auxBoard, 'y');
-            let auxBoardZ = this.reader.getFloat(auxBoard, 'z');
+            let x = this.reader.getFloat(game, 'x');
+            let y = this.reader.getFloat(game, 'y');
+            let z = this.reader.getFloat(game, 'z');
+
+            if (x == null || isNaN(x)) {
+                this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag. Using x = 0.0");
+                x = 0.0;
+            }
+            if (y == null || isNaN(y)) {
+                this.onXMLMinorError("Missing/Invalid value of y in <boardgame> tag, from <game> tag. Using y = 0.0");
+                y = 0.0;
+            }
+            if (z == null || isNaN(z)) {
+                this.onXMLMinorError("Missing/Invalid value of y in<boardgame> tag, from <game> tag. Using z = 0.0");
+                z = 0.0;
+            }
+
+            this.boardDisplacement = [x, y, z];
+            
+            let boardTextureInfo = game.children[0];
+            let boardTexture = this.reader.getString(boardTextureInfo, 'id');
+            if ((this.textures[boardTexture] == null) || (boardTextureInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <game> tag. Using default wood texture");
+
+                this.boardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.boardTexture = this.textures[boardTexture];
+            }  
+        }
+        if (auxBoard.nodeName != "auxboard") {
+            this.onXMLMinorError("Missing <auxboard> on boardgame. Using Default Values");
+
+            this.auxBoardDisplacement = [0, 0, 0];
+            this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/decoration/flag.png");
+        }
+        else {
+            let x = this.reader.getFloat(auxBoard, 'x');
+            let y = this.reader.getFloat(auxBoard, 'y');
+            let z = this.reader.getFloat(auxBoard, 'z');
+
+            if (x == null || isNaN(x)) {
+                this.onXMLMinorError("Missing/Invalid value of x in <translation> tag, from <transformations> tag. Using x = 0.0");
+                x = 0.0;
+            }
+            if (y == null || isNaN(y)) {
+                this.onXMLMinorError("Missing/Invalid value of y in <boardgame> tag, from <game> tag. Using y = 0.0");
+                y = 0.0;
+            }
+            if (z == null || isNaN(z)) {
+                this.onXMLMinorError("Missing/Invalid value of y in<boardgame> tag, from <game> tag. Using z = 0.0");
+                z = 0.0;
+            }
+
+            this.auxBoardDisplacement = [x, y, z];
 
             let auxBoardTextureInfo = auxBoard.children[0];
             let auxBoardTexture = this.reader.getString(auxBoardTextureInfo, 'id');
+            if ((this.textures[auxBoardTexture] == null) || (auxBoardTextureInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <game> tag. Using default wood texture");
 
-            this.auxBoardDisplacement = [auxBoardX, auxBoardY, auxBoardZ];
-            this.auxBoardTexture = this.textures[auxBoardTexture];
+                this.auxBoardTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.auxBoardTexture = this.textures[auxBoardTexture];
+            }
+            
         }
-        if(piece.nodeName != "piece") {
-            console.log("Missing <piece> on boardgame.  Using Default Values");
+        if (piece.nodeName != "piece") {
+            this.onXMLMinorError("Missing <piece> on boardgame.  Using Default Values");
 
             this.whiteTexture = new CGFtexture(this.scene, "scenes/images/white.jpg");
             this.blackTexture = new CGFtexture(this.scene, "scenes/images/black.jpg");
-        } else {
+       } else {
             let textureWhiteInfo = piece.children[0];
-            let textureBlackInfo = piece.children[1];
-
             let textureWhite = this.reader.getString(textureWhiteInfo, 'id');
+            if ((this.textures[textureWhite] == null) || (textureWhiteInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <piece> tag. Using default wood texture");
+
+                this.whiteTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.whiteTexture = this.textures[textureWhite];
+            }
+
+            let textureBlackInfo = piece.children[1];
             let textureBlack = this.reader.getString(textureBlackInfo, 'id');
-     
-            this.whiteTexture = this.textures[textureWhite];
-            this.blackTexture = this.textures[textureBlack];
+            if ((this.textures[textureBlack] == null) || (textureBlackInfo.nodeName != "texture")) {
+                this.onXMLMinorError("Missing <texture> tag/value, from <piece> tag. Using default wood texture");
+
+                this.blackTexture = new CGFtexture(this.scene, "scenes/images/wood.jpg");
+            }
+            else {
+                this.blackTexture = this.textures[textureBlack];
+            }
+        }
+        if(menu.nodeName != "menu") {
+            this.onXMLError("Missing <menu> on boardgame. Returning...");
+            return -1;
+        }
+        else {
+            let boardMain = menu.children[0];
+            let boardGame = menu.children[1];
+
+            let boardMainID = this.reader.getString(boardMain, 'id');
+            let boardGameID = this.reader.getString(boardMain, 'id');
+
+            if (boardMain.nodeName != "board") {
+                this.onXMLMinorError("Missing board tag/value, from <menu> tag.");
+            }
+            if (boardMainID == "") {
+                this.onXMLMinorError("Missing main board ID, from <menu> tag.");
+            }
+
+            if (boardGame.nodeName != "board") {
+                this.onXMLMinorError("Missing board tag/value, from <menu> tag.");
+            }
+            if (boardGameID == "") {
+                this.onXMLMinorError("Missing main board ID, from <menu> tag.");
+            }
+
+            // -- Main Board -- //
+            let rotation = boardMain.children[0], i = 0;
+            let angleZ = 0, angleY = 0, angleX = 0, angle_radians;
+
+            while(rotation.nodeName == "rotation") {
+                i++;
+                let axis = this.reader.getString(rotation, 'axis');
+                let angle = this.reader.getFloat(rotation, 'angle');
+                if (axis == 'x') {
+                    if (angle != null) {
+                        angle_radians = angle * Math.PI / 180;
+                        angleX = angle_radians;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='x'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else if (axis == 'y') {
+                    if (angle != null) {
+                        angle_radians = angle * Math.PI / 180;
+                        angleY = angle_radians;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='y'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else if (axis == 'z') {
+                    if (angle != null) {
+                        angle_radians = angle * Math.PI / 180;
+                        angleZ = angle_radians;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='z'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else {
+                    this.onXMLMinorError("Missing/Invalid axis value, in tag <rotation> from <menu> tag.");
+                }
+                rotation = boardMain.children[i];
+            }
+
+            let translation = boardMain.children[i]; i++;
+
+            let translationX = this.reader.getFloat(translation, 'x');
+            let translationY = this.reader.getFloat(translation, 'y');
+            let translationZ = this.reader.getFloat(translation, 'z');
+
+            if (translationX == null) {
+                this.onXMLMinorError("Missing/Invalid x value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationX = 0;
+            }
+            if (translationY == null) {
+                this.onXMLMinorError("Missing/Invalid y value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationY = 0;
+            }
+            if (translationZ == null) {
+                this.onXMLMinorError("Missing/Invalid z value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationZ = 0;
+            }
+
+            this.mainMenuDisplacement = [[angleX, angleY, angleZ], [translationX, translationY, translationZ]];
+
+            let iconsTag = boardMain.children[i]; i++;
+            let iconPlayerTex, iconRandomTex, iconSmartTex, iconSmallTex, iconMediumTex, iconLargeTex, iconPlayTex;
+
+            if (iconsTag.nodeName != "icons") {
+                this.onXMLError("Missing <icons> tag on board with id " + boardMainID);
+            }
+            else {
+                let grandChildren = iconsTag.children;
+                let iconPlayer = grandChildren[0];
+                let iconRandom = grandChildren[1];
+                let iconSmart = grandChildren[2];
+                let iconSmall = grandChildren[3];
+                let iconMedium = grandChildren[4];
+                let iconLarge = grandChildren[5];
+                let iconPlay = grandChildren[6];
+
+                if ((iconPlayer.nodeName != "icon") || (iconRandom.nodeName != "icon") || (iconSmart.nodeName != "icon") || (iconSmall.nodeName != "icon")
+                 || (iconMedium.nodeName != "icon") || (iconLarge.nodeName != "icon") || (iconPlay.nodeName != "icon")) {
+                    this.onXMLError("Missing <icon> tag on <icons> tag in board with id " + boardMainID);
+                }
+
+                let iconPlayerId = this.reader.getString(iconPlayer, 'id');
+                let iconRandomId = this.reader.getString(iconRandom, 'id');
+                let iconSmartId = this.reader.getString(iconSmart, 'id');
+                let iconSmallId = this.reader.getString(iconSmall, 'id');
+                let iconMediumId = this.reader.getString(iconMedium, 'id');
+                let iconLargeId = this.reader.getString(iconLarge, 'id');
+                let iconPlayId = this.reader.getString(iconPlay, 'id');
+
+                if ((iconPlayerId == null) || (iconRandomId == null) || (iconSmartId == null) || (iconSmallId == null)
+                 || (iconMediumId == null) || (iconLargeId == null) || (iconPlayId == null)) {
+                    this.onXMLError("Missing id value from <icon> tag on <icons> tag in board with id " + boardMainID);
+                }
+
+                iconPlayerTex = this.reader.getString(iconPlayer, 'texture');
+                iconRandomTex = this.reader.getString(iconRandom, 'texture');
+                iconSmartTex = this.reader.getString(iconSmart, 'texture');
+                iconSmallTex = this.reader.getString(iconSmall, 'texture');
+                iconMediumTex = this.reader.getString(iconMedium, 'texture');
+                iconLargeTex = this.reader.getString(iconLarge, 'texture');
+                iconPlayTex = this.reader.getString(iconPlay, 'texture');
+
+                if ((iconPlayerTex == null) || (iconRandomTex == null) || (iconSmartTex == null) || (iconSmallTex == null)
+                 || (iconMediumTex == null) || (iconLargeTex == null) || (iconPlayTex == null)) {
+                    this.onXMLError("Missing texture value from <icon> tag on <icons> tag in board with id " + boardMainID);
+                }
+            }
+
+            let texture = boardMain.children[i]; i++;
+            let buttonTexture = boardMain.children[i]; i++;
+
+            if (texture.nodeName != "texture") {
+                this.onXMLError("Missing <texture> tag in board with id " + boardMainID);
+            }
+            if (buttonTexture.nodeName != "buttonTexture") {
+                this.onXMLError("Missing <buttonTexture> tag in board with id " + boardMainID);
+            }
+
+            let textureId = this.reader.getString(texture, 'id');
+            let buttonTextureId = this.reader.getString(buttonTexture, 'id');
+
+            if (textureId == null) {
+                this.onXMLError("Missing id from <texture> tag in board with id " + boardMainID);
+            }
+            if (buttonTextureId == null) {
+                this.onXMLError("Missing id from <buttonTexture> tag in board with id " + boardMainID);
+            }
+
+            this.mainMenuTextures = [
+                this.textures[iconPlayerTex],
+                this.textures[iconRandomTex],
+                this.textures[iconSmartTex],
+                this.textures[iconSmallTex],
+                this.textures[iconMediumTex],
+                this.textures[iconLargeTex],
+                this.textures[iconPlayTex],
+                this.textures[textureId],
+                this.textures[buttonTextureId]
+            ];
+
+            // -- Game Board -- //
+            let rotationGame = boardGame.children[0], k = 0;
+            let angleGameZ = 0, angleGameY = 0, angleGameX = 0, angle_radiansGame;
+
+            while(rotationGame.nodeName == "rotation") {
+                k++;
+                let axis = this.reader.getString(rotationGame, 'axis');
+                let angle = this.reader.getFloat(rotationGame, 'angle');
+                if (axis == 'x') {
+                    if (angle != null) {
+                        angle_radiansGame = angle * Math.PI / 180;
+                        angleGameX = angle_radiansGame;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='x'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else if (axis == 'y') {
+                    if (angle != null) {
+                        angle_radiansGame = angle * Math.PI / 180;
+                        angleGameY = angle_radiansGame;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='y'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else if (axis == 'z') {
+                    if (angle != null) {
+                        angle_radiansGame = angle * Math.PI / 180;
+                        angleGameZ = angle_radiansGame;
+                    }
+                    else {
+                        this.onXMLMinorError("Missing/Invalid angle value, in tag <rotation axis='z'> from <menu> tag. Assuming rotation of 0 degrees...");
+                    }
+                }
+                else {
+                    this.onXMLMinorError("Missing/Invalid axis value, in tag <rotation> from <menu> tag.");
+                }
+                rotationGame = boardGame.children[k];
+            }
+
+            let translationGame = boardGame.children[k]; k++;
+
+            let translationGameX = this.reader.getFloat(translationGame, 'x');
+            let translationGameY = this.reader.getFloat(translationGame, 'y');
+            let translationGameZ = this.reader.getFloat(translationGame, 'z');
+
+            if (translationGameX == null) {
+                this.onXMLMinorError("Missing/Invalid x value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationGameX = 0;
+            }
+            if (translationGameY == null) {
+                this.onXMLMinorError("Missing/Invalid y value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationGameY = 0;
+            }
+            if (translationGameZ == null) {
+                this.onXMLMinorError("Missing/Invalid z value, in tag <translation> from <menu> tag. Assuming translation of 0...");
+                translationGameZ = 0;
+            }
+
+            this.infoBoardDisplacement = [[angleGameX, angleGameY, angleGameZ], [translationGameX, translationGameY, translationGameZ]];
+
+            let iconsTagGame = boardGame.children[k]; k++;
+            let iconMenuTex, iconRestartTex, iconMovieTex, iconUndoTex;
+
+            if (iconsTagGame.nodeName != "icons") {
+                this.onXMLError("Missing <icons> tag on board with id " + boardGameID);
+            }
+            else {
+                let grandChildren = iconsTagGame.children;
+                let iconMenu = grandChildren[0];
+                let iconRestart = grandChildren[1];
+                let iconMovie = grandChildren[2];
+                let iconUndo = grandChildren[3];
+
+                if ((iconMenu.nodeName != "icon") || (iconRestart.nodeName != "icon") || (iconMovie.nodeName != "icon") || (iconUndo.nodeName != "icon")) {
+                    this.onXMLError("Missing <icon> tag on <icons> tag in board with id " + boardGameID);
+                }
+
+                let iconMenuId = this.reader.getString(iconMenu, 'id');
+                let iconRestartId = this.reader.getString(iconRestart, 'id');
+                let iconMovieId = this.reader.getString(iconMovie, 'id');
+                let iconUndoId = this.reader.getString(iconUndo, 'id');
+
+                if ((iconMenuId == null) || (iconRestartId == null) || (iconMovieId == null) || (iconUndoId == null)) {
+                    this.onXMLError("Missing id value from <icon> tag on <icons> tag in board with id " + boardGameID);
+                }
+
+                iconMenuTex = this.reader.getString(iconMenu, 'texture');
+                iconRestartTex = this.reader.getString(iconRestart, 'texture');
+                iconMovieTex = this.reader.getString(iconMovie, 'texture');
+                iconUndoTex = this.reader.getString(iconUndo, 'texture');
+
+                if ((iconMenuTex == null) || (iconRestartTex == null) || (iconMovieTex == null) || (iconUndoTex == null)) {
+                    this.onXMLError("Missing texture value from <icon> tag on <icons> tag in board with id " + boardGameID);
+                }
+            }
+
+            let textureGame = boardMain.children[k]; k++;
+            let buttonGame = boardMain.children[k]; k++;
+
+            if (textureGame.nodeName != "texture") {
+                this.onXMLError("Missing <texture> tag in board with id " + boardGameID);
+            }
+            if (buttonGame.nodeName != "buttonTexture") {
+                this.onXMLError("Missing <buttonTexture> tag in board with id " + boardGameID);
+            }
+
+            let textureGameId = this.reader.getString(texture, 'id');
+            let buttonTextureGameId = this.reader.getString(buttonTexture, 'id');
+
+            if (textureGameId == null) {
+                this.onXMLError("Missing id from <texture> tag in board with id " + boardGameID);
+            }
+            if (buttonTextureGameId == null) {
+                this.onXMLError("Missing id from <buttonTexture> tag in board with id " + boardGameID);
+            }
+
+            this.infoBoardTextures = [
+                this.textures[iconMenuTex],
+                this.textures[iconRestartTex],
+                this.textures[iconMovieTex],
+                this.textures[iconUndoTex],
+                this.textures[textureGameId],
+                this.textures[buttonTextureGameId]
+            ];
         }
 
+        this.log("Parsed Board");
+        
         return null;
     }
 
@@ -1356,7 +1723,8 @@ class MySceneGraph {
                 }
             } else if (descendants[j].nodeName == "leaf") {
                 let type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'triangle', 'sphere', 'torus', 'halftorus',
-                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim']);
+                                                                        'spritetext', 'spriteanim', 'plane', 'patch', 'defbarrel', 'waveanim',
+                                                                        'obj']);
 
                 if (type == null) {
                     this.onXMLMinorError("Missing/Invalid type of leaf found on " + nodeID + " in <nodes>. Ignoring leaf...");
@@ -1420,9 +1788,20 @@ class MySceneGraph {
                 return this.parseDefbarrel(descendants, messageError);
             case "waveanim":
                 return this.parseWaveAnim(descendants, messageError);
+            case "obj":
+                return this.obj(descendants, messageError);
             default:
                 return "not a valid leaf on node " + messageError;
         }
+    }
+
+    obj(descendants, messageError) {
+        let path = this.reader.getString(descendants, 'path');
+        if (path == null) {
+            return "unable to parse the path of OBJ File on node " + messageError;
+        }
+
+        return new MyOBJ(this.scene, path);
     }
 
     parseWaveAnim(descendants, messageError) {
@@ -1443,6 +1822,7 @@ class MySceneGraph {
 
         return new MyWaveAnimation(this.scene, x, y, z);
     }
+
     /**
      * Parse Torus from XML
      * @param {node leaf} descendants node that contains primitive information

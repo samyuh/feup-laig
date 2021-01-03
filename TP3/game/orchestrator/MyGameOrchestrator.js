@@ -6,83 +6,132 @@
 class MyGameOrchestrator {
 	constructor(scene) {
         this.scene = scene;
-        this.graph = null;
+        this.graph = null; // -- SceneGraph
+        this.allLoaded = false;
 
-        // Concrete State 
-        // Loading -> Loading Graph
-        // Game -> Game
-        // Anime -> Piece Animation
-        // End - > End Game
-        // TODO:
-        // Movie -> Displays the Movie with game Sequence maybe? // 
-        // Menu -> Menu to choose! (Or in html)
+        // -- Menu -- //
+        this.unselectMenu = false;
+        this.unselectGameMenu = false;
+        this.timeUntilUnselect = 0;
+
+        // -- Current Game State -- //
         this.concreteState = new GameStateLoading(this, null);
-
-        // -- Game Sequence -- //
-        this.gameSequence = new MyGameSequence();
 
         // PROLOG Connection
         this.server = new MyServer();
 
-        // Player type
-        this.player = {
-            Player: '1', Random: '2', Intelligent: '3'
-        };
+        // -- Board Settings, Player, more -- //
+        this.lastCamera = null;
+        this.turn = "white"; // White always start
+        this.boardSize = '7';
+        this.timeout = 30;
 
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 8, 6);
-        this.menu = new MyMenu(scene, this, this.spriteSheet);
+        this.player = {
+            Player: '1', 
+            Random: '2', 
+            Intelligent: '3'
+        };
 
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
 
-        this.boardSize = '7';
-        this.timeout = 30;
-
-        // Passar para o XML
-        this.infoDisplacement = [0, -10, -5];
+        this.backgroundText = new CGFtexture(this.scene, "./scenes/images/menus/text-background.png");
     }
 
-    
-    pickMenu() {
-		if (this.scene.pickMode == false) {
-			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-				for (let i = 0; i < this.scene.pickResults.length; i++) {
-					let obj = this.scene.pickResults[i][0];
-					if (obj) {
-                        let objId = this.scene.pickResults[i][1];
+    /**
+     * Initializes the graph of the scene, storing its textures
+     * @param {SceneGraph Object} sceneGraph - the graph of the scene
+     */
+    initGraph(sceneGraph) {
+        this.graph = sceneGraph;
 
-                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateGame)) {
-                            this.concreteState.handlePicking(obj, objId);
-                        }
-                        if(obj instanceof MyButton) {
-                            obj.apply();
-                        }
-                        console.log(obj, objId);
-                    }
-                }
-                
-                this.scene.pickResults.splice(0, this.scene.pickResults.length);
-            }
-		}
+        this.spriteSheet = this.graph.spriteSheet;
+
+        // -- Board -- //
+        this.boardDisplacement = this.graph.boardDisplacement;
+        this.boardTexture = this.graph.boardTexture;
+
+        // -- Aux Board -- //
+        this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
+        this.auxBoardTexture = this.graph.auxBoardTexture;
+
+        // -- Piece -- //
+        this.whiteTexture = this.graph.whiteTexture;
+        this.blackTexture = this.graph.blackTexture;
+
+        // -- Main Menu -- //
+        this.mainMenuDisplacement = this.graph.mainMenuDisplacement;
+        this.mainMenuTextures = this.graph.mainMenuTextures;
+
+        // -- In Game Menu -- //
+        this.infoBoardDisplacement = this.graph.infoBoardDisplacement;
+        this.infoBoardTextures = this.graph.infoBoardTextures;
+
+        // -- Game Cameras -- //
+        this.menuCamera = this.graph.menuCamera;
+        this.whiteCamera = this.graph.whiteCamera;
+        this.blackCamera = this.graph.blackCamera;
+        
+        this.menu = new MyMenu(this, this.scene, this.spriteSheet, this.mainMenuDisplacement, this.mainMenuTextures);
+        this.gameMenu = new MyGameMenu(this, this.scene, this.infoBoardDisplacement, this.infoBoardTextures);
+        this.gameInfo = new MyGameInfo(this.scene, this.turn, this.player1, this.player2, this.infoBoardDisplacement, this.timeout, this.spriteSheet, this.backgroundText);
+
+        if (!(this.concreteState instanceof GameStateLoading)) {
+            this.boardSet.updateBoardDisplacement(this.boardDisplacement);
+            this.boardSet.auxBoardDisplacement = this.auxBoardDisplacement;
+
+            this.boardSet.whiteTileTexture =  this.whiteTexture;
+            this.boardSet.blackTileTexture = this.blackTexture
+            this.boardSet.boardTexture = this.boardTexture;
+            this.boardSet.auxBoardTexture = this.auxBoardTexture;
+        } 
+        else {
+            this.initBoard(false);
+
+            this.concreteState.reset();
+            this.concreteState.setMenuCamera(this.menuCamera);
+            this.lastCamera = this.menuCamera;
+        }
     }
 
     /**
      * Initializes the game board, the turn (White Player starts playing), and updates the current game state depending on the user preferences
      */
-    initBoard() {
+    initBoard(startGame) {
         let boardString = 'initial(' + this.boardSize + ')';
         
         let p = this.server.promiseRequest(boardString, null, null);
         p.then((request) => {
             let board = request;
 
-            this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
-            this.gameInfo = new MyGameInfo(this.scene, "white", this.player1, this.player2, this.infoDisplacement, this.timeout, this.spriteSheet);
-            //this.board = this.boardSet.board;
-            this.turn = "white";
-            this.piecesList = this.boardSet.board.pieceList; // Pieces on board
+            // -- GameBoard -- //
+            this.timeout = Math.floor(this.timeout); // Because of interface input
 
-            this.updatePlayerState(this.player1);
+            this.boardSet = new MyBoardSet(this.scene, board, this.boardDisplacement, this.auxBoardDisplacement, this.boardTexture, this.auxBoardTexture, this.whiteTexture, this.blackTexture);
+            this.piecesList = this.boardSet.board.pieceList;
+            this.gameInfo.turn = "white";
+            this.turn = "white";
+
+            if(startGame) {
+                this.gameSequence = new MyGameSequence();
+                this.updatePlayerState(this.player1);
+                if(this.player1 == 1) {
+                    this.scene.updateCamera(this.whiteCamera);
+                    this.lastCamera = this.whiteCamera;
+                }
+                else if(this.player2 == 1) {
+                    this.scene.updateCamera(this.blackCamera);
+                    this.lastCamera = this.blackCamera;
+                } else {
+                    this.scene.updateCamera(this.whiteCamera);
+                    this.lastCamera = this.whiteCamera;
+                }
+            }
+            else {
+                this.concreteState.board = this.boardSet.board;
+            }
+
+            this.allLoaded = true;
         });
     }
 
@@ -90,19 +139,41 @@ class MyGameOrchestrator {
      * Changes the turn of the game, updating the game states if user changed any player configuration
      */
     changeTurn() {
-        let player = null;
+        let currentPlayer = null;
         if(this.turn == "white") {
             this.turn = "black";
             this.gameInfo.turn = "black";
             this.gameInfo.blackPlayer = this.player2;
-            player = this.player2;
+            currentPlayer = this.player2;
+            if(currentPlayer == 1) {
+                this.scene.updateCamera(this.blackCamera);
+                this.lastCamera = this.blackCamera;
+            }
         } else {
             this.turn = "white";
             this.gameInfo.turn = "white";
             this.gameInfo.whitePlayer = this.player1;
-            player = this.player1;
+            currentPlayer = this.player1;
+            if(currentPlayer == 1) {
+                this.scene.updateCamera(this.whiteCamera);
+                this.lastCamera = this.whiteCamera;
+            }
         }
-        this.updatePlayerState(player);
+        this.updatePlayerState(currentPlayer);
+    }
+
+    /*
+     *
+     */
+    returnGame() {
+        let currentPlayer = null;
+
+        if(this.turn == "white") {
+            currentPlayer = this.player1;
+        } else if(this.turn == "black") {
+            currentPlayer = this.player2;
+        }
+        this.updatePlayerState(currentPlayer);
     }
 
     /**
@@ -111,7 +182,7 @@ class MyGameOrchestrator {
      */
     updatePlayerState(player) {
         if (player == 1) {
-            this.changeState(new GameStateGame(this, this.boardSet.board));
+            this.changeState(new GameStateTurn(this, this.boardSet.board));
         } else if (player == 2) {
             this.changeState(new GameStateBot(this, this.boardSet.board, "random"));
         } else if (player == 3) {
@@ -127,34 +198,49 @@ class MyGameOrchestrator {
         this.concreteState = state;
     }
 
+    // --- Menus Functions --- //
+
     /**
-     * Initializes the graph of the scene, storing its textures
-     * @param {SceneGraph Object} sceneGraph - the graph of the scene
+     * 
      */
-    initGraph(sceneGraph) {
-        this.graph = sceneGraph;
-        
-        this.graphLoaded = true;
+    changeMenu() {
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
 
-        this.boardDisplacement = this.graph.boardDisplacement;
-        this.auxBoardDisplacement = this.graph.auxBoardDisplacement;
-
-        this.boardTexture = this.graph.boardTexture;
-        this.auxBoardTexture = this.graph.auxBoardTexture;
-        this.whiteTexture = this.graph.whiteTexture;
-        this.blackTexture = this.graph.blackTexture;
-
-        this.spriteSheet = this.graph.spriteSheet;
-
-        this.initBoard();
+        this.scene.updateCamera(this.menuCamera);
+        this.lastCamera = this.menuCamera;
+        this.changeState(new GameStateLoading(this, this.boardSet.board));
     }
 
     /**
-     * Initializes the game, after the scene if fully loaded
+     * 
      */
-    initGame() {
-        if(this.graphLoaded) {
-            this.initBoard();
+    changeBoardSize(size) {
+        this.boardSize = size;
+
+        this.initBoard(false);
+    }
+
+    /**
+     * 
+     */
+    changePlayer(player, type) {
+        if(player == "one") {
+            if (type == 1) {
+                this.player1 = this.player.Player;
+            } else if (type == 2) {
+                this.player1 = this.player.Random;
+            } else if (type == 3) {
+                this.player1 = this.player.Intelligent;
+            }
+        } else if (player == "two") {
+            if (type == 1) {
+                this.player2 = this.player.Player;
+            } else if (type == 2) {
+                this.player2 = this.player.Random;
+            } else if (type == 3) {
+                this.player2 = this.player.Intelligent;
+            }
         }
     }
 
@@ -162,76 +248,148 @@ class MyGameOrchestrator {
      * Initializes the movie of the game, if the user presses the "Movie" button on the interface
      */
     movie() {
-        // if gamestate = end
-        this.boardSet.board.pieceList = [];
-        this.changeState(new GameStateAnimator(this, this.gameSequence));
-    }
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
 
-    /**
-     * Resets the board, if the user presses the "Reset" button on the interface, returning to Player VS Player mode
-     */
-    reset() {
-        this.initBoard();
-
-        this.gameInfo.whitePlayer = '1';
-        this.gameInfo.blackPlayer = '1';
-
-        this.changeState(new GameStateGame(this, this.boardSet.board));
-    }
-
-    /**
-     * Undoes the last move, if the user presses the "Undo" button on the interface
-     */
-    undo() {
-        if(!(this.concreteState instanceof GameStateGame)) {
-            this.changeState(new GameStateGame(this, this.boardSet.board));
+        if((this.concreteState instanceof GameStateAnime) || (this.concreteState instanceof GameStateLoading) || (this.concreteState instanceof GameStateMovie)) {
+            return;
         }
 
         if (this.boardSet.board.pieceList.length == 0) {
             return;
         }
 
-        let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
-
-        let piece = this.boardSet.board.pieceList.pop();
-
-        let piece_row = piece.z + 1;
-        let piece_column = piece.x + 1;
-        let piece_secondary_row = piece.zb + 1;
-        let piece_secondary_column = piece.xb + 1;
-
-        let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
-        let p = this.server.promiseRequest(undoString, null, null);
-
-        p.then((request) => {
-            let new_board = request;
-
-            this.boardSet.board.boardList = new_board;
-
-            this.changeTurn();
-
-            if (this.boardSet.board.pieceList.length == 0) {
-                this.gameInfo.updateGroups(0, 0);
-            }
-            else {
-                let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
-                let groupsString = 'groups(' + stringNewBoard + ')';
-                
-                return this.server.promiseRequest(groupsString, null, null, false);
-            }
-        }).then((request) => {
-            let groupsData = request;
-            groupsData[0] = groupsData[0] || 1;
-            groupsData[1] = groupsData[1] || 1;
-            this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
-        }).catch((error) =>  {
-            console.log(error);    
-        });
-        
-        
-        //this.gameSequence.pop();
-        //this.gameInfo = new MyGameInfo(this.scene, turn);
+        this.boardSet.board.pieceList = [];
+        if(this.concreteState instanceof GameStateEnd) {
+            this.changeState(new GameStateMovie(this, this.gameSequence, "end"));
+        }
+        else {
+            this.changeState(new GameStateMovie(this, this.gameSequence, "turn"));
+        }
     }
+
+    /**
+     * Resets/Init a new game with the
+     */
+    reset() {
+        this.unselectMenu = true;
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+        
+        this.initBoard(true);
+    }
+
+    /**
+     * Undoes the last move, if the user presses the "Undo" button on the interface
+     */
+    undo() {
+        this.unselectGameMenu = true;
+        this.timeUntilUnselect = 0;
+
+        if(!(this.concreteState instanceof GameStateTurn)) {
+            return;
+        }
+        if (this.boardSet.board.pieceList.length == 0) {
+            return;
+        }
+
+        if(this.player1 != 1 || this.player2 != 1) { // Se for vs bots
+            if (this.boardSet.board.pieceList.length == 1) { // First time black plays
+                return;
+            }
+
+            this.gameSequence.undo();
+            let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+            let piece = this.boardSet.board.pieceList.pop();
+
+            let piece_row = piece.z + 1;
+            let piece_column = piece.x + 1;
+            let piece_secondary_row = piece.zb + 1;
+            let piece_secondary_column = piece.xb + 1;
+
+            let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
+            let p = this.server.promiseRequest(undoString, null, null);
+
+            p.then((request) => {
+                this.boardSet.board.boardList = request;
+
+                this.gameSequence.undo();
+                let stringBoard2 = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                let piece2 = this.boardSet.board.pieceList.pop();
+
+                let piece_row2 = piece2.z + 1;
+                let piece_column2 = piece2.x + 1;
+                let piece_secondary_row2 = piece2.zb + 1;
+                let piece_secondary_column2 = piece2.xb + 1;
+
+                let undoString2 = 'undo(' + stringBoard2 + ',' + piece_row2 + '-' + piece_column2 + '-' + piece_secondary_row2 + '-' + piece_secondary_column2 + ')';
+                return this.server.promiseRequest(undoString2, null, null); 
+            
+            
+            }).then((request) => {
+                this.boardSet.board.boardList = request;
+
+                if (this.boardSet.board.pieceList.length != 0) {
+                    let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                    let groupsString = 'groups(' + stringNewBoard + ')';
+                    
+                    return this.server.promiseRequest(groupsString, null, null, false);
+                }
+                else {
+                    return null;
+                }
+            }).then((request) => {
+                if (request == null) {
+                    this.gameInfo.updateGroups(0, 0);
+                } else {
+                    let groupsData = request;
+                    groupsData[0] = groupsData[0] || 1;
+                    groupsData[1] = groupsData[1] || 1;
+                    this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+                }
+            });
+        } else {
+            this.gameSequence.undo();
+            let stringBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+            let piece = this.boardSet.board.pieceList.pop();
+
+            let piece_row = piece.z + 1;
+            let piece_column = piece.x + 1;
+            let piece_secondary_row = piece.zb + 1;
+            let piece_secondary_column = piece.xb + 1;
+
+            let undoString = 'undo(' + stringBoard + ',' + piece_row + '-' + piece_column + '-' + piece_secondary_row + '-' + piece_secondary_column + ')';
+            let p = this.server.promiseRequest(undoString, null, null);
+
+            p.then((request) => {
+                this.boardSet.board.boardList = request;
+                
+                this.boardSet.resetPiece();
+                this.changeTurn();
+    
+                if (this.boardSet.board.pieceList.length != 0) {
+                    let stringNewBoard = JSON.stringify(this.boardSet.board.boardList).replaceAll("\"", "");
+                    let groupsString = 'groups(' + stringNewBoard + ')';
+                    
+                    return this.server.promiseRequest(groupsString, null, null, false);
+                }
+                else {
+                    return null;
+                }
+            }).then((request) => {
+                if (request == null) {
+                    this.gameInfo.updateGroups(0, 0);
+                } else {
+                    let groupsData = request;
+                    groupsData[0] = groupsData[0] || 1;
+                    groupsData[1] = groupsData[1] || 1;
+                    this.gameInfo.updateGroups(groupsData[0], groupsData[1]);
+                }
+            });
+        }
+    }
+
+    // --- End of Menus Function --- //
 
     /**
      * Presents the game info to the screen, after the end of the game
@@ -239,7 +397,29 @@ class MyGameOrchestrator {
      * @param {Array} gameOverData - game info, with the winner and its score
      */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoBoardDisplacement, this.spriteSheet, this.backgroundText);
+    }
+
+    pickMenu() {
+		if (this.scene.pickMode == false) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+				for (let i = 0; i < this.scene.pickResults.length; i++) {
+					let obj = this.scene.pickResults[i][0];
+					if (obj) {
+                        let objId = this.scene.pickResults[i][1];
+
+                        if((obj instanceof MyTile) && (this.concreteState instanceof GameStateTurn)) {
+                            this.concreteState.handlePicking(obj, objId);
+                        }
+                        if(obj instanceof MyButton) {
+                            this.menu.unselectButton(obj.radioType);
+                            obj.apply();
+                        }
+                    }
+                }
+                this.scene.pickResults.splice(0, this.scene.pickResults.length);
+            }
+		}
     }
 
     /**
@@ -248,6 +428,17 @@ class MyGameOrchestrator {
      */
     update(elapsedTime) {
         this.concreteState.update(elapsedTime);
+
+        // -- Menus Update -- //
+        this.timeUntilUnselect += elapsedTime;
+        if(this.unselectMenu && this.timeUntilUnselect > 0.8) {
+            this.menu.unselectButton(null);
+            this.unselectMenu = false;
+        }
+        if(this.unselectGameMenu && this.timeUntilUnselect > 0.8) {
+            this.gameMenu.unselectButton(null);
+            this.unselectGameMenu = false;
+        }
     }
 
     /**
@@ -255,10 +446,11 @@ class MyGameOrchestrator {
      */
     display() {
         this.pickMenu();
-
         this.concreteState.display();
 
+        // -- Menus and Scene Display -- //
         this.menu.display();
+        this.gameMenu.display();
         this.processNode(this.graph.idRoot, this.graph.nodes[this.graph.idRoot].material, this.graph.nodes[this.graph.idRoot].texture);
     }
 

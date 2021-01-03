@@ -7,6 +7,22 @@
 class GameStateLoading extends GameState {
     constructor(gameOrchestrator, board) {
         super(gameOrchestrator, board);
+
+        this.gameOrchestrator = gameOrchestrator;
+        this.board = board;
+
+        this.elapsedTime = 0;
+        this.movedCamera = false;
+        this.menuCamera = null;
+    }
+
+    reset() {
+        this.movedCamera = false;
+        this.elapsedTime = 0;
+    }
+
+    setMenuCamera(camera) {
+        this.menuCamera = camera;
     }
 
     /**
@@ -14,13 +30,21 @@ class GameStateLoading extends GameState {
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
     update(elapsedTime) {
-        // Override
+        this.elapsedTime += elapsedTime;
+
+        if((this.elapsedTime >= 8) && !this.movedCamera && (this.menuCamera != null)) {
+            this.movedCamera = true;
+            this.gameOrchestrator.scene.updateCamera(this.menuCamera);
+        }
     }
 
     /**
      * Display function, called periodically, which shows a message to the console telling that the scene is loading
      */
     display() {
-        console.log("Waiting Loading");
+        if(this.gameOrchestrator.allLoaded) {
+            this.gameOrchestrator.boardSet.display();
+            this.gameOrchestrator.gameInfo.display();
+        }
     }
 }

@@ -17,8 +17,8 @@ class MySpriteAnim extends CGFobject {
 
         this.background = new MyRectangle(this.scene, -0.5, -0.5, 0.5, 0.5);
 
+        this.animationRelativeIndex = 0;
         this.currentCell = startCell;
-
         let number_cells = endCell - startCell + 1;
         this.cellDuration = this.duration / number_cells;
 
@@ -34,13 +34,16 @@ class MySpriteAnim extends CGFobject {
         this.elapsedTime += currentTime;
 
         // Calculate which sprite cell is active - If the elapsedTime is greater than the time needed to present the current cell, it must change the cell presented
-        if (this.elapsedTime >= (this.cellDuration * (this.currentCell + 1))) {
+        if (this.elapsedTime >= (this.cellDuration * (this.animationRelativeIndex + 1))) {
             if (this.currentCell == this.endCell) {     // Reset Animation Loop
                 this.currentCell = this.startCell;
                 this.elapsedTime = 0;
+                this.animationRelativeIndex = 0;
             }
-            else
+            else {
                 this.currentCell++;     // Skip to the next cell
+                this.animationRelativeIndex++;
+            }
         }
     }
 

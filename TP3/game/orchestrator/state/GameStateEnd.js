@@ -14,7 +14,7 @@ class GameStateEnd extends GameState {
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */
     update(elapsedTime) {
-        // Override
+
     }
 
     /**
@@ -24,6 +24,5 @@ class GameStateEnd extends GameState {
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();
         this.gameOrchestrator.gameInfo.display();
-        // -- Board -- //
     }
 }

@@ -14,12 +14,19 @@ class MyBoardSet {
     constructor(scene, boardList, boardDisplacement, auxBoardDisplacement, boardTexture, auxBoardTexture, whiteTileTexture, blackTileTexture) {
         this.scene = scene;
 
+        // -- Tiles -- //
         this.whiteTileTexture = whiteTileTexture;
         this.blackTileTexture = blackTileTexture;
+
+        this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
+        this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
+
+        // -- Board Textures -- //
         this.boardTexture = boardTexture;
         this.auxBoardTexture = auxBoardTexture;
+        
+        // -- Board Size and Displacement
         this.size = boardList.length;
-
         if (this.size == 7) {
             this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
         }
@@ -30,16 +37,27 @@ class MyBoardSet {
             this.boardDisplacement = boardDisplacement;
         }
 
-        this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
-        this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
-        this.pieceToPlay = new MyPiece(this.scene, 'black', this.whiteTileTexture, this.blackTileTexture);
-        this.pieceStack = new MyPiece(this.scene, 'white', this.whiteTileTexture, this.blackTileTexture);
-        
         this.auxBoardDisplacement =  auxBoardDisplacement;
 
-        this.pieceAnimated = false;
+        this.board = new MyBoard(scene, boardList, this.boardDisplacement, boardTexture);
+        this.auxBoard = new MyAuxBoard(scene, this.auxBoardTexture);
 
+        this.pieceAnimated = false;
         this.turn = "white";
+    }
+
+    updateBoardDisplacement(boardDisplacement) {
+        if (this.size == 7) {
+            this.boardDisplacement = [boardDisplacement[0] + 2, boardDisplacement[1], boardDisplacement[2] + 2];
+        }
+        else if (this.size == 9) {
+            this.boardDisplacement = [boardDisplacement[0] + 1, boardDisplacement[1], boardDisplacement[2] + 1];
+        }
+        else {
+            this.boardDisplacement = boardDisplacement;
+        }
+
+        this.board.boardDisplacement = this.boardDisplacement
     }
     
     /**
@@ -70,12 +88,11 @@ class MyBoardSet {
 
         if(!this.pieceAnimated) {
             this.pieceToPlay.display(); 
-            this.scene.translate(0, -1, 0);
+            this.scene.translate(0, -0.7, 0);
             this.pieceStack.display();
         }
         
         this.scene.popMatrix();
-
         this.scene.pushMatrix();
         this.scene.translate(this.boardDisplacement[0], this.boardDisplacement[1], this.boardDisplacement[2]);
         this.board.display();

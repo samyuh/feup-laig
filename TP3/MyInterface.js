@@ -17,6 +17,7 @@ class MyInterface extends CGFinterface {
         //  http://workshop.chromeexperiments.com/examples/gui
 
         this.gui = new dat.GUI();
+        this.gui.close();
 
         // add a group of controls (and open/expand by default)
         this.initKeys();
@@ -60,14 +61,34 @@ class MyInterface extends CGFinterface {
      */
     initInterfaceLights() {
         this.lights = this.gui.addFolder('Lights');
+        this.lightsItems = [];
 
         for (const light of this.scene.lights) {
             if (light.light_id != undefined) {
-                this.lights.add(light, 'enabled').name(light.light_id).onChange(
+                this.lightsItems.push(this.lights.add(light, 'enabled').name(light.light_id).onChange(
                     () => {
                         light.update();
                     }
-                );
+                ));
+            }
+        }
+    }
+
+    updateLights() {
+        for (const light of this.lightsItems) {
+            this.lights.remove(light);
+        }
+
+        this.lightsItems = [];
+        console.log(this.lightsItems);
+        console.log(this.scene.lights);
+        for (const light of this.scene.lights) {
+            if (light.light_id != undefined) {
+                this.lightsItems.push(this.lights.add(light, 'enabled').name(light.light_id).onChange(
+                    () => {
+                        light.update();
+                    }
+                ));
             }
         }
     }
@@ -77,7 +98,7 @@ class MyInterface extends CGFinterface {
      */
     initMiscellaneous() {
         this.misc = this.gui.addFolder('Miscellaneous');
-        this.misc.add(this.scene, 'musicActive').name('Music').onChange(this.scene.updateMusic.bind(this.scene));
+        this.misc.add(this.scene, 'musicActive').name('Sound').onChange(this.scene.updateMusic.bind(this.scene));
     }
 
     /**
@@ -86,7 +107,7 @@ class MyInterface extends CGFinterface {
     initInterfaceThemes() {
         this.themes = this.gui.addFolder('Themes');
 
-        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateSkyBoxTextures.bind(this.scene));
+        this.themes.add(this.scene, 'selectedTheme', this.scene.textureIds).name('Selected SkyBox Texture').onChange(this.scene.updateThemes.bind(this.scene));
     }
 
     /**
@@ -95,13 +116,13 @@ class MyInterface extends CGFinterface {
     initGameInterface() {
         this.gameInterface = this.gui.addFolder('Game');
 
-        this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'reset').name('Reset / New Game');
         this.gameInterface.add(this.scene.gameOrchestrator, 'movie').name('Movie');
         this.gameInterface.add(this.scene.gameOrchestrator, 'undo').name('Undo');
+        this.gameInterface.add(this.scene.gameOrchestrator, 'timeout', 10, 120).name('TimeOut');
         this.gameInterface.add(this.scene.gameOrchestrator, 'boardSize', {'Small': '7', 'Medium': '9', 'Large': '11'}).name('Board Size');
         this.gameInterface.add(this.scene.gameOrchestrator, 'player1', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("White Player");
         this.gameInterface.add(this.scene.gameOrchestrator, 'player2', { 'Player': '1', 'Random Bot': '2', 'Intelligent Bot': '3' }).name("Black Player");
-        this.gameInterface.add(this.scene.gameOrchestrator, 'initGame').name('Init Game');
 
         this.gameInterface.open();
     }
