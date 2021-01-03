@@ -84,6 +84,8 @@ There are many options for the game configuration, including different board siz
 
 For more information about our project visit the repository of our project [here](https://github.com/Samuuuh/plog-taiji).
 
+The manual of our game can be seen [here](./TP3/scenes/docs/manual.pdf).
+
 > Official Game Rules: https://nestorgames.com/rulebooks/TAIJI_EN4.pdf
 
 ### Strong points of our project
