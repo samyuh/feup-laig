@@ -20,6 +20,13 @@ class MyAuxBoard {
     }
 
     /**
+     * Update the texture of board when changing themes
+     * @param {Texture} boardTexture - board texture
+     */
+    updateTexture(auxBoardTexture) {
+        this.tileMaterial.setTexture(auxBoardTexture)
+    }
+    /**
      * Display function, called periodically, which calls the display function of the cubes composing the auxiliary board
      */
     display() {

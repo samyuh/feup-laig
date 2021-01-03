@@ -55,14 +55,11 @@ class MyKeyframeAnimation extends MyAnimation {
 
         if (this.totalTime < this.endTime) {
             let lastState = ((this.state + 1) == this.keyframes.length) ? true : false;
-            //console.log(this.state + " " + lastState);
 
             if(!lastState) {
                 // --- Switch KeyFrame if needed --- //
                 if ((this.totalTime > this.keyframes[this.state + 1].instant))
                     this.state++; 
-
-                //console.log("Next KeyFrame: " + this.keyframes[this.state + 1].instant);
 
                 // --- Previous KeyFrame --- //
                 let previousKeyframe = this.keyframes[this.state]; 

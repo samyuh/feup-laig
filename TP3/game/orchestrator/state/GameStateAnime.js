@@ -12,6 +12,7 @@ class GameStateAnime extends GameState {
         this.piece = piece;
         this.boardSet = boardSet;
         this.board = boardSet.board;
+        this.finalPosition = finalPosition;
         this.position = this.board.getCoordinates(finalPosition[0], finalPosition[1]);
         
         this.pieceToPlayPosition = boardSet.auxBoardDisplacement;
@@ -26,7 +27,31 @@ class GameStateAnime extends GameState {
         this.waitingResponse = false;
     }
 
-    checkEndGame(board) {
+    /**
+     * Update the position and textures of an animations when graph changes
+     * @param {Array} auxBoardDisplacement - displacement of the auxiliary board
+     * @param {Texture} whiteTexture - white Texture of the piece
+     * @param {Texture} blackTexture - black Texture of the piece
+     */
+    updatePosition(auxBoardDisplacement, whiteTexture, blackTexture) {
+        // -- Update Textures -- //
+        this.pieceToPlayPosition = auxBoardDisplacement;
+        this.piece.whiteTexture = whiteTexture; 
+        this.piece.blackTexture = blackTexture; 
+
+        this.animation.pieceToPlay.whiteTexture = whiteTexture; 
+        this.animation.pieceToPlay.blackTexture = blackTexture;
+
+        this.animation.pieceStack.whiteTexture = whiteTexture;
+        this.animation.pieceStack.blackTexture = blackTexture;
+
+        this.animation.updateKeyFrames(auxBoardDisplacement, this.board.getPieceFinalPosition(this.finalPosition[0], this.finalPosition[1]));
+    }
+
+     /**
+     * Check Endgame
+     */
+    checkEndGame() {
         let stringNewBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
         let groupsString = 'groups(' + stringNewBoard + ')';
         
@@ -44,7 +69,7 @@ class GameStateAnime extends GameState {
             let gameOverData = request;
 
             if (gameOverData.length != 0) {
-                this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, board));
+                this.gameOrchestrator.changeState(new GameStateEnd(this.gameOrchestrator, this.board));
                 this.gameOrchestrator.createGameStats("end", gameOverData);
             }
             else {
@@ -78,7 +103,7 @@ class GameStateAnime extends GameState {
         } else if (!this.waitingResponse) {
             this.putPiece();
             this.waitingResponse = true;
-            this.checkEndGame(this.board);
+            this.checkEndGame();
         }
 
         // -- Board -- //

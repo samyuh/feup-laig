@@ -142,7 +142,6 @@ class XMLscene extends CGFscene {
     initXMLLights() {
         // Lights index.
         let i = 0;
-        console.log(this.graph[this.selectedTheme].lights);
         // Reads the lights from the scene graph.
         for (let key in this.graph[this.selectedTheme].lights) {
             if (i >= 8)

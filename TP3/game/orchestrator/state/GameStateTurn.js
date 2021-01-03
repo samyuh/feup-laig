@@ -15,6 +15,10 @@ class GameStateTurn extends GameState {
         this.piece = new MyPiece(this.gameOrchestrator.scene, this.gameOrchestrator.turn, this.gameOrchestrator.whiteTexture, this.gameOrchestrator.blackTexture); 
     }
 
+     /**
+     * Update the prolog board
+     * @param {Array} lastMove - lastMove
+     */
     updateBoardProlog(lastMove) {
         let move = this.board.convertProlog(lastMove[0]);
         let orientation = this.board.getOrientation(lastMove[0], lastMove[1]);
@@ -54,7 +58,6 @@ class GameStateTurn extends GameState {
             let stringBoard = JSON.stringify(this.board.boardList).replaceAll("\"", "");
 
             let validString = 'valid_move(' + move[0] + '-' + move[1] + '-' + orientation + ',' + stringBoard + ')';
-            console.log(validString);
             let p = this.gameOrchestrator.server.promiseRequest(validString, null, null, false);
 
             p.then((request) => {
@@ -70,7 +73,8 @@ class GameStateTurn extends GameState {
                             this.piece,
                             this.gameOrchestrator.turn, 
                             this.gameOrchestrator.boardSet.auxBoardDisplacement, 
-                            this.board.getPieceFinalPosition(this.lastMove[0], this.lastMove[1]))
+                            this.board.getPieceFinalPosition(this.lastMove[0], this.lastMove[1]),
+                            [this.lastMove[0], this.lastMove[1]])
                         );
 
                     // --- Game move --- //
@@ -110,6 +114,9 @@ class GameStateTurn extends GameState {
         }
     }
 
+    /**
+     * Display function, called periodically, which calls the display function of the current state
+     */
     display() {       
         // -- Board -- //
         this.gameOrchestrator.boardSet.display();

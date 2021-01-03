@@ -29,6 +29,20 @@ class MyBoard {
         this.createTiles();
     }
 
+     /**
+     * Update the texture of board when changing themes
+     * @param {Texture} boardTexture - board texture
+     */
+    updateTexture(boardTexture, whiteTexture, blackTexture) {
+        this.tileMaterial.setTexture(boardTexture);
+        this.selectedTexture.setTexture(boardTexture);
+
+        for(let i = 0; i < this.pieceList.length; i++) {
+            this.pieceList[i].whiteTexture = whiteTexture;
+            this.pieceList[i].blackTexture = blackTexture;
+        }
+    }
+
     /**
      * Creates the MyTile objects that compose the board, each one corresponding to a given cell of the board
      */

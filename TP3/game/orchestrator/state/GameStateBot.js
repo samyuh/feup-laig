@@ -44,7 +44,8 @@ class GameStateBot extends GameState {
                         piece,
                         this.gameOrchestrator.turn, 
                         this.gameOrchestrator.boardSet.auxBoardDisplacement, 
-                        this.board.getPieceFinalPosition(firstId, secondId))
+                        this.board.getPieceFinalPosition(firstId, secondId),
+                        [firstId, secondId])
                     );
                 
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));
@@ -72,7 +73,8 @@ class GameStateBot extends GameState {
                         piece,
                         this.gameOrchestrator.turn, 
                         this.gameOrchestrator.boardSet.auxBoardDisplacement, 
-                        this.board.getPieceFinalPosition(firstId, secondId))
+                        this.board.getPieceFinalPosition(firstId, secondId),
+                        [firstId, secondId])
                     );
 
                 this.gameOrchestrator.changeState(new GameStateAnime(this.gameOrchestrator, piece, this.gameOrchestrator.boardSet, [firstId, secondId]));

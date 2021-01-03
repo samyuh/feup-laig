@@ -52,6 +52,28 @@ class MyPieceAnimation {
     }
 
     /**
+     * Update the keyframes transformations
+     * @param {Array} startPosition - Start position of the animation
+     * @param {Array} finalPosition - final position of the animation
+     */
+    updateKeyFrames(startPosition, finalPosition) {
+        this.startPosition = startPosition;
+        this.finalPosition = finalPosition;
+        
+        this.keyFrameAnim.keyframes[0].translation = [this.startPosition[0], this.startPosition[1], this.startPosition[2]];
+        this.keyFrameAnim.keyframes[1].translation = [this.startPosition[0], this.startPosition[1], this.startPosition[2]];
+        this.keyFrameAnim.keyframes[2].translation = [this.startPosition[0], this.startPosition[1] + 2, this.startPosition[2]];
+        this.keyFrameAnim.keyframes[3].translation = [this.finalPosition[0], this.finalPosition[1] + 2, this.finalPosition[2]];
+        this.keyFrameAnim.keyframes[3].rotation = [0, this.finalPosition[3], 0];
+        this.keyFrameAnim.keyframes[4].translation = [this.finalPosition[0], this.finalPosition[1], this.finalPosition[2]];
+        this.keyFrameAnim.keyframes[4].rotation = [0, this.finalPosition[3], 0];
+
+        this.keyFrameAnimStack.keyframes[0].translation = [this.startPosition[0], this.startPosition[1] - 0.7, this.startPosition[2]];
+        this.keyFrameAnimStack.keyframes[1].translation = [this.startPosition[0], this.startPosition[1] - 0.7, this.startPosition[2]];
+        this.keyFrameAnimStack.keyframes[2].translation = [this.startPosition[0], this.startPosition[1], this.startPosition[2]];
+    }
+
+    /**
      * Update function, called periodically, which calls the update of the MyKeyframeAnimations objects of the piece being played and the piece in the stack
      * @param {Integer} elapsedTime - the time elapsed since the last call
      */

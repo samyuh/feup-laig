@@ -1,3 +1,13 @@
+/**
+ * MyButton
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {CGFtexture} texture - the texture of the button
+ * @param {Prototype} prototype - the prototype of the function to call when the button is clicked
+ * @param {Bool} selected - true if the button is selected, false otherwise
+ * @param {Bool} radioType - true if the button is selected, false otherwise
+ */
 class MyButton {
     constructor(gameOrchestrator, scene, texture, prototype, selected, radioType, ...args) {
         this.gameOrchestrator = gameOrchestrator;
@@ -27,22 +37,29 @@ class MyButton {
         this.args.push(...args);
     }
 
+    /**
+     * Unselect the button, so its display changes
+     */
     unselect() {
         this.selected = false;
     }
 
+    /**
+     * Apply functions, which selects the button, and calls the prototype of the function that it is linked to
+     */
     apply() {
         this.prototype.call(this.gameOrchestrator, ...this.args);
         this.selected = true;
     }
 
+    /**
+     * Display function, called periodically, which displays the button to the scene
+     */
     display() {
         this.scene.pushMatrix();
         
-        if(this.selected)
-            this.scene.translate(0, 0, -0.6);
-        
         if(this.selected) {
+            this.scene.translate(0, 0, -0.6);
             this.selectedMaterial.apply();
         }
         this.button.display();
