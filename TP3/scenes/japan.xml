@@ -55,43 +55,44 @@
     </lights>
 
     <textures>
-        <texture id="skyboxFront" path="./scenes/images/skybox/front.jpg" />
-        <texture id="skyboxRight" path="./scenes/images/skybox/right.jpg" />
-        <texture id="skyboxLeft" path="./scenes/images/skybox/left.jpg" />
-        <texture id="skyboxBack" path="./scenes/images/skybox/back.jpg" />
-        <texture id="skyboxTop" path="./scenes/images/skybox/top.jpg" />
-        <texture id="skyboxFloor" path="./scenes/images/skybox/bottom.jpg" />
-        <texture id="grass" path="./scenes/images/scene2/grass.jpg" />
-        <texture id="gravel" path="./scenes/images/scene2/gravel.jpg" />
-        <texture id="sand" path="./scenes/images/scene2/sand.jpg" />
-        <texture id="water" path="./scenes/images/scene2/water.jpg" />
-        <texture id="sandboxTexture" path="./scenes/images/sandbox.jpg" />
-        <texture id="mainBoardTexture" path="./scenes/images/wood.jpg" />
-        <texture id="auxBoardTexture" path="./scenes/images/wood.jpg" />
-        <texture id="whitePieceTexture" path="./scenes/images/white.jpg" />
-        <texture id="blackPieceTexture" path="./scenes/images/black.jpg" />
-        <texture id="infoBackground" path="./scenes/images/info-background.jpg" />
-        <texture id="playerIcon" path="scenes/images/icon/player.png" />
-        <texture id="randomIcon" path="scenes/images/icon/random.png" />
-        <texture id="smartIcon" path="scenes/images/icon/smart.png" />
-        <texture id="smallIcon" path="scenes/images/icon/small.png" />
-        <texture id="mediumIcon" path="scenes/images/icon/medium.png" />
-        <texture id="largeIcon" path="scenes/images/icon/large.png" />
-        <texture id="playIcon" path="scenes/images/icon/play.png" />
-        <texture id="menuIcon" path="scenes/images/icon/menu.png" />
-        <texture id="restartIcon" path="scenes/images/icon/restart.png" />
-        <texture id="movieIcon" path="scenes/images/icon/movie.png" />
-        <texture id="undoIcon" path="scenes/images/icon/undo.png" />
-        <texture id="grass-floor" path="./scenes/images/scene2/grass-floor.jpg" />
-        <texture id="textureMainMenu" path="scenes/images/japanBoard.jpg" />
-        <texture id="buttonIcon" path="./scenes/images/sandbox.jpg" />
-        <texture id="blackPillowTexture" path="./scenes/images/scene2/black-pillow.jpg" />
-        <texture id="whitePillowTexture" path="./scenes/images/scene2/white-pillow.jpg" />
-        <texture id="toriiTexture" path="./scenes/images/scene2/torii.jpg" />
-        <texture id="stoneTexture" path="./scenes/images/scene2/stone.jpg" />
-        <texture id="lightTexture" path="./scenes/images/scene2/light.jpg" />
-        <texture id="roofTexture" path="./scenes/images/scene2/roof.jpg" />
-        <texture id="yinyangTexture" path="./scenes/images/scene2/yinyang.png" />
+        <!-- Decoration -->
+        <texture id="grass" path="./scenes/images/decoration/grass.jpg" />
+        <texture id="gravel" path="./scenes/images/decoration/gravel.jpg" />
+        <texture id="sand" path="./scenes/images/decoration/sand.jpg" />
+        <texture id="water" path="./scenes/images/shaders/water.jpg" />
+        <texture id="toriiTexture" path="./scenes/images/decoration/torii.jpg" />
+        <texture id="stoneTexture" path="./scenes/images/decoration/stone.jpg" />
+        <texture id="lightTexture" path="./scenes/images/decoration/light.jpg" />
+        <texture id="roofTexture" path="./scenes/images/decoration/roof.jpg" />
+        <texture id="yinyangTexture" path="./scenes/images/decoration/yinyang.png" />
+        <texture id="grass-floor" path="./scenes/images/decoration/grass-floor.jpg" />
+        <texture id="blackPillowTexture" path="./scenes/images/decoration/black-pillow.jpg" />
+        <texture id="whitePillowTexture" path="./scenes/images/decoration/white-pillow.jpg" />
+        <texture id="wood" path="./scenes/images/decoration/wood.jpg" />
+        <texture id="darkWood" path="./scenes/images/decoration/darkWood.jpg" />
+        <texture id="woodBoard" path="scenes/images/decoration/wood-board.jpg" />
+        <!-- Piece-->
+        <texture id="whitePieceTexture" path="./scenes/images/pieces/classic/white.jpg" />
+        <texture id="blackPieceTexture" path="./scenes/images/pieces/classic/black.jpg" />
+        <!-- SkyBox -->
+        <texture id="skyboxFront" path="./scenes/images/skybox/japan/front.jpg" />
+        <texture id="skyboxRight" path="./scenes/images/skybox/japan/right.jpg" />
+        <texture id="skyboxLeft" path="./scenes/images/skybox/japan/left.jpg" />
+        <texture id="skyboxBack" path="./scenes/images/skybox/japan/back.jpg" />
+        <texture id="skyboxTop" path="./scenes/images/skybox/japan/top.jpg" />
+        <texture id="skyboxFloor" path="./scenes/images/skybox/japan/bottom.jpg" />
+        <!-- Icons -->
+        <texture id="playerIcon" path="scenes/images/menus/icon/player.png" />
+        <texture id="randomIcon" path="scenes/images/menus/icon/random.png" />
+        <texture id="smartIcon" path="scenes/images/menus/icon/smart.png" />
+        <texture id="smallIcon" path="scenes/images/menus/icon/small.png" />
+        <texture id="mediumIcon" path="scenes/images/menus/icon/medium.png" />
+        <texture id="largeIcon" path="scenes/images/menus/icon/large.png" />
+        <texture id="playIcon" path="scenes/images/menus/icon/play.png" />
+        <texture id="menuIcon" path="scenes/images/menus/icon/menu.png" />
+        <texture id="restartIcon" path="scenes/images/menus/icon/restart.png" />
+        <texture id="movieIcon" path="scenes/images/menus/icon/movie.png" />
+        <texture id="undoIcon" path="scenes/images/menus/icon/undo.png" />
     </textures>
 
     <spritesheets>
@@ -208,11 +209,11 @@
       </cameras>
 
       <game x="-12.5" y="5" z="-5">
-        <texture id="mainBoardTexture" />
+        <texture id="wood" />
       </game>
       
       <auxboard x="-17" y="5" z="0">
-        <texture id="infoBackground" />
+        <texture id="darkWood" />
       </auxboard>
     
      <piece>
@@ -237,8 +238,8 @@
                 <icon id="play" texture="playIcon" />
             </icons>
 
-            <texture id="textureMainMenu" />
-            <buttonTexture id="infoBackground" />
+            <texture id="woodBoard" />
+            <buttonTexture id="darkWood" />
         </board>
 
         <board id="game">
@@ -254,8 +255,8 @@
                 <icon id="undo" texture="undoIcon" />
             </icons>
 
-            <texture id="textureMainMenu" />
-            <buttonTexture id="infoBackground" />
+            <texture id="woodBoard" />
+            <buttonTexture id="darkWood" />
         </board>
       </menu>
     </boardgame>
@@ -294,7 +295,7 @@
         <node id="boat">
            <material id="null" />
 
-            <texture id="infoBackground">
+            <texture id="darkWood">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -415,7 +416,7 @@
 
         <node id="info-support">
             <material id="null" />
-            <texture id="infoBackground">
+            <texture id="darkWood">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -433,7 +434,7 @@
         <node id="table">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -452,7 +453,7 @@
         <node id="table-holders-right">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -469,7 +470,7 @@
         <node id="table-holders-left">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -617,7 +618,7 @@
         <node id="black-bench">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -635,7 +636,7 @@
         <node id="white-bench">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -653,7 +654,7 @@
         <node id="bench">
             <material id="null" />
 
-            <texture id="textureMainMenu">
+            <texture id="woodBoard">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1067,7 +1068,7 @@
         <node id="columns-support">
             <material id="null" />
 
-            <texture id="sandboxTexture">
+            <texture id="darkWood">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1753,7 +1754,7 @@
         <node id="box">
             <material id="null" />
 
-            <texture id="sandboxTexture">
+            <texture id="darkWood">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

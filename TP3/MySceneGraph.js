@@ -688,7 +688,7 @@ class MySceneGraph {
         var children = spriteSheetsNode.children;
 
         this.spritesheets = [];
-        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/spritesheet-alphabet.jpg", 16, 6);
+        this.spriteSheet = new MySpriteSheet(this.scene, "./scenes/images/menus/spritesheet-alphabet.jpg", 16, 6);
         
         for (let i = 0; i < children.length; i++) {
             if (children[i].nodeName != "spritesheet") {

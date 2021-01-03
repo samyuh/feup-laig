@@ -8,7 +8,7 @@ class MyWaveAnimation {
         this.x = x;
         this.y= y;
         this.z = z;
-        this.lavaPlane = new MyPlane(this.scene, 50, 50);
+        this.waterPlane = new MyPlane(this.scene, 50, 50);
 
         this.appearance = new CGFappearance(this.scene);
 		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -17,8 +17,8 @@ class MyWaveAnimation {
 		this.appearance.setShininess(120);
 
 
-		this.waterTex = new CGFtexture(this.scene, "scenes/images/scene2/water.jpg");
-		this.waterMap = new CGFtexture(this.scene, "scenes/images/waterMap.jpg");
+		this.waterTex = new CGFtexture(this.scene, "scenes/images/shaders/water.jpg");
+		this.waterMap = new CGFtexture(this.scene, "scenes/images/shaders/waterMap.jpg");
 
         this.appearance.setTexture(this.waterTex);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -56,7 +56,7 @@ class MyWaveAnimation {
         this.scene.translate(this.x, this.y, this.z);
         
         this.scene.setActiveShader(this.waterShader);
-        this.lavaPlane.display();
+        this.waterPlane.display();
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }

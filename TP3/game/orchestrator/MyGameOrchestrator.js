@@ -35,7 +35,7 @@ class MyGameOrchestrator {
         this.player1 = this.player.Player;
         this.player2 = this.player.Player;
 
-        this.backgroundText = new CGFtexture(this.scene, "./scenes/images/text-background.png");
+        this.backgroundText = new CGFtexture(this.scene, "./scenes/images/menus/text-background.png");
     }
 
     /**
@@ -275,7 +275,6 @@ class MyGameOrchestrator {
         this.unselectMenu = true;
         this.unselectGameMenu = true;
         this.timeUntilUnselect = 0;
-        this.gameInfo.updateGroups(0, 0);
         
         this.initBoard(true);
     }
@@ -398,7 +397,7 @@ class MyGameOrchestrator {
      * @param {Array} gameOverData - game info, with the winner and its score
      */
     createGameStats(status, gameOverData) {
-        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoBoardDisplacement, this.spriteSheet);
+        this.gameInfo = new MyGameEndInfo(this.scene, status, gameOverData, this.infoBoardDisplacement, this.spriteSheet, this.backgroundText);
     }
 
     pickMenu() {
