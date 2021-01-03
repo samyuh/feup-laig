@@ -33,8 +33,11 @@ For more information about our project visit the repository of our project [here
 - Creative camera animations, after initializing the scene, and between each player turns.
 - Interactive Menu, where the user can select the game configuration, and do many other things, like the "undo" of a move, reseting the board, starting the game movie, etc. This can be also done in the WebGL interface, as an alternative.
 - It's possible to listen to the environment sound. On interface, select Miscellaneous and then Sound.
+- Game is fluid and has no breaks. This can be checked since the water animation always running.
+- We promisified XMLHttpRequest so we can have a better flow of our game.
+- Board and auxiliary board can have differents coordinates, just like game menus.
 - Water using shaders that were thaught in CGRA
-- OBJ modeling. Models used: [Sakura Tree](https://sketchfab.com/3d-models/sakura-a995ce485d4d4329a19f6d4604b18c71) from RosticOstafi.
+- OBJ modeling. Models used: Sakura Tree and Pokemóns (Piplup, Lapras, Ho-Oh and Squirtle) from Sketchfab  
 - Use of patches to create circular superficies (like the volcano)
 - Good and creative use of textures, materials and lights to create more appealing scenes.
 
@@ -45,10 +48,11 @@ For more information about our project visit the repository of our project [here
 - Main menu panel
 - Game info panel
 - Environment skybox
-- Main mountain
+- Mountain
 - Two pillars, for each player
 - Board and auxiliary board
 - Water animation inside the mountain
+- Pokemons using OBJ
 - You can see this theme [here](scenes/mountains.xml).
 
 ##### Japan theme
@@ -56,7 +60,9 @@ For more information about our project visit the repository of our project [here
 - Main menu panel
 - Game info panel
 - Environment skybox
+- FLoating boat upside down
 - Water animation surrounding the island
+- Two Lamps
 - Decorative shrubs
 - Sandbox
 - Board and auxiliary board
