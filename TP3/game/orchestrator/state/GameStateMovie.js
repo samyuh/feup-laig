@@ -18,6 +18,10 @@ class GameStateMovie extends GameState {
             this.gameOrchestrator.boardSet.resetPiece();
         }
 
+        if (this.gameOrchestrator.concreteState instanceof GameStateEnd) {
+            this.gameOrchestrator.boardSet.resetPiece();
+        }
+
         this.animation = new MyPieceAnimation(
             this.gameOrchestrator.scene, 
             this.gameOrchestrator.boardSet,
