@@ -1,3 +1,12 @@
+/**
+ * MyMenu
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {MySpritesheet} spriteSheet - the spritesheet to use in the Spritetext objects
+ * @param {Array} boardDisplacement - the displacement of the menu in the scene, in the format [x, y, z]
+ * @param {Array of CGFTextures} textures - the textures of the buttons composing the menu
+ */
 class MyMenu {
     constructor(gameOrchestrator, scene, spriteSheet, boardDisplacement, textures) {
         this.scene = scene;
@@ -49,6 +58,10 @@ class MyMenu {
         this.startText = new MySpriteText(this.scene, "Start Game", spriteSheet);
     }
 
+    /**
+     * Unselects the menu buttons, according to the corresponding radio type
+     * @param {String} radioType - the radio type of the buttons to unselect
+     */
     unselectButton(radioType) {
         if(radioType == "size") {
             this.boardSizeButtonSmall.unselect();
@@ -67,6 +80,9 @@ class MyMenu {
         }
     }
 
+    /**
+     * Display function, called periodically, which displays the menu and the corresponding buttons to the scene
+     */
     display() {
         this.scene.pushMatrix();
         this.material.apply();

@@ -1,3 +1,11 @@
+/**
+ * MyGameMenu
+ * @constructor
+ * @param {Orchestrator Object} gameOrchestrator - the gameOrchestrator controlling the game
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {Array} displacement - the displacement of the game menu in the scene, in the format [x, y, z]
+ * @param {Array of CGFTextures} textures - the textures of the buttons composing the menu
+ */
 class MyGameMenu {
     constructor(gameOrchestrator, scene, displacement, textures) {
         this.scene = scene;
@@ -27,6 +35,10 @@ class MyGameMenu {
         this.material.setTexture(textures[5]);
     }
 
+    /**
+     * Unselects the game menu buttons, when the radioType is null
+     * @param {String} radioType - check if radiotype is null before unselecting the buttons
+     */
     unselectButton(radioType) {
         if (radioType == null) {
             this.menuButton.unselect();
@@ -36,6 +48,9 @@ class MyGameMenu {
         }
     }
 
+    /**
+     * Display function, called periodically, which displays the game menu and the corresponding buttons to the scene
+     */
     display() {
         this.scene.pushMatrix();
 
